@@ -14,7 +14,7 @@ class AppRoute {
 
       case RoutesName.onBoarding:
         return _handelMaterialPageRoute(
-            settings: settings, widget: const OnboardingScreen());
+            settings: settings, widget:  OnboardingScreen());
       case RoutesName.login:
         return _handelMaterialPageRoute(
             settings: settings, widget: const LoginScreen());
