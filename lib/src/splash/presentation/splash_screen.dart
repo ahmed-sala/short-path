@@ -20,9 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _navigateToLogin() async {
     await Future.delayed(const Duration(seconds: 4));
-    print(navKey.currentState);
-    // navKey.currentState!.pushReplacementNamed(RoutesName.onBoarding);
-    Navigator.of(context).pushReplacementNamed(RoutesName.onBoarding);
+    navKey.currentState!.pushReplacementNamed(RoutesName.onBoarding);
   }
 
   @override
