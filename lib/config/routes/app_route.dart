@@ -4,9 +4,6 @@ import 'package:short_path/src/auth/presentation/screens/login_screen.dart';
 import 'package:short_path/src/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:short_path/src/splash/presentation/splash_screen.dart';
 
-import '../../src/splash/presentation/splash_screen.dart';
-import '../../src/onboarding/presentation/screens/onboarding_screen.dart';
-
 class AppRoute {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
