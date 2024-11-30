@@ -5,6 +5,8 @@ import 'package:short_path/src/onboarding/presentation/screens/auth_decision.dar
 import 'package:short_path/src/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:short_path/src/splash/presentation/splash_screen.dart';
 
+import '../../src/auth/presentation/screens/register_screen.dart';
+
 class AppRoute {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -20,6 +22,9 @@ class AppRoute {
       case RoutesName.authDecision:
         return _handelMaterialPageRoute(
             settings: settings, widget: const AuthDecision());
+      case RoutesName.register:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const RegisterScreen());
       default:
         return _handelMaterialPageRoute(
             settings: settings, widget: const Scaffold());

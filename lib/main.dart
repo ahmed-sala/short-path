@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/config/routes/app_route.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/core/styles/theme/app_theme.dart';
 
 import 'core/utils/bloc_observer/bloc_observer.dart';
 import 'dependency_injection/di.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       navigatorKey: navKey,

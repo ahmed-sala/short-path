@@ -15,6 +15,10 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
 import '../src/auth/data/api/api_services.dart' as _i832;
 import '../src/auth/data/api/network_factory.dart' as _i287;
+import '../src/auth/presentation/viewmodels/login/login_viewmodel.dart'
+    as _i257;
+import '../src/auth/presentation/viewmodels/register/register_viewmodel.dart'
+    as _i355;
 import '../src/onboarding/presentation/viewmodel/onboarding_viewmodel.dart'
     as _i228;
 
@@ -30,7 +34,9 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final dioProvider = _$DioProvider();
+    gh.factory<_i257.LoginViewModel>(() => _i257.LoginViewModel());
     gh.factory<_i228.OnboardingViewmodel>(() => _i228.OnboardingViewmodel());
+    gh.factory<_i355.RegisterViewModel>(() => _i355.RegisterViewModel());
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
     gh.lazySingleton<_i528.PrettyDioLogger>(() => dioProvider.providePretty());
     gh.singleton<_i832.ApiServices>(() => _i832.ApiServices(gh<_i361.Dio>()));
