@@ -130,8 +130,7 @@ class OnboardingScreen extends StatelessWidget {
                             child: const Text('Back'),
                           )
                         else
-                          const SizedBox(
-                              width: 60), // Placeholder for alignment
+                          const SizedBox(width: 60),
 
                         // Next Button
                         ElevatedButton(
