@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/src/auth/presentation/screens/login_screen.dart';
+import 'package:short_path/src/onboarding/presentation/screens/auth_decision.dart';
 import 'package:short_path/src/onboarding/presentation/screens/onboarding_screen.dart';
 import 'package:short_path/src/splash/presentation/splash_screen.dart';
 
@@ -16,6 +17,9 @@ class AppRoute {
       case RoutesName.onBoarding:
         return _handelMaterialPageRoute(
             settings: settings, widget: OnboardingScreen());
+      case RoutesName.authDecision:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const AuthDecision());
       default:
         return _handelMaterialPageRoute(
             settings: settings, widget: const Scaffold());

@@ -4,4 +4,5 @@ class RoutesName {
   static const String register = 'register';
   static const String home = 'home';
   static const String onBoarding = 'onBoarding';
+  static const String authDecision = 'authDecision';
 }
