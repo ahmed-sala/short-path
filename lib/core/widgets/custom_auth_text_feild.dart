@@ -10,6 +10,7 @@ class CustomTextFormField extends StatefulWidget {
     required this.validator,
     this.isPasswordVisible = true,
     this.showPassword,
+    this.onChanged,
   });
 
   final String? labelText;
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   bool isPasswordVisible;
   void Function()? showPassword;
+  void Function(String)? onChanged;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -72,17 +74,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           color: Colors.grey.shade400,
         ),
         filled: true, // Add filled background
-        fillColor: Color(0xFFF4F4F4), // Light grey background color
+        fillColor: const Color(0xFFF4F4F4),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
-          borderSide: BorderSide(
+          borderSide: const BorderSide(
             color: Color(0xFFDEDEDE), // Match background color
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
           borderSide: BorderSide(
-            color: Colors.grey.shade400, // Slightly darker border on focus
+            color: Colors.grey.shade400,
           ),
         ),
         errorBorder: OutlineInputBorder(
@@ -98,13 +100,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           ),
         ),
       ),
+      onChanged: widget.onChanged,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      obscureText: widget.showPassword == null
-          ? false
-          : widget.isPasswordVisible, // Toggle password visibility
+      obscureText:
+          widget.showPassword == null ? false : widget.isPasswordVisible,
       validator: widget.validator,
       keyboardType: widget.keyboardType,
-
       style: TextStyle(
         color: Color(0xFF858383),
       ),

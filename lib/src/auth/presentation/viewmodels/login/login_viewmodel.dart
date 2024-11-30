@@ -14,7 +14,22 @@ class LoginViewModel extends Cubit<LoginScreenState> {
   var formKey = GlobalKey<FormState>();
 
   bool validate = false;
-  void doAction(LoginScreenActions action) {}
+  void doAction(LoginScreenActions action) {
+    switch (action) {
+      case LoginAction():
+      // TODO: Handle this case.
+      case NavigateToRegisterAction():
+      // TODO: Handle this case.
+      case NavigateToHomeAction():
+      // TODO: Handle this case.
+      case ValidateColorButtonAction():
+        _validateColorButton();
+      case ShowPasswordAction():
+      // TODO: Handle this case.
+      case NavigateToForgetPasswordAction():
+      // TODO: Handle this case.
+    }
+  }
 
   void _login() async {
     if (formKey.currentState!.validate()) {
@@ -24,6 +39,11 @@ class LoginViewModel extends Cubit<LoginScreenState> {
 
   void _navigateToHome() {
     emit(NavigateToHomeState());
+  }
+
+  void updateValidation() {
+    validate = formKey.currentState?.validate() ?? false;
+    emit(ValidateColorButtonState()); // Emit state change
   }
 
   _validateColorButton() {

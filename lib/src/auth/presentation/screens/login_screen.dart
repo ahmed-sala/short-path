@@ -46,112 +46,103 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: BlocConsumer<LoginViewModel, LoginScreenState>(
                   listener: (context, state) {},
                   builder: (context, state) {
-                    return Form(
-                      key: loginViewModel.formKey,
-                      onChanged: () {
-                        if (loginViewModel.emailController.text.isEmpty ||
-                            loginViewModel.passwordController.text.isEmpty) {
-                          validate = false;
-                        } else if (!loginViewModel.formKey.currentState!
-                            .validate()) {
-                          validate = false;
-                        } else {
-                          validate = true;
-                        }
-                      },
-                      child: Card(
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 32),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              // Logo or Icon
-                              const Icon(Icons.lock_outline,
-                                  size: 80, color: AppColors.primaryColor),
-                              const SizedBox(height: 20),
-                              Text(
-                                'Welcome Back!',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                'Log in to your account',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium
-                                    ?.copyWith(color: Colors.grey[600]),
-                              ),
-                              const SizedBox(height: 30),
-                              CustomTextFormField(
-                                hintText: 'Enter your email',
-                                keyboardType: TextInputType.emailAddress,
-                                controller: loginViewModel.emailController,
-                                labelText: 'Email Address',
-                                validator: (val) {
-                                  return Validations.validateEmail(
-                                      context, val);
-                                },
-                              ),
-                              const SizedBox(height: 20),
-                              CustomTextFormField(
-                                isPasswordVisible: passwordVisible,
-                                showPassword: () {
-                                  setState(() {
-                                    passwordVisible = !passwordVisible;
-                                  });
-                                },
-                                hintText: 'Enter your password',
-                                keyboardType: TextInputType.visiblePassword,
-                                controller: loginViewModel.passwordController,
-                                labelText: 'Password',
-                                validator: (val) {
-                                  return Validations.validatePassword(
-                                      context, val);
-                                },
-                              ),
-                              const SizedBox(height: 10),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                  onPressed: () {},
-                                  child: const Text('Forgot Password?'),
+                    if (state is InitialState ||
+                        state is ValidateColorButtonState) {
+                      return Form(
+                        key: loginViewModel.formKey,
+                        child: Card(
+                          elevation: 8,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 32),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                // Logo or Icon
+                                const Icon(Icons.lock_outline,
+                                    size: 80, color: AppColors.primaryColor),
+                                const SizedBox(height: 20),
+                                Text(
+                                  'Welcome Back!',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 ),
-                              ),
-                              const SizedBox(height: 20),
-                              CustomAuthButton(
-                                text: 'SIGN IN',
-                                onPressed: () {},
-                                color: validate
-                                    ? AppColors.primaryColor
-                                    : Colors.grey,
-                              ),
-                              const SizedBox(height: 20),
-                              NoAccountRow(
-                                content: 'Don’t Have an Account?',
-                                actionText: 'Register Here',
-                                onPressed: () {
-                                  navKey.currentState!.pushReplacementNamed(
-                                      RoutesName.register);
-                                },
-                              ),
-                            ],
+                                const SizedBox(height: 12),
+                                Text(
+                                  'Log in to your account',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(color: Colors.grey[600]),
+                                ),
+                                const SizedBox(height: 30),
+                                CustomTextFormField(
+                                  hintText: 'Enter your email',
+                                  keyboardType: TextInputType.emailAddress,
+                                  controller: loginViewModel.emailController,
+                                  labelText: 'Email Address',
+                                  validator: (val) {
+                                    return Validations.validateEmail(val);
+                                  },
+                                ),
+                                const SizedBox(height: 20),
+                                CustomTextFormField(
+                                  isPasswordVisible: passwordVisible,
+                                  showPassword: () {
+                                    setState(() {
+                                      passwordVisible = !passwordVisible;
+                                    });
+                                  },
+                                  hintText: 'Enter your password',
+                                  keyboardType: TextInputType.visiblePassword,
+                                  controller: loginViewModel.passwordController,
+                                  labelText: 'Password',
+                                  validator: (val) {
+                                    return Validations.validatePassword(val);
+                                  },
+                                ),
+                                const SizedBox(height: 10),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    child: const Text('Forgot Password?'),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                CustomAuthButton(
+                                  text: 'SIGN IN',
+                                  onPressed: () {},
+                                  color: loginViewModel.validate
+                                      ? AppColors.primaryColor
+                                      : Colors.grey,
+                                ),
+                                const SizedBox(height: 20),
+                                NoAccountRow(
+                                  content: 'Don’t Have an Account?',
+                                  actionText: 'Register Here',
+                                  onPressed: () {
+                                    navKey.currentState!.pushReplacementNamed(
+                                        RoutesName.register);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
+                      );
+                    }
+                    return const Center(child: CircularProgressIndicator());
                   },
                 ),
               ),

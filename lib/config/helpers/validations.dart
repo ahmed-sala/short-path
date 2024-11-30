@@ -1,16 +1,14 @@
-import 'package:flutter/cupertino.dart';
-
 import 'app_regexp.dart';
 
 abstract class Validations {
-  static String? validateName(BuildContext context, String? name) {
+  static String? validateName(String? name) {
     if (name!.isEmpty || !AppRegExp.isNameValid(name)) {
       return 'Name is required';
     }
     return null;
   }
 
-  static String? validateEmail(BuildContext context, String? email) {
+  static String? validateEmail(String? email) {
     if (email!.isEmpty || !AppRegExp.isEmailValid(email)) {
       return 'Email is required!';
     } else if (!email.contains('@')) {
@@ -19,15 +17,14 @@ abstract class Validations {
     return null;
   }
 
-  static String? validatePhoneNumber(
-      BuildContext context, String? phoneNumber) {
+  static String? validatePhoneNumber(String? phoneNumber) {
     if (phoneNumber!.isEmpty || !AppRegExp.isPhoneNumberValid(phoneNumber)) {
       return 'Phone number is required!';
     }
     return null;
   }
 
-  static String? validatePassword(BuildContext context, String? password) {
+  static String? validatePassword(String? password) {
     if (password!.isEmpty || !AppRegExp.isPasswordValid(password)) {
       return 'Password is required!';
     }
@@ -35,7 +32,7 @@ abstract class Validations {
   }
 
   static String? validateConfirmPassword(
-      BuildContext context, String? password, String? confirmPassword) {
+      String? password, String? confirmPassword) {
     if (confirmPassword!.isEmpty ||
         !AppRegExp.isPasswordValid(confirmPassword)) {
       return 'Confirm Password is required!';
@@ -45,14 +42,14 @@ abstract class Validations {
     return null;
   }
 
-  static String? validateOTP(BuildContext context, String? otp) {
+  static String? validateOTP(String? otp) {
     if (otp!.isEmpty || !AppRegExp.isOTPValid(otp)) {
       return 'OTP is required!';
     }
     return null;
   }
 
-  static String? validateUsername(BuildContext context, String? username) {
+  static String? validateUsername(String? username) {
     if (username!.isEmpty || !AppRegExp.isUsernameValid(username)) {
       return 'Username is required!';
     }

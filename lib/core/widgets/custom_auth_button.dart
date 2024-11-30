@@ -7,32 +7,34 @@ class CustomAuthButton extends StatelessWidget {
     required this.onPressed,
     required this.color,
     this.textColor = Colors.white,
+    this.validate = true,
   });
 
   final String? text;
   final void Function()? onPressed;
   final Color color;
   final Color? textColor;
+  final bool validate;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: validate ? onPressed : null,
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white,
-        backgroundColor: color, // Set the button color
+        foregroundColor: textColor,
+        backgroundColor:
+            validate ? color : Colors.grey.shade400, // Disabled color
         minimumSize: const Size(double.infinity, 60),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.0),
-          // Add blue border
         ),
       ),
       child: Text(
-        text!,
+        text ?? '',
         style: TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 16.0,
-          color: textColor,
+          color: validate ? textColor : Colors.black54, // Disabled text color
         ),
       ),
     );

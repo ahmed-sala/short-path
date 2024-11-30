@@ -13,18 +13,45 @@ class RegisterViewModel extends Cubit<RegisterScreenState> {
   TextEditingController rePasswordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  bool isPasswordVisible = true;
+  bool isRePasswordVisible = true;
+  bool validate = false;
 
-  void doAction(RegisterScreenActions action) {}
-
-  void _register() async {
-    if (formKey.currentState!.validate()) {}
+  void doAction(RegisterScreenActions action) {
+    switch (action) {
+      case RegisterAction():
+        _register();
+        break;
+      case GoToLoginAction():
+      case NavigateToHomeAction():
+        _navigateToHome();
+      case ValidateColorButtonAction():
+        _validateColorButton();
+    }
   }
 
-  void _goToLogin() {
-    emit(GoToLoginState());
+  void _register() async {
+    if (formKey.currentState!.validate()) {
+      emit(LoadingState());
+    }
   }
 
   void _navigateToHome() {
     emit(NavigateToHomeState());
+  }
+
+  _validateColorButton() {
+    if (fullNameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        rePasswordController.text.isEmpty ||
+        phoneController.text.isEmpty) {
+      validate = false;
+    } else if (!formKey.currentState!.validate()) {
+      validate = false;
+    } else {
+      validate = true;
+    }
+    emit(ValidateColorButtonState());
   }
 }
