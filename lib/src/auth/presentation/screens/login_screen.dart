@@ -115,7 +115,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Align(
                                   alignment: Alignment.centerRight,
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      navKey.currentState!.pushNamed(RoutesName.resetpassword);
+                                    },
                                     child: const Text('Forgot Password?'),
                                   ),
                                 ),

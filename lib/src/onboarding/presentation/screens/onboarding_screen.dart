@@ -37,8 +37,8 @@ class OnboardingScreen extends StatelessWidget {
                           TextButton(
                             onPressed: () {
                               _viewmodel.skip();
-                              navKey.currentState!
-                                  .pushReplacementNamed(RoutesName.login);
+                              navKey.currentState!.pushReplacementNamed(
+                                  RoutesName.authDecision);
                             },
                             child: const Text(
                               'Skip',
@@ -130,8 +130,7 @@ class OnboardingScreen extends StatelessWidget {
                             child: const Text('Back'),
                           )
                         else
-                          const SizedBox(
-                              width: 60), // Placeholder for alignment
+                          const SizedBox(width: 60),
 
                         // Next Button
                         ElevatedButton(
@@ -146,9 +145,8 @@ class OnboardingScreen extends StatelessWidget {
                                       .changePage(_viewmodel.currentPage + 1);
                                 }
                               : () {
-                                  // Go to Login after the last page
-                                  navKey.currentState!
-                                      .pushReplacementNamed(RoutesName.login);
+                                  navKey.currentState!.pushReplacementNamed(
+                                      RoutesName.authDecision);
                                 },
                           child: Text(
                             _viewmodel.currentPage < demoData.length - 1
