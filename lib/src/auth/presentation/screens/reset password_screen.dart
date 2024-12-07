@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../../../config/helpers/validations.dart';
 import '../../../../core/styles/colors/app_colore.dart';
 import '../../../../core/widgets/custom_auth_button.dart';
+import '../../../../core/widgets/custom_auth_text_feild.dart';
 import '../../../../main.dart';
 import '../../../../config/routes/routes_name.dart';
 
@@ -59,24 +61,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       ),
                     ),
                     const SizedBox(height: 30.0),
-
-                    TextFormField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        labelText: 'Email Address',
-                        hintText: 'Enter your email address',
-                        border: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$').hasMatch(value)) {
-                          return 'Please enter a valid email address';
-                        }
-                        return null;
-                      },
-                    ),
+                    CustomTextFormField(labelText: "Email Address", hintText:"Enter your email address", keyboardType:TextInputType.emailAddress, controller:emailController , validator: (value) {
+                      return Validations.validateEmail(value);
+                    },),
 
                     const SizedBox(height: 40.0),
 
