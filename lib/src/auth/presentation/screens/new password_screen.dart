@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/config/helpers/validations.dart';
+import 'package:short_path/core/widgets/custom_auth_text_feild.dart';
 import '../../../../config/routes/routes_name.dart';
 import '../../../../core/styles/colors/app_colore.dart';
 import '../../../../core/widgets/custom_auth_button.dart';
@@ -63,70 +65,26 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     const SizedBox(height: 30.0),
 
                     // Password Field
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: !isPasswordVisible,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Enter your password',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                            color: AppColors.greyColor,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isPasswordVisible = !isPasswordVisible;
-                            });
-                          },
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        } else if (value.length < 8) {
-                          return 'Password must be at least 8 characters';
-                        }
-                        return null;
-                      },
-                    ),
+                    CustomTextFormField(labelText: "password", hintText:"enter new password", keyboardType:TextInputType.visiblePassword, controller:passwordController , validator: (value) {
+                      return Validations.validatePassword(value);
+                    },showPassword:(){
+                      setState(() {
+                        isPasswordVisible = !isPasswordVisible;
+                      });
+                    },isPasswordVisible: isPasswordVisible,),
 
                     const SizedBox(height: 20),
 
                     // Confirm Password Field
-                    TextFormField(
-                      controller: confirmPasswordController,
-                      obscureText: !isConfirmPasswordVisible,
-                      decoration: InputDecoration(
-                        labelText: 'Confirm Password',
-                        hintText: 'Re-enter your password',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                            color: AppColors.greyColor,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isConfirmPasswordVisible = !isConfirmPasswordVisible;
-                            });
-                          },
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please confirm your password';
-                        } else if (value != passwordController.text) {
-                          return 'Passwords do not match';
-                        }
-                        return null;
-                      },
-                    ),
+                    CustomTextFormField(labelText: 'Confirm Password', hintText:'Re-enter your password', keyboardType:TextInputType.visiblePassword, controller:confirmPasswordController, validator: (value) {
+                      return Validations.validateConfirmPassword(value, passwordController.text);
+                    },showPassword:(){
+                      setState(() {
+                        isConfirmPasswordVisible = !isConfirmPasswordVisible;
+                      });
+                    },isPasswordVisible: isConfirmPasswordVisible,),
+
+
 
                     const SizedBox(height: 40),
 
