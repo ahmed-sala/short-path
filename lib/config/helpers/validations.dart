@@ -9,11 +9,12 @@ abstract class Validations {
   }
 
   static String? validateEmail(String? email) {
-    if (email!.isEmpty || !AppRegExp.isEmailValid(email)) {
+    if (email!.isEmpty) {
       return 'Email is required!';
-    } else if (!email.contains('@')) {
+    } else if (!AppRegExp.isEmailValid(email)) {
       return 'Invalid Email!';
     }
+
     return null;
   }
 
@@ -25,8 +26,10 @@ abstract class Validations {
   }
 
   static String? validatePassword(String? password) {
-    if (password!.isEmpty || !AppRegExp.isPasswordValid(password)) {
+    if (password!.isEmpty) {
       return 'Password is required!';
+    } else if (!AppRegExp.isPasswordValid(password)) {
+      return 'Invalid Password!';
     }
     return null;
   }
@@ -52,6 +55,13 @@ abstract class Validations {
   static String? validateUsername(String? username) {
     if (username!.isEmpty || !AppRegExp.isUsernameValid(username)) {
       return 'Username is required!';
+    }
+    return null;
+  }
+
+  static String? validateAddress(String? address) {
+    if (address!.isEmpty) {
+      return 'Address is required!';
     }
     return null;
   }
