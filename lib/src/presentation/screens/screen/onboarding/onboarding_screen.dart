@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/dependency_injection/di.dart';
 
 import '../../../../../../config/routes/routes_name.dart';
+import '../../../../../core/styles/spacing.dart';
 import '../../../../data/static_data/demo_data_list.dart';
 import '../../../../short_path.dart';
 import '../../../mangers/onboarding/onboarding_state.dart';
@@ -30,7 +33,7 @@ class OnboardingScreen extends StatelessWidget {
                   // Top Skip Button
                   if (_viewmodel.currentPage != demoData.length - 1)
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: EdgeInsets.symmetric(horizontal: 16.0.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -40,11 +43,11 @@ class OnboardingScreen extends StatelessWidget {
                               navKey.currentState!.pushReplacementNamed(
                                   RoutesName.authDecision);
                             },
-                            child: const Text(
+                            child: Text(
                               'Skip',
                               style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16.0,
+                                color: AppColors.primaryColor,
+                                fontSize: 16.0.sp,
                               ),
                             ),
                           ),
@@ -65,11 +68,10 @@ class OnboardingScreen extends StatelessWidget {
                         return Column(
                           children: [
                             const Spacer(flex: 2),
-                            Image.asset(demoData[index].image, height: 250),
+                            Image.asset(demoData[index].image, height: 250.h),
                             const Spacer(flex: 2),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 24.0),
+                              padding: EdgeInsets.symmetric(horizontal: 24.0.w),
                               child: Text(
                                 demoData[index].title,
                                 textAlign: TextAlign.center,
@@ -78,14 +80,13 @@ class OnboardingScreen extends StatelessWidget {
                                     .headlineSmall!
                                     .copyWith(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 24.0,
+                                      fontSize: 24.0.sp,
                                     ),
                               ),
                             ),
-                            const SizedBox(height: 16.0),
+                            verticalSpace(16),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 24.0),
+                              padding: EdgeInsets.symmetric(horizontal: 24.0.w),
                               child: Text(
                                 demoData[index].subtitle,
                                 textAlign: TextAlign.center,
@@ -96,7 +97,7 @@ class OnboardingScreen extends StatelessWidget {
                                       .color!
                                       .withOpacity(0.7),
                                   fontSize: 16.0,
-                                  height: 1.5,
+                                  height: 1.5.h,
                                 ),
                               ),
                             ),
@@ -117,23 +118,23 @@ class OnboardingScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24.0),
+                  verticalSpace(24),
 
-                  // Navigation Buttons
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    padding: EdgeInsets.symmetric(horizontal: 24.0.w),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Back Button
                         if (_viewmodel.currentPage > 0)
                           Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16.0),
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 16.0.h),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
+                                  borderRadius: BorderRadius.circular(12.0.r),
+                                ),
+                                side: BorderSide(
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               onPressed: () {
@@ -144,23 +145,26 @@ class OnboardingScreen extends StatelessWidget {
                                 _viewmodel
                                     .changePage(_viewmodel.currentPage - 1);
                               },
-                              child: const Text('Back'),
+                              child: Text(
+                                'Back',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 16.0.sp,
+                                ),
+                              ),
                             ),
-                          )
-                        else
-                          const SizedBox(width: 100),
-
-                        const SizedBox(width: 16.0),
-
-                        // Next or Get Started Button
+                          ),
+                        _viewmodel.currentPage > 0
+                            ? SizedBox(width: 16.0.w)
+                            : const SizedBox(width: 0),
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              padding: EdgeInsets.symmetric(vertical: 16.0.h),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
+                                borderRadius: BorderRadius.circular(12.0.r),
                               ),
+                              backgroundColor: Theme.of(context).primaryColor,
                             ),
                             onPressed: _viewmodel.currentPage <
                                     demoData.length - 1
@@ -181,14 +185,17 @@ class OnboardingScreen extends StatelessWidget {
                               _viewmodel.currentPage < demoData.length - 1
                                   ? 'Next'
                                   : 'Get Started',
-                              style: const TextStyle(fontSize: 16.0),
+                              style: TextStyle(
+                                fontSize: 16.0.sp,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 24.0),
+                  verticalSpace(24),
                 ],
               );
             },
