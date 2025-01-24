@@ -4,9 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../config/routes/app_route.dart';
 import '../config/routes/routes_name.dart';
-import '../core/styles/theme/app_theme.dart';
-
-final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
+import '../core/styles/theme/app_themeavKey = GlobalKey<NavigatorState>();
 
 class ShortPath extends StatefulWidget {
   const ShortPath({Key? key}) : super(key: key);
