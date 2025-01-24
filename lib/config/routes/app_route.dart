@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/profile_screen.dart';
 
 import '../../src/presentation/screens/screen/auth/login_screen.dart';
 import '../../src/presentation/screens/screen/auth/register_screen.dart';
@@ -25,6 +27,12 @@ class AppRoute {
       case RoutesName.home:
         return _handelMaterialPageRoute(
             settings: settings, widget: const HomeScreen());
+      case RoutesName.profile:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const ProfileScreen());
+        case RoutesName.education:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const EducationScreen());
 
       default:
         return _handelMaterialPageRoute(

@@ -34,9 +34,9 @@ class _ShortPathState extends State<ShortPath> {
         await getIt<FlutterSecureStorage>().read(key: SharedPrefKeys.userToken);
     print('Token: $token');
     if (token != null) {
-      _initialRoute = RoutesName.onBoarding;
+      _initialRoute = RoutesName.profile;
     } else {
-      _initialRoute = RoutesName.onBoarding;
+      _initialRoute = RoutesName.profile;
     }
 
     // Ensure the splash screen is removed after initialization

@@ -9,5 +9,7 @@ class RoutesName {
   static const String otp = 'otp';
   static const String newpassword = 'newpassword';
   static const String passwordchanged = 'passwordchanged';
+  static const String profile = 'profile';
+  static const String education = 'education';
 
 }
