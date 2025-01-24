@@ -9,9 +9,11 @@ class InitialSkillGatheringState extends SkillGatheringState {
 }
 
 class SkillAddedState extends SkillGatheringState {
-  final List<SkillEntity> skills;
+  final List<SkillEntity>? techSkills;
+  final List<String>? softSkills;
+  final List<String>? industrySkills;
 
-  SkillAddedState(this.skills);
+  SkillAddedState({this.techSkills, this.softSkills, this.industrySkills});
 }
 
 class OnboardingNextState extends SkillGatheringState {
@@ -19,7 +21,9 @@ class OnboardingNextState extends SkillGatheringState {
 }
 
 class SkillRemovedState extends SkillGatheringState {
-  final List<SkillEntity> skills;
+  final List<SkillEntity>? techSkills;
+  final List<String>? softSkills;
+  final List<String>? industrySkills;
 
-  SkillRemovedState(this.skills);
+  SkillRemovedState({this.techSkills, this.softSkills, this.industrySkills});
 }

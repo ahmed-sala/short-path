@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/src/data/static_data/demo_data_list.dart';
 
-import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../domain/entities/infromation_gathering/skill_entity.dart';
-import '../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
-import '../../../../shared_widgets/custom_auth_text_feild.dart';
-import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
+import '../../../../../../../core/styles/colors/app_colore.dart';
+import '../../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
+import '../../../../../shared_widgets/custom_auth_text_feild.dart';
 
-class SkillInputWidget extends StatefulWidget {
-  SkillInputWidget({super.key});
+class SoftSkillInputWidget extends StatefulWidget {
+  SoftSkillInputWidget({super.key});
 
   @override
-  _SkillInputSectionState createState() => _SkillInputSectionState();
+  _SoftSkillInputWidgetState createState() => _SoftSkillInputWidgetState();
 }
 
-class _SkillInputSectionState extends State<SkillInputWidget> {
+class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
   bool _showSuggestions = false;
 
   @override
@@ -33,7 +32,7 @@ class _SkillInputSectionState extends State<SkillInputWidget> {
                 labelText: 'Skill',
                 hintText: 'Enter your skill',
                 keyboardType: TextInputType.text,
-                controller: viewModel.skillController,
+                controller: viewModel.softSkillController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a skill';
@@ -41,7 +40,7 @@ class _SkillInputSectionState extends State<SkillInputWidget> {
                   return null;
                 },
                 onChanged: (value) {
-                  final filteredSkills = viewModel.technicalSkills
+                  final filteredSkills = softSkills
                       .where((skill) =>
                           skill.toLowerCase().contains(value.toLowerCase()))
                       .toList();
@@ -52,41 +51,20 @@ class _SkillInputSectionState extends State<SkillInputWidget> {
                 },
               ),
             ),
-            const SizedBox(width: 8),
-            // Proficiency Dropdown
-            Expanded(
-              flex: 2,
-              child: CustomDropdownButtonFormField<String>(
-                labelText: 'Proficiency',
-                hintText: 'Select proficiency',
-                value: viewModel.selectedProficiency,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    viewModel.selectedProficiency = newValue!;
-                  });
-                },
-                items: ['Beginner', 'Moderate', 'Advanced']
-                    .map((value) => DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        ))
-                    .toList(),
-              ),
-            ),
+
             const SizedBox(width: 8),
             // Add Skill Icon Button
             IconButton(
               icon: const Icon(Icons.add_circle,
                   color: AppColors.primaryColor, size: 30),
               onPressed: () {
-                final skill = viewModel.skillController.text.trim();
+                final skill = viewModel.softSkillController.text.trim();
                 if (skill.isNotEmpty) {
                   viewModel.addSkill(
-                    SkillEntity(
-                        skill: skill,
-                        proficiency: viewModel.selectedProficiency),
+                    type: 'Soft',
+                    skill: skill,
                   );
-                  viewModel.skillController.clear();
+                  viewModel.softSkillController.clear();
                   setState(() {
                     viewModel.filteredSuggestions = [];
                     _showSuggestions = false;
@@ -124,7 +102,7 @@ class _SkillInputSectionState extends State<SkillInputWidget> {
                 return ListTile(
                   title: Text(viewModel.filteredSuggestions[index]),
                   onTap: () {
-                    viewModel.skillController.text =
+                    viewModel.softSkillController.text =
                         viewModel.filteredSuggestions[index];
                     setState(() {
                       _showSuggestions = false;
