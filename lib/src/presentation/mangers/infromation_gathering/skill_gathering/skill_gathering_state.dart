@@ -14,6 +14,10 @@ class SkillAddedState extends SkillGatheringState {
   SkillAddedState(this.skills);
 }
 
+class OnboardingNextState extends SkillGatheringState {
+  const OnboardingNextState();
+}
+
 class SkillRemovedState extends SkillGatheringState {
   final List<SkillEntity> skills;
 
