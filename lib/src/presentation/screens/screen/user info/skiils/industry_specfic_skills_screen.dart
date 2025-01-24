@@ -4,8 +4,8 @@ import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/skill_gathering/industry_specfic/industry_skill_input_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/skill_gathering/industry_specfic/industry_skill_list_widget.dart';
 
-import '../../../../../dependency_injection/di.dart';
-import '../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
+import '../../../../../../dependency_injection/di.dart';
+import '../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
 
 class IndustrySpecificSkillsScreen extends StatelessWidget {
   const IndustrySpecificSkillsScreen({super.key});

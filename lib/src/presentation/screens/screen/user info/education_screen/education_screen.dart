@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
-import '../../../shared_widgets/custom_auth_button.dart';
-import '../../../shared_widgets/custom_auth_text_feild.dart';
+
+import '../../../../shared_widgets/custom_auth_button.dart';
+import '../../../../shared_widgets/custom_auth_text_feild.dart';
 
 class EducationScreen extends StatefulWidget {
   const EducationScreen({super.key});
@@ -24,10 +25,21 @@ class _EducationScreenState extends State<EducationScreen> {
 
   // Lists for month and year suggestions
   final List<String> _months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
   ];
-  final List<String> _years = List.generate(101, (index) => (1925 + index).toString());
+  final List<String> _years =
+      List.generate(101, (index) => (1925 + index).toString());
 
   // Filtered suggestions for months and years
   List<String> filteredStartMonths = [];
@@ -60,8 +72,9 @@ class _EducationScreenState extends State<EducationScreen> {
         filteredStartMonths = _months;
       } else {
         filteredStartMonths = _months
-            .where((month) =>
-            month.toLowerCase().startsWith(_startDateMonthController.text.toLowerCase()))
+            .where((month) => month
+                .toLowerCase()
+                .startsWith(_startDateMonthController.text.toLowerCase()))
             .toList();
       }
     });
@@ -73,8 +86,7 @@ class _EducationScreenState extends State<EducationScreen> {
         filteredStartYears = _years;
       } else {
         filteredStartYears = _years
-            .where((year) =>
-            year.startsWith(_startDateYearController.text))
+            .where((year) => year.startsWith(_startDateYearController.text))
             .toList();
       }
     });
@@ -86,8 +98,9 @@ class _EducationScreenState extends State<EducationScreen> {
         filteredEndMonths = _months;
       } else {
         filteredEndMonths = _months
-            .where((month) =>
-            month.toLowerCase().startsWith(_endDateMonthController.text.toLowerCase()))
+            .where((month) => month
+                .toLowerCase()
+                .startsWith(_endDateMonthController.text.toLowerCase()))
             .toList();
       }
     });
@@ -99,8 +112,7 @@ class _EducationScreenState extends State<EducationScreen> {
         filteredEndYears = _years;
       } else {
         filteredEndYears = _years
-            .where((year) =>
-            year.startsWith(_endDateYearController.text))
+            .where((year) => year.startsWith(_endDateYearController.text))
             .toList();
       }
     });
@@ -145,16 +157,16 @@ class _EducationScreenState extends State<EducationScreen> {
                   'Add Your Education',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 verticalSpace(10),
                 Text(
                   'Fill in your education details',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    color: Colors.grey[600],
-                  ),
+                        color: Colors.grey[600],
+                      ),
                 ),
                 verticalSpace(30),
                 CustomTextFormField(
@@ -213,7 +225,8 @@ class _EducationScreenState extends State<EducationScreen> {
                               return null;
                             },
                           ),
-                          if (filteredStartMonths.isNotEmpty && _startDateMonthController.text.isNotEmpty)
+                          if (filteredStartMonths.isNotEmpty &&
+                              _startDateMonthController.text.isNotEmpty)
                             Container(
                               margin: EdgeInsets.only(top: 8),
                               decoration: BoxDecoration(
@@ -230,9 +243,13 @@ class _EducationScreenState extends State<EducationScreen> {
                                     title: Text(filteredStartMonths[index]),
                                     onTap: () {
                                       setState(() {
-                                        _startDateMonthController.text = filteredStartMonths[index]; // Set the selected month
-                                        filteredStartMonths = []; // Clear the suggestions list
-                                        FocusScope.of(context).unfocus(); // Remove focus from the text field
+                                        _startDateMonthController.text =
+                                            filteredStartMonths[
+                                                index]; // Set the selected month
+                                        filteredStartMonths =
+                                            []; // Clear the suggestions list
+                                        FocusScope.of(context)
+                                            .unfocus(); // Remove focus from the text field
                                       });
                                     },
                                   );
@@ -258,7 +275,8 @@ class _EducationScreenState extends State<EducationScreen> {
                               return null;
                             },
                           ),
-                          if (filteredStartYears.isNotEmpty && _startDateYearController.text.isNotEmpty)
+                          if (filteredStartYears.isNotEmpty &&
+                              _startDateYearController.text.isNotEmpty)
                             Container(
                               margin: EdgeInsets.only(top: 8),
                               decoration: BoxDecoration(
@@ -275,9 +293,13 @@ class _EducationScreenState extends State<EducationScreen> {
                                     title: Text(filteredStartYears[index]),
                                     onTap: () {
                                       setState(() {
-                                        _startDateYearController.text = filteredStartYears[index]; // Set the selected year
-                                        filteredStartYears = []; // Clear the suggestions list
-                                        FocusScope.of(context).unfocus(); // Remove focus from the text field
+                                        _startDateYearController.text =
+                                            filteredStartYears[
+                                                index]; // Set the selected year
+                                        filteredStartYears =
+                                            []; // Clear the suggestions list
+                                        FocusScope.of(context)
+                                            .unfocus(); // Remove focus from the text field
                                       });
                                     },
                                   );
@@ -307,7 +329,8 @@ class _EducationScreenState extends State<EducationScreen> {
                               return null;
                             },
                           ),
-                          if (filteredEndMonths.isNotEmpty && _endDateMonthController.text.isNotEmpty)
+                          if (filteredEndMonths.isNotEmpty &&
+                              _endDateMonthController.text.isNotEmpty)
                             Container(
                               margin: EdgeInsets.only(top: 8),
                               decoration: BoxDecoration(
@@ -324,9 +347,13 @@ class _EducationScreenState extends State<EducationScreen> {
                                     title: Text(filteredEndMonths[index]),
                                     onTap: () {
                                       setState(() {
-                                        _endDateMonthController.text = filteredEndMonths[index]; // Set the selected month
-                                        filteredEndMonths = []; // Clear the suggestions list
-                                        FocusScope.of(context).unfocus(); // Remove focus from the text field
+                                        _endDateMonthController.text =
+                                            filteredEndMonths[
+                                                index]; // Set the selected month
+                                        filteredEndMonths =
+                                            []; // Clear the suggestions list
+                                        FocusScope.of(context)
+                                            .unfocus(); // Remove focus from the text field
                                       });
                                     },
                                   );
@@ -352,7 +379,8 @@ class _EducationScreenState extends State<EducationScreen> {
                               return null;
                             },
                           ),
-                          if (filteredEndYears.isNotEmpty && _endDateYearController.text.isNotEmpty)
+                          if (filteredEndYears.isNotEmpty &&
+                              _endDateYearController.text.isNotEmpty)
                             Container(
                               margin: EdgeInsets.only(top: 8),
                               decoration: BoxDecoration(
@@ -369,9 +397,13 @@ class _EducationScreenState extends State<EducationScreen> {
                                     title: Text(filteredEndYears[index]),
                                     onTap: () {
                                       setState(() {
-                                        _endDateYearController.text = filteredEndYears[index]; // Set the selected year
-                                        filteredEndYears = []; // Clear the suggestions list
-                                        FocusScope.of(context).unfocus(); // Remove focus from the text field
+                                        _endDateYearController.text =
+                                            filteredEndYears[
+                                                index]; // Set the selected year
+                                        filteredEndYears =
+                                            []; // Clear the suggestions list
+                                        FocusScope.of(context)
+                                            .unfocus(); // Remove focus from the text field
                                       });
                                     },
                                   );
@@ -394,13 +426,16 @@ class _EducationScreenState extends State<EducationScreen> {
                       // If validation fails, show an error message or handle it as needed
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Please fill all required fields correctly.'),
+                          content: Text(
+                              'Please fill all required fields correctly.'),
                           backgroundColor: Colors.red,
                         ),
                       );
                     }
                   },
-                  color: _validate ? AppColors.primaryColor : const Color(0xFF5C6673),
+                  color: _validate
+                      ? AppColors.primaryColor
+                      : const Color(0xFF5C6673),
                 ),
               ],
             ),

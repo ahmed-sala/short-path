@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/skill_gathering/soft_skills/soft_skill_input_widget.dart';
+import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/skill_gathering/soft_skills/soft_skill_list_widget.dart';
 
-import '../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../dependency_injection/di.dart';
-import '../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
-import '../../widgets/infromation_gathering/skill_gathering/technical_skills/tech_skill_input_widget.dart';
-import '../../widgets/infromation_gathering/skill_gathering/technical_skills/tech_skill_list_widget.dart';
+import '../../../../../../core/styles/colors/app_colore.dart';
+import '../../../../../../dependency_injection/di.dart';
+import '../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
 
-class TechnicalSkillScreen extends StatelessWidget {
-  const TechnicalSkillScreen({super.key});
+class SoftSkillScreen extends StatelessWidget {
+  const SoftSkillScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class TechnicalSkillScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Technical Skills',
+              'Soft Skills',
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -37,7 +37,7 @@ class TechnicalSkillScreen extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16),
-                child: TechSkillInputWidget(),
+                child: SoftSkillInputWidget(),
               ),
             ),
             const SizedBox(height: 24),
@@ -50,7 +50,7 @@ class TechnicalSkillScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            const TechSkillListWidget(),
+            const SoftSkillListWidget(),
           ],
         ),
       ),

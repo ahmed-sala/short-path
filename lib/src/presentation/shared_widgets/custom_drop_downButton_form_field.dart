@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDropdownButtonFormField<T> extends StatefulWidget {
   const CustomDropdownButtonFormField({
@@ -101,7 +102,9 @@ class _CustomDropdownButtonFormFieldState<T>
           Icons.arrow_drop_down,
           color: Colors.grey.shade600,
         ),
-        style: const TextStyle(
+        style: TextStyle(
+          fontSize: 11.sp,
+          fontWeight: FontWeight.w500,
           color: Color(0xFF858383),
         ),
         isExpanded: true, // Make the dropdown take up all available width

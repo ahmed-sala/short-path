@@ -7,7 +7,7 @@ import 'package:short_path/src/presentation/mangers/infromation_gathering/skill_
 import 'package:short_path/src/presentation/shared_widgets/next_back_buttuns.dart';
 import 'package:short_path/src/short_path.dart';
 
-import '../../../../../config/routes/routes_name.dart';
+import '../../../../../../config/routes/routes_name.dart';
 
 class SkillInformationScreen extends StatefulWidget {
   const SkillInformationScreen({super.key});
@@ -64,7 +64,7 @@ class _SkillInformationScreenState extends State<SkillInformationScreen> {
                 NextBackButtuns(
                   finish: () {
                     navKey.currentState!
-                        .pushReplacementNamed(RoutesName.authDecision);
+                        .pushReplacementNamed(RoutesName.education);
                   },
                   pageController: _pageController,
                   length: skillGatheringViewmodel.pages.length,

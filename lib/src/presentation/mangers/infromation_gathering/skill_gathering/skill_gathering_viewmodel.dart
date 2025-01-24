@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/src/presentation/mangers/infromation_gathering/skill_gathering/skill_gathering_state.dart';
-import 'package:short_path/src/presentation/screens/screen/infro/industry_specfic_skills_screen.dart';
-import 'package:short_path/src/presentation/screens/screen/infro/soft_skill_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/skiils/industry_specfic_skills_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/skiils/soft_skill_screen.dart';
 
 import '../../../../domain/entities/infromation_gathering/skill_entity.dart';
-import '../../../screens/screen/infro/technical_skill_screen.dart';
+import '../../../screens/screen/user info/skiils/technical_skill_screen.dart';
 
 @injectable
 class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
