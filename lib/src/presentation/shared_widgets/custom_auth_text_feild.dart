@@ -11,6 +11,7 @@ class CustomTextFormField extends StatefulWidget {
     this.isPasswordVisible = true,
     this.showPassword,
     this.onChanged,
+    this.custfocusNode,
   });
 
   final String? labelText;
@@ -21,6 +22,7 @@ class CustomTextFormField extends StatefulWidget {
   bool isPasswordVisible;
   void Function()? showPassword;
   void Function(String)? onChanged;
+  final FocusNode? custfocusNode;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -51,7 +53,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      focusNode: _focusNode,
+      focusNode: widget.custfocusNode ?? _focusNode,
       controller: widget.controller,
       decoration: InputDecoration(
         suffixIcon: (_isFocused && widget.showPassword != null)

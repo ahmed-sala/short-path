@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/src/presentation/screens/screen/infro/skill_information_screen.dart';
 
 import '../../src/presentation/screens/screen/auth/login_screen.dart';
 import '../../src/presentation/screens/screen/auth/register_screen.dart';
@@ -25,6 +26,10 @@ class AppRoute {
       case RoutesName.home:
         return _handelMaterialPageRoute(
             settings: settings, widget: const HomeScreen());
+
+      case RoutesName.skillGathering:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const SkillInformationScreen());
 
       default:
         return _handelMaterialPageRoute(

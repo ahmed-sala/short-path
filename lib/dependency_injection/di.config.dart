@@ -32,6 +32,8 @@ import '../src/domain/usecases/auth/auth_use_case.dart' as _i692;
 import '../src/presentation/mangers/auth/login/login_viewmodel.dart' as _i312;
 import '../src/presentation/mangers/auth/register/register_viewmodel.dart'
     as _i599;
+import '../src/presentation/mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart'
+    as _i373;
 import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
     as _i359;
 
@@ -52,6 +54,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPrefModule.sharedPreferences,
       preResolve: true,
     );
+    gh.factory<_i373.SkillGatheringViewmodel>(
+        () => _i373.SkillGatheringViewmodel());
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
         () => sharedPrefModule.secureStorage);
