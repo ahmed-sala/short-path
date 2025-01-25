@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:short_path/src/domain/entities/infromation_gathering/language_entity.dart';
+import 'package:short_path/src/domain/entities/infromation_gathering/profile_entity.dart';
+import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
 import 'package:short_path/src/presentation/mangers/infromation_gathering/profile/profile_state.dart';
 
 import '../../../../data/static_data/demo_data_list.dart';
 
 @injectable
+@singleton
 class ProfileViewmodel extends Cubit<ProfileState> {
-  ProfileViewmodel() : super(ProfileInitialState()) {
+  UserInfoUsecase userInfoUsecase;
+  ProfileViewmodel(this.userInfoUsecase) : super(ProfileInitialState()) {
     // Attach listeners to the controllers
     jobTitleController.addListener(onJobTitleChanged);
     languageController.addListener(onLanguageChanged);
   }
 
-  final formKey = GlobalKey<FormState>();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController jobTitleController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController languageController = TextEditingController();
+  bool checkValidLink(String link) {
+    return Uri.parse(link).isAbsolute;
+  }
 
-  List<Map<String, String>> languages = [];
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController jobTitleController = TextEditingController();
+  final TextEditingController linkedInController = TextEditingController();
+  TextEditingController profilePictureController = TextEditingController();
+  final TextEditingController languageController = TextEditingController();
+  final TextEditingController portfolioController = TextEditingController();
+  final TextEditingController bioController = TextEditingController();
+
+  List<LanguageEntity> languages = [];
   String? selectedLanguageLevel;
   List<String> filteredJobSuggestions = [];
   List<String> filteredLanguageSuggestions = [];
-  bool isFormValid = false;
+  bool validate = false;
+
+  List<String> portfolioLinks = [];
 
   List<String> languageLevels = ['Beginner', 'Moderate', 'Advanced'];
-  void validateForm() {
-    isFormValid = formKey.currentState?.validate() ?? false;
-    emit(ProfileUpdated());
-  }
 
   String? validateJobTitle(String? value) =>
       value?.isEmpty == true ? 'Please enter your job title' : null;
-
-  String? validateGitHubProfile(String? value) =>
-      value?.isEmpty == true ? 'Please enter your GitHub profile URL' : null;
 
   String? validateLinkedInProfile(String? value) =>
       value?.isEmpty == true ? 'Please enter your LinkedIn profile URL' : null;
@@ -66,6 +71,21 @@ class ProfileViewmodel extends Cubit<ProfileState> {
     emit(LanguageChanged());
   }
 
+  void next() {
+    if (formKey.currentState!.validate()) {
+      ProfileEntity profileEntity = ProfileEntity(
+        bio: bioController.text,
+        jobTitle: jobTitleController.text,
+        languages: languages,
+        linkedIn: linkedInController.text,
+        portfolioLinks: portfolioLinks,
+        profilePicture: profilePictureController.text,
+      );
+      userInfoUsecase.invokeProfile(profileEntity);
+      emit(ProfileUpdated());
+    }
+  }
+
   void selectJobTitle(int index) {
     jobTitleController.text = filteredJobSuggestions[index];
     filteredJobSuggestions = [];
@@ -83,21 +103,64 @@ class ProfileViewmodel extends Cubit<ProfileState> {
     emit(SelectLanguage());
   }
 
-  void addLanguage(Map<String, String> language) {
-    languages.add(language);
-    emit(NewLanguageAdded(language));
+  void addLanguage(String language, String level) {
+    LanguageEntity languageEntity =
+        LanguageEntity(language: language, level: level);
+    if (languages.contains(languageEntity)) {
+      return;
+    } else if (languages.length == 5) {
+      return;
+    } else if (language.isEmpty) {
+      return;
+    }
+    languages.add(languageEntity);
+    emit(NewLanguageAdded(languageEntity));
   }
 
-  void removeLanguage(Map<String, String> language) {
+  void removeLanguage(LanguageEntity language) {
     languages.remove(language);
     emit(LanguageRemoved(language));
   }
 
-  void validateAndProceed() {
-    if (formKey.currentState?.validate() ?? false) {
-      emit(ProfileUpdated());
-    } else {
-      // Show error message
+  void addPortfolioLink(String link) {
+    if (portfolioLinks.contains(link)) {
+      return;
+    } else if (portfolioLinks.length == 5) {
+      return;
+    } else if (link.isEmpty) {
+      return;
     }
+    portfolioLinks.add(link);
+    emit(PortfolioLinkAdded(link));
+  }
+
+  void removePortfolioLink(String link) {
+    portfolioLinks.remove(link);
+    emit(PortfolioLinkRemoved(link));
+  }
+
+  validateColorButton() {
+    if (jobTitleController.text.isEmpty ||
+        profilePictureController.text.isEmpty ||
+        linkedInController.text.isEmpty ||
+        bioController.text.isEmpty) {
+      validate = false;
+    } else if (!formKey.currentState!.validate()) {
+      validate = false;
+    } else {
+      validate = true;
+    }
+    emit(ValidateColorButtonState());
+  }
+
+  @override
+  Future<void> close() {
+    jobTitleController.dispose();
+    linkedInController.dispose();
+    profilePictureController.dispose();
+    languageController.dispose();
+    portfolioController.dispose();
+    bioController.dispose();
+    return super.close();
   }
 }

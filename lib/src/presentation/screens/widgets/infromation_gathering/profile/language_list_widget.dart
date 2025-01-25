@@ -23,7 +23,7 @@ class LanguageListWidget extends StatelessWidget {
           runSpacing: 8,
           children: skills.map((skill) {
             return Chip(
-              label: Text('${skill['language']} (${skill['level']})'),
+              label: Text('${skill.language} (${skill.level})'),
               backgroundColor: AppColors.whiteColor,
               labelStyle: const TextStyle(color: AppColors.primaryColor),
               deleteIcon: const Icon(Icons.close, color: Colors.red),
@@ -48,7 +48,9 @@ class LanguageListWidget extends StatelessWidget {
                       onPressed: () {
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
-                        context.read<ProfileViewmodel>().addLanguage(skill);
+                        context
+                            .read<ProfileViewmodel>()
+                            .addLanguage(skill.language, skill.level);
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
                             content: Text('$skill added back!'),

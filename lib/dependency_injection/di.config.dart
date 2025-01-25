@@ -29,9 +29,12 @@ import '../src/data/data_source/online_data_source/auth/impl/auth_online_datasou
 import '../src/data/repository_impl/auth/auth_repository_impl.dart' as _i946;
 import '../src/domain/repositories/contract/auth_repository.dart' as _i367;
 import '../src/domain/usecases/auth/auth_use_case.dart' as _i692;
+import '../src/domain/usecases/user_info/user_info_usecase.dart' as _i748;
 import '../src/presentation/mangers/auth/login/login_viewmodel.dart' as _i312;
 import '../src/presentation/mangers/auth/register/register_viewmodel.dart'
     as _i599;
+import '../src/presentation/mangers/infromation_gathering/profile/profile_viewmodel.dart'
+    as _i825;
 import '../src/presentation/mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart'
     as _i373;
 import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
@@ -54,6 +57,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPrefModule.sharedPreferences,
       preResolve: true,
     );
+    gh.factory<_i748.UserInfoUsecase>(() => _i748.UserInfoUsecase());
     gh.factory<_i373.SkillGatheringViewmodel>(
         () => _i373.SkillGatheringViewmodel());
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
@@ -65,6 +69,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i990.AuthOfflineDataSource>(
         () => _i718.authOfflineDatasourceImpl());
     gh.singleton<_i687.ApiServices>(() => _i687.ApiServices(gh<_i361.Dio>()));
+    gh.factory<_i825.ProfileViewmodel>(
+        () => _i825.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i144.AuthOnlineDatasource>(
         () => _i116.AuthOnlineDataSourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i367.AuthRepository>(() => _i946.AuthRepositoryImpl(

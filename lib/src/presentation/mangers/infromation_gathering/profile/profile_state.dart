@@ -1,3 +1,5 @@
+import 'package:short_path/src/domain/entities/infromation_gathering/language_entity.dart';
+
 sealed class ProfileState {
   const ProfileState();
 }
@@ -13,13 +15,13 @@ class ProfileLoading extends ProfileState {
 class ProfileUpdated extends ProfileState {}
 
 class NewLanguageAdded extends ProfileState {
-  final Map<String, String> language;
+  final LanguageEntity language;
 
   const NewLanguageAdded(this.language);
 }
 
 class LanguageRemoved extends ProfileState {
-  final Map<String, String> language;
+  final LanguageEntity language;
 
   const LanguageRemoved(this.language);
 }
@@ -46,4 +48,20 @@ class LanguageChanged extends ProfileState {
 
 class JobTitleChanged extends ProfileState {
   const JobTitleChanged();
+}
+
+class PortfolioLinkAdded extends ProfileState {
+  final String link;
+
+  const PortfolioLinkAdded(this.link);
+}
+
+class PortfolioLinkRemoved extends ProfileState {
+  final String link;
+
+  const PortfolioLinkRemoved(this.link);
+}
+
+class ValidateColorButtonState extends ProfileState {
+  const ValidateColorButtonState();
 }

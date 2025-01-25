@@ -52,6 +52,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSummaryField = widget.labelText == "Summary";
+
     return TextFormField(
       focusNode: widget.custfocusNode ?? _focusNode,
       controller: widget.controller,
@@ -107,7 +109,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       obscureText:
           widget.showPassword == null ? false : widget.isPasswordVisible,
       validator: widget.validator,
-      keyboardType: widget.keyboardType,
+      keyboardType:
+          isSummaryField ? TextInputType.multiline : widget.keyboardType,
+      maxLines:
+          isSummaryField ? 5 : 1, // Set maxLines to 5 if it's the Summary field
       style: TextStyle(
         color: Color(0xFF858383),
       ),
