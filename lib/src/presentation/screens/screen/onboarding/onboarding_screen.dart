@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/shared_widgets/next_back_buttuns.dart';
 
 import '../../../../../../config/routes/routes_name.dart';
 import '../../../../../core/styles/spacing.dart';
@@ -10,7 +11,6 @@ import '../../../../data/static_data/demo_data_list.dart';
 import '../../../../short_path.dart';
 import '../../../mangers/onboarding/onboarding_state.dart';
 import '../../../mangers/onboarding/onboarding_viewmodel.dart';
-import '../../widgets/onboarding/dot_items.dart';
 
 class OnboardingScreen extends StatelessWidget {
   OnboardingScreen({super.key});
@@ -109,92 +109,15 @@ class OnboardingScreen extends StatelessWidget {
                   ),
 
                   // Dots Indicator
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      demoData.length,
-                      (index) => DotItems(
-                        isActive: index == _viewmodel.currentPage,
-                      ),
-                    ),
-                  ),
-                  verticalSpace(24),
-
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.0.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (_viewmodel.currentPage > 0)
-                          Expanded(
-                            child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 16.0.h),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0.r),
-                                ),
-                                side: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              onPressed: () {
-                                _pageController.previousPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
-                                _viewmodel
-                                    .changePage(_viewmodel.currentPage - 1);
-                              },
-                              child: Text(
-                                'Back',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 16.0.sp,
-                                ),
-                              ),
-                            ),
-                          ),
-                        _viewmodel.currentPage > 0
-                            ? SizedBox(width: 16.0.w)
-                            : const SizedBox(width: 0),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(vertical: 16.0.h),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0.r),
-                              ),
-                              backgroundColor: Theme.of(context).primaryColor,
-                            ),
-                            onPressed: _viewmodel.currentPage <
-                                    demoData.length - 1
-                                ? () {
-                                    _pageController.nextPage(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                      curve: Curves.easeInOut,
-                                    );
-                                    _viewmodel
-                                        .changePage(_viewmodel.currentPage + 1);
-                                  }
-                                : () {
-                                    navKey.currentState!.pushReplacementNamed(
-                                        RoutesName.authDecision);
-                                  },
-                            child: Text(
-                              _viewmodel.currentPage < demoData.length - 1
-                                  ? 'Next'
-                                  : 'Get Started',
-                              style: TextStyle(
-                                fontSize: 16.0.sp,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  NextBackButtuns(
+                      finish: () {
+                        navKey.currentState!
+                            .pushReplacementNamed(RoutesName.authDecision);
+                      },
+                      pageController: _pageController,
+                      length: demoData.length,
+                      changePage: _viewmodel.changePage,
+                      currentPage: _viewmodel.currentPage),
                   verticalSpace(24),
                 ],
               );

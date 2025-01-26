@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/config/routes/routes_name.dart';
-import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen.dart';
-import 'package:short_path/src/presentation/screens/screen/user%20info/profile_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen/education_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/profile_screen/profile_screen.dart';
 
 import '../../src/presentation/screens/screen/auth/login_screen.dart';
 import '../../src/presentation/screens/screen/auth/register_screen.dart';
 import '../../src/presentation/screens/screen/home/home_screen.dart';
 import '../../src/presentation/screens/screen/onboarding/auth_decision.dart';
 import '../../src/presentation/screens/screen/onboarding/onboarding_screen.dart';
+import '../../src/presentation/screens/screen/user info/skiils/skill_information_screen.dart';
 
 class AppRoute {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -30,9 +31,13 @@ class AppRoute {
       case RoutesName.profile:
         return _handelMaterialPageRoute(
             settings: settings, widget: const ProfileScreen());
-        case RoutesName.education:
+      case RoutesName.education:
         return _handelMaterialPageRoute(
-            settings: settings, widget: const EducationScreen());
+            settings: settings, widget: EducationScreen());
+
+      case RoutesName.skillGathering:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const SkillInformationScreen());
 
       default:
         return _handelMaterialPageRoute(

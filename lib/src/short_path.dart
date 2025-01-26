@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../config/helpers/shared_pref/shared_pre_keys.dart';
 import '../config/routes/app_route.dart';
 import '../config/routes/routes_name.dart';
 import '../core/styles/theme/app_theme.dart';
-import '../dependency_injection/di.dart';
 
 final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
@@ -19,8 +16,8 @@ class ShortPath extends StatefulWidget {
 }
 
 class _ShortPathState extends State<ShortPath> {
-  String? _initialRoute;
-  bool _isInitialized = false;
+  String? _initialRoute = RoutesName.education;
+  bool _isInitialized = true;
 
   @override
   void initState() {
@@ -29,22 +26,22 @@ class _ShortPathState extends State<ShortPath> {
   }
 
   Future<void> initialization() async {
-    // Perform initialization logic
-    String? token =
-        await getIt<FlutterSecureStorage>().read(key: SharedPrefKeys.userToken);
-    print('Token: $token');
-    if (token != null) {
-      _initialRoute = RoutesName.profile;
-    } else {
-      _initialRoute = RoutesName.profile;
-    }
+    // // Perform initialization logic
+    // String? token =
+    //     await getIt<FlutterSecureStorage>().read(key: SharedPrefKeys.userToken);
+    // print('Token: $token');
+    // if (token != null) {
+    //   _initialRoute = RoutesName.onBoarding;
+    // } else {
+    //   _initialRoute = RoutesName.onBoarding;
+    // }
 
     // Ensure the splash screen is removed after initialization
     FlutterNativeSplash.remove();
 
-    setState(() {
-      _isInitialized = true;
-    });
+    // setState(() {
+    //   _isInitialized = true;
+    // });
   }
 
   @override

@@ -67,11 +67,6 @@ class LoginViewModel extends Cubit<LoginScreenState> {
     emit(NavigateToHomeState());
   }
 
-  void updateValidation() {
-    validate = formKey.currentState?.validate() ?? false;
-    emit(ValidateColorButtonState()); // Emit state change
-  }
-
   _validateColorButton() {
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       validate = false;

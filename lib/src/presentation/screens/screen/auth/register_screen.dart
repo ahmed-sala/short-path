@@ -85,7 +85,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onOk: () {},
                         dialogType: DialogType.error);
                   case SuccessState():
-                    navKey.currentState!.pushReplacementNamed(RoutesName.home);
+                    navKey.currentState!
+                        .pushReplacementNamed(RoutesName.profile);
                   default:
                 }
               },

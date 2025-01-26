@@ -1,0 +1,166 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:short_path/src/domain/entities/infromation_gathering/language_entity.dart';
+import 'package:short_path/src/domain/entities/infromation_gathering/profile_entity.dart';
+import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
+import 'package:short_path/src/presentation/mangers/infromation_gathering/profile/profile_state.dart';
+
+import '../../../../data/static_data/demo_data_list.dart';
+
+@injectable
+@singleton
+class ProfileViewmodel extends Cubit<ProfileState> {
+  UserInfoUsecase userInfoUsecase;
+  ProfileViewmodel(this.userInfoUsecase) : super(ProfileInitialState()) {
+    // Attach listeners to the controllers
+    jobTitleController.addListener(onJobTitleChanged);
+    languageController.addListener(onLanguageChanged);
+  }
+
+  bool checkValidLink(String link) {
+    return Uri.parse(link).isAbsolute;
+  }
+
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController jobTitleController = TextEditingController();
+  final TextEditingController linkedInController = TextEditingController();
+  TextEditingController profilePictureController = TextEditingController();
+  final TextEditingController languageController = TextEditingController();
+  final TextEditingController portfolioController = TextEditingController();
+  final TextEditingController bioController = TextEditingController();
+
+  List<LanguageEntity> languages = [];
+  String? selectedLanguageLevel;
+  List<String> filteredJobSuggestions = [];
+  List<String> filteredLanguageSuggestions = [];
+  bool validate = false;
+
+  List<String> portfolioLinks = [];
+
+  List<String> languageLevels = ['Beginner', 'Moderate', 'Advanced'];
+
+  String? validateJobTitle(String? value) =>
+      value?.isEmpty == true ? 'Please enter your job title' : null;
+
+  String? validateLinkedInProfile(String? value) =>
+      value?.isEmpty == true ? 'Please enter your LinkedIn profile URL' : null;
+
+  String? validateProfilePicture(String? value) =>
+      value?.isEmpty == true ? 'Please enter your profile picture URL' : null;
+
+  void onJobTitleChanged() {
+    filteredJobSuggestions = jobTitleController.text.isEmpty
+        ? jobSuggestions
+        : jobSuggestions
+            .where((job) => job
+                .toLowerCase()
+                .startsWith(jobTitleController.text.toLowerCase()))
+            .toList();
+    emit(JobTitleChanged());
+  }
+
+  void onLanguageChanged() {
+    filteredLanguageSuggestions = languageController.text.isEmpty
+        ? languageSuggestions
+        : languageSuggestions
+            .where((language) => language
+                .toLowerCase()
+                .startsWith(languageController.text.toLowerCase()))
+            .toList();
+    emit(LanguageChanged());
+  }
+
+  void next() {
+    if (formKey.currentState!.validate()) {
+      ProfileEntity profileEntity = ProfileEntity(
+        bio: bioController.text,
+        jobTitle: jobTitleController.text,
+        languages: languages,
+        linkedIn: linkedInController.text,
+        portfolioLinks: portfolioLinks,
+        profilePicture: profilePictureController.text,
+      );
+      userInfoUsecase.invokeProfile(profileEntity);
+      emit(ProfileUpdated());
+    }
+  }
+
+  void selectJobTitle(int index) {
+    jobTitleController.text = filteredJobSuggestions[index];
+    filteredJobSuggestions = [];
+    emit(SelectJobTitle());
+  }
+
+  void selectLanguageLevel(String? value) {
+    selectedLanguageLevel = value;
+    emit(SelectLanguageLevel());
+  }
+
+  void selectLanguage(int index) {
+    languageController.text = filteredLanguageSuggestions[index];
+    filteredLanguageSuggestions = [];
+    emit(SelectLanguage());
+  }
+
+  void addLanguage(String language, String level) {
+    LanguageEntity languageEntity =
+        LanguageEntity(language: language, level: level);
+    if (languages.contains(languageEntity)) {
+      return;
+    } else if (languages.length == 5) {
+      return;
+    } else if (language.isEmpty) {
+      return;
+    }
+    languages.add(languageEntity);
+    emit(NewLanguageAdded(languageEntity));
+  }
+
+  void removeLanguage(LanguageEntity language) {
+    languages.remove(language);
+    emit(LanguageRemoved(language));
+  }
+
+  void addPortfolioLink(String link) {
+    if (portfolioLinks.contains(link)) {
+      return;
+    } else if (portfolioLinks.length == 5) {
+      return;
+    } else if (link.isEmpty) {
+      return;
+    }
+    portfolioLinks.add(link);
+    emit(PortfolioLinkAdded(link));
+  }
+
+  void removePortfolioLink(String link) {
+    portfolioLinks.remove(link);
+    emit(PortfolioLinkRemoved(link));
+  }
+
+  validateColorButton() {
+    if (jobTitleController.text.isEmpty ||
+        profilePictureController.text.isEmpty ||
+        linkedInController.text.isEmpty ||
+        bioController.text.isEmpty) {
+      validate = false;
+    } else if (!formKey.currentState!.validate()) {
+      validate = false;
+    } else {
+      validate = true;
+    }
+    emit(ValidateColorButtonState());
+  }
+
+  @override
+  Future<void> close() {
+    jobTitleController.dispose();
+    linkedInController.dispose();
+    profilePictureController.dispose();
+    languageController.dispose();
+    portfolioController.dispose();
+    bioController.dispose();
+    return super.close();
+  }
+}
