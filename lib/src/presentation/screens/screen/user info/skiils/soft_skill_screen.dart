@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/skill_gathering/soft_skills/soft_skill_input_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/skill_gathering/soft_skills/soft_skill_list_widget.dart';
 
 import '../../../../../../core/styles/colors/app_colore.dart';
 import '../../../../../../dependency_injection/di.dart';
 import '../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
+import '../../../widgets/user info/skill_gathering/soft_skills/soft_skill_input_widget.dart';
+import '../../../widgets/user info/skill_gathering/soft_skills/soft_skill_list_widget.dart';
 
 class SoftSkillScreen extends StatelessWidget {
   const SoftSkillScreen({super.key});

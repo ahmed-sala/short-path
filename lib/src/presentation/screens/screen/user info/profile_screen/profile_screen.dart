@@ -7,18 +7,18 @@ import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
 import 'package:short_path/src/presentation/mangers/infromation_gathering/profile/profile_viewmodel.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/profile/header_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/profile/job_title_input.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/profile/language_input.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/profile/language_list_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/profile/portfolio_input.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/profile/portfolio_list_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/profile/suggestion_list.dart';
-import 'package:short_path/src/short_path.dart';
 
+import '../../../../../short_path.dart';
 import '../../../../mangers/infromation_gathering/profile/profile_state.dart';
 import '../../../../shared_widgets/custom_auth_button.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';
+import '../../../widgets/user info/profile/header_widget.dart';
+import '../../../widgets/user info/profile/job_title_input.dart';
+import '../../../widgets/user info/profile/language_input.dart';
+import '../../../widgets/user info/profile/language_list_widget.dart';
+import '../../../widgets/user info/profile/portfolio_input.dart';
+import '../../../widgets/user info/profile/portfolio_list_widget.dart';
+import '../../../widgets/user info/profile/suggestion_list.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -32,9 +32,7 @@ class ProfileScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text(
             'Personal Details',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Padding(

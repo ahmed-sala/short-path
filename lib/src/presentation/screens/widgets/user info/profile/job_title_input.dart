@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:short_path/src/presentation/screens/widgets/infromation_gathering/profile/suggestion_list.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/suggestion_list.dart';
 
 import '../../../../mangers/infromation_gathering/profile/profile_viewmodel.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';

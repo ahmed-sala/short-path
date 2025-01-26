@@ -7,6 +7,9 @@ class SuggestionList extends StatelessWidget {
   final Function(int) onTap;
   @override
   Widget build(BuildContext context) {
+    print(
+        "Building SuggestionList with ${suggestions.length} items"); // Debug print
+
     return Container(
       margin: const EdgeInsets.only(top: 8),
       decoration: BoxDecoration(

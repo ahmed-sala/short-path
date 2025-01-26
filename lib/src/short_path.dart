@@ -16,7 +16,7 @@ class ShortPath extends StatefulWidget {
 }
 
 class _ShortPathState extends State<ShortPath> {
-  String? _initialRoute = RoutesName.profile;
+  String? _initialRoute = RoutesName.education;
   bool _isInitialized = true;
 
   @override

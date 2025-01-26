@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/styles/colors/app_colore.dart';
 import '../../../../../../dependency_injection/di.dart';
 import '../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
-import '../../../widgets/infromation_gathering/skill_gathering/technical_skills/tech_skill_input_widget.dart';
-import '../../../widgets/infromation_gathering/skill_gathering/technical_skills/tech_skill_list_widget.dart';
+import '../../../widgets/user info/skill_gathering/technical_skills/tech_skill_input_widget.dart';
+import '../../../widgets/user info/skill_gathering/technical_skills/tech_skill_list_widget.dart';
 
 class TechnicalSkillScreen extends StatelessWidget {
   const TechnicalSkillScreen({super.key});

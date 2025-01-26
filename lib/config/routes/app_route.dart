@@ -33,7 +33,7 @@ class AppRoute {
             settings: settings, widget: const ProfileScreen());
       case RoutesName.education:
         return _handelMaterialPageRoute(
-            settings: settings, widget: const EducationScreen());
+            settings: settings, widget: EducationScreen());
 
       case RoutesName.skillGathering:
         return _handelMaterialPageRoute(
