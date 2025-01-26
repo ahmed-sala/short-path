@@ -11,6 +11,7 @@ class CustomTextFormField extends StatefulWidget {
     this.isPasswordVisible = true,
     this.showPassword,
     this.onChanged,
+    this.custfocusNode,
   });
 
   final String? labelText;
@@ -21,6 +22,7 @@ class CustomTextFormField extends StatefulWidget {
   bool isPasswordVisible;
   void Function()? showPassword;
   void Function(String)? onChanged;
+  final FocusNode? custfocusNode;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -50,8 +52,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSummaryField = widget.labelText == "Summary";
+
     return TextFormField(
-      focusNode: _focusNode,
+      focusNode: widget.custfocusNode ?? _focusNode,
       controller: widget.controller,
       decoration: InputDecoration(
         suffixIcon: (_isFocused && widget.showPassword != null)
@@ -105,7 +109,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       obscureText:
           widget.showPassword == null ? false : widget.isPasswordVisible,
       validator: widget.validator,
-      keyboardType: widget.keyboardType,
+      keyboardType:
+          isSummaryField ? TextInputType.multiline : widget.keyboardType,
+      maxLines:
+          isSummaryField ? 5 : 1, // Set maxLines to 5 if it's the Summary field
       style: TextStyle(
         color: Color(0xFF858383),
       ),

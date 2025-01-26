@@ -18,6 +18,13 @@ abstract class Validations {
     return null;
   }
 
+  static String? validateJobTitle(String? jobTitle) {
+    if (jobTitle!.isEmpty) {
+      return 'Job Title is required!';
+    }
+    return null;
+  }
+
   static String? validatePhoneNumber(String? phoneNumber) {
     if (phoneNumber!.isEmpty || !AppRegExp.isPhoneNumberValid(phoneNumber)) {
       return 'Phone number is required!';
