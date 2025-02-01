@@ -1,5 +1,5 @@
 import '../../../domain/entities/auth/app_user.dart';
-import '../../api/core/api_request_model/register_request.dart';
+import '../../api/core/api_request_model/auth/register_request.dart';
 
 class AppUserDto {
   final String firstName;

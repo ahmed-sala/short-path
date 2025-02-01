@@ -26,21 +26,28 @@ import '../src/data/data_source/online_data_source/auth/contracts/auth_online_da
     as _i144;
 import '../src/data/data_source/online_data_source/auth/impl/auth_online_datasource_impl.dart'
     as _i116;
+import '../src/data/data_source/online_data_source/user_info/contracts/user_info_online_datasource.dart'
+    as _i468;
+import '../src/data/data_source/online_data_source/user_info/impl/user_info_online_datasource_impl.dart'
+    as _i260;
 import '../src/data/repository_impl/auth/auth_repository_impl.dart' as _i946;
+import '../src/data/repository_impl/user_info/user_info_repository_impl.dart'
+    as _i300;
 import '../src/domain/repositories/contract/auth_repository.dart' as _i367;
+import '../src/domain/repositories/contract/user_info_repository.dart' as _i175;
 import '../src/domain/usecases/auth/auth_use_case.dart' as _i692;
 import '../src/domain/usecases/user_info/user_info_usecase.dart' as _i748;
 import '../src/presentation/mangers/auth/login/login_viewmodel.dart' as _i312;
 import '../src/presentation/mangers/auth/register/register_viewmodel.dart'
     as _i599;
-import '../src/presentation/mangers/infromation_gathering/education/education_viewmodel.dart'
-    as _i849;
-import '../src/presentation/mangers/infromation_gathering/profile/profile_viewmodel.dart'
-    as _i825;
-import '../src/presentation/mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart'
-    as _i373;
 import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
     as _i359;
+import '../src/presentation/mangers/user_info/education/education_viewmodel.dart'
+    as _i228;
+import '../src/presentation/mangers/user_info/profile/profile_viewmodel.dart'
+    as _i4;
+import '../src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart'
+    as _i639;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -59,11 +66,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPrefModule.sharedPreferences,
       preResolve: true,
     );
-    gh.factory<_i748.UserInfoUsecase>(() => _i748.UserInfoUsecase());
-    gh.factory<_i373.SkillGatheringViewmodel>(
-        () => _i373.SkillGatheringViewmodel());
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
-    gh.factory<_i849.EducationViewmodel>(() => _i849.EducationViewmodel());
+    gh.factory<_i228.EducationViewmodel>(() => _i228.EducationViewmodel());
+    gh.factory<_i639.SkillGatheringViewmodel>(
+        () => _i639.SkillGatheringViewmodel());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
         () => sharedPrefModule.secureStorage);
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
@@ -72,16 +78,24 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i990.AuthOfflineDataSource>(
         () => _i718.authOfflineDatasourceImpl());
     gh.singleton<_i687.ApiServices>(() => _i687.ApiServices(gh<_i361.Dio>()));
-    gh.factory<_i825.ProfileViewmodel>(
-        () => _i825.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i468.UserInfoOnlineDataSource>(
+        () => _i260.UserInfoOnlineDatasourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i144.AuthOnlineDatasource>(
         () => _i116.AuthOnlineDataSourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i367.AuthRepository>(() => _i946.AuthRepositoryImpl(
           gh<_i144.AuthOnlineDatasource>(),
           gh<_i990.AuthOfflineDataSource>(),
         ));
+    gh.factory<_i175.UserInfoRepository>(() => _i300.UserInfoRepositoryImpl(
+          gh<_i468.UserInfoOnlineDataSource>(),
+          gh<_i990.AuthOfflineDataSource>(),
+        ));
     gh.factory<_i692.AuthUseCase>(
         () => _i692.AuthUseCase(gh<_i367.AuthRepository>()));
+    gh.factory<_i748.UserInfoUsecase>(
+        () => _i748.UserInfoUsecase(gh<_i175.UserInfoRepository>()));
+    gh.factory<_i4.ProfileViewmodel>(
+        () => _i4.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i312.LoginViewModel>(
         () => _i312.LoginViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i599.RegisterViewModel>(

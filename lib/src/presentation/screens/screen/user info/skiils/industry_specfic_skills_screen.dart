@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 
 import '../../../../../../dependency_injection/di.dart';
-import '../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
+import '../../../../mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 import '../../../widgets/user info/skill_gathering/industry_specfic/industry_skill_input_widget.dart';
 import '../../../widgets/user info/skill_gathering/industry_specfic/industry_skill_list_widget.dart';
 

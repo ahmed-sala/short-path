@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/skill_gathering/skill_gathering_state.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/next_back_buttuns.dart';
 import 'package:short_path/src/short_path.dart';
 
 import '../../../../../../config/routes/routes_name.dart';
+import '../../../../mangers/user_info/skill_gathering/skill_gathering_state.dart';
+import '../../../../mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 
 class SkillInformationScreen extends StatefulWidget {
   const SkillInformationScreen({super.key});

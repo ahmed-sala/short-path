@@ -31,7 +31,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<ApiResult<void>> login(String email, String password) async {
     return executeApi<void>(apiCall: () async {
       var response = await _authOnlineDatasource.login(email, password);
-      print('repo token: ${response.token}');
+      print('the token is: ${response.token}');
       await _authOfflineDataSource.saveToken(response.token!);
     });
   }
@@ -41,6 +41,8 @@ class AuthRepositoryImpl implements AuthRepository {
     return executeApi<void>(apiCall: () async {
       var response =
           await _authOnlineDatasource.register(appUserDto.toAppUserDto());
+      print('the token is: ${response.token}');
+
       await _authOfflineDataSource.saveToken(response.token!);
     });
   }

@@ -1,4 +1,4 @@
-import '../../../../domain/entities/infromation_gathering/skill_entity.dart';
+import '../../../../domain/entities/user_info/skill_entity.dart';
 
 sealed class SkillGatheringState {
   const SkillGatheringState();

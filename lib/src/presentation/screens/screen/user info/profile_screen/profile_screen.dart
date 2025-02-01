@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,10 +7,12 @@ import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/profile/profile_viewmodel.dart';
 
+import '../../../../../../core/dialogs/awesome_dialoge.dart';
+import '../../../../../../core/dialogs/show_hide_loading.dart';
 import '../../../../../short_path.dart';
-import '../../../../mangers/infromation_gathering/profile/profile_state.dart';
+import '../../../../mangers/user_info/profile/profile_state.dart';
+import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
 import '../../../../shared_widgets/custom_auth_button.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';
 import '../../../widgets/user info/profile/header_widget.dart';
@@ -39,13 +42,31 @@ class ProfileScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
             child: BlocConsumer<ProfileViewmodel, ProfileState>(
               listener: (context, state) {
-                if (state is ProfileUpdated) {
-                  navKey.currentState?.pushNamed(RoutesName.skillGathering);
+                switch (state) {
+                  case ProfileLoading():
+                    showLoading(context, 'Adding profile...');
+                  case ProfileUpdateSuccess():
+                    navKey.currentState!
+                        .pushReplacementNamed(RoutesName.skillGathering);
+                  case ProfileUpdateError():
+                    showAwesomeDialog(context,
+                        title: 'error',
+                        desc: state.message,
+                        onOk: () {},
+                        dialogType: DialogType.error);
+                  default:
                 }
               },
               buildWhen: (previous, current) {
                 return current is ProfileInitialState ||
                     current is ValidateColorButtonState;
+              },
+              listenWhen: (previous, current) {
+                if (previous is ProfileLoading ||
+                    current is ProfileUpdateError) {
+                  hideLoading();
+                }
+                return current is! ProfileInitialState;
               },
               builder: (context, state) {
                 final viewModel = context.read<ProfileViewmodel>();
