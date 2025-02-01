@@ -32,4 +32,14 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
           profileDto.toProfileDto(), languagesDto, token);
     });
   }
+
+  Future<ApiResult<void>> saveLanguages(List<LanguageEntity> languages) async {
+    return executeApi<void>(apiCall: () async {
+      LanguagesDto languagesDto = LanguagesDto(
+          languages: languages.map((e) => e.toLanguageDto()).toList());
+      var token = await _authOfflineDataSource.getToken();
+      token = 'Bearer $token';
+      await _userInfoOnlineDataSource.addLanguage(languagesDto, token);
+    });
+  }
 }

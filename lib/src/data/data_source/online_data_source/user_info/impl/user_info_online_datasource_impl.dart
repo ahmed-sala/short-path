@@ -15,4 +15,9 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
       LanguagesDto languageRequest, String token) async {
     await _apiServices.addProfile(profileRequest.toProfileRequest(), token);
   }
+
+  @override
+  Future<void> addLanguage(LanguagesDto languageRequest, String token) {
+    return _apiServices.addLanguage(languageRequest.toLanguagesRequest(), token);
+  }
 }

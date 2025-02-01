@@ -5,4 +5,6 @@ import 'package:short_path/src/domain/entities/user_info/profile_entity.dart';
 abstract interface class UserInfoRepository {
   Future<ApiResult<void>> saveProfile(
       ProfileEntity profileDto, List<LanguageEntity> languages);
+
+  Future<ApiResult<void>> saveLanguages(List<LanguageEntity> languages);
 }

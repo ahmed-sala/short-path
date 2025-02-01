@@ -12,4 +12,5 @@ class RoutesName {
   static const String passwordchanged = 'passwordchanged';
   static const String profile = 'profile';
   static const String education = 'education';
+  static const String language = 'language';
 }

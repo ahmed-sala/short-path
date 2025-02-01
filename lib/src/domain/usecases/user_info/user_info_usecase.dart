@@ -13,4 +13,9 @@ class UserInfoUsecase {
       ProfileEntity profile, List<LanguageEntity> languages) async {
     return await _userInfoRepository.saveProfile(profile, languages);
   }
+
+  Future<ApiResult<void>> invokeLanguages(
+      List<LanguageEntity> languages) async {
+    return await _userInfoRepository.saveLanguages(languages);
+  }
 }

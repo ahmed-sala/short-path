@@ -4,4 +4,6 @@ import '../../../../dto_models/user_info/profile_dto.dart';
 abstract interface class UserInfoOnlineDataSource {
   Future<void> addProfile(
       ProfileDto profileRequest, LanguagesDto languageRequest, String token);
+
+  Future <void> addLanguage(LanguagesDto languageRequest, String token);
 }
