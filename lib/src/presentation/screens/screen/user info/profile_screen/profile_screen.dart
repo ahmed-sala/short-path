@@ -113,17 +113,17 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         verticalSpace(20),
                         // LanguageInput(viewModel: viewModel),
-                        verticalSpace(20),
-                        if (viewModel.filteredLanguageSuggestions.isNotEmpty &&
-                            viewModel.languageController.text.isNotEmpty)
-                          SuggestionList(
-                            suggestions: languageSuggestions,
-                            onTap: (int index) {
-                              viewModel.selectLanguage(index);
-                            },
-                          ),
-                        if (viewModel.languages.isNotEmpty)
-                          const LanguageListWidget(),
+                        // verticalSpace(20),
+                        // if (viewModel.filteredLanguageSuggestions.isNotEmpty &&
+                        //     viewModel.languageController.text.isNotEmpty)
+                        //   SuggestionList(
+                        //     suggestions: languageSuggestions,
+                        //     onTap: (int index) {
+                        //       viewModel.selectLanguage(index);
+                        //     },
+                        //   ),
+                        // if (viewModel.languages.isNotEmpty)
+                        //   const LanguageListWidget(),
                         verticalSpace(30),
                         CustomAuthButton(
                           text: 'NEXT',

@@ -62,7 +62,7 @@ class LanguageScreen extends StatelessWidget {
               builder: (context, state) {
                 final viewModel = context.read<LanguageViewModel>();
 
-                if (state is ValidateColorButtonState || state is LanguageInitial) {
+                if (state is ValidateColorButtonState || state is LanguageInitial || state is LanguageChanged) {
                   return Form(
                     key: viewModel.formKey,
                     child: Column(
