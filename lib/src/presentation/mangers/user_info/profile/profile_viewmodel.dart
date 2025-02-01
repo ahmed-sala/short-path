@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:short_path/src/domain/entities/infromation_gathering/language_entity.dart';
-import 'package:short_path/src/domain/entities/infromation_gathering/profile_entity.dart';
+import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
+import 'package:short_path/src/domain/entities/user_info/profile_entity.dart';
 import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/profile/profile_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/profile/profile_state.dart';
 
+import '../../../../../core/common/api/api_result.dart';
+import '../../../../data/api/core/error/error_handler.dart';
 import '../../../../data/static_data/demo_data_list.dart';
 
 @injectable
@@ -38,7 +40,13 @@ class ProfileViewmodel extends Cubit<ProfileState> {
 
   List<String> portfolioLinks = [];
 
-  List<String> languageLevels = ['Beginner', 'Moderate', 'Advanced'];
+  List<String> languageLevels = [
+    'Beginner',
+    'Intermediate',
+    'Advanced',
+    'Fluent',
+    'Native'
+  ];
 
   String? validateJobTitle(String? value) =>
       value?.isEmpty == true ? 'Please enter your job title' : null;
@@ -71,18 +79,32 @@ class ProfileViewmodel extends Cubit<ProfileState> {
     emit(LanguageChanged());
   }
 
-  void next() {
+  void next() async {
     if (formKey.currentState!.validate()) {
+      emit(ProfileLoading());
       ProfileEntity profileEntity = ProfileEntity(
         bio: bioController.text,
         jobTitle: jobTitleController.text,
-        languages: languages,
         linkedIn: linkedInController.text,
         portfolioLinks: portfolioLinks,
         profilePicture: profilePictureController.text,
       );
-      userInfoUsecase.invokeProfile(profileEntity);
-      emit(ProfileUpdated());
+
+      print('Profile: ${profileEntity.portfolioLinks}');
+
+      var response =
+          await userInfoUsecase.invokeProfile(profileEntity, languages);
+      print('Response: $response');
+      switch (response) {
+        case Success<void>():
+          emit(const ProfileUpdateSuccess());
+          break;
+        case Failures<void>():
+          final error = ErrorHandler.fromException(response.exception);
+          print('Error: ${error.errorMessage}, with code ${error.code}');
+          emit(ProfileUpdateError(error.errorMessage));
+          break;
+      }
     }
   }
 

@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../../api/api_services.dart';
-import '../../../../api/core/api_request_model/login_request.dart';
+import '../../../../api/core/api_request_model/auth/login_request.dart';
 import '../../../../api/core/api_response_model/auth_response.dart';
 import '../../../../dto_models/auth/app_user_dto.dart';
 import '../contracts/auth_online_datasource.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../mangers/infromation_gathering/profile/profile_viewmodel.dart';
+import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';
 import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
 

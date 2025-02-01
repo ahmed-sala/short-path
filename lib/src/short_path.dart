@@ -16,7 +16,7 @@ class ShortPath extends StatefulWidget {
 }
 
 class _ShortPathState extends State<ShortPath> {
-  String? _initialRoute = RoutesName.education;
+  String? _initialRoute = RoutesName.login;
   bool _isInitialized = true;
 
   @override
@@ -29,9 +29,11 @@ class _ShortPathState extends State<ShortPath> {
     // // Perform initialization logic
     // String? token =
     //     await getIt<FlutterSecureStorage>().read(key: SharedPrefKeys.userToken);
+
     // print('Token: $token');
     // if (token != null) {
-    //   _initialRoute = RoutesName.onBoarding;
+    //   // _initialRoute = RoutesName.onBoarding;
+    // }
     // } else {
     //   _initialRoute = RoutesName.onBoarding;
     // }

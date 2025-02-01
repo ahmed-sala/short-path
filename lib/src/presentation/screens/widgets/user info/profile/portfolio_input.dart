@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:short_path/src/presentation/shared_widgets/snack_bar.dart';
 
 import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../mangers/infromation_gathering/profile/profile_viewmodel.dart';
+import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';
 
 class PortfolioInput extends StatelessWidget {

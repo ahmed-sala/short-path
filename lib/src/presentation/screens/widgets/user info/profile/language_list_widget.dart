@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/profile/profile_state.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/profile/profile_viewmodel.dart';
+
+import '../../../../mangers/user_info/profile/profile_state.dart';
+import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
 
 class LanguageListWidget extends StatelessWidget {
   const LanguageListWidget({super.key});

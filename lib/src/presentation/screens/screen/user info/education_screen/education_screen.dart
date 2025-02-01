@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/education/education_state.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/education/education_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/widgets/user info/education/education_header.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
@@ -13,6 +11,8 @@ import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feil
 import '../../../../../../core/styles/colors/app_colore.dart';
 import '../../../../../../core/styles/spacing.dart';
 import '../../../../../../dependency_injection/di.dart';
+import '../../../../mangers/user_info/education/education_state.dart';
+import '../../../../mangers/user_info/education/education_viewmodel.dart';
 
 class EducationScreen extends StatelessWidget {
   EducationViewmodel educationViewmodel = getIt<EducationViewmodel>();

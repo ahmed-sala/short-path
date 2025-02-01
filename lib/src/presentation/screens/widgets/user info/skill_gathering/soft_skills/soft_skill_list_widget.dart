@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 
-import '../../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_state.dart';
-import '../../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
+import '../../../../../mangers/user_info/skill_gathering/skill_gathering_state.dart';
+import '../../../../../mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 
 class SoftSkillListWidget extends StatelessWidget {
   const SoftSkillListWidget({super.key});
