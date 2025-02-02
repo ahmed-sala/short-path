@@ -20,13 +20,11 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
   );
   @override
   Future<ApiResult<void>> saveProfile(
-      ProfileEntity profileDto, List<LanguageEntity> languages) async {
+      ProfileEntity profileDto) async {
     return executeApi<void>(apiCall: () async {
-      LanguagesDto languagesDto = LanguagesDto(
-          languages: languages.map((e) => e.toLanguageDto()).toList());
       var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addProfile(
-          profileDto.toProfileDto(), languagesDto, token!);
+          profileDto.toProfileDto(), token!);
     });
   }
 
@@ -39,6 +37,7 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
     });
   }
 
+  @override
   Future<ApiResult<void>> saveLanguages(List<LanguageEntity> languages) async {
     return executeApi<void>(apiCall: () async {
       LanguagesDto languagesDto = LanguagesDto(

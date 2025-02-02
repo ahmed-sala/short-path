@@ -32,16 +32,14 @@ class LanguageListWidget extends StatelessWidget {
               labelStyle: const TextStyle(color: AppColors.primaryColor),
               deleteIcon: const Icon(Icons.close, color: Colors.red),
               onDeleted: () {
-                // Use ScaffoldMessenger to manage SnackBars
+                final languageViewmodel = context.read<LanguageViewmodel>();
                 final scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
                 if (scaffoldMessenger == null) {
                   debugPrint('ScaffoldMessenger not found in the widget tree.');
                   return;
                 }
-
-                scaffoldMessenger
-                    .hideCurrentSnackBar(); // Dismiss any previous SnackBar
-                context.read<LanguageViewmodel>().removeLanguage(skill);
+                scaffoldMessenger.hideCurrentSnackBar();
+                languageViewmodel.removeLanguage(skill);
 
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
@@ -50,11 +48,9 @@ class LanguageListWidget extends StatelessWidget {
                     action: SnackBarAction(
                       label: 'Undo',
                       onPressed: () {
-                        scaffoldMessenger
-                            .hideCurrentSnackBar(); // Dismiss previous SnackBar
-                        context
-                            .read<LanguageViewmodel>()
-                            .addLanguage(skill.language, skill.level);
+                        scaffoldMessenger.hideCurrentSnackBar();
+                        // Use the stored languageViewmodel reference.
+                        languageViewmodel.addLanguage(skill.language, skill.level);
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
                             content: Text('$skill added back!'),
@@ -66,6 +62,7 @@ class LanguageListWidget extends StatelessWidget {
                   ),
                 );
               },
+
             );
           }).toList(),
         );

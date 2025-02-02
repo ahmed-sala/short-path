@@ -11,11 +11,15 @@ class UserInfoUsecase {
   UserInfoRepository _userInfoRepository;
   UserInfoUsecase(this._userInfoRepository);
   Future<ApiResult<void>> invokeProfile(
-      ProfileEntity profile, List<LanguageEntity> languages) async {
-    return await _userInfoRepository.saveProfile(profile, languages);
+      ProfileEntity profile) async {
+    return await _userInfoRepository.saveProfile(profile);
   }
 
   Future<ApiResult<void>> invokeSkills(SkillEntity skillEntity) async {
     return await _userInfoRepository.saveSkills(skillEntity);
+  }
+
+  Future<ApiResult<void>> invokeLanguages(List<LanguageEntity> languages) async {
+    return await _userInfoRepository.saveLanguages(languages);
   }
 }

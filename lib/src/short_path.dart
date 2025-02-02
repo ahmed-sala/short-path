@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../config/helpers/shared_pref/shared_pre_keys.dart';
 import '../config/routes/app_route.dart';
 import '../config/routes/routes_name.dart';
 import '../core/styles/theme/app_theme.dart';
+import '../dependency_injection/di.dart';
 
 final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
@@ -16,7 +19,7 @@ class ShortPath extends StatefulWidget {
 }
 
 class _ShortPathState extends State<ShortPath> {
-  String? _initialRoute = RoutesName.skillGathering;
+  String? _initialRoute = RoutesName.language;
   bool _isInitialized = true;
 
   @override

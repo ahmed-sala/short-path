@@ -51,6 +51,7 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
       emit(SkillAddedState(techSkills: _techSkills));
     } else if (type == 'Soft') {
       _softSkills.add(skill);
+      softSkills.remove(skill);
       emit(SkillAddedState(softSkills: _softSkills));
     } else if (type == 'Industry') {
       _industrySkills.add(skill);
