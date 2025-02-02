@@ -1,44 +1,33 @@
-part of 'language_viewmodel.dart';
 
-@immutable
-sealed class LanguageState {}
+import '../../../../domain/entities/user_info/language_entity.dart';
 
-final class LanguageInitial extends LanguageState {}
-
-final class LanguageLoading extends LanguageState {}
-
-final class LanguageLoaded extends LanguageState {
-  final List<String> languages;
-
-  LanguageLoaded({required this.languages});
+sealed class LanguageState {
+  const LanguageState();
+}
+class LanguageInitial extends LanguageState {
+  const LanguageInitial();
 }
 
-final class LanguageError extends LanguageState {
-  final String message;
-
-  LanguageError({required this.message});
+class LanguageChanged extends LanguageState {
+  const LanguageChanged();
 }
 
-final class LanguageAdded extends LanguageState {
+class SelectLanguageLevel extends LanguageState {
+  const SelectLanguageLevel();
+}
+
+class SelectLanguage extends LanguageState {
+  const SelectLanguage();
+}
+
+class NewLanguageAdded extends LanguageState {
   final LanguageEntity language;
 
-  LanguageAdded({required this.language});
+  const NewLanguageAdded(this.language);
 }
 
-final class LanguageRemoved extends LanguageState {
+class LanguageRemoved extends LanguageState {
   final LanguageEntity language;
 
-  LanguageRemoved({required this.language});
+  const LanguageRemoved(this.language);
 }
-
-final class LanguageSelected extends LanguageState {}
-
-final class LanguageChanged extends LanguageState {}
-
-final class LanguageLevelSelected extends LanguageState {}
-
-final class LanguageLevelChanged extends LanguageState {}
-
-
-
-

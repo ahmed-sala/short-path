@@ -124,7 +124,7 @@ class ProfileScreen extends StatelessWidget {
                         //   ),
                         // if (viewModel.languages.isNotEmpty)
                         //   const LanguageListWidget(),
-                        verticalSpace(30),
+                        // verticalSpace(30),
                         CustomAuthButton(
                           text: 'NEXT',
                           onPressed: viewModel.next,

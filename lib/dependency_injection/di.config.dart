@@ -96,10 +96,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i692.AuthUseCase(gh<_i367.AuthRepository>()));
     gh.factory<_i748.UserInfoUsecase>(
         () => _i748.UserInfoUsecase(gh<_i175.UserInfoRepository>()));
+    gh.factory<_i208.LanguageViewmodel>(
+        () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i4.ProfileViewmodel>(
         () => _i4.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
-    gh.factory<_i208.LanguageViewModel>(
-        () => _i208.LanguageViewModel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i312.LoginViewModel>(
         () => _i312.LoginViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i599.RegisterViewModel>(

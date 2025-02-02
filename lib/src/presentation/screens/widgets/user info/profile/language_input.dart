@@ -8,7 +8,7 @@ import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
 
 class LanguageInput extends StatelessWidget {
   const LanguageInput({super.key, required this.viewModel});
-  final LanguageViewModel viewModel;
+  final LanguageViewmodel viewModel;
 
   @override
   Widget build(BuildContext context) {

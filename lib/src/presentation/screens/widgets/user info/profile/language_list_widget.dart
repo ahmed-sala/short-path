@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Language/language_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
 
 import '../../../../mangers/user_info/profile/profile_state.dart';
@@ -11,9 +12,9 @@ class LanguageListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LanguageViewModel, LanguageState>(
+    return BlocBuilder<LanguageViewmodel, LanguageState>(
       builder: (context, state) {
-        final languages = context.read<LanguageViewModel>().languages;
+        final languages = context.read<LanguageViewmodel>().languages;
         print(languages);
         if (languages.isEmpty) {
           return const Text(
@@ -40,7 +41,7 @@ class LanguageListWidget extends StatelessWidget {
 
                 scaffoldMessenger
                     .hideCurrentSnackBar(); // Dismiss any previous SnackBar
-                context.read<LanguageViewModel>().removeLanguage(skill);
+                context.read<LanguageViewmodel>().removeLanguage(skill);
 
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
@@ -52,7 +53,7 @@ class LanguageListWidget extends StatelessWidget {
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
                         context
-                            .read<LanguageViewModel>()
+                            .read<LanguageViewmodel>()
                             .addLanguage(skill.language, skill.level);
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
