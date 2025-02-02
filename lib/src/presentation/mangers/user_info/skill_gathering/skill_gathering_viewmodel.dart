@@ -49,17 +49,13 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
       technicalSkills.remove(skill);
 
       emit(SkillAddedState(techSkills: _techSkills));
-      return; // Ensure no further execution
     } else if (type == 'Soft') {
       _softSkills.add(skill);
-      softSkills.remove(skill);
       emit(SkillAddedState(softSkills: _softSkills));
-      return;
     } else if (type == 'Industry') {
       _industrySkills.add(skill);
       industrySpecificSkills.remove(skill);
       emit(SkillAddedState(industrySkills: _industrySkills));
-      return;
     }
   }
 
@@ -78,7 +74,6 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
       emit(SkillRemovedState(techSkills: _techSkills));
     } else if (type == 'Soft') {
       _softSkills.remove(skill);
-      softSkills.add(skill);
       emit(SkillRemovedState(softSkills: _softSkills));
     } else if (type == 'Industry') {
       _industrySkills.remove(skill);
