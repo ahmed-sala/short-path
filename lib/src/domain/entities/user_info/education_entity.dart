@@ -1,19 +1,9 @@
+import 'package:short_path/src/domain/entities/user_info/education_detail_entity.dart';
+
 class EducationEntity {
-  final String? schoolName;
-  final String? degree;
-  final String? fieldOfStudy;
-  final String? startDateMonth;
-  final String? endDateYear;
-  final String? endDateMonth;
-  final String? startDateYear;
+  final List<EducationDetailEntity>? educationDetails;
 
   EducationEntity({
-    this.schoolName,
-    this.degree,
-    this.fieldOfStudy,
-    this.startDateMonth,
-    this.endDateYear,
-    this.endDateMonth,
-    this.startDateYear,
+    this.educationDetails,
   });
 }

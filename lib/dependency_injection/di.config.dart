@@ -67,7 +67,8 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
-    gh.factory<_i228.EducationViewmodel>(() => _i228.EducationViewmodel());
+    gh.factory<_i228.EducationViewmodelNew>(
+        () => _i228.EducationViewmodelNew());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
         () => sharedPrefModule.secureStorage);
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
