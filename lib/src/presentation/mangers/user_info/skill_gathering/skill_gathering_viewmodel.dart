@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:short_path/src/data/static_data/demo_data_list.dart';
+import 'package:short_path/src/domain/entities/user_info/skill_entity.dart';
+import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
 import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_state.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/skiils/industry_specfic_skills_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/skiils/soft_skill_screen.dart';
 
-import '../../../../domain/entities/user_info/skill_entity.dart';
+import '../../../../../core/common/api/api_result.dart';
+import '../../../../data/api/core/error/error_handler.dart';
+import '../../../../domain/entities/user_info/tech_skill_entity.dart';
 import '../../../screens/screen/user info/skiils/technical_skill_screen.dart';
 
 @injectable
 class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
-  SkillGatheringViewmodel() : super(InitialSkillGatheringState());
+  UserInfoUsecase _userInfoUsecase;
+  SkillGatheringViewmodel(this._userInfoUsecase)
+      : super(InitialSkillGatheringState());
   final TextEditingController techSkillController = TextEditingController();
   final TextEditingController softSkillController = TextEditingController();
   final TextEditingController industrySpecificSkillController =
       TextEditingController();
 
-  final List<SkillEntity> _techSkills = [];
-  List<SkillEntity> get techSkills => _techSkills;
+  final List<TechnicalSkillEntity> _techSkills = [];
+  List<TechnicalSkillEntity> get techSkills => _techSkills;
   final List<String> _softSkills = [];
   List<String> get softSkills => _softSkills;
   final List<String> _industrySkills = [];
@@ -36,14 +43,23 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
   void addSkill(
       {required String skill, String? proficiency, required String type}) {
     if (type == 'Technical') {
-      _techSkills.add(SkillEntity(skill: skill, proficiency: proficiency));
+      var techSkill = TechnicalSkillEntity(
+          skill: skill, proficiency: proficiency?.toUpperCase());
+      _techSkills.add(techSkill);
+      technicalSkills.remove(skill);
+
       emit(SkillAddedState(techSkills: _techSkills));
+      return; // Ensure no further execution
     } else if (type == 'Soft') {
       _softSkills.add(skill);
+      softSkills.remove(skill);
       emit(SkillAddedState(softSkills: _softSkills));
+      return;
     } else if (type == 'Industry') {
       _industrySkills.add(skill);
+      industrySpecificSkills.remove(skill);
       emit(SkillAddedState(industrySkills: _industrySkills));
+      return;
     }
   }
 
@@ -56,15 +72,41 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
   void removeSkill(
       {required String skill, required String type, String? proficiency}) {
     if (type == 'Technical') {
-      _techSkills
-          .removeWhere((s) => s.skill == skill && s.proficiency == proficiency);
+      _techSkills.removeWhere((s) =>
+          s.skill == skill && s.proficiency == proficiency?.toUpperCase());
+      technicalSkills.add(skill);
       emit(SkillRemovedState(techSkills: _techSkills));
     } else if (type == 'Soft') {
       _softSkills.remove(skill);
+      softSkills.add(skill);
       emit(SkillRemovedState(softSkills: _softSkills));
     } else if (type == 'Industry') {
       _industrySkills.remove(skill);
+      industrySpecificSkills.add(skill);
       emit(SkillRemovedState(industrySkills: _industrySkills));
+    }
+  }
+
+  void addAllSkills() async {
+    emit(SkillsAddedLoadingState());
+    try {
+      SkillEntity skills = SkillEntity(
+        technicalSkills: _techSkills,
+        softSkills: _softSkills,
+        industrySpecificSkills: _industrySkills,
+      );
+      var result = await _userInfoUsecase.invokeSkills(skills);
+      switch (result) {
+        case Success<void>():
+          emit(SkillsAddedSuccessState());
+          break;
+        case Failures<void>():
+          final error = ErrorHandler.fromException(result.exception);
+          emit(SkillsAddedFailureState(error.errorMessage));
+          break;
+      }
+    } catch (e) {
+      emit(SkillsAddedFailureState(e.toString()));
     }
   }
 

@@ -65,7 +65,7 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
                     viewModel.selectedProficiency = newValue!;
                   });
                 },
-                items: ['Beginner', 'Moderate', 'Advanced']
+                items: ['Beginner', 'Intermediate', 'Advanced', 'Expert']
                     .map((value) => DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
