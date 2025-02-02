@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/src/data/static_data/demo_data_list.dart';
 
 import '../../../../../mangers/user_info/skill_gathering/skill_gathering_state.dart';
 import '../../../../../mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
@@ -42,7 +43,7 @@ class SoftSkillListWidget extends StatelessWidget {
                       type: 'Soft',
                       skill: skill,
                     );
-
+                softSkills.add(skill);
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
                     content: Text('$skill removed successfully!'),
@@ -56,6 +57,7 @@ class SoftSkillListWidget extends StatelessWidget {
                               type: 'Soft',
                               skill: skill,
                             );
+                        softSkills.remove(skill);
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
                             content: Text('$skill added back!'),

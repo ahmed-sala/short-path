@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/spacing.dart';
@@ -6,6 +7,8 @@ import 'package:short_path/src/presentation/shared_widgets/next_back_buttuns.dar
 import 'package:short_path/src/short_path.dart';
 
 import '../../../../../../config/routes/routes_name.dart';
+import '../../../../../../core/dialogs/awesome_dialoge.dart';
+import '../../../../../../core/dialogs/show_hide_loading.dart';
 import '../../../../mangers/user_info/skill_gathering/skill_gathering_state.dart';
 import '../../../../mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 
@@ -39,7 +42,30 @@ class _SkillInformationScreenState extends State<SkillInformationScreen> {
       ),
       body: BlocProvider(
         create: (context) => getIt<SkillGatheringViewmodel>(),
-        child: BlocBuilder<SkillGatheringViewmodel, SkillGatheringState>(
+        child: BlocConsumer<SkillGatheringViewmodel, SkillGatheringState>(
+          listener: (context, state) {
+            switch (state) {
+              case SkillsAddedSuccessState():
+                navKey.currentState!.pushReplacementNamed(RoutesName.education);
+              case SkillsAddedFailureState():
+                showAwesomeDialog(context,
+                    title: 'error',
+                    desc: state.message,
+                    onOk: () {},
+                    dialogType: DialogType.error);
+              case SkillsAddedLoadingState():
+                showLoading(context, 'Adding Skills...');
+
+              default:
+            }
+          },
+          listenWhen: (previous, current) {
+            if (previous is SkillsAddedLoadingState ||
+                current is SkillsAddedFailureState) {
+              hideLoading();
+            }
+            return current is! InitialSkillGatheringState;
+          },
           builder: (context, state) {
             final skillGatheringViewmodel =
                 context.read<SkillGatheringViewmodel>();
@@ -63,8 +89,7 @@ class _SkillInformationScreenState extends State<SkillInformationScreen> {
                 // NextBackButtons widget for navigation
                 NextBackButtuns(
                   finish: () {
-                    navKey.currentState!
-                        .pushReplacementNamed(RoutesName.education);
+                    skillGatheringViewmodel.addAllSkills();
                   },
                   pageController: _pageController,
                   length: skillGatheringViewmodel.pages.length,

@@ -7,6 +7,17 @@ part of 'skill_request.dart';
 // **************************************************************************
 
 SkillRequest _$SkillRequestFromJson(Map<String, dynamic> json) => SkillRequest(
+      skills: json['skills'] == null
+          ? null
+          : Skills.fromJson(json['skills'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$SkillRequestToJson(SkillRequest instance) =>
+    <String, dynamic>{
+      'skills': instance.skills,
+    };
+
+Skills _$SkillsFromJson(Map<String, dynamic> json) => Skills(
       technicalSkills: (json['technicalSkills'] as List<dynamic>?)
           ?.map((e) => TechnicalSkills.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -18,8 +29,7 @@ SkillRequest _$SkillRequestFromJson(Map<String, dynamic> json) => SkillRequest(
           .toList(),
     );
 
-Map<String, dynamic> _$SkillRequestToJson(SkillRequest instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$SkillsToJson(Skills instance) => <String, dynamic>{
       'technicalSkills': instance.technicalSkills,
       'softSkills': instance.softSkills,
       'industrySpecificSkills': instance.industrySpecificSkills,
