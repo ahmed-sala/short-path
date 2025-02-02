@@ -5,6 +5,7 @@ import 'package:short_path/src/data/data_source/online_data_source/user_info/con
 import 'package:short_path/src/data/dto_models/user_info/language_dto.dart';
 import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
 import 'package:short_path/src/domain/entities/user_info/profile_entity.dart';
+import 'package:short_path/src/domain/entities/user_info/skill_entity.dart';
 import 'package:short_path/src/domain/repositories/contract/user_info_repository.dart';
 
 import '../../../../core/common/api/api_execute.dart';
@@ -14,22 +15,27 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
   UserInfoOnlineDataSource _userInfoOnlineDataSource;
   AuthOfflineDataSource _authOfflineDataSource;
   UserInfoRepositoryImpl(
-      this._userInfoOnlineDataSource, this._authOfflineDataSource);
+    this._userInfoOnlineDataSource,
+    this._authOfflineDataSource,
+  );
   @override
   Future<ApiResult<void>> saveProfile(
       ProfileEntity profileDto, List<LanguageEntity> languages) async {
-    print('the repo data is: ${profileDto.jobTitle}');
-    print('the repo data is: ${profileDto.linkedIn}');
-    print('the repo data is: ${profileDto.profilePicture}');
-    print('the repo data is: ${profileDto.bio}');
-
     return executeApi<void>(apiCall: () async {
       LanguagesDto languagesDto = LanguagesDto(
           languages: languages.map((e) => e.toLanguageDto()).toList());
       var token = await _authOfflineDataSource.getToken();
-      token = 'Bearer $token';
       await _userInfoOnlineDataSource.addProfile(
-          profileDto.toProfileDto(), languagesDto, token);
+          profileDto.toProfileDto(), languagesDto, token!);
+    });
+  }
+
+  @override
+  Future<ApiResult<void>> saveSkills(SkillEntity skillEntity) async {
+    return await executeApi<void>(apiCall: () async {
+      var token = await _authOfflineDataSource.getToken();
+      await _userInfoOnlineDataSource.addSkills(
+          skillEntity.toSkillsDto(), token!);
     });
   }
 

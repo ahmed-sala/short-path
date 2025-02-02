@@ -16,7 +16,7 @@ class ShortPath extends StatefulWidget {
 }
 
 class _ShortPathState extends State<ShortPath> {
-  String? _initialRoute = RoutesName.language;
+  String? _initialRoute = RoutesName.skillGathering;
   bool _isInitialized = true;
 
   @override
@@ -27,13 +27,15 @@ class _ShortPathState extends State<ShortPath> {
 
   Future<void> initialization() async {
     // // Perform initialization logic
-    // String? token =
-    //     await getIt<FlutterSecureStorage>().read(key: SharedPrefKeys.userToken);
+    String? token =
+        await getIt<FlutterSecureStorage>().read(key: SharedPrefKeys.userToken);
 
     // print('Token: $token');
-    // if (token != null) {
-    //   // _initialRoute = RoutesName.onBoarding;
-    // }
+    if (token != null) {
+      // getIt<Dio>().options.headers['Authorization'] = 'Bearer $token';
+
+      // _initialRoute = RoutesName.onBoarding;
+    }
     // } else {
     //   _initialRoute = RoutesName.onBoarding;
     // }

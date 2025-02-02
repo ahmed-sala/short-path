@@ -122,10 +122,14 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<void> addSkill(SkillRequest skillRequest) async {
+  Future<void> addSkill(
+    SkillRequest skillRequest,
+    String token,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(skillRequest.toJson());
     final _options = _setStreamType<void>(Options(

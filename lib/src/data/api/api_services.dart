@@ -31,9 +31,12 @@ abstract class ApiServices {
   Future<void> addLanguage(@Body() LanguageRequest languageRequest, @Header('Authorization') String token);
 
   @POST(ApisEndPoints.skill)
-  Future<void> addSkill(@Body() SkillRequest skillRequest);
+  Future<void> addSkill(
+      @Body() SkillRequest skillRequest, @Header('Authorization') String token);
 
   @POST(ApisEndPoints.profile)
-  Future<void> addProfile(@Body() ProfileInfoRequest profileRequest,
-      @Header('Authorization') String token);
+  Future<void> addProfile(
+    @Body() ProfileInfoRequest profileRequest,
+    @Header('Authorization') String token,
+  );
 }

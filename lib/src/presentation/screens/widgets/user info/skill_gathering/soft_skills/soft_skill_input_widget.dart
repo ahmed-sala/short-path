@@ -64,6 +64,7 @@ class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
                     type: 'Soft',
                     skill: skill,
                   );
+                  softSkills.remove(skill);
                   viewModel.softSkillController.clear();
                   setState(() {
                     viewModel.filteredSuggestions = [];

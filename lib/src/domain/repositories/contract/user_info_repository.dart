@@ -1,10 +1,10 @@
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
 import 'package:short_path/src/domain/entities/user_info/profile_entity.dart';
+import 'package:short_path/src/domain/entities/user_info/skill_entity.dart';
 
 abstract interface class UserInfoRepository {
   Future<ApiResult<void>> saveProfile(
       ProfileEntity profileDto, List<LanguageEntity> languages);
-
-  Future<ApiResult<void>> saveLanguages(List<LanguageEntity> languages);
+  Future<ApiResult<void>> saveSkills(SkillEntity skillEntity);
 }
