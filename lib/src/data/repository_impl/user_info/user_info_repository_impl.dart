@@ -19,8 +19,7 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
     this._authOfflineDataSource,
   );
   @override
-  Future<ApiResult<void>> saveProfile(
-      ProfileEntity profileDto) async {
+  Future<ApiResult<void>> saveProfile(ProfileEntity profileDto) async {
     return executeApi<void>(apiCall: () async {
       var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addProfile(
@@ -39,7 +38,7 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
 
   @override
   Future<ApiResult<void>> saveLanguages(List<LanguageEntity> languages) async {
-    return executeApi<void>(apiCall: () async {
+    return await executeApi<void>(apiCall: () async {
       LanguagesDto languagesDto = LanguagesDto(
           languages: languages.map((e) => e.toLanguageDto()).toList());
       var token = await _authOfflineDataSource.getToken();

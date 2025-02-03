@@ -19,7 +19,7 @@ class ShortPath extends StatefulWidget {
 }
 
 class _ShortPathState extends State<ShortPath> {
-  String? _initialRoute = RoutesName.language;
+  String? _initialRoute = RoutesName.login;
   bool _isInitialized = true;
 
   @override

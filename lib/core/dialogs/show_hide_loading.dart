@@ -16,5 +16,7 @@ showLoading(BuildContext context, String? message) {
 }
 
 hideLoading() {
-  navKey.currentState!.pop();
+  if (navKey.currentState!.canPop()) {
+    Navigator.of(navKey.currentContext!).pop();
+  }
 }

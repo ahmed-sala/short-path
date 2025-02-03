@@ -1,9 +1,9 @@
-
 import '../../../../domain/entities/user_info/language_entity.dart';
 
 sealed class LanguageState {
   const LanguageState();
 }
+
 class LanguageInitial extends LanguageState {
   const LanguageInitial();
 }
@@ -30,4 +30,18 @@ class LanguageRemoved extends LanguageState {
   final LanguageEntity language;
 
   const LanguageRemoved(this.language);
+}
+
+class AddLanguageError extends LanguageState {
+  final String message;
+
+  const AddLanguageError(this.message);
+}
+
+class AddLanguageSuccess extends LanguageState {
+  const AddLanguageSuccess();
+}
+
+class AddLanguageLoading extends LanguageState {
+  const AddLanguageLoading();
 }

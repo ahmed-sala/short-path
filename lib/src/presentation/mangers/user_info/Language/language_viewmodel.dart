@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
-import 'package:short_path/src/domain/entities/user_info/profile_entity.dart';
 import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
 
-import '../../../../../core/common/api/api_result.dart';
 import '../../../../data/api/core/error/error_handler.dart';
 import '../../../../data/static_data/demo_data_list.dart';
 import 'language_state.dart';
 
 @injectable
-@singleton
 class LanguageViewmodel extends Cubit<LanguageState> {
-  UserInfoUsecase userInfoUsecase;
-  LanguageViewmodel(this.userInfoUsecase) : super(LanguageInitial()) {
+  UserInfoUsecase _userInfoUsecase;
+  LanguageViewmodel(this._userInfoUsecase) : super(const LanguageInitial()) {
     // Attach listeners to the controllers
     languageController.addListener(onLanguageChanged);
   }
@@ -22,12 +20,10 @@ class LanguageViewmodel extends Cubit<LanguageState> {
   final formKey = GlobalKey<FormState>();
   final TextEditingController languageController = TextEditingController();
 
-
   List<LanguageEntity> languages = [];
   String? selectedLanguageLevel;
   List<String> filteredLanguageSuggestions = [];
   bool validate = false;
-
 
   List<String> languageLevels = [
     'Beginner',
@@ -37,20 +33,16 @@ class LanguageViewmodel extends Cubit<LanguageState> {
     'Native'
   ];
 
-
-
   void onLanguageChanged() {
     filteredLanguageSuggestions = languageController.text.isEmpty
         ? languageSuggestions
         : languageSuggestions
-        .where((language) => language
-        .toLowerCase()
-        .startsWith(languageController.text.toLowerCase()))
-        .toList();
+            .where((language) => language
+                .toLowerCase()
+                .startsWith(languageController.text.toLowerCase()))
+            .toList();
     emit(LanguageChanged());
   }
-
-
 
   void selectLanguageLevel(String? value) {
     selectedLanguageLevel = value;
@@ -65,7 +57,7 @@ class LanguageViewmodel extends Cubit<LanguageState> {
 
   void addLanguage(String language, String level) {
     LanguageEntity languageEntity =
-    LanguageEntity(language: language, level: level);
+        LanguageEntity(language: language, level: level.toUpperCase());
     if (languages.contains(languageEntity)) {
       return;
     } else if (languages.length == 5) {
@@ -82,6 +74,23 @@ class LanguageViewmodel extends Cubit<LanguageState> {
     emit(LanguageRemoved(language));
   }
 
+  void next() async {
+    if (languages.isNotEmpty) {
+      emit(AddLanguageLoading());
+      var result = await _userInfoUsecase.invokeLanguages(languages);
+      switch (result) {
+        case Success<void>():
+          emit(AddLanguageSuccess());
+          break;
+        case Failures<void>():
+          var errorMessage =
+              ErrorHandler.fromException(result.exception).errorMessage;
+          emit(AddLanguageError(errorMessage));
+      }
+    } else {
+      emit(const AddLanguageError('Please add at least one language'));
+    }
+  }
 
   @override
   Future<void> close() {
