@@ -13,3 +13,20 @@ class ValidateColorButtonState extends EducationState {
 class DateUpdatedState extends EducationState {
   const DateUpdatedState();
 }
+
+class RemoveEducationState extends EducationState {
+  const RemoveEducationState();
+}
+
+class EducationAddedState extends EducationState {
+  const EducationAddedState();
+}
+
+class OnboardingNextState extends EducationState {
+  const OnboardingNextState();
+}
+
+class UpdateSelectedDateState extends EducationState {
+  final DateTime? selectedDate;
+  const UpdateSelectedDateState(this.selectedDate);
+}
