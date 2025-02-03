@@ -1,6 +1,6 @@
-import '../../api/core/api_request_model/user_info/work_experience_request.dart';
+import 'package:short_path/src/data/dto_models/user_info/work_experience_dto.dart';
 
-class WorkExperienceDto {
+class WorkExperienceEntity {
   final String jobTitle;
   final String companyName;
   final String companyField;
@@ -11,7 +11,7 @@ class WorkExperienceDto {
   final String summary;
   final List<String> toolsTechnologiesUsed;
 
-  WorkExperienceDto({
+  WorkExperienceEntity({
     required this.jobTitle,
     required this.companyName,
     required this.companyField,
@@ -23,8 +23,8 @@ class WorkExperienceDto {
     required this.toolsTechnologiesUsed,
   });
 
-  WorkExperiences toWorkExperiences() {
-    return WorkExperiences(
+  WorkExperienceDto toWorkExperienceDto() {
+    return WorkExperienceDto(
       jobTitle: jobTitle,
       companyName: companyName,
       companyField: companyField,
@@ -37,16 +37,3 @@ class WorkExperienceDto {
     );
   }
 }
-
-class WorkExperiencesDto {
-  final List<WorkExperienceDto> workExperiences;
-
-  WorkExperiencesDto({required this.workExperiences});
-
-  WorkExperienceRequest toWorkExperienceRequest() {
-    return WorkExperienceRequest(
-      workExperiences: workExperiences.map((e) => e.toWorkExperiences()).toList(),
-    );
-  }
-}
-

@@ -12,7 +12,7 @@ abstract interface class UserInfoOnlineDataSource {
   Future<void> addSkills(SkillsDto skillsRequest, String token);
 
   Future<void> addWorkExperience(
-    WorkExperienceDto workExperienceRequest,
+    WorkExperiencesDto workExperiencesRequest,
     String token,
   );
 }

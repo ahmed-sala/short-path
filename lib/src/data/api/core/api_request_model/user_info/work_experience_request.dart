@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:short_path/src/domain/entities/user_info/work_experience_entity.dart';
 
 part 'work_experience_request.g.dart';
 
@@ -17,6 +18,12 @@ class WorkExperienceRequest {
 
   Map<String, dynamic> toJson() {
     return _$WorkExperienceRequestToJson(this);
+  }
+
+  factory WorkExperienceRequest.fromDomainDto(List<WorkExperienceEntity> workExperiences) {
+    return WorkExperienceRequest(
+      workExperiences: workExperiences.map((e) => WorkExperiences.fromDomainEntity(e)).toList(),
+    );
   }
 }
 
@@ -59,6 +66,20 @@ class WorkExperiences {
 
   Map<String, dynamic> toJson() {
     return _$WorkExperiencesToJson(this);
+  }
+
+  factory WorkExperiences.fromDomainEntity(WorkExperienceEntity workExperience) {
+    return WorkExperiences(
+      jobTitle: workExperience.jobTitle,
+      companyName: workExperience.companyName,
+      companyField: workExperience.companyField,
+      jobType: workExperience.jobType,
+      jobLocation: workExperience.jobLocation,
+      startDate: workExperience.startDate,
+      endDate: workExperience.endDate,
+      summary: workExperience.summary,
+      toolsTechnologiesUsed: workExperience.toolsTechnologiesUsed,
+    );
   }
 }
 
