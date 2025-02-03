@@ -7,6 +7,7 @@ import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
 
 import '../../../../../../core/dialogs/awesome_dialoge.dart';
 import '../../../../../../core/dialogs/show_hide_loading.dart';
@@ -111,19 +112,19 @@ class ProfileScreen extends StatelessWidget {
                           validator: viewModel.validateProfilePicture,
                         ),
                         verticalSpace(20),
-                        LanguageInput(viewModel: viewModel),
-                        verticalSpace(20),
-                        if (viewModel.filteredLanguageSuggestions.isNotEmpty &&
-                            viewModel.languageController.text.isNotEmpty)
-                          SuggestionList(
-                            suggestions: languageSuggestions,
-                            onTap: (int index) {
-                              viewModel.selectLanguage(index);
-                            },
-                          ),
-                        if (viewModel.languages.isNotEmpty)
-                          const LanguageListWidget(),
-                        verticalSpace(30),
+                        // LanguageInput(viewModel: viewModel),
+                        // verticalSpace(20),
+                        // if (viewModel.filteredLanguageSuggestions.isNotEmpty &&
+                        //     viewModel.languageController.text.isNotEmpty)
+                        //   SuggestionList(
+                        //     suggestions: languageSuggestions,
+                        //     onTap: (int index) {
+                        //       viewModel.selectLanguage(index);
+                        //     },
+                        //   ),
+                        // if (viewModel.languages.isNotEmpty)
+                        //   const LanguageListWidget(),
+                        // verticalSpace(30),
                         CustomAuthButton(
                           text: 'NEXT',
                           onPressed: viewModel.next,

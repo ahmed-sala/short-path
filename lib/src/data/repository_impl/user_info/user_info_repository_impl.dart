@@ -19,14 +19,11 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
     this._authOfflineDataSource,
   );
   @override
-  Future<ApiResult<void>> saveProfile(
-      ProfileEntity profileDto, List<LanguageEntity> languages) async {
+  Future<ApiResult<void>> saveProfile(ProfileEntity profileDto) async {
     return executeApi<void>(apiCall: () async {
-      LanguagesDto languagesDto = LanguagesDto(
-          languages: languages.map((e) => e.toLanguageDto()).toList());
       var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addProfile(
-          profileDto.toProfileDto(), languagesDto, token!);
+          profileDto.toProfileDto(), token!);
     });
   }
 
@@ -36,6 +33,17 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
       var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addSkills(
           skillEntity.toSkillsDto(), token!);
+    });
+  }
+
+  @override
+  Future<ApiResult<void>> saveLanguages(List<LanguageEntity> languages) async {
+    return await executeApi<void>(apiCall: () async {
+      LanguagesDto languagesDto = LanguagesDto(
+          languages: languages.map((e) => e.toLanguageDto()).toList());
+      var token = await _authOfflineDataSource.getToken();
+      token = 'Bearer $token';
+      await _userInfoOnlineDataSource.addLanguage(languagesDto, token);
     });
   }
 }

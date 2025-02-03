@@ -10,11 +10,11 @@ import '../contracts/user_info_online_datasource.dart';
 @Injectable(as: UserInfoOnlineDataSource)
 class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
   ApiServices _apiServices;
+
   UserInfoOnlineDatasourceImpl(this._apiServices);
 
   @override
-  Future<void> addProfile(ProfileDto profileRequest,
-      LanguagesDto languageRequest, String token) async {
+  Future<void> addProfile(ProfileDto profileRequest, String token) async {
     await _apiServices.addProfile(
       profileRequest.toProfileRequest(),
       "Bearer $token",
@@ -39,5 +39,11 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
       ),
     );
     await _apiServices.addSkill(skillRequest, "Bearer $token");
+  }
+
+  @override
+  Future<void> addLanguage(LanguagesDto languageRequest, String token) {
+    return _apiServices.addLanguage(
+        languageRequest.toLanguagesRequest(), token);
   }
 }
