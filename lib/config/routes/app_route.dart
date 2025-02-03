@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen/education_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/language/language_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/profile_screen/profile_screen.dart';
 
 import '../../src/presentation/screens/screen/auth/login_screen.dart';
@@ -39,9 +40,14 @@ class AppRoute {
         return _handelMaterialPageRoute(
             settings: settings, widget: const SkillInformationScreen());
 
+      case RoutesName.language:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const LanguageScreen());
+
       default:
         return _handelMaterialPageRoute(
             settings: settings, widget: const Scaffold());
+
     }
   }
 

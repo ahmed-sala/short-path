@@ -92,10 +92,14 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<void> addLanguage(LanguageRequest languageRequest) async {
+  Future<void> addLanguage(
+    LanguageRequest languageRequest,
+    String token,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(languageRequest.toJson());
     final _options = _setStreamType<void>(Options(

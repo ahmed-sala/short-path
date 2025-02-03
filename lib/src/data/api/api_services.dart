@@ -28,7 +28,7 @@ abstract class ApiServices {
   Future<AuthResponse> register(@Body() RegisterRequest registerRequest);
 
   @POST(ApisEndPoints.language)
-  Future<void> addLanguage(@Body() LanguageRequest languageRequest);
+  Future<void> addLanguage(@Body() LanguageRequest languageRequest, @Header('Authorization') String token);
 
   @POST(ApisEndPoints.skill)
   Future<void> addSkill(
