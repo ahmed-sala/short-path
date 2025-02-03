@@ -33,7 +33,6 @@ class WorkExperienceEntity {
       startDate: startDate,
       endDate: endDate,
       summary: summary,
-      toolsTechnologiesUsed: toolsTechnologiesUsed,
-    );
+      toolsTechnologiesUsed: toolsTechnologiesUsed);
   }
 }

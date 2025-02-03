@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
+import 'package:short_path/src/domain/entities/user_info/work_experience_entity.dart';
 import 'package:short_path/src/domain/repositories/contract/user_info_repository.dart';
 
 import '../../entities/user_info/profile_entity.dart';
@@ -17,5 +18,9 @@ class UserInfoUsecase {
 
   Future<ApiResult<void>> invokeSkills(SkillEntity skillEntity) async {
     return await _userInfoRepository.saveSkills(skillEntity);
+  }
+
+  Future<ApiResult<void>> invokeWorkExperience(List<WorkExperienceEntity> workExperienceEntity) async {
+    return await _userInfoRepository.saveWorkExperiences(workExperienceEntity);
   }
 }
