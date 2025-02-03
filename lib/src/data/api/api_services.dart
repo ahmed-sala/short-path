@@ -9,6 +9,7 @@ import 'core/api_request_model/auth/login_request.dart';
 import 'core/api_request_model/auth/register_request.dart';
 import 'core/api_request_model/user_info/language_request.dart';
 import 'core/api_request_model/user_info/skill_request.dart';
+import 'core/api_request_model/user_info/work_experience_request.dart';
 import 'core/constants/apis_baseurl.dart';
 import 'core/constants/apis_end_points.dart';
 
@@ -37,6 +38,12 @@ abstract class ApiServices {
   @POST(ApisEndPoints.profile)
   Future<void> addProfile(
     @Body() ProfileInfoRequest profileRequest,
+    @Header('Authorization') String token,
+  );
+
+  @POST(ApisEndPoints.workExperience)
+  Future<void> addWorkExperience(
+    @Body() WorkExperienceRequest workExperienceRequest,
     @Header('Authorization') String token,
   );
 }

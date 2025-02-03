@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/skill_request.dart';
 import 'package:short_path/src/data/dto_models/user_info/language_dto.dart';
 import 'package:short_path/src/data/dto_models/user_info/profile_dto.dart';
+import 'package:short_path/src/data/dto_models/user_info/work_experience_dto.dart';
 
 import '../../../../api/api_services.dart';
 import '../../../../dto_models/user_info/skills_dto.dart';
@@ -39,5 +40,11 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
       ),
     );
     await _apiServices.addSkill(skillRequest, "Bearer $token");
+  }
+
+  @override
+  Future<void> addWorkExperience(WorkExperienceDto workExperienceRequest, String token) async {
+    var workExperience = workExperienceRequest.toWorkExperienceRequest();
+    await _apiServices.addWorkExperience(workExperience, "Bearer $token");
   }
 }
