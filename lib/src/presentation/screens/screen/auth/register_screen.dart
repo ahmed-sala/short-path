@@ -86,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         dialogType: DialogType.error);
                   case SuccessState():
                     navKey.currentState!
-                        .pushReplacementNamed(RoutesName.profile);
+                        .pushReplacementNamed(RoutesName.login);
                   default:
                 }
               },
@@ -319,10 +319,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 const SizedBox(height: 20),
                                 CustomAuthButton(
                                   text: 'REGISTER',
-                                  onPressed: registerViewModel.validate
-                                      ? () => registerViewModel
-                                          .doAction(RegisterAction())
-                                      : null,
+                                  onPressed: () => registerViewModel
+                                      .doAction(RegisterAction()),
                                   color: registerViewModel.validate
                                       ? AppColors.primaryColor
                                       : const Color(0xFF5C6673),

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
 
 import '../../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart';
+import '../../../../../mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 import '../../../../../shared_widgets/custom_auth_text_feild.dart';
 
 class SoftSkillInputWidget extends StatefulWidget {
@@ -64,6 +64,7 @@ class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
                     type: 'Soft',
                     skill: skill,
                   );
+                  softSkills.remove(skill);
                   viewModel.softSkillController.clear();
                   setState(() {
                     viewModel.filteredSuggestions = [];

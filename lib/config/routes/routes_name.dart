@@ -13,7 +13,7 @@ class RoutesName {
   static const String profile = 'profile';
   static const String education = 'education';
   static const String educationproject = 'educationproject';
-  static const String certification  = 'certification';
-  static const String project  = 'project';
-
+  static const String certification = 'certification';
+  static const String project = 'project';
+  static const String language = 'language';
 }

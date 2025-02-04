@@ -1,4 +1,4 @@
-import 'package:short_path/src/domain/entities/infromation_gathering/language_entity.dart';
+import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
 
 sealed class ProfileState {
   const ProfileState();
@@ -13,6 +13,16 @@ class ProfileLoading extends ProfileState {
 }
 
 class ProfileUpdated extends ProfileState {}
+
+class ProfileUpdateError extends ProfileState {
+  final String message;
+
+  const ProfileUpdateError(this.message);
+}
+
+class ProfileUpdateSuccess extends ProfileState {
+  const ProfileUpdateSuccess();
+}
 
 class NewLanguageAdded extends ProfileState {
   final LanguageEntity language;

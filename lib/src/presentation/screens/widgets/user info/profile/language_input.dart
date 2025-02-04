@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
 
 import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../mangers/infromation_gathering/profile/profile_viewmodel.dart';
+import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';
 import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
 
 class LanguageInput extends StatelessWidget {
   const LanguageInput({super.key, required this.viewModel});
-  final ProfileViewmodel viewModel;
+  final LanguageViewmodel viewModel;
 
   @override
   Widget build(BuildContext context) {

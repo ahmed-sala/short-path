@@ -1,4 +1,4 @@
-import 'language_entity.dart';
+import 'package:short_path/src/data/dto_models/user_info/profile_dto.dart';
 
 class ProfileEntity {
   final List<String> portfolioLinks;
@@ -7,7 +7,6 @@ class ProfileEntity {
   final String linkedIn;
   final String profilePicture;
   final String bio;
-  final List<LanguageEntity> languages;
 
   ProfileEntity({
     required this.portfolioLinks,
@@ -15,6 +14,14 @@ class ProfileEntity {
     required this.linkedIn,
     required this.profilePicture,
     required this.bio,
-    required this.languages,
   });
+  ProfileDto toProfileDto() {
+    return ProfileDto(
+      bio: bio,
+      linkedInProfile: linkedIn,
+      portfolioWebsites: portfolioLinks,
+      professionalTitle: jobTitle,
+      profilePhotoUrl: profilePicture,
+    );
+  }
 }

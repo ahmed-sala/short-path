@@ -1,4 +1,4 @@
-import '../../../../domain/entities/infromation_gathering/skill_entity.dart';
+import '../../../../domain/entities/user_info/tech_skill_entity.dart';
 
 sealed class SkillGatheringState {
   const SkillGatheringState();
@@ -9,7 +9,7 @@ class InitialSkillGatheringState extends SkillGatheringState {
 }
 
 class SkillAddedState extends SkillGatheringState {
-  final List<SkillEntity>? techSkills;
+  final List<TechnicalSkillEntity>? techSkills;
   final List<String>? softSkills;
   final List<String>? industrySkills;
 
@@ -21,9 +21,23 @@ class OnboardingNextState extends SkillGatheringState {
 }
 
 class SkillRemovedState extends SkillGatheringState {
-  final List<SkillEntity>? techSkills;
+  final List<TechnicalSkillEntity>? techSkills;
   final List<String>? softSkills;
   final List<String>? industrySkills;
 
   SkillRemovedState({this.techSkills, this.softSkills, this.industrySkills});
+}
+
+class SkillsAddedSuccessState extends SkillGatheringState {
+  const SkillsAddedSuccessState();
+}
+
+class SkillsAddedFailureState extends SkillGatheringState {
+  final String message;
+
+  SkillsAddedFailureState(this.message);
+}
+
+class SkillsAddedLoadingState extends SkillGatheringState {
+  const SkillsAddedLoadingState();
 }

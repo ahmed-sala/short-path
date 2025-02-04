@@ -69,9 +69,10 @@ class RegisterViewModel extends Cubit<RegisterScreenState> {
             emit(SuccessState());
             break;
           case Failures<void>():
+            validate = false;
             final error = ErrorHandler.fromException(result.exception);
-            print('Error: ${error.errorMassage}, with code ${error.code}');
-            emit(ErrorState(error.errorMassage));
+            print('Error: ${error.errorMessage}, with code ${error.code}');
+            emit(ErrorState(error.errorMessage));
             break;
         }
       } catch (e) {
