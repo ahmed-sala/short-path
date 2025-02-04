@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         dialogType: DialogType.error);
                   case SuccessState():
                     navKey.currentState!
-                        .pushReplacementNamed(RoutesName.profile);
+                        .pushReplacementNamed(RoutesName.language);
                   default:
                 }
               },

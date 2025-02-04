@@ -93,7 +93,7 @@ class ProfileViewmodel extends Cubit<ProfileState> {
       print('Profile: ${profileEntity.portfolioLinks}');
 
       var response =
-          await userInfoUsecase.invokeProfile(profileEntity, languages);
+          await userInfoUsecase.invokeProfile(profileEntity);
       print('Response: $response');
       switch (response) {
         case Success<void>():

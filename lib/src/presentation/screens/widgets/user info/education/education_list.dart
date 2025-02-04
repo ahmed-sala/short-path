@@ -1,56 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
-import 'package:short_path/src/presentation/mangers/user_info/Language/language_state.dart';
-import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
+import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
 
-import '../../../../mangers/user_info/profile/profile_state.dart';
-import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
-
-class LanguageListWidget extends StatelessWidget {
-  const LanguageListWidget({super.key});
+class EducationListWidget extends StatelessWidget {
+  const EducationListWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LanguageViewmodel, LanguageState>(
+    return BlocBuilder<EducationViewmodelNew, EducationState>(
       builder: (context, state) {
-        final languages = context.read<LanguageViewmodel>().languages;
-        print(languages);
-        if (languages.isEmpty) {
+        final skills = context.read<EducationViewmodelNew>().educationDetails;
+        if (skills.isEmpty) {
           return const Text(
-            'No languages added yet. Start by adding some skills.',
+            'No skills added yet. Start by adding some skills.',
             style: TextStyle(color: Colors.grey),
           );
         }
         return Wrap(
           spacing: 8,
           runSpacing: 8,
-          children: languages.map((skill) {
+          children: skills.map((skill) {
             return Chip(
-              label: Text('${skill.language} (${skill.level})'),
+              label: Text(skill.institutionName!),
               backgroundColor: AppColors.whiteColor,
               labelStyle: const TextStyle(color: AppColors.primaryColor),
               deleteIcon: const Icon(Icons.close, color: Colors.red),
               onDeleted: () {
-                final languageViewmodel = context.read<LanguageViewmodel>();
+                // Use ScaffoldMessenger to manage SnackBars
                 final scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
                 if (scaffoldMessenger == null) {
                   debugPrint('ScaffoldMessenger not found in the widget tree.');
                   return;
                 }
-                scaffoldMessenger.hideCurrentSnackBar();
-                languageViewmodel.removeLanguage(skill);
 
+                scaffoldMessenger
+                    .hideCurrentSnackBar(); // Dismiss any previous SnackBar
+                context.read<EducationViewmodelNew>().removeEducation(skill);
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
-                    content: Text('$skill removed successfully!'),
+                    content:
+                        Text('${skill.institutionName} removed successfully!'),
                     backgroundColor: Colors.red,
                     action: SnackBarAction(
                       label: 'Undo',
                       onPressed: () {
-                        scaffoldMessenger.hideCurrentSnackBar();
-                        // Use the stored languageViewmodel reference.
-                        languageViewmodel.addLanguage(skill.language, skill.level);
+                        scaffoldMessenger
+                            .hideCurrentSnackBar(); // Dismiss previous SnackBar
+                        context.read<EducationViewmodelNew>().addEducation();
+
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
                             content: Text('$skill added back!'),
@@ -62,7 +61,6 @@ class LanguageListWidget extends StatelessWidget {
                   ),
                 );
               },
-
             );
           }).toList(),
         );

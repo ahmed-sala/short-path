@@ -44,6 +44,8 @@ import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
     as _i359;
 import '../src/presentation/mangers/user_info/education/education_viewmodel.dart'
     as _i228;
+import '../src/presentation/mangers/user_info/Language/language_viewmodel.dart'
+    as _i208;
 import '../src/presentation/mangers/user_info/profile/profile_viewmodel.dart'
     as _i4;
 import '../src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart'
@@ -67,7 +69,8 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
-    gh.factory<_i228.EducationViewmodel>(() => _i228.EducationViewmodel());
+    gh.factory<_i228.EducationViewmodelNew>(
+        () => _i228.EducationViewmodelNew());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
         () => sharedPrefModule.secureStorage);
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
@@ -100,6 +103,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i599.RegisterViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i639.SkillGatheringViewmodel>(
         () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i208.LanguageViewmodel>(
+        () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
     return this;
   }
 }
