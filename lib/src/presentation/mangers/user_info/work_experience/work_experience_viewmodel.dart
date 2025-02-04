@@ -1,54 +1,47 @@
-import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+import 'package:intl/intl.dart';
 import 'package:short_path/src/domain/entities/user_info/work_experience_entity.dart';
-import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
-
-part 'work_experience_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/work_experience/work_experience_state.dart';
 
 @injectable
-@singleton
 class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
-  final UserInfoUsecase userInfoUseCase;
-  WorkExperienceViewModel(this.userInfoUseCase) : super(WorkExperienceInitial()) {
-    /// **Attach listeners to text controllers**
-    jobTitleController.addListener(onTextChanged);
-    companyNameController.addListener(onTextChanged);
-    companyFieldController.addListener(onTextChanged);
-    jobTypeController.addListener(onTextChanged);
-    jobLocationController.addListener(onTextChanged);
-    startDateController.addListener(onTextChanged);
-    endDateController.addListener(onTextChanged);
-    summaryController.addListener(onTextChanged);
+  WorkExperienceViewModel() : super(const WorkExperienceInitial()) {
+    jobTitleController.addListener(_validateForm);
+    companyNameController.addListener(_validateForm);
+    companyFieldController.addListener(_validateForm);
+    jobTypeController.addListener(_validateForm);
+    jobLocationController.addListener(_validateForm);
+    summaryController.addListener(_validateForm);
   }
 
   final formKey = GlobalKey<FormState>();
+
+  // Controllers
   final TextEditingController jobTitleController = TextEditingController();
   final TextEditingController companyNameController = TextEditingController();
   final TextEditingController companyFieldController = TextEditingController();
   final TextEditingController jobTypeController = TextEditingController();
   final TextEditingController jobLocationController = TextEditingController();
-  final TextEditingController startDateController = TextEditingController();
-  final TextEditingController endDateController = TextEditingController();
   final TextEditingController summaryController = TextEditingController();
   final TextEditingController toolController = TextEditingController();
 
+  DateTime? startDate;
+  DateTime? endDate;
   List<WorkExperienceEntity> workExperiences = [];
   List<String> toolsTechnologiesUsed = [];
-  bool isValid  = false;
 
+  bool isValid = false;
 
-
-  /// **Listen for Text Changes & Validate Form**
-  void onTextChanged() {
+  void _validateForm() {
     final bool allFieldsFilled = jobTitleController.text.isNotEmpty &&
         companyNameController.text.isNotEmpty &&
         companyFieldController.text.isNotEmpty &&
         jobTypeController.text.isNotEmpty &&
         jobLocationController.text.isNotEmpty &&
-        startDateController.text.isNotEmpty &&
-        endDateController.text.isNotEmpty &&
+        startDate != null &&
+        endDate != null &&
         summaryController.text.isNotEmpty;
 
     if (isValid != allFieldsFilled) {
@@ -57,47 +50,114 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     }
   }
 
-  /// **Add Tool/Technology**
-  void addTool(String tool) {
-    if (tool.isNotEmpty && !toolsTechnologiesUsed.contains(tool)) {
+  // Validation methods
+  String? validateJobTitle(String? value) =>
+      value?.isEmpty ?? true ? 'Job Title is required' : null;
+
+  String? validateCompanyName(String? value) =>
+      value?.isEmpty ?? true ? 'Company Name is required' : null;
+
+  String? validateCompanyField(String? value) =>
+      value?.isEmpty ?? true ? 'Company Field is required' : null;
+
+  String? validateJobType(String? value) =>
+      value?.isEmpty ?? true ? 'Job Type is required' : null;
+
+  String? validateJobLocation(String? value) =>
+      value?.isEmpty ?? true ? 'Job Location is required' : null;
+
+  String? validateSummary(String? value) =>
+      value?.isEmpty ?? true ? 'Summary is required' : null;
+
+  String? validateDates() {
+    if (startDate == null) return 'Start date is required';
+    if (endDate == null) return 'End date is required';
+    if (endDate!.isBefore(startDate!))
+      return 'End date must be after start date';
+    return null;
+  }
+
+  // Date selection
+  void selectStartDate(DateTime date) {
+    startDate = date;
+    emit(StartDateSelected(startDate!));
+  }
+
+  void selectEndDate(DateTime date) {
+    endDate = date;
+    emit(EndDateSelected(endDate!));
+  }
+
+  // Tools management
+  void addTool() {
+    final tool = toolController.text.trim();
+    if (tool.isNotEmpty) {
       toolsTechnologiesUsed.add(tool);
-      emit(ToolAdded(tool));
+      toolController.clear();
+      emit(const ToolAdded());
+      _validateForm();
     }
   }
 
-  /// **Remove Tool/Technology**
   void removeTool(String tool) {
     toolsTechnologiesUsed.remove(tool);
-    emit(ToolRemoved(tool));
+    emit(const ToolRemoved());
+    _validateForm();
   }
 
-  /// **Add Work Experience**
+  // Work experience management
   void addWorkExperience() {
-    if (!formKey.currentState!.validate()) {
-      emit(const WorkExperienceError("Please fill in all required fields."));
+    if (!formKey.currentState!.validate()) return;
+
+    final dateError = validateDates();
+    if (dateError != null) {
+      emit(WorkExperienceError(dateError));
       return;
     }
 
-    final workExperience = WorkExperienceEntity(
+    if (toolsTechnologiesUsed.isEmpty) {
+      emit(const WorkExperienceError('Add at least one tool/technology'));
+      return;
+    }
+
+    workExperiences.add(WorkExperienceEntity(
       jobTitle: jobTitleController.text,
       companyName: companyNameController.text,
       companyField: companyFieldController.text,
       jobType: jobTypeController.text,
       jobLocation: jobLocationController.text,
-      startDate: startDateController.text,
-      endDate: endDateController.text,
+      startDate: DateFormat('M/d/yyyy').format(startDate!),
+      endDate: DateFormat('M/d/yyyy').format(endDate!),
       summary: summaryController.text,
-      toolsTechnologiesUsed: toolsTechnologiesUsed,
-    );
+      toolsTechnologiesUsed: List.from(toolsTechnologiesUsed),
+    ));
 
-    workExperiences.add(workExperience);
-    emit(WorkExperienceAdded(workExperience));
+    _resetForm();
+    emit(const WorkExperienceAdded());
   }
 
-  /// **Remove Work Experience**
-  void removeWorkExperience(WorkExperienceEntity workExperience) {
-    workExperiences.remove(workExperience);
-    emit(WorkExperienceRemoved(workExperience));
+  void _resetForm() {
+    jobTitleController.clear();
+    companyNameController.clear();
+    companyFieldController.clear();
+    jobTypeController.clear();
+    jobLocationController.clear();
+    summaryController.clear();
+    toolController.clear();
+    toolsTechnologiesUsed.clear();
+    startDate = null;
+    endDate = null;
+    formKey.currentState?.reset();
+  }
+
+  void removeWorkExperience(WorkExperienceEntity experience) {
+    workExperiences.remove(experience);
+    emit(const WorkExperienceRemoved());
+  }
+
+  void addWorkExperienceBack(WorkExperienceEntity experience) {
+    workExperiences.add(experience);
+    emit(WorkExperienceAdded());
   }
 
   @override
@@ -107,8 +167,6 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     companyFieldController.dispose();
     jobTypeController.dispose();
     jobLocationController.dispose();
-    startDateController.dispose();
-    endDateController.dispose();
     summaryController.dispose();
     toolController.dispose();
     return super.close();

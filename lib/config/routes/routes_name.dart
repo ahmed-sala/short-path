@@ -13,4 +13,5 @@ class RoutesName {
   static const String profile = 'profile';
   static const String education = 'education';
   static const String language = 'language';
+  static const String workExperience = 'workExperience';
 }

@@ -1,8 +1,4 @@
-part of 'work_experience_viewmodel.dart';
-
-@immutable
 sealed class WorkExperienceState {
-
   const WorkExperienceState();
 }
 
@@ -19,15 +15,11 @@ class WorkExperienceLoading extends WorkExperienceState {
 }
 
 class WorkExperienceAdded extends WorkExperienceState {
-  final WorkExperienceEntity workExperience;
-
-  const WorkExperienceAdded(this.workExperience);
+  const WorkExperienceAdded();
 }
 
 class WorkExperienceRemoved extends WorkExperienceState {
-  final WorkExperienceEntity workExperience;
-
-  const WorkExperienceRemoved(this.workExperience);
+  const WorkExperienceRemoved();
 }
 
 class WorkExperienceError extends WorkExperienceState {
@@ -37,13 +29,21 @@ class WorkExperienceError extends WorkExperienceState {
 }
 
 class ToolAdded extends WorkExperienceState {
-  final String tool;
-
-  const ToolAdded(this.tool);
+  const ToolAdded();
 }
 
 class ToolRemoved extends WorkExperienceState {
-  final String tool;
+  const ToolRemoved();
+}
 
-  const ToolRemoved(this.tool);
+class StartDateSelected extends WorkExperienceState {
+  final DateTime date;
+
+  const StartDateSelected(this.date);
+}
+
+class EndDateSelected extends WorkExperienceState {
+  final DateTime date;
+
+  const EndDateSelected(this.date);
 }

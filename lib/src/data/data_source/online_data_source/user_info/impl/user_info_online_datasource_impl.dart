@@ -5,6 +5,7 @@ import 'package:short_path/src/data/dto_models/user_info/profile_dto.dart';
 
 import '../../../../api/api_services.dart';
 import '../../../../dto_models/user_info/skills_dto.dart';
+import '../../../../dto_models/user_info/work_experience_dto.dart';
 import '../contracts/user_info_online_datasource.dart';
 
 @Injectable(as: UserInfoOnlineDataSource)

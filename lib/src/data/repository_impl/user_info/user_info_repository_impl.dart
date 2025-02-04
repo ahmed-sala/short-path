@@ -9,6 +9,8 @@ import 'package:short_path/src/domain/entities/user_info/skill_entity.dart';
 import 'package:short_path/src/domain/repositories/contract/user_info_repository.dart';
 
 import '../../../../core/common/api/api_execute.dart';
+import '../../../domain/entities/user_info/work_experience_entity.dart';
+import '../../dto_models/user_info/work_experience_dto.dart';
 
 @Injectable(as: UserInfoRepository)
 class UserInfoRepositoryImpl implements UserInfoRepository {
