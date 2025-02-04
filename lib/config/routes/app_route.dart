@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/certification/certification_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/education%20project_screen/eduction%20project_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen/education_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/profile_screen/profile_screen.dart';
-
+import 'package:short_path/src/presentation/screens/screen/user%20info/project/project_screen.dart';
 import '../../src/presentation/screens/screen/auth/login_screen.dart';
 import '../../src/presentation/screens/screen/auth/register_screen.dart';
 import '../../src/presentation/screens/screen/home/home_screen.dart';
@@ -38,6 +40,17 @@ class AppRoute {
       case RoutesName.skillGathering:
         return _handelMaterialPageRoute(
             settings: settings, widget: const SkillInformationScreen());
+      case RoutesName.educationproject:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const EducationProjectScreen());
+
+      case RoutesName.project :
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const ProjectScreen());
+
+      case RoutesName.certification :
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const CertificationScreen());
 
       default:
         return _handelMaterialPageRoute(

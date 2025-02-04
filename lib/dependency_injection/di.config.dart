@@ -29,14 +29,25 @@ import '../src/data/data_source/online_data_source/auth/impl/auth_online_datasou
 import '../src/data/repository_impl/auth/auth_repository_impl.dart' as _i946;
 import '../src/domain/repositories/contract/auth_repository.dart' as _i367;
 import '../src/domain/usecases/auth/auth_use_case.dart' as _i692;
+import '../src/domain/usecases/Certification/certification_usecase.dart'
+    as _i665;
+import '../src/domain/usecases/EducationProjectUsecase/educationProject_usecase.dart'
+    as _i428;
+import '../src/domain/usecases/Project/project_usecase.dart' as _i859;
 import '../src/domain/usecases/user_info/user_info_usecase.dart' as _i748;
 import '../src/presentation/mangers/auth/login/login_viewmodel.dart' as _i312;
 import '../src/presentation/mangers/auth/register/register_viewmodel.dart'
     as _i599;
+import '../src/presentation/mangers/infromation_gathering/Certification/certification_viewmodel.dart'
+    as _i930;
 import '../src/presentation/mangers/infromation_gathering/education/education_viewmodel.dart'
     as _i849;
+import '../src/presentation/mangers/infromation_gathering/EducationProject/EducationProjectViewmodel.dart'
+    as _i613;
 import '../src/presentation/mangers/infromation_gathering/profile/profile_viewmodel.dart'
     as _i825;
+import '../src/presentation/mangers/infromation_gathering/Project/Project_Viewmodel.dart'
+    as _i1013;
 import '../src/presentation/mangers/infromation_gathering/skill_gathering/skill_gathering_viewmodel.dart'
     as _i373;
 import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
@@ -60,10 +71,14 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i748.UserInfoUsecase>(() => _i748.UserInfoUsecase());
+    gh.factory<_i849.EducationViewmodel>(() => _i849.EducationViewmodel());
     gh.factory<_i373.SkillGatheringViewmodel>(
         () => _i373.SkillGatheringViewmodel());
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
-    gh.factory<_i849.EducationViewmodel>(() => _i849.EducationViewmodel());
+    gh.factory<_i665.CertificationUsecase>(() => _i665.CertificationUsecase());
+    gh.factory<_i428.EducationProjectUsecase>(
+        () => _i428.EducationProjectUsecase());
+    gh.factory<_i859.ProjectUsecase>(() => _i859.ProjectUsecase());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
         () => sharedPrefModule.secureStorage);
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
@@ -71,9 +86,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => dioProvider.providePrettyDioLogger());
     gh.factory<_i990.AuthOfflineDataSource>(
         () => _i718.authOfflineDatasourceImpl());
+    gh.factory<_i1013.ProjectViewmodel>(
+        () => _i1013.ProjectViewmodel(gh<_i859.ProjectUsecase>()));
     gh.singleton<_i687.ApiServices>(() => _i687.ApiServices(gh<_i361.Dio>()));
+    gh.factory<_i613.EducationProjectViewmodel>(() =>
+        _i613.EducationProjectViewmodel(gh<_i428.EducationProjectUsecase>()));
     gh.factory<_i825.ProfileViewmodel>(
         () => _i825.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i930.CertificationViewmodel>(
+        () => _i930.CertificationViewmodel(gh<_i665.CertificationUsecase>()));
     gh.factory<_i144.AuthOnlineDatasource>(
         () => _i116.AuthOnlineDataSourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i367.AuthRepository>(() => _i946.AuthRepositoryImpl(

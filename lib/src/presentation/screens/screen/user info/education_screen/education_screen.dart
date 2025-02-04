@@ -10,9 +10,11 @@ import 'package:short_path/src/presentation/screens/widgets/user info/education/
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 
+import '../../../../../../config/routes/routes_name.dart';
 import '../../../../../../core/styles/colors/app_colore.dart';
 import '../../../../../../core/styles/spacing.dart';
 import '../../../../../../dependency_injection/di.dart';
+import '../../../../../short_path.dart';
 
 class EducationScreen extends StatelessWidget {
   EducationViewmodel educationViewmodel = getIt<EducationViewmodel>();
@@ -119,9 +121,10 @@ class EducationScreen extends StatelessWidget {
                       verticalSpace(20),
                       CustomAuthButton(
                         text: 'NEXT',
-                        onPressed: educationViewmodel.validate
-                            ? educationViewmodel.nextButton
-                            : null,
+                        onPressed: () {
+                          navKey.currentState!.pushReplacementNamed(
+                              RoutesName.educationproject);
+                        },
                         color: educationViewmodel.validate
                             ? AppColors.primaryColor
                             : const Color(0xFF5C6673),
