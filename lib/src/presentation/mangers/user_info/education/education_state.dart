@@ -30,3 +30,29 @@ class UpdateSelectedDateState extends EducationState {
   final DateTime? selectedDate;
   const UpdateSelectedDateState(this.selectedDate);
 }
+
+class EducationProjectUpdated extends EducationState {}
+
+class ProjectNameChanged extends EducationState {
+  const ProjectNameChanged();
+}
+
+class ProjectDescriptionChanged extends EducationState {
+  const ProjectDescriptionChanged();
+}
+
+class ProjectLinkChanged extends EducationState {
+  const ProjectLinkChanged();
+}
+
+class ToolsTechnologiesChanged extends EducationState {
+  const ToolsTechnologiesChanged();
+}
+
+class ToolsAndTechnologiesAdded extends EducationState {
+  const ToolsAndTechnologiesAdded();
+}
+
+class ToolsAndTechnologiesRemoved extends EducationState {
+  const ToolsAndTechnologiesRemoved();
+}

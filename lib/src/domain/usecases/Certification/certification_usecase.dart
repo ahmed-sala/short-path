@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
-import '../../entities/infromation_gathering/Certification_Entity.dart';
+
+import '../../entities/user_info/Certification_Entity.dart';
 
 @injectable
 class CertificationUsecase {

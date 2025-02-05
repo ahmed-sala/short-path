@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen/detailed_education.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/education/education_list.dart';
 
@@ -25,16 +24,19 @@ class MainEducationScreen extends StatelessWidget {
                 state is RemoveEducationState ||
                 state is EducationInitialState ||
                 state is OnboardingNextState ||
-                state is UpdateSelectedDateState) {
+                state is UpdateSelectedDateState ||
+                state is EducationProjectUpdated ||
+                state is ProjectDescriptionChanged ||
+                state is ProjectLinkChanged ||
+                state is ToolsTechnologiesChanged ||
+                state is ProjectNameChanged ||
+                state is ValidateColorButtonState ||
+                state is DateUpdatedState ||
+                state is ToolsAndTechnologiesAdded ||
+                state is ToolsAndTechnologiesRemoved) {
               return Column(
                 children: [
                   EducationListWidget(),
-                  verticalSpace(20),
-                  Text(
-                    'Add your education details',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  verticalSpace(20),
                   Expanded(child: DetailedEducation()),
                 ],
               );

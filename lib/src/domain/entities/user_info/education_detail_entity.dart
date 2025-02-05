@@ -5,13 +5,13 @@ class EducationDetailEntity {
   final String? institutionName;
   final String? location;
   final String? graduationDate;
-  final List<EducationProjectsEntity>? projects;
+  final List<EducationProjectsEntity> projects;
 
   EducationDetailEntity({
     this.degreeCertification,
     this.institutionName,
     this.location,
     this.graduationDate,
-    this.projects,
+    required this.projects,
   });
 }

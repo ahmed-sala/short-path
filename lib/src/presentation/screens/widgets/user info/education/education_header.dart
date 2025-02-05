@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/styles/spacing.dart';
 
 class EducationHeader extends StatelessWidget {
-  const EducationHeader({super.key});
-
+  const EducationHeader({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Add Your Education',
+          title,
           textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme

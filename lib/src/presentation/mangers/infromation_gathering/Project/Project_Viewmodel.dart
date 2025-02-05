@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../domain/entities/infromation_gathering/Project_Entity.dart';
+
+import '../../../../domain/entities/user_info/Project_Entity.dart';
 import '../../../../domain/usecases/Project/project_usecase.dart';
 import 'Project_State.dart';
 
@@ -18,7 +19,8 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   final TextEditingController projectTitleController = TextEditingController();
   final TextEditingController roleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController technologiesUsedController = TextEditingController();
+  final TextEditingController technologiesUsedController =
+      TextEditingController();
 
   List<ProjectEntity> projects = []; // List to store projects
   bool validate = false;
@@ -31,7 +33,9 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   }
 
   String? validateProjectTitle(String? value) {
-    return (value == null || value.trim().isEmpty) ? 'Project Title is required' : null;
+    return (value == null || value.trim().isEmpty)
+        ? 'Project Title is required'
+        : null;
   }
 
   String? validateRole(String? value) {
@@ -39,11 +43,15 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   }
 
   String? validateDescription(String? value) {
-    return (value == null || value.trim().isEmpty) ? 'Description is required' : null;
+    return (value == null || value.trim().isEmpty)
+        ? 'Description is required'
+        : null;
   }
 
   String? validateTechnologiesUsed(String? value) {
-    return (value == null || value.trim().isEmpty) ? 'Technologies Used are required' : null;
+    return (value == null || value.trim().isEmpty)
+        ? 'Technologies Used are required'
+        : null;
   }
 
   void addProject() {

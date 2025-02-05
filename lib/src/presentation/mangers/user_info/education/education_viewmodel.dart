@@ -3,82 +3,122 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/src/domain/entities/user_info/education_detail_entity.dart';
 
+import '../../../../domain/entities/user_info/education_projects_entity.dart';
 import '../../../screens/screen/user info/education_screen/education_projects_screen.dart';
 import '../../../screens/screen/user info/education_screen/education_screen.dart';
 import 'education_state.dart';
 
 @injectable
 class EducationViewmodelNew extends Cubit<EducationState> {
-  EducationViewmodelNew() : super(const EducationInitialState());
-  List<EducationDetailEntity> educationDetails = [];
+  EducationViewmodelNew() : super(const EducationInitialState()) {
+    _initializeListeners();
+  }
+
+  // Controllers
+  final TextEditingController institutionName = TextEditingController();
+  final TextEditingController degreeCertification = TextEditingController();
+  final TextEditingController location = TextEditingController();
+  final TextEditingController projectNameController = TextEditingController();
+  final TextEditingController projectDescriptionController =
+      TextEditingController();
+  final TextEditingController projectLinkController = TextEditingController();
+  final TextEditingController toolsTechnologiesController =
+      TextEditingController();
+  List<String> tollsTechnologies = [];
+  // Form Keys
   final formKey = GlobalKey<FormState>();
-  final institutionName = TextEditingController();
-  final degreeCertification = TextEditingController();
-  final location = TextEditingController();
+  GlobalKey<FormState> educationProjectFormKey = GlobalKey<FormState>();
+
+  // Data Variables
+  List<EducationDetailEntity> educationDetails = [];
+  List<EducationProjectsEntity> projects = [];
+  DateTime? selectedDate;
+  bool validate = false;
   int currentPage = 0;
 
-  DateTime? selectedDate;
-
-  bool validate = false;
-  var pages = [
+  // Screens
+  final List<Widget> pages = [
     EducationScreen(),
-    EducationProjectsScreen(),
+    EducationProjectScreen(),
   ];
+
+  void _initializeListeners() {
+    projectNameController.addListener(_onInputChanged);
+    projectDescriptionController.addListener(_onInputChanged);
+    projectLinkController.addListener(_onInputChanged);
+    toolsTechnologiesController.addListener(_onInputChanged);
+  }
+
+  void _onInputChanged() {
+    validateColorButton();
+  }
+
   void validateColorButton() {
-    if (institutionName.text.isEmpty ||
-        degreeCertification.text.isEmpty ||
-        location.text.isEmpty) {
-      validate = false;
-    } else if (!formKey.currentState!.validate()) {
-      {
-        validate = false;
-      }
-    } else {
-      validate = true;
-    }
+    validate = institutionName.text.isNotEmpty &&
+        degreeCertification.text.isNotEmpty &&
+        location.text.isNotEmpty &&
+        (formKey.currentState?.validate() ?? false);
+    emit(ValidateColorButtonState());
   }
 
   void updateSelectedDate(DateTime date) {
     selectedDate = date;
-    emit(
-        UpdateSelectedDateState(selectedDate)); // Emit state to trigger rebuild
-    validateColorButton(); // Ensure validation after date selection
-  }
-
-  void nextButton() {
-    if (validate) {
-      // Already validated, no need to check again
-      print("Education details submitted successfully.");
-    }
-  }
-
-  void removeEducation(EducationDetailEntity education) {
-    educationDetails = List.from(educationDetails)..remove(education);
-    emit(RemoveEducationState());
+    emit(UpdateSelectedDateState(selectedDate));
+    validateColorButton();
   }
 
   void addEducation() {
-    changePage(0);
-    print(educationDetails);
+    if (!validate) return;
 
-    educationDetails.add(EducationDetailEntity(
-      degreeCertification: degreeCertification.text,
-      institutionName: institutionName.text,
-      location: location.text,
-      graduationDate: selectedDate.toString(),
-    ));
+    educationDetails.add(
+      EducationDetailEntity(
+        degreeCertification: degreeCertification.text,
+        institutionName: institutionName.text,
+        location: location.text,
+        graduationDate: selectedDate.toString(),
+        projects: projects,
+      ),
+    );
     emit(const EducationAddedState());
 
-    // Clear the form fields and reset the date
-    institutionName.clear();
-    degreeCertification.clear();
-    location.clear();
-    selectedDate = null;
+    // Reset fields
+    _clearEducationFields();
+  }
+
+  void removeEducation(EducationDetailEntity education) {
+    educationDetails.remove(education);
+    emit(RemoveEducationState());
+  }
+
+  void addProject() {
+    if (educationProjectFormKey.currentState!.validate()) {
+      projects.add(
+        EducationProjectsEntity(
+          projectName: projectNameController.text,
+          projectDescription: projectDescriptionController.text,
+          projectLink: projectLinkController.text,
+        ),
+      );
+
+      // Reset form and clear fields
+      educationProjectFormKey = GlobalKey<FormState>();
+      _clearProjectFields();
+      emit(EducationProjectUpdated());
+    }
+  }
+
+  void removeProject(EducationProjectsEntity project) {
+    projects.remove(project);
+    emit(EducationProjectUpdated());
+  }
+
+  void addProjectBack(EducationProjectsEntity project) {
+    projects.add(project);
+    emit(EducationProjectUpdated());
   }
 
   void changePage(int index) {
     if (currentPage != index) {
-      // Prevent unnecessary rebuilds
       currentPage = index;
       emit(OnboardingNextState());
     }
@@ -88,10 +128,58 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     changePage(0);
   }
 
-  void dataDispose() {
-    institutionName.dispose();
-    degreeCertification.dispose();
-    location.dispose();
+  void nextButton() {
+    if (validate) {
+      print("Education details submitted successfully.");
+    }
+  }
+
+  void addToolsTechnologies(String value) {
+    if (value.isNotEmpty) {
+      tollsTechnologies.add(value);
+      toolsTechnologiesController.clear();
+      emit(ToolsAndTechnologiesAdded());
+    }
+  }
+
+  void removeToolsTechnologies(String value) {
+    if (value.isNotEmpty) {
+      tollsTechnologies.remove(value);
+      emit(ToolsAndTechnologiesRemoved());
+    }
+  }
+
+  // Validators
+  String? validateProjectName(String? value) =>
+      (value == null || value.isEmpty) ? 'Project Name is required' : null;
+
+  String? validateProjectDescription(String? value) =>
+      (value == null || value.isEmpty)
+          ? 'Project Description is required'
+          : null;
+
+  String? validateProjectLink(String? value) =>
+      (value == null || value.isEmpty) ? 'Project Link is required' : null;
+
+  String? validateToolsTechnologies(String? value) =>
+      (value == null || value.isEmpty)
+          ? 'Tools/Technologies are required'
+          : null;
+
+  // Utility Methods
+  void _clearEducationFields() {
+    institutionName.clear();
+    degreeCertification.clear();
+    location.clear();
+    selectedDate = null;
+    _clearProjectFields();
+  }
+
+  void _clearProjectFields() {
+    projectNameController.clear();
+    projectDescriptionController.clear();
+    projectLinkController.clear();
+    toolsTechnologiesController.clear();
   }
 
   @override
@@ -99,6 +187,10 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     institutionName.dispose();
     degreeCertification.dispose();
     location.dispose();
+    projectNameController.dispose();
+    projectDescriptionController.dispose();
+    projectLinkController.dispose();
+    toolsTechnologiesController.dispose();
     return super.close();
   }
 }

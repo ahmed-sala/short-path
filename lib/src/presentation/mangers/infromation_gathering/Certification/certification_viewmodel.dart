@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
-import '../../../../domain/entities/infromation_gathering/Certification_Entity.dart';
+
+import '../../../../domain/entities/user_info/Certification_Entity.dart';
 import '../../../../domain/usecases/Certification/certification_usecase.dart';
 import 'certification_state.dart';
 
@@ -10,7 +11,8 @@ import 'certification_state.dart';
 class CertificationViewmodel extends Cubit<CertificationState> {
   final CertificationUsecase _usecase;
 
-  CertificationViewmodel(this._usecase) : super(const CertificationInitialState());
+  CertificationViewmodel(this._usecase)
+      : super(const CertificationInitialState());
 
   // Text controllers for certification details
   final certificationNameController = TextEditingController();
