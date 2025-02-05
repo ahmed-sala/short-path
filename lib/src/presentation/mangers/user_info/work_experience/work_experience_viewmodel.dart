@@ -16,7 +16,7 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     summaryController.addListener(_validateForm);
   }
 
-  final formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   // Controllers
   final TextEditingController jobTitleController = TextEditingController();
@@ -89,20 +89,18 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   }
 
   // Tools management
-  void addTool() {
-    final tool = toolController.text.trim();
+  void addTool(String tool) {
     if (tool.isNotEmpty) {
       toolsTechnologiesUsed.add(tool);
       toolController.clear();
-      emit(const ToolAdded());
-      _validateForm();
+      print(toolsTechnologiesUsed);
+      emit(ToolAdded());
     }
   }
 
   void removeTool(String tool) {
     toolsTechnologiesUsed.remove(tool);
-    emit(const ToolRemoved());
-    _validateForm();
+    emit(ToolRemoved());
   }
 
   // Work experience management
@@ -147,7 +145,7 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     toolsTechnologiesUsed.clear();
     startDate = null;
     endDate = null;
-    formKey.currentState?.reset();
+    formKey = GlobalKey<FormState>();
   }
 
   void removeWorkExperience(WorkExperienceEntity experience) {
