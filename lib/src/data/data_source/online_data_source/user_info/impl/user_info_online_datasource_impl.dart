@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/skill_request.dart';
+import 'package:short_path/src/data/dto_models/user_info/EducationDto.dart';
 import 'package:short_path/src/data/dto_models/user_info/language_dto.dart';
 import 'package:short_path/src/data/dto_models/user_info/profile_dto.dart';
 
@@ -38,12 +39,24 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
         industrySpecificSkills: skills.skills!.industrySpecificSkills,
       ),
     );
-    await _apiServices.addSkill(skillRequest, "Bearer $token");
+    return await _apiServices.addSkill(skillRequest, "Bearer $token");
   }
 
   @override
-  Future<void> addLanguage(LanguagesDto languageRequest, String token) {
-    return _apiServices.addLanguage(
-        languageRequest.toLanguagesRequest(), token);
+  Future<void> addLanguage(LanguagesDto languageRequest, String token) async {
+    return await _apiServices.addLanguage(
+        languageRequest.toLanguagesRequest(), "Bearer $token");
+  }
+
+  @override
+  Future<void> addEducation(EducationDto educationRequest, String token) async {
+    print(
+        'Education Request: ${educationRequest.educations?[0].degreeCertification}');
+    print(
+        'Education Request: ${educationRequest.educations?[0].institutionName}');
+    print(
+        'Education Request: ${educationRequest.educations?[0].projects?[0].projectName}');
+    return await _apiServices.addEducation(
+        educationRequest.toRequest(), "Bearer $token");
   }
 }

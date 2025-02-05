@@ -12,8 +12,6 @@ import '../../../../mangers/user_info/education/education_state.dart';
 import '../../../../mangers/user_info/education/education_viewmodel.dart';
 
 class EducationScreen extends StatelessWidget {
-  EducationScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     var educationViewmodel = context.read<EducationViewmodelNew>();
@@ -34,7 +32,10 @@ class EducationScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  EducationHeader(),
+                  Center(
+                      child: EducationHeader(
+                    title: 'Add Your Education',
+                  )),
                   verticalSpace(30),
                   CustomTextFormField(
                     keyboardType: TextInputType.text,

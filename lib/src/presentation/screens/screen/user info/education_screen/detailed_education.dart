@@ -57,7 +57,9 @@ class _DetailedEducationState extends State<DetailedEducation> {
               ),
               // Navigation Buttons
               NextBackButtuns(
-                finish: () {},
+                finish: () {
+                  viewModel.nextButton();
+                },
                 pageController: _pageController,
                 length: viewModel.pages.length,
                 changePage: viewModel.changePage,
