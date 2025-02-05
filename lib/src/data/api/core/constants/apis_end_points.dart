@@ -6,4 +6,5 @@ abstract class ApisEndPoints {
   static const String language = "${ApisBaseurl.baseUrl}language/";
   static const String skill = "${ApisBaseurl.baseUrl}skills/";
   static const String profile = "${ApisBaseurl.baseUrl}profile/";
+  static const String education = "${ApisBaseurl.baseUrl}education/";
 }

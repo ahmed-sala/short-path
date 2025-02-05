@@ -78,8 +78,6 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
-    gh.factory<_i228.EducationViewmodelNew>(
-        () => _i228.EducationViewmodelNew());
     gh.factory<_i665.CertificationUsecase>(() => _i665.CertificationUsecase());
     gh.factory<_i428.EducationProjectUsecase>(
         () => _i428.EducationProjectUsecase());
@@ -118,6 +116,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i312.LoginViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i599.RegisterViewModel>(
         () => _i599.RegisterViewModel(gh<_i692.AuthUseCase>()));
+    gh.factory<_i228.EducationViewmodelNew>(
+        () => _i228.EducationViewmodelNew(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i639.SkillGatheringViewmodel>(
         () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i208.LanguageViewmodel>(

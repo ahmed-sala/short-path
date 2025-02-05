@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'education_request.g.dart';
@@ -11,13 +12,10 @@ class EducationRequest {
     this.educations,
   });
 
-  factory EducationRequest.fromJson(Map<String, dynamic> json) {
-    return _$EducationRequestFromJson(json);
-  }
+  factory EducationRequest.fromJson(Map<String, dynamic> json) =>
+      _$EducationRequestFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return _$EducationRequestToJson(this);
-  }
+  Map<String, dynamic> toJson() => _$EducationRequestToJson(this);
 }
 
 @JsonSerializable()
@@ -28,8 +26,11 @@ class Educations {
   final String? institutionName;
   @JsonKey(name: "location")
   final String? location;
+
   @JsonKey(name: "graduationDate")
-  final String? graduationDate;
+  @LocalDateConverter()
+  final DateTime? graduationDate;
+
   @JsonKey(name: "projects")
   final List<Projects>? projects;
 
@@ -41,13 +42,10 @@ class Educations {
     this.projects,
   });
 
-  factory Educations.fromJson(Map<String, dynamic> json) {
-    return _$EducationsFromJson(json);
-  }
+  factory Educations.fromJson(Map<String, dynamic> json) =>
+      _$EducationsFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return _$EducationsToJson(this);
-  }
+  Map<String, dynamic> toJson() => _$EducationsToJson(this);
 }
 
 @JsonSerializable()
@@ -68,11 +66,24 @@ class Projects {
     this.toolsTechnologiesUsed,
   });
 
-  factory Projects.fromJson(Map<String, dynamic> json) {
-    return _$ProjectsFromJson(json);
+  factory Projects.fromJson(Map<String, dynamic> json) =>
+      _$ProjectsFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProjectsToJson(this);
+}
+
+/// **Custom DateTime Converter**
+/// Ensures `graduationDate` is always serialized as `"yyyy-MM-dd"`
+class LocalDateConverter implements JsonConverter<DateTime?, String?> {
+  const LocalDateConverter();
+
+  @override
+  DateTime? fromJson(String? json) {
+    return json != null ? DateTime.parse(json) : null;
   }
 
-  Map<String, dynamic> toJson() {
-    return _$ProjectsToJson(this);
+  @override
+  String? toJson(DateTime? date) {
+    return date != null ? DateFormat("yyyy-MM-dd").format(date) : null;
   }
 }

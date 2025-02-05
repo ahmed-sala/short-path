@@ -22,7 +22,8 @@ Educations _$EducationsFromJson(Map<String, dynamic> json) => Educations(
       degreeCertification: json['degreeCertification'] as String?,
       institutionName: json['institutionName'] as String?,
       location: json['location'] as String?,
-      graduationDate: json['graduationDate'] as String?,
+      graduationDate: const LocalDateConverter()
+          .fromJson(json['graduationDate'] as String?),
       projects: (json['projects'] as List<dynamic>?)
           ?.map((e) => Projects.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -33,7 +34,8 @@ Map<String, dynamic> _$EducationsToJson(Educations instance) =>
       'degreeCertification': instance.degreeCertification,
       'institutionName': instance.institutionName,
       'location': instance.location,
-      'graduationDate': instance.graduationDate,
+      'graduationDate':
+          const LocalDateConverter().toJson(instance.graduationDate),
       'projects': instance.projects,
     };
 

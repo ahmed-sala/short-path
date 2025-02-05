@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:short_path/core/common/api/api_result.dart';
+import 'package:short_path/src/data/api/core/error/error_handler.dart';
 import 'package:short_path/src/domain/entities/user_info/education_detail_entity.dart';
+import 'package:short_path/src/domain/entities/user_info/education_entity.dart';
+import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
 
 import '../../../../domain/entities/user_info/education_projects_entity.dart';
 import '../../../screens/screen/user info/education_screen/education_projects_screen.dart';
@@ -10,7 +14,9 @@ import 'education_state.dart';
 
 @injectable
 class EducationViewmodelNew extends Cubit<EducationState> {
-  EducationViewmodelNew() : super(const EducationInitialState()) {
+  final UserInfoUsecase _userInfoUsecase;
+  EducationViewmodelNew(this._userInfoUsecase)
+      : super(EducationInitialState()) {
     _initializeListeners();
   }
 
@@ -26,7 +32,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
       TextEditingController();
   List<String> tollsTechnologies = [];
   // Form Keys
-  final formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<FormState> educationProjectFormKey = GlobalKey<FormState>();
 
   // Data Variables
@@ -68,21 +74,21 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   }
 
   void addEducation() {
-    if (!validate) return;
-
+    changePage(0);
     educationDetails.add(
       EducationDetailEntity(
         degreeCertification: degreeCertification.text,
         institutionName: institutionName.text,
         location: location.text,
-        graduationDate: selectedDate.toString(),
+        graduationDate: selectedDate,
         projects: projects,
       ),
     );
-    emit(const EducationAddedState());
+    emit(EducationAddedState());
 
     // Reset fields
     _clearEducationFields();
+    projects = [];
   }
 
   void removeEducation(EducationDetailEntity education) {
@@ -91,6 +97,10 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   }
 
   void addProject() {
+    if (tollsTechnologies.isEmpty) {
+      emit(AddEducationErrorState('Please add tools and technologies'));
+      return;
+    }
     if (educationProjectFormKey.currentState!.validate()) {
       projects.add(
         EducationProjectsEntity(
@@ -103,6 +113,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
       // Reset form and clear fields
       educationProjectFormKey = GlobalKey<FormState>();
       _clearProjectFields();
+      tollsTechnologies = [];
       emit(EducationProjectUpdated());
     }
   }
@@ -128,9 +139,39 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     changePage(0);
   }
 
-  void nextButton() {
-    if (validate) {
-      print("Education details submitted successfully.");
+  void nextButton() async {
+    if (projects.isEmpty) {
+      emit(AddEducationErrorState('Please add projects'));
+      return;
+    }
+    if (!validate) {
+      emit(AddEducationErrorState('Please fill education details'));
+      return;
+    }
+    educationDetails.add(
+      EducationDetailEntity(
+        degreeCertification: degreeCertification.text,
+        institutionName: institutionName.text,
+        location: location.text,
+        graduationDate: selectedDate,
+        projects: projects,
+      ),
+    );
+    emit(AddEducationLoadingState());
+    EducationEntity educationEntity = EducationEntity(
+      educationDetails: educationDetails,
+    );
+    var result = await _userInfoUsecase.invokeEducation(
+      educationEntity,
+    );
+    switch (result) {
+      case Success<void>():
+        emit(AddEducationSuccessState());
+      case Failures<void>():
+        educationDetails.removeLast();
+        var errorMessage =
+            ErrorHandler.fromException(result.exception).errorMessage;
+        emit(AddEducationErrorState(errorMessage));
     }
   }
 
@@ -160,11 +201,6 @@ class EducationViewmodelNew extends Cubit<EducationState> {
 
   String? validateProjectLink(String? value) =>
       (value == null || value.isEmpty) ? 'Project Link is required' : null;
-
-  String? validateToolsTechnologies(String? value) =>
-      (value == null || value.isEmpty)
-          ? 'Tools/Technologies are required'
-          : null;
 
   // Utility Methods
   void _clearEducationFields() {

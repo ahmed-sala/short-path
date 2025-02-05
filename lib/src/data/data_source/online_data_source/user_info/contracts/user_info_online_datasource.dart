@@ -1,3 +1,4 @@
+import '../../../../dto_models/user_info/EducationDto.dart';
 import '../../../../dto_models/user_info/language_dto.dart';
 import '../../../../dto_models/user_info/profile_dto.dart';
 import '../../../../dto_models/user_info/skills_dto.dart';
@@ -10,4 +11,5 @@ abstract interface class UserInfoOnlineDataSource {
   Future<void> addSkills(SkillsDto skillsRequest, String token);
 
   Future<void> addLanguage(LanguagesDto languagesRequest, String token);
+  Future<void> addEducation(EducationDto educationRequest, String token);
 }

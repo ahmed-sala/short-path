@@ -56,3 +56,16 @@ class ToolsAndTechnologiesAdded extends EducationState {
 class ToolsAndTechnologiesRemoved extends EducationState {
   const ToolsAndTechnologiesRemoved();
 }
+
+class AddEducationLoadingState extends EducationState {
+  const AddEducationLoadingState();
+}
+
+class AddEducationSuccessState extends EducationState {
+  const AddEducationSuccessState();
+}
+
+class AddEducationErrorState extends EducationState {
+  final String message;
+  const AddEducationErrorState(this.message);
+}

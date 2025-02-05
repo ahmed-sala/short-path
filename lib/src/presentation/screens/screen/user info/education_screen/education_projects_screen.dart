@@ -72,7 +72,7 @@ class EducationProjectScreen extends StatelessWidget {
                               keyboardType: TextInputType.text,
                               controller: viewModel.toolsTechnologiesController,
                               labelText: 'Tools/Technologies Used',
-                              validator: viewModel.validateToolsTechnologies,
+                              validator: (value) => null,
                             ),
                           ),
                           SizedBox(
@@ -223,7 +223,7 @@ class EducationProjectScreen extends StatelessWidget {
                   text: 'Add New Education',
                   onPressed: viewModel.projects.isNotEmpty
                       ? () {
-                          viewModel.nextButton();
+                          viewModel.addEducation();
                         }
                       : null,
                   color: viewModel.projects.isNotEmpty
