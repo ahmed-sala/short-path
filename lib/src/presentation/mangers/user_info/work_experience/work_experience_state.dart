@@ -29,11 +29,23 @@ class WorkExperienceError extends WorkExperienceState {
 }
 
 class ToolAdded extends WorkExperienceState {
-  const ToolAdded();
+  final String tool;
+
+  const ToolAdded(this.tool);
 }
 
 class ToolRemoved extends WorkExperienceState {
-  const ToolRemoved();
+  final String tool;
+
+  const ToolRemoved(this.tool);
+}
+
+class ToolChanged extends WorkExperienceState {
+  const ToolChanged();
+}
+
+class ToolSelected extends WorkExperienceState {
+  const ToolSelected();
 }
 
 class StartDateSelected extends WorkExperienceState {
@@ -47,3 +59,7 @@ class EndDateSelected extends WorkExperienceState {
 
   const EndDateSelected(this.date);
 }
+
+class JobTypeSelected extends WorkExperienceState {}
+
+class JobLocationSelected extends WorkExperienceState {}

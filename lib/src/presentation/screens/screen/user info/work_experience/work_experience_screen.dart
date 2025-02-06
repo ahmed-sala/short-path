@@ -9,6 +9,8 @@ import 'package:short_path/src/presentation/mangers/user_info/work_experience/wo
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 
+import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
+import '../../../widgets/user info/profile/suggestion_list.dart';
 import '../../../widgets/user info/work_exprience/detailed_list.dart';
 import '../../../widgets/user info/work_exprience/tools_list.dart';
 
@@ -73,21 +75,37 @@ class WorkExperienceScreen extends StatelessWidget {
                           ),
                           verticalSpace(20),
 
-                          CustomTextFormField(
-                            controller: viewModel.jobTypeController,
+                          CustomDropdownButtonFormField(
                             labelText: 'Job Type',
-                            hintText: 'Enter Job Type',
+                            hintText: 'Select Job Type',
+                            value: viewModel.selectedJobType,
+                            items: viewModel.jobTypes
+                                .map(
+                                  (jobType) => DropdownMenuItem(
+                                    value: jobType,
+                                    child: Text(jobType),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: viewModel.selectJobType,
                             validator: viewModel.validateJobType,
-                            keyboardType: TextInputType.text,
                           ),
                           verticalSpace(20),
 
-                          CustomTextFormField(
-                            controller: viewModel.jobLocationController,
+                          CustomDropdownButtonFormField(
                             labelText: 'Job Location',
-                            hintText: 'Enter Job Location',
+                            hintText: 'Select Job Location',
+                            value: viewModel.selectedJobLocation,
+                            items: viewModel.jobLocations
+                                .map(
+                                  (jobLocation) => DropdownMenuItem(
+                                    value: jobLocation,
+                                    child: Text(jobLocation),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: viewModel.selectJobLocation,
                             validator: viewModel.validateJobLocation,
-                            keyboardType: TextInputType.text,
                           ),
                           verticalSpace(20),
 
@@ -231,6 +249,12 @@ class WorkExperienceScreen extends StatelessWidget {
                               ),
                             ],
                           ),
+                          if (viewModel.filteredToolSuggestions.isNotEmpty &&
+                              viewModel.toolController.text.isNotEmpty)
+                            SuggestionList(
+                              suggestions: viewModel.filteredToolSuggestions,
+                              onTap: viewModel.selectTool,
+                            ),
                           if (viewModel.toolsTechnologiesUsed.isNotEmpty)
                             const ToolsList(),
 

@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
+import 'package:short_path/src/data/static_data/demo_data_list.dart';
 import 'package:short_path/src/domain/entities/user_info/work_experience_entity.dart';
 import 'package:short_path/src/presentation/mangers/user_info/work_experience/work_experience_state.dart';
 
 @injectable
 class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   WorkExperienceViewModel() : super(const WorkExperienceInitial()) {
-    jobTitleController.addListener(_validateForm);
-    companyNameController.addListener(_validateForm);
-    companyFieldController.addListener(_validateForm);
-    jobTypeController.addListener(_validateForm);
-    jobLocationController.addListener(_validateForm);
-    summaryController.addListener(_validateForm);
+    toolController.addListener(onToolChanged);
   }
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -22,8 +18,6 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   final TextEditingController jobTitleController = TextEditingController();
   final TextEditingController companyNameController = TextEditingController();
   final TextEditingController companyFieldController = TextEditingController();
-  final TextEditingController jobTypeController = TextEditingController();
-  final TextEditingController jobLocationController = TextEditingController();
   final TextEditingController summaryController = TextEditingController();
   final TextEditingController toolController = TextEditingController();
 
@@ -31,15 +25,29 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   DateTime? endDate;
   List<WorkExperienceEntity> workExperiences = [];
   List<String> toolsTechnologiesUsed = [];
+  List<String> filteredToolSuggestions = [];
+  String? selectedJobType;
+  String? selectedJobLocation;
 
   bool isValid = false;
+
+  void onToolChanged() {
+    filteredToolSuggestions = toolController.text.isEmpty
+        ? technicalSkills
+        : technicalSkills
+            .where((tool) => tool
+                .toLowerCase()
+                .startsWith(toolController.text.toLowerCase()))
+            .toList();
+    emit(ToolChanged());
+  }
 
   void _validateForm() {
     final bool allFieldsFilled = jobTitleController.text.isNotEmpty &&
         companyNameController.text.isNotEmpty &&
         companyFieldController.text.isNotEmpty &&
-        jobTypeController.text.isNotEmpty &&
-        jobLocationController.text.isNotEmpty &&
+        selectedJobLocation != null &&
+        selectedJobType != null &&
         startDate != null &&
         endDate != null &&
         summaryController.text.isNotEmpty;
@@ -48,6 +56,29 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       isValid = allFieldsFilled;
       emit(const WorkExperienceChanged()); // Notify UI of state change
     }
+  }
+
+  List<String> jobTypes = [
+    'Full_Time',
+    'Part_Time',
+    'Contract',
+    'Internship',
+  ];
+
+  List<String> jobLocations = [
+    'Remote',
+    'Onsite',
+    'Hybrid',
+  ];
+
+  void selectJobType(String? value) {
+    selectedJobType = value;
+    emit(JobTypeSelected());
+  }
+
+  void selectJobLocation(String? value) {
+    selectedJobLocation = value;
+    emit(JobLocationSelected());
   }
 
   // Validation methods
@@ -61,10 +92,10 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       value?.isEmpty ?? true ? 'Company Field is required' : null;
 
   String? validateJobType(String? value) =>
-      value?.isEmpty ?? true ? 'Job Type is required' : null;
+      (value == null || value.isEmpty) ? 'Job Type is required' : null;
 
   String? validateJobLocation(String? value) =>
-      value?.isEmpty ?? true ? 'Job Location is required' : null;
+      (value == null || value.isEmpty) ? 'Job Location is required' : null;
 
   String? validateSummary(String? value) =>
       value?.isEmpty ?? true ? 'Summary is required' : null;
@@ -94,13 +125,19 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       toolsTechnologiesUsed.add(tool);
       toolController.clear();
       print(toolsTechnologiesUsed);
-      emit(ToolAdded());
+      emit(ToolAdded(tool));
     }
   }
 
   void removeTool(String tool) {
     toolsTechnologiesUsed.remove(tool);
-    emit(ToolRemoved());
+    emit(ToolRemoved(tool));
+  }
+
+  void selectTool(int index) {
+    toolController.text = filteredToolSuggestions[index];
+    filteredToolSuggestions = [];
+    emit(ToolSelected());
   }
 
   // Work experience management
@@ -122,8 +159,8 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       jobTitle: jobTitleController.text,
       companyName: companyNameController.text,
       companyField: companyFieldController.text,
-      jobType: jobTypeController.text,
-      jobLocation: jobLocationController.text,
+      jobType: selectedJobType!.toUpperCase(),
+      jobLocation: selectedJobLocation!.toUpperCase(),
       startDate: DateFormat('M/d/yyyy').format(startDate!),
       endDate: DateFormat('M/d/yyyy').format(endDate!),
       summary: summaryController.text,
@@ -138,11 +175,11 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     jobTitleController.clear();
     companyNameController.clear();
     companyFieldController.clear();
-    jobTypeController.clear();
-    jobLocationController.clear();
     summaryController.clear();
     toolController.clear();
     toolsTechnologiesUsed.clear();
+    selectedJobType = null;
+    selectedJobLocation = null;
     startDate = null;
     endDate = null;
     formKey = GlobalKey<FormState>();
@@ -163,8 +200,6 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     jobTitleController.dispose();
     companyNameController.dispose();
     companyFieldController.dispose();
-    jobTypeController.dispose();
-    jobLocationController.dispose();
     summaryController.dispose();
     toolController.dispose();
     return super.close();
