@@ -3,13 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:short_path/src/presentation/screens/widgets/user info/education/education_header.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
+import 'package:short_path/src/presentation/shared_widgets/date_input_feild.dart';
 
 import '../../../../../../core/styles/spacing.dart';
 import '../../../../mangers/user_info/education/education_state.dart';
 import '../../../../mangers/user_info/education/education_viewmodel.dart';
+import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
 
 class EducationScreen extends StatelessWidget {
   @override
@@ -52,14 +53,9 @@ class EducationScreen extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: DropdownButtonFormField<String>(
-                          decoration: InputDecoration(
-                            labelText: 'Degree',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          // Use a property from your view model to store the selected degree.
+                        child: CustomDropdownButtonFormField(
+                          labelText: 'Role',
+                          hintText: 'Select Role',
                           value: educationViewmodel.selectedDegree,
                           items: [
                             'Associates',
@@ -67,13 +63,18 @@ class EducationScreen extends StatelessWidget {
                             'Masters',
                             'Doctorate'
                           ]
-                              .map((degree) => DropdownMenuItem(
-                                    value: degree,
-                                    child: Text(degree),
-                                  ))
+                              .map(
+                                (jobLocation) => DropdownMenuItem(
+                                  value: jobLocation,
+                                  child: Text(jobLocation),
+                                ),
+                              )
                               .toList(),
-                          onChanged: (value) {
-                            educationViewmodel.updateSelectedDegree(value);
+                          onChanged: (String? newValue) {
+                            if (newValue != null) {
+                              educationViewmodel.selectedDegree = newValue;
+                              educationViewmodel.validateColorButton();
+                            }
                           },
                           validator: (value) => value == null
                               ? 'Please select your degree'
@@ -105,47 +106,10 @@ class EducationScreen extends StatelessWidget {
                     keyboardType: TextInputType.text,
                   ),
                   verticalSpace(20),
-                  GestureDetector(
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2030),
-                      );
-                      if (pickedDate != null) {
-                        educationViewmodel.updateSelectedDate(pickedDate);
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF4F4F4),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      height: 70.h,
-                      padding: const EdgeInsets.only(top: 20),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          labelText: 'Graduation Date',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        child: Text(
-                          educationViewmodel.selectedDate != null
-                              ? DateFormat('M/d/yyyy')
-                                  .format(educationViewmodel.selectedDate!)
-                              : 'Select Date',
-                          style: TextStyle(
-                            color: educationViewmodel.selectedDate == null
-                                ? Colors.grey
-                                : Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
+                  DateInputField(
+                    selectedDate: educationViewmodel.selectedDate,
+                    onDateSelected: educationViewmodel.updateSelectedDate,
+                    labelText: 'Graduation Date',
                   ),
                   verticalSpace(20),
                 ],

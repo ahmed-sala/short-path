@@ -14,7 +14,7 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   ProjectViewmodel(this.projectUsecase) : super(ProjectInitialState()) {
     _attachListeners();
   }
-
+  String? role;
   final ProjectUsecase projectUsecase;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController projectLinkController = TextEditingController();
