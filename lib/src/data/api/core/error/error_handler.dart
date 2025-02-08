@@ -14,7 +14,17 @@ class ErrorHandler {
       // Extract error message from server response
       String message = "An error occurred";
       if (responseData is Map<String, dynamic>) {
-        message = responseData['detail'] ?? responseData['message'] ?? message;
+        message = responseData['error'] ??
+            responseData['detail'] ??
+            responseData['message'] ??
+            message;
+      }
+
+      // Handle token expiration specifically
+      if (statusCode == 403 && message.contains("token has expired")) {
+        // Perform token refresh or force logout
+        return ErrorHandler._(
+            "Session expired. Please log in again.", statusCode!);
       }
 
       return ErrorHandler._(message, statusCode ?? -1);
