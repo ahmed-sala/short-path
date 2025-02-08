@@ -7,7 +7,7 @@ import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
-import 'package:short_path/src/presentation/shared_widgets/custom_drop_down_field.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
 
 import '../../../../../../core/dialogs/show_hide_loading.dart';
 import '../../../../../short_path.dart';
@@ -80,18 +80,25 @@ class ProjectScreen extends StatelessWidget {
                           verticalSpace(20),
 
                           // Role Field with Dropdown Suggestions
-                          CustomDropDownField(
-                            value: viewModel.roleController.text,
-                            hintText: 'Select role',
-                            items: ['Full-time', 'Part-time', 'Freelance'],
+                          CustomDropdownButtonFormField(
+                            labelText: 'Role',
+                            hintText: 'Select Role',
+                            value: viewModel.role,
+                            items: ['Full-time', 'Part-time', 'Freelance']
+                                .map(
+                                  (jobLocation) => DropdownMenuItem(
+                                    value: jobLocation,
+                                    child: Text(jobLocation),
+                                  ),
+                                )
+                                .toList(),
                             onChanged: (String? newValue) {
                               if (newValue != null) {
-                                viewModel.roleController.text = newValue;
+                                viewModel.role = newValue;
                                 viewModel.validateColorButton();
                               }
                             },
                             validator: viewModel.validateRole,
-                            label: 'Role',
                           ),
 
                           verticalSpace(20),

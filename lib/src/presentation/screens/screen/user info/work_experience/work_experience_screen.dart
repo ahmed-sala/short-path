@@ -2,7 +2,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
@@ -16,6 +15,7 @@ import 'package:short_path/src/short_path.dart';
 
 import '../../../../../../config/routes/routes_name.dart';
 import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
+import '../../../../shared_widgets/date_input_feild.dart';
 import '../../../widgets/user info/profile/suggestion_list.dart';
 import '../../../widgets/user info/work_exprience/detailed_list.dart';
 import '../../../widgets/user info/work_exprience/tools_list.dart';
@@ -134,109 +134,20 @@ class WorkExperienceScreen extends StatelessWidget {
                           verticalSpace(20),
 
                           // Start Date Picker
-                          GestureDetector(
-                            onTap: () async {
-                              final DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2030),
-                              );
-                              if (pickedDate != null)
-                                viewModel.selectStartDate(pickedDate);
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              height: 70.h,
-                              padding: EdgeInsets.only(top: 20.h),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF4F4F4),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: InputDecorator(
-                                decoration: InputDecoration(
-                                  labelText: 'Start Date',
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                child: Text(
-                                  viewModel.startDate != null
-                                      ? DateFormat('M/d/yyyy')
-                                          .format(viewModel.startDate!)
-                                      : 'Select Date',
-                                  style: TextStyle(
-                                    color: viewModel.startDate == null
-                                        ? Colors.grey
-                                        : Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          DateInputField(
+                            selectedDate: viewModel.startDate,
+                            onDateSelected: viewModel.selectStartDate,
+                            labelText: 'Graduation Date',
                           ),
-                          if (dateError != null && viewModel.startDate == null)
-                            Padding(
-                              padding: EdgeInsets.only(left: 12.w, top: 4.h),
-                              child: Text(
-                                dateError,
-                                style: TextStyle(
-                                    color: Colors.red, fontSize: 12.sp),
-                              ),
-                            ),
+
                           verticalSpace(20),
 
                           // End Date Picker
-                          GestureDetector(
-                            onTap: () async {
-                              final DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2030),
-                              );
-                              if (pickedDate != null)
-                                viewModel.selectEndDate(pickedDate);
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              height: 70.h,
-                              padding: EdgeInsets.only(top: 20.h),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF4F4F4),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: InputDecorator(
-                                decoration: InputDecoration(
-                                  labelText: 'End Date',
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                child: Text(
-                                  viewModel.endDate != null
-                                      ? DateFormat('M/d/yyyy')
-                                          .format(viewModel.endDate!)
-                                      : 'Select Date',
-                                  style: TextStyle(
-                                    color: viewModel.endDate == null
-                                        ? Colors.grey
-                                        : Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          DateInputField(
+                            selectedDate: viewModel.endDate,
+                            onDateSelected: viewModel.selectEndDate,
+                            labelText: 'Graduation Date',
                           ),
-                          if (dateError != null && viewModel.endDate == null)
-                            Padding(
-                              padding: EdgeInsets.only(left: 12.w, top: 4.h),
-                              child: Text(
-                                dateError,
-                                style: TextStyle(
-                                    color: Colors.red, fontSize: 12.sp),
-                              ),
-                            ),
                           verticalSpace(20),
 
                           CustomTextFormField(
