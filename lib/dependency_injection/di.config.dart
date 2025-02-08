@@ -45,6 +45,8 @@ import '../src/domain/usecases/user_info/user_info_usecase.dart' as _i748;
 import '../src/presentation/mangers/auth/login/login_viewmodel.dart' as _i312;
 import '../src/presentation/mangers/auth/register/register_viewmodel.dart'
     as _i599;
+import '../src/presentation/mangers/infromation_gathering/additional_info/additional_info_viewmodel.dart'
+    as _i103;
 import '../src/presentation/mangers/infromation_gathering/Certification/certification_viewmodel.dart'
     as _i930;
 import '../src/presentation/mangers/infromation_gathering/Project/Project_Viewmodel.dart'
@@ -77,11 +79,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPrefModule.sharedPreferences,
       preResolve: true,
     );
-    gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
     gh.factory<_i665.CertificationUsecase>(() => _i665.CertificationUsecase());
     gh.factory<_i428.EducationProjectUsecase>(
         () => _i428.EducationProjectUsecase());
     gh.factory<_i859.ProjectUsecase>(() => _i859.ProjectUsecase());
+    gh.factory<_i103.AdditionalInfoViewmodel>(
+        () => _i103.AdditionalInfoViewmodel());
+    gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
         () => sharedPrefModule.secureStorage);
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
@@ -118,10 +122,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i599.RegisterViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i228.EducationViewmodelNew>(
         () => _i228.EducationViewmodelNew(gh<_i748.UserInfoUsecase>()));
-    gh.factory<_i639.SkillGatheringViewmodel>(
-        () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i208.LanguageViewmodel>(
         () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i639.SkillGatheringViewmodel>(
+        () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
     return this;
   }
 }

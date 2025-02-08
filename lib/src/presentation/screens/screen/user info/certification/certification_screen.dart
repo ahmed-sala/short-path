@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
+import '../../../../../../config/routes/routes_name.dart';
+import '../../../../../short_path.dart';
 import '../../../../mangers/infromation_gathering/Certification/certification_state.dart';
 import '../../../../mangers/infromation_gathering/Certification/certification_viewmodel.dart';
 import '../../../../shared_widgets/custom_auth_button.dart';
@@ -269,7 +271,7 @@ class CertificationScreen extends StatelessWidget {
                     CustomAuthButton(
                       text: 'NEXT',
                       onPressed: viewModel.certifications.isNotEmpty
-                          ? () {}
+                          ? () {  navKey.currentState!.pushReplacementNamed(RoutesName.additionalinfo);}
                           : null,
                       color: viewModel.certifications.isNotEmpty
                           ? AppColors.primaryColor

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/additional_info/additional_info_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/certification/certification_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen/main_education_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/language/language_screen.dart';
@@ -52,6 +53,10 @@ class AppRoute {
       case RoutesName.certification:
         return _handelMaterialPageRoute(
             settings: settings, widget: const CertificationScreen());
+
+      case RoutesName.additionalinfo:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const AdditionalInfoScreen());
 
       case RoutesName.language:
         return _handelMaterialPageRoute(
