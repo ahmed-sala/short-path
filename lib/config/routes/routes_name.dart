@@ -17,4 +17,5 @@ class RoutesName {
   static const String project = 'project';
   static const String language = 'language';
   static const String additionalinfo = 'additionalinfo';
+  static const String workExperience = 'workExperience';
 }

@@ -5,6 +5,7 @@ import '../../../../dto_models/user_info/certification_do.dart';
 import '../../../../dto_models/user_info/language_dto.dart';
 import '../../../../dto_models/user_info/profile_dto.dart';
 import '../../../../dto_models/user_info/skills_dto.dart';
+import '../../../../dto_models/user_info/work_experience_dto.dart';
 
 abstract interface class UserInfoOnlineDataSource {
   Future<void> addProfile(
@@ -18,4 +19,9 @@ abstract interface class UserInfoOnlineDataSource {
   Future<void> addCertification(
       CertificationDto certificationRequest, String token);
   Future<void> addProjects(ProjectDto projectRequest, String token);
+
+  Future<void> addWorkExperience(
+    WorkExperiencesDto workExperiencesRequest,
+    String token,
+  );
 }

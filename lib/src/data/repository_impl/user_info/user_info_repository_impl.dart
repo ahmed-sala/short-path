@@ -12,6 +12,8 @@ import 'package:short_path/src/domain/entities/user_info/skill_entity.dart';
 import 'package:short_path/src/domain/repositories/contract/user_info_repository.dart';
 
 import '../../../../core/common/api/api_execute.dart';
+import '../../../domain/entities/user_info/work_experience_entity.dart';
+import '../../dto_models/user_info/work_experience_dto.dart';
 
 @Injectable(as: UserInfoRepository)
 class UserInfoRepositoryImpl implements UserInfoRepository {
@@ -73,6 +75,17 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
     return await executeApi<void>(apiCall: () async {
       var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addProjects(projects.toDto(), token!);
+    });
+  }
+
+  @override
+  Future<ApiResult<void>> saveWorkExperiences(List<WorkExperienceEntity> workExperiences) async {
+    return executeApi<void>(apiCall: () async {
+      WorkExperiencesDto workExperienceDto = WorkExperiencesDto(
+          workExperiences: workExperiences.map((e) => e.toWorkExperienceDto()).toList());
+      var token = await _authOfflineDataSource.getToken();
+      token = 'Bearer $token';
+      await _userInfoOnlineDataSource.addWorkExperience(workExperienceDto, token);
     });
   }
 }
