@@ -6,8 +6,8 @@ class WorkExperienceEntity {
   final String companyField;
   final String jobType;
   final String jobLocation;
-  final String startDate;
-  final String endDate;
+  final DateTime startDate;
+  final DateTime endDate;
   final String summary;
   final List<String> toolsTechnologiesUsed;
 
@@ -25,14 +25,14 @@ class WorkExperienceEntity {
 
   WorkExperienceDto toWorkExperienceDto() {
     return WorkExperienceDto(
-      jobTitle: jobTitle,
-      companyName: companyName,
-      companyField: companyField,
-      jobType: jobType,
-      jobLocation: jobLocation,
-      startDate: startDate,
-      endDate: endDate,
-      summary: summary,
-      toolsTechnologiesUsed: toolsTechnologiesUsed);
+        jobTitle: jobTitle,
+        companyName: companyName,
+        companyField: companyField,
+        jobType: jobType,
+        jobLocation: jobLocation,
+        startDate: startDate,
+        endDate: endDate,
+        summary: summary,
+        toolsTechnologiesUsed: toolsTechnologiesUsed);
   }
 }

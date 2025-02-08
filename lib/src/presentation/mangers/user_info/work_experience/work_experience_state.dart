@@ -63,3 +63,21 @@ class EndDateSelected extends WorkExperienceState {
 class JobTypeSelected extends WorkExperienceState {}
 
 class JobLocationSelected extends WorkExperienceState {}
+
+class AddWorkExperienceSuccess extends WorkExperienceState {
+  const AddWorkExperienceSuccess();
+}
+
+class AddWorkExperienceFailed extends WorkExperienceState {
+  final String message;
+
+  const AddWorkExperienceFailed(this.message);
+}
+
+class AddWorkExperienceLoading extends WorkExperienceState {
+  const AddWorkExperienceLoading();
+}
+
+class SessionExpired extends WorkExperienceState {
+  const SessionExpired();
+}

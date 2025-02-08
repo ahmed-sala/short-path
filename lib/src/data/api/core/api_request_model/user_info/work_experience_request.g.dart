@@ -27,8 +27,9 @@ WorkExperiences _$WorkExperiencesFromJson(Map<String, dynamic> json) =>
       companyField: json['companyField'] as String?,
       jobType: json['jobType'] as String?,
       jobLocation: json['jobLocation'] as String?,
-      startDate: json['startDate'] as String?,
-      endDate: json['endDate'] as String?,
+      startDate:
+          const LocalDateConverter().fromJson(json['startDate'] as String?),
+      endDate: const LocalDateConverter().fromJson(json['endDate'] as String?),
       summary: json['summary'] as String?,
       toolsTechnologiesUsed: (json['toolsTechnologiesUsed'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -42,8 +43,8 @@ Map<String, dynamic> _$WorkExperiencesToJson(WorkExperiences instance) =>
       'companyField': instance.companyField,
       'jobType': instance.jobType,
       'jobLocation': instance.jobLocation,
-      'startDate': instance.startDate,
-      'endDate': instance.endDate,
+      'startDate': const LocalDateConverter().toJson(instance.startDate),
+      'endDate': const LocalDateConverter().toJson(instance.endDate),
       'summary': instance.summary,
       'toolsTechnologiesUsed': instance.toolsTechnologiesUsed,
     };

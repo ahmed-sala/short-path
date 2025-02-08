@@ -31,7 +31,9 @@ class UserInfoUsecase {
       List<WorkExperienceEntity> workExperienceEntity) async {
     return await _userInfoRepository.saveWorkExperiences(workExperienceEntity);
   }
-  Future<ApiResult<void>> invokeEducation(EducationEntity educationEntity) async {
+
+  Future<ApiResult<void>> invokeEducation(
+      EducationEntity educationEntity) async {
     return await _userInfoRepository.saveEducation(educationEntity);
   }
 }

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:intl/intl.dart';
+import 'package:short_path/core/common/api/api_result.dart';
+import 'package:short_path/src/data/api/core/error/error_handler.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
 import 'package:short_path/src/domain/entities/user_info/work_experience_entity.dart';
+import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
 import 'package:short_path/src/presentation/mangers/user_info/work_experience/work_experience_state.dart';
 
 @injectable
 class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
-  WorkExperienceViewModel() : super(const WorkExperienceInitial()) {
+  UserInfoUsecase userInfoUsecase;
+  WorkExperienceViewModel(this.userInfoUsecase)
+      : super(const WorkExperienceInitial()) {
     toolController.addListener(onToolChanged);
   }
 
@@ -70,6 +74,29 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     'Onsite',
     'Hybrid',
   ];
+
+  Future<void> next() async {
+    if (workExperiences.isNotEmpty) {
+      try {
+        emit(AddWorkExperienceLoading());
+        final result =
+            await userInfoUsecase.invokeWorkExperience(workExperiences);
+        switch (result) {
+          case Success<void>():
+            emit(AddWorkExperienceSuccess());
+          case Failures<void>():
+            var errorMessage = ErrorHandler.fromException(result.exception);
+            if (errorMessage.code == 403) {
+              emit(SessionExpired());
+              return;
+            }
+            emit(AddWorkExperienceFailed(errorMessage.errorMessage));
+        }
+      } catch (e) {
+        emit(AddWorkExperienceFailed('An error occurred. Please try again.'));
+      }
+    }
+  }
 
   void selectJobType(String? value) {
     selectedJobType = value;
@@ -161,8 +188,8 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       companyField: companyFieldController.text,
       jobType: selectedJobType!.toUpperCase(),
       jobLocation: selectedJobLocation!.toUpperCase(),
-      startDate: DateFormat('M/d/yyyy').format(startDate!),
-      endDate: DateFormat('M/d/yyyy').format(endDate!),
+      startDate: startDate!,
+      endDate: endDate!,
       summary: summaryController.text,
       toolsTechnologiesUsed: List.from(toolsTechnologiesUsed),
     ));

@@ -6,6 +6,7 @@ import 'package:short_path/src/domain/entities/user_info/skill_entity.dart';
 
 import '../../entities/user_info/Certification_Entity.dart';
 import '../../entities/user_info/Project_Entity.dart';
+import '../../entities/user_info/work_experience_entity.dart';
 
 abstract interface class UserInfoRepository {
   Future<ApiResult<void>> saveProfile(ProfileEntity profileDto);
