@@ -69,3 +69,7 @@ class AddEducationErrorState extends EducationState {
   final String message;
   const AddEducationErrorState(this.message);
 }
+
+class DegreeCertificationChanged extends EducationState {
+  const DegreeCertificationChanged();
+}

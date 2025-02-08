@@ -7,6 +7,7 @@ class EducationDetailEntity {
   final String? location;
   final DateTime? graduationDate;
   final List<EducationProjectsEntity> projects;
+  final String? fieldOfStudy;
 
   EducationDetailEntity({
     this.degreeCertification,
@@ -14,6 +15,7 @@ class EducationDetailEntity {
     this.location,
     this.graduationDate,
     required this.projects,
+    this.fieldOfStudy,
   });
 
   EducationsDto toDto() {
@@ -23,6 +25,7 @@ class EducationDetailEntity {
       location: location,
       graduationDate: graduationDate,
       projects: projects.map((e) => e.toDto()).toList(),
+      fieldOfStudy: fieldOfStudy,
     );
   }
 }
