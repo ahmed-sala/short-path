@@ -21,6 +21,7 @@ Map<String, dynamic> _$EducationRequestToJson(EducationRequest instance) =>
 Educations _$EducationsFromJson(Map<String, dynamic> json) => Educations(
       degreeCertification: json['degreeCertification'] as String?,
       institutionName: json['institutionName'] as String?,
+      fieldOfStudy: json['fieldOfStudy'] as String?,
       location: json['location'] as String?,
       graduationDate: const LocalDateConverter()
           .fromJson(json['graduationDate'] as String?),
@@ -33,6 +34,7 @@ Map<String, dynamic> _$EducationsToJson(Educations instance) =>
     <String, dynamic>{
       'degreeCertification': instance.degreeCertification,
       'institutionName': instance.institutionName,
+      'fieldOfStudy': instance.fieldOfStudy,
       'location': instance.location,
       'graduationDate':
           const LocalDateConverter().toJson(instance.graduationDate),

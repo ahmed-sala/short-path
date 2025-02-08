@@ -22,7 +22,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
 
   // Controllers
   final TextEditingController institutionName = TextEditingController();
-  final TextEditingController degreeCertification = TextEditingController();
+  String? selectedDegree;
   final TextEditingController location = TextEditingController();
   final TextEditingController projectNameController = TextEditingController();
   final TextEditingController projectDescriptionController =
@@ -30,6 +30,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   final TextEditingController projectLinkController = TextEditingController();
   final TextEditingController toolsTechnologiesController =
       TextEditingController();
+  final TextEditingController fieldOfStudyController = TextEditingController();
   List<String> tollsTechnologies = [];
   // Form Keys
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -61,10 +62,15 @@ class EducationViewmodelNew extends Cubit<EducationState> {
 
   void validateColorButton() {
     validate = institutionName.text.isNotEmpty &&
-        degreeCertification.text.isNotEmpty &&
         location.text.isNotEmpty &&
         (formKey.currentState?.validate() ?? false);
     emit(ValidateColorButtonState());
+  }
+
+  void updateSelectedDegree(String? degree) {
+    selectedDegree = degree;
+    emit(DegreeCertificationChanged());
+    validateColorButton();
   }
 
   void updateSelectedDate(DateTime date) {
@@ -77,11 +83,12 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     changePage(0);
     educationDetails.add(
       EducationDetailEntity(
-        degreeCertification: degreeCertification.text,
+        degreeCertification: selectedDegree?.toUpperCase(),
         institutionName: institutionName.text,
         location: location.text,
         graduationDate: selectedDate,
         projects: projects,
+        fieldOfStudy: fieldOfStudyController.text,
       ),
     );
     emit(EducationAddedState());
@@ -144,17 +151,15 @@ class EducationViewmodelNew extends Cubit<EducationState> {
       emit(AddEducationErrorState('Please add projects'));
       return;
     }
-    if (!validate) {
-      emit(AddEducationErrorState('Please fill education details'));
-      return;
-    }
+
     educationDetails.add(
       EducationDetailEntity(
-        degreeCertification: degreeCertification.text,
+        degreeCertification: selectedDegree?.toUpperCase(),
         institutionName: institutionName.text,
         location: location.text,
         graduationDate: selectedDate,
         projects: projects,
+        fieldOfStudy: fieldOfStudyController.text,
       ),
     );
     emit(AddEducationLoadingState());
@@ -205,7 +210,8 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   // Utility Methods
   void _clearEducationFields() {
     institutionName.clear();
-    degreeCertification.clear();
+    selectedDegree = null;
+    fieldOfStudyController.clear();
     location.clear();
     selectedDate = null;
     _clearProjectFields();
@@ -221,12 +227,12 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   @override
   Future<void> close() {
     institutionName.dispose();
-    degreeCertification.dispose();
     location.dispose();
     projectNameController.dispose();
     projectDescriptionController.dispose();
     projectLinkController.dispose();
     toolsTechnologiesController.dispose();
+    fieldOfStudyController.dispose();
     return super.close();
   }
 }

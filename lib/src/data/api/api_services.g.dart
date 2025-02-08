@@ -12,7 +12,6 @@ class _ApiServices implements ApiServices {
   _ApiServices(
     this._dio, {
     this.baseUrl,
-    this.errorLogger,
   }) {
     baseUrl ??= 'http://10.0.2.2:8099/';
   }
@@ -20,8 +19,6 @@ class _ApiServices implements ApiServices {
   final Dio _dio;
 
   String? baseUrl;
-
-  final ParseErrorLogger? errorLogger;
 
   @override
   Future<AuthResponse> login(LoginRequest loginRequest) async {
@@ -37,7 +34,7 @@ class _ApiServices implements ApiServices {
     )
         .compose(
           _dio.options,
-          'http://10.0.2.2:8099/auth/login',
+          'auth/login',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -51,7 +48,6 @@ class _ApiServices implements ApiServices {
     try {
       _value = AuthResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
       rethrow;
     }
     return _value;
@@ -71,7 +67,7 @@ class _ApiServices implements ApiServices {
     )
         .compose(
           _dio.options,
-          'http://10.0.2.2:8099/auth/register',
+          'auth/register',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -85,7 +81,6 @@ class _ApiServices implements ApiServices {
     try {
       _value = AuthResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
       rethrow;
     }
     return _value;
@@ -109,7 +104,7 @@ class _ApiServices implements ApiServices {
     )
         .compose(
           _dio.options,
-          'http://10.0.2.2:8099/language/',
+          'language/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -139,7 +134,7 @@ class _ApiServices implements ApiServices {
     )
         .compose(
           _dio.options,
-          'http://10.0.2.2:8099/skills/',
+          'skills/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -169,7 +164,7 @@ class _ApiServices implements ApiServices {
     )
         .compose(
           _dio.options,
-          'http://10.0.2.2:8099/profile/',
+          'profile/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -199,7 +194,67 @@ class _ApiServices implements ApiServices {
     )
         .compose(
           _dio.options,
-          'http://10.0.2.2:8099/education/',
+          'education/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<void> addCertification(
+    CertificationRequest certificationRequest,
+    String token,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(certificationRequest.toJson());
+    final _options = _setStreamType<void>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'certifications/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<void> addProject(
+    ProjectRequest projectRequest,
+    String token,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(projectRequest.toJson());
+    final _options = _setStreamType<void>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'projects/',
           queryParameters: queryParameters,
           data: _data,
         )

@@ -1,6 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/skill_request.dart';
 import 'package:short_path/src/data/dto_models/user_info/EducationDto.dart';
+import 'package:short_path/src/data/dto_models/user_info/ProjectDto.dart';
+import 'package:short_path/src/data/dto_models/user_info/certification_do.dart';
 import 'package:short_path/src/data/dto_models/user_info/language_dto.dart';
 import 'package:short_path/src/data/dto_models/user_info/profile_dto.dart';
 
@@ -58,5 +60,18 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
         'Education Request: ${educationRequest.educations?[0].projects?[0].projectName}');
     return await _apiServices.addEducation(
         educationRequest.toRequest(), "Bearer $token");
+  }
+
+  @override
+  Future<void> addCertification(
+      CertificationDto certificationRequest, String token) async {
+    return await _apiServices.addCertification(
+        certificationRequest.toRequest(), "Bearer $token");
+  }
+
+  @override
+  Future<void> addProjects(ProjectDto projectRequest, String token) async {
+    return await _apiServices.addProject(
+        projectRequest.toRequest(), "Bearer $token");
   }
 }
