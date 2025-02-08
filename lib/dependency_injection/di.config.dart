@@ -59,6 +59,8 @@ import '../src/presentation/mangers/user_info/profile/profile_viewmodel.dart'
     as _i4;
 import '../src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart'
     as _i639;
+import '../src/presentation/mangers/user_info/work_experience/work_experience_viewmodel.dart'
+    as _i277;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -110,6 +112,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i859.ProjectUsecase(gh<_i175.UserInfoRepository>()));
     gh.factory<_i4.ProfileViewmodel>(
         () => _i4.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i277.WorkExperienceViewModel>(
+        () => _i277.WorkExperienceViewModel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i312.LoginViewModel>(
         () => _i312.LoginViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i599.RegisterViewModel>(

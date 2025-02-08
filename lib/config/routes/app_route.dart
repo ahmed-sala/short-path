@@ -5,6 +5,7 @@ import 'package:short_path/src/presentation/screens/screen/user%20info/education
 import 'package:short_path/src/presentation/screens/screen/user%20info/language/language_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/profile_screen/profile_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/project/project_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/user%20info/work_experience/work_experience_screen.dart';
 
 import '../../src/presentation/screens/screen/auth/login_screen.dart';
 import '../../src/presentation/screens/screen/auth/register_screen.dart';
@@ -56,6 +57,10 @@ class AppRoute {
       case RoutesName.language:
         return _handelMaterialPageRoute(
             settings: settings, widget: const LanguageScreen());
+
+      case RoutesName.workExperience:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: WorkExperienceScreen());
 
       default:
         return _handelMaterialPageRoute(

@@ -12,6 +12,7 @@ class _ApiServices implements ApiServices {
   _ApiServices(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   }) {
     baseUrl ??= 'http://10.0.2.2:8099/';
   }
@@ -19,6 +20,8 @@ class _ApiServices implements ApiServices {
   final Dio _dio;
 
   String? baseUrl;
+
+  final ParseErrorLogger? errorLogger;
 
   @override
   Future<AuthResponse> login(LoginRequest loginRequest) async {
@@ -48,6 +51,7 @@ class _ApiServices implements ApiServices {
     try {
       _value = AuthResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
     return _value;
@@ -81,6 +85,7 @@ class _ApiServices implements ApiServices {
     try {
       _value = AuthResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
     return _value;
@@ -255,6 +260,36 @@ class _ApiServices implements ApiServices {
         .compose(
           _dio.options,
           'projects/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<void> addWorkExperience(
+    WorkExperienceRequest workExperienceRequest,
+    String token,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(workExperienceRequest.toJson());
+    final _options = _setStreamType<void>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'work-experience/',
           queryParameters: queryParameters,
           data: _data,
         )
