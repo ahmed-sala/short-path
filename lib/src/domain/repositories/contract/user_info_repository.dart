@@ -3,6 +3,9 @@ import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
 import 'package:short_path/src/domain/entities/user_info/profile_entity.dart';
 import 'package:short_path/src/domain/entities/user_info/skill_entity.dart';
 
+import '../../entities/user_info/Certification_Entity.dart';
+import '../../entities/user_info/Project_Entity.dart';
+import '../../entities/user_info/education_entity.dart';
 import '../../entities/user_info/work_experience_entity.dart';
 
 abstract interface class UserInfoRepository {

@@ -36,10 +36,21 @@ import '../src/data/repository_impl/user_info/user_info_repository_impl.dart'
 import '../src/domain/repositories/contract/auth_repository.dart' as _i367;
 import '../src/domain/repositories/contract/user_info_repository.dart' as _i175;
 import '../src/domain/usecases/auth/auth_use_case.dart' as _i692;
+import '../src/domain/usecases/Certification/certification_usecase.dart'
+    as _i665;
+import '../src/domain/usecases/EducationProjectUsecase/educationProject_usecase.dart'
+    as _i428;
+import '../src/domain/usecases/Project/project_usecase.dart' as _i859;
 import '../src/domain/usecases/user_info/user_info_usecase.dart' as _i748;
 import '../src/presentation/mangers/auth/login/login_viewmodel.dart' as _i312;
 import '../src/presentation/mangers/auth/register/register_viewmodel.dart'
     as _i599;
+import '../src/presentation/mangers/infromation_gathering/additional_info/additional_info_viewmodel.dart'
+    as _i103;
+import '../src/presentation/mangers/infromation_gathering/Certification/certification_viewmodel.dart'
+    as _i930;
+import '../src/presentation/mangers/infromation_gathering/Project/Project_Viewmodel.dart'
+    as _i1013;
 import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
     as _i359;
 import '../src/presentation/mangers/user_info/education/education_viewmodel.dart'
@@ -71,8 +82,10 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
-    gh.factory<_i228.EducationViewmodelNew>(
-        () => _i228.EducationViewmodelNew());
+    gh.factory<_i428.EducationProjectUsecase>(
+        () => _i428.EducationProjectUsecase());
+    gh.factory<_i103.AdditionalInfoViewmodel>(
+        () => _i103.AdditionalInfoViewmodel());
     gh.factory<_i277.WorkExperienceViewModel>(
         () => _i277.WorkExperienceViewModel());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
@@ -99,16 +112,26 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i692.AuthUseCase(gh<_i367.AuthRepository>()));
     gh.factory<_i748.UserInfoUsecase>(
         () => _i748.UserInfoUsecase(gh<_i175.UserInfoRepository>()));
+    gh.factory<_i665.CertificationUsecase>(
+        () => _i665.CertificationUsecase(gh<_i175.UserInfoRepository>()));
+    gh.factory<_i859.ProjectUsecase>(
+        () => _i859.ProjectUsecase(gh<_i175.UserInfoRepository>()));
     gh.factory<_i4.ProfileViewmodel>(
         () => _i4.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i312.LoginViewModel>(
         () => _i312.LoginViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i599.RegisterViewModel>(
         () => _i599.RegisterViewModel(gh<_i692.AuthUseCase>()));
-    gh.factory<_i208.LanguageViewmodel>(
-        () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i930.CertificationViewmodel>(
+        () => _i930.CertificationViewmodel(gh<_i665.CertificationUsecase>()));
+    gh.factory<_i1013.ProjectViewmodel>(
+        () => _i1013.ProjectViewmodel(gh<_i859.ProjectUsecase>()));
+    gh.factory<_i228.EducationViewmodelNew>(
+        () => _i228.EducationViewmodelNew(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i639.SkillGatheringViewmodel>(
         () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i208.LanguageViewmodel>(
+        () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
     return this;
   }
 }

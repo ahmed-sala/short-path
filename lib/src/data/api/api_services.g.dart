@@ -284,7 +284,7 @@ class _ApiServices implements ApiServices {
     )
         .compose(
           _dio.options,
-          'http://10.0.2.2:8099/work-experience/',
+          'work-experience/',
           queryParameters: queryParameters,
           data: _data,
         )
