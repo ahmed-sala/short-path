@@ -1,23 +1,31 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/core/dialogs/awesome_dialoge.dart';
+import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import '../../../../../../config/routes/routes_name.dart';
 import '../../../../../short_path.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/certification/certification_list.dart';
+import 'package:short_path/src/short_path.dart';
+
+import '../../../../../domain/entities/user_info/Certification_Entity.dart';
 import '../../../../mangers/infromation_gathering/Certification/certification_state.dart';
 import '../../../../mangers/infromation_gathering/Certification/certification_viewmodel.dart';
 import '../../../../shared_widgets/custom_auth_button.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';
+import '../../../../shared_widgets/date_input_feild.dart';
 
 class CertificationScreen extends StatelessWidget {
-  const CertificationScreen({super.key});
+  CertificationScreen({super.key});
+  CertificationViewmodel viewModel = getIt<CertificationViewmodel>();
 
   @override
   Widget build(BuildContext context) {
-    CertificationViewmodel viewModel = getIt.get<CertificationViewmodel>();
     return BlocProvider(
       create: (context) => viewModel,
       child: Scaffold(
@@ -29,14 +37,27 @@ class CertificationScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
             child: BlocConsumer<CertificationViewmodel, CertificationState>(
               listener: (context, state) {
-                if (state is CertificationUpdated) {
-                  // Handle any actions after adding/removing certification
+                if (state is AddCertificationsLoading) {
+                  showLoading(context, 'Adding Certifications');
+                } else if (state is AddCertificationsSuccess) {
+                  navKey.currentState!.pushReplacementNamed(RoutesName.project);
+                } else if (state is AddCertificationsFailure) {
+                  showAwesomeDialog(context,
+                      title: 'Error',
+                      desc: state.message,
+                      onOk: () {},
+                      dialogType: DialogType.error);
+                } else if (state is ExpirationDateChanged) {
+                  viewModel.selectedExpirationDate = state.date;
                 }
               },
-              buildWhen: (previous, current) =>
-              current is CertificationInitialState ||
-                  current is ValidateColorButtonState ||
-                  current is CertificationUpdated,
+              listenWhen: (previous, current) {
+                if (previous is AddCertificationsLoading ||
+                    current is AddCertificationsFailure) {
+                  hideLoading();
+                }
+                return current is! CertificationInitialState;
+              },
               builder: (context, state) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,90 +85,16 @@ class CertificationScreen extends StatelessWidget {
                             validator: viewModel.validateIssuingOrganization,
                           ),
                           verticalSpace(20),
-                          GestureDetector(
-                            onTap: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2030),
-                              );
-                              if (pickedDate != null) {
-                                viewModel.setDateEarned(pickedDate);
-                              }
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF4F4F4),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              height: 70.h,
-                              padding: const EdgeInsets.only(top: 20),
-                              child: InputDecorator(
-                                decoration: InputDecoration(
-                                  labelText: 'Date Earned',
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                child: Text(
-                                  viewModel.selectedDateEarned != null
-                                      ? DateFormat('M/d/yyyy')
-                                      .format(viewModel.selectedDateEarned!)
-                                      : 'Select Date',
-                                  style: TextStyle(
-                                    color: viewModel.selectedDateEarned == null
-                                        ? Colors.grey
-                                        : Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          DateInputField(
+                            selectedDate: viewModel.selectedDateEarned,
+                            onDateSelected: viewModel.setDateEarned,
+                            labelText: 'Date Earned',
                           ),
                           verticalSpace(20),
-                          GestureDetector(
-                            onTap: () async {
-                              DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2030),
-                              );
-                              if (pickedDate != null) {
-                                viewModel.setExpirationDate(pickedDate);
-                              }
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF4F4F4),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              height: 70.h,
-                              padding: const EdgeInsets.only(top: 20),
-                              child: InputDecorator(
-                                decoration: InputDecoration(
-                                  labelText: 'Expiration Date',
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                child: Text(
-                                  viewModel.selectedExpirationDate != null
-                                      ? DateFormat('M/d/yyyy')
-                                      .format(viewModel.selectedExpirationDate!)
-                                      : 'Select Date',
-                                  style: TextStyle(
-                                    color: viewModel.selectedExpirationDate == null
-                                        ? Colors.grey
-                                        : Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          DateInputField(
+                            selectedDate: viewModel.selectedExpirationDate,
+                            onDateSelected: viewModel.setExpirationDate,
+                            labelText: 'Expiration Date',
                           ),
                           verticalSpace(20),
                           CustomAuthButton(
@@ -168,110 +115,25 @@ class CertificationScreen extends StatelessWidget {
                     ),
                     // Display the List of Certifications
                     if (viewModel.certifications.isNotEmpty)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Added Certifications:',
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          verticalSpace(10),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: viewModel.certifications.length,
-                            itemBuilder: (context, index) {
-                              final certification = viewModel.certifications[index];
-
-                              return Card(
-                                margin: EdgeInsets.only(bottom: 10.h),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  side: BorderSide(color: AppColors.primaryColor, width: 1),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(12.w),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        certification.certificationName,
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      ),
-                                      verticalSpace(5),
-                                      Text(
-                                        'Issued by: ${certification.issuingOrganization}',
-                                        style: TextStyle(fontSize: 14.sp),
-                                      ),
-                                      verticalSpace(5),
-                                      Text(
-                                        'Date Earned: ${certification.dateEarned}',
-                                        style: TextStyle(fontSize: 14.sp),
-                                      ),
-                                      verticalSpace(5),
-                                      Text(
-                                        'Expiration Date: ${certification.expirationDate}',
-                                        style: TextStyle(fontSize: 14.sp),
-                                      ),
-                                      verticalSpace(10),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(Icons.delete, color: Colors.red),
-                                            onPressed: () {
-                                              final scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
-                                              if (scaffoldMessenger == null) {
-                                                debugPrint('ScaffoldMessenger not found.');
-                                                return;
-                                              }
-
-                                              scaffoldMessenger.hideCurrentSnackBar();
-                                              viewModel.removeCertification(certification);
-
-                                              scaffoldMessenger.showSnackBar(
-                                                SnackBar(
-                                                  content: Text('${certification.certificationName} removed!'),
-                                                  backgroundColor: Colors.red,
-                                                  action: SnackBarAction(
-                                                    label: 'Undo',
-                                                    onPressed: () {
-                                                      scaffoldMessenger.hideCurrentSnackBar();
-                                                      viewModel.addCertificationBack(certification);
-                                                      scaffoldMessenger.showSnackBar(
-                                                        SnackBar(
-                                                          content: Text('${certification.certificationName} restored!'),
-                                                          backgroundColor: Colors.green,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                      CertificationList(
+                          certifications: viewModel.certifications,
+                          onRemove: (CertificationEntity certification) {
+                            viewModel.removeCertification(
+                              certification,
+                            );
+                          },
+                          onUndo: (CertificationEntity certification) {
+                            viewModel.addCertificationBack(
+                              certification,
+                            );
+                          }),
                     // NEXT Button
                     CustomAuthButton(
                       text: 'NEXT',
                       onPressed: viewModel.certifications.isNotEmpty
-                          ? () {  navKey.currentState!.pushReplacementNamed(RoutesName.additionalinfo);}
+                          ? () {
+                              viewModel.next();
+                            }
                           : null,
                       color: viewModel.certifications.isNotEmpty
                           ? AppColors.primaryColor

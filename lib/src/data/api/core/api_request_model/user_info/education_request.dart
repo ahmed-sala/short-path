@@ -12,10 +12,13 @@ class EducationRequest {
     this.educations,
   });
 
-  factory EducationRequest.fromJson(Map<String, dynamic> json) =>
-      _$EducationRequestFromJson(json);
+  factory EducationRequest.fromJson(Map<String, dynamic> json) {
+    return _$EducationRequestFromJson(json);
+  }
 
-  Map<String, dynamic> toJson() => _$EducationRequestToJson(this);
+  Map<String, dynamic> toJson() {
+    return _$EducationRequestToJson(this);
+  }
 }
 
 @JsonSerializable()
@@ -24,9 +27,10 @@ class Educations {
   final String? degreeCertification;
   @JsonKey(name: "institutionName")
   final String? institutionName;
+  @JsonKey(name: "fieldOfStudy")
+  final String? fieldOfStudy;
   @JsonKey(name: "location")
   final String? location;
-
   @JsonKey(name: "graduationDate")
   @LocalDateConverter()
   final DateTime? graduationDate;
@@ -37,15 +41,19 @@ class Educations {
   Educations({
     this.degreeCertification,
     this.institutionName,
+    this.fieldOfStudy,
     this.location,
     this.graduationDate,
     this.projects,
   });
 
-  factory Educations.fromJson(Map<String, dynamic> json) =>
-      _$EducationsFromJson(json);
+  factory Educations.fromJson(Map<String, dynamic> json) {
+    return _$EducationsFromJson(json);
+  }
 
-  Map<String, dynamic> toJson() => _$EducationsToJson(this);
+  Map<String, dynamic> toJson() {
+    return _$EducationsToJson(this);
+  }
 }
 
 @JsonSerializable()
@@ -66,14 +74,15 @@ class Projects {
     this.toolsTechnologiesUsed,
   });
 
-  factory Projects.fromJson(Map<String, dynamic> json) =>
-      _$ProjectsFromJson(json);
+  factory Projects.fromJson(Map<String, dynamic> json) {
+    return _$ProjectsFromJson(json);
+  }
 
-  Map<String, dynamic> toJson() => _$ProjectsToJson(this);
+  Map<String, dynamic> toJson() {
+    return _$ProjectsToJson(this);
+  }
 }
 
-/// **Custom DateTime Converter**
-/// Ensures `graduationDate` is always serialized as `"yyyy-MM-dd"`
 class LocalDateConverter implements JsonConverter<DateTime?, String?> {
   const LocalDateConverter();
 

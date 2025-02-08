@@ -33,9 +33,10 @@ class EducationScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
-                      child: EducationHeader(
-                    title: 'Add Your Education',
-                  )),
+                    child: EducationHeader(
+                      title: 'Add Your Education',
+                    ),
+                  ),
                   verticalSpace(30),
                   CustomTextFormField(
                     keyboardType: TextInputType.text,
@@ -47,14 +48,51 @@ class EducationScreen extends StatelessWidget {
                         : null,
                   ),
                   verticalSpace(20),
-                  CustomTextFormField(
-                    keyboardType: TextInputType.text,
-                    hintText: 'Enter your degree of certificate',
-                    controller: educationViewmodel.degreeCertification,
-                    labelText: 'Degree of Certification',
-                    validator: (val) => val == null || val.isEmpty
-                        ? 'Please enter your degree'
-                        : null,
+                  // Row for Degree Dropdown and Field of Study
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            labelText: 'Degree',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          // Use a property from your view model to store the selected degree.
+                          value: educationViewmodel.selectedDegree,
+                          items: [
+                            'Associates',
+                            'Bachelors',
+                            'Masters',
+                            'Doctorate'
+                          ]
+                              .map((degree) => DropdownMenuItem(
+                                    value: degree,
+                                    child: Text(degree),
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            educationViewmodel.updateSelectedDegree(value);
+                          },
+                          validator: (value) => value == null
+                              ? 'Please select your degree'
+                              : null,
+                        ),
+                      ),
+                      SizedBox(width: 16.w),
+                      Expanded(
+                        child: CustomTextFormField(
+                          keyboardType: TextInputType.text,
+                          hintText: 'Field of Study',
+                          controller: educationViewmodel.fieldOfStudyController,
+                          labelText: 'Field of Study',
+                          validator: (val) => val == null || val.isEmpty
+                              ? 'Please enter your field of study'
+                              : null,
+                        ),
+                      ),
+                    ],
                   ),
                   verticalSpace(20),
                   CustomTextFormField(

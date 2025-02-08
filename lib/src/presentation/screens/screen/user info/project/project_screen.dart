@@ -1,10 +1,15 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_drop_down_field.dart';
+
+import '../../../../../../core/dialogs/show_hide_loading.dart';
 import '../../../../../short_path.dart';
 import '../../../../mangers/infromation_gathering/Project/Project_State.dart';
 import '../../../../mangers/infromation_gathering/Project/Project_Viewmodel.dart';
@@ -28,13 +33,30 @@ class ProjectScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
             child: BlocConsumer<ProjectViewmodel, ProjectState>(
               listener: (context, state) {
-                if (state is ProjectUpdated) {
+                if (state is AddProjectFailure) {
+                  showAwesomeDialog(context,
+                      title: 'Error',
+                      desc: state.error,
+                      onOk: () {},
+                      dialogType: DialogType.error);
+                } else if (state is AddProjectSuccess) {
+                  navKey.currentState!
+                      .pushReplacementNamed(RoutesName.certification);
+                } else if (state is AddProjectLoading) {
+                  showLoading(context, 'Adding Projects');
                 }
               },
               buildWhen: (previous, current) =>
-              current is ProjectInitialState ||
+                  current is ProjectInitialState ||
                   current is ValidateColorButtonState ||
                   current is ProjectUpdated,
+              listenWhen: (previous, current) {
+                if (previous is AddProjectLoading ||
+                    current is AddProjectFailure) {
+                  hideLoading();
+                }
+                return current is! ProjectInitialState;
+              },
               builder: (context, state) {
                 final viewModel = context.read<ProjectViewmodel>();
 
@@ -58,28 +80,27 @@ class ProjectScreen extends StatelessWidget {
                           verticalSpace(20),
 
                           // Role Field with Dropdown Suggestions
-                          DropdownButtonFormField<String>(
-                            value: viewModel.roleController.text.isEmpty ? null : viewModel.roleController.text,
-                            hint: const Text('Select Role'),
-                            items: ['Full-time', 'Part-time', 'Freelance'].map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                          CustomDropDownField(
+                            value: viewModel.roleController.text,
+                            hintText: 'Select role',
+                            items: ['Full-time', 'Part-time', 'Freelance'],
                             onChanged: (String? newValue) {
                               if (newValue != null) {
                                 viewModel.roleController.text = newValue;
                                 viewModel.validateColorButton();
                               }
                             },
-                            decoration: InputDecoration(
-                              labelText: 'Role',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
                             validator: viewModel.validateRole,
+                            label: 'Role',
+                          ),
+
+                          verticalSpace(20),
+                          CustomTextFormField(
+                            hintText: 'Enter Project Link',
+                            keyboardType: TextInputType.text,
+                            controller: viewModel.projectLinkController,
+                            labelText: 'Project Link',
+                            validator: viewModel.validateProjectLink,
                           ),
                           verticalSpace(20),
 
@@ -133,12 +154,14 @@ class ProjectScreen extends StatelessWidget {
                                 margin: EdgeInsets.only(bottom: 10.h),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  side: BorderSide(color: AppColors.primaryColor, width: 1),
+                                  side: const BorderSide(
+                                      color: AppColors.primaryColor, width: 1),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(12.w),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         project.projectTitle,
@@ -161,37 +184,51 @@ class ProjectScreen extends StatelessWidget {
                                       verticalSpace(5),
                                       Text(
                                         'Technologies Used: ${project.technologiesUsed}',
-                                        style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+                                        style: TextStyle(
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.w500),
                                       ),
                                       verticalSpace(10),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           IconButton(
-                                            icon: const Icon(Icons.delete, color: Colors.red),
+                                            icon: const Icon(Icons.delete,
+                                                color: Colors.red),
                                             onPressed: () {
-                                              final scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
+                                              final scaffoldMessenger =
+                                                  ScaffoldMessenger.maybeOf(
+                                                      context);
                                               if (scaffoldMessenger == null) {
-                                                debugPrint('ScaffoldMessenger not found.');
+                                                debugPrint(
+                                                    'ScaffoldMessenger not found.');
                                                 return;
                                               }
 
-                                              scaffoldMessenger.hideCurrentSnackBar();
+                                              scaffoldMessenger
+                                                  .hideCurrentSnackBar();
                                               viewModel.removeProject(project);
 
                                               scaffoldMessenger.showSnackBar(
                                                 SnackBar(
-                                                  content: Text('${project.projectTitle} removed!'),
+                                                  content: Text(
+                                                      '${project.projectTitle} removed!'),
                                                   backgroundColor: Colors.red,
                                                   action: SnackBarAction(
                                                     label: 'Undo',
                                                     onPressed: () {
-                                                      scaffoldMessenger.hideCurrentSnackBar();
-                                                      viewModel.addProjectBack(project);
-                                                      scaffoldMessenger.showSnackBar(
+                                                      scaffoldMessenger
+                                                          .hideCurrentSnackBar();
+                                                      viewModel.addProjectBack(
+                                                          project);
+                                                      scaffoldMessenger
+                                                          .showSnackBar(
                                                         SnackBar(
-                                                          content: Text('${project.projectTitle} restored!'),
-                                                          backgroundColor: Colors.green,
+                                                          content: Text(
+                                                              '${project.projectTitle} restored!'),
+                                                          backgroundColor:
+                                                              Colors.green,
                                                         ),
                                                       );
                                                     },
@@ -216,8 +253,8 @@ class ProjectScreen extends StatelessWidget {
                       text: 'NEXT',
                       onPressed: viewModel.projects.isNotEmpty
                           ? () {
-                        navKey.currentState!.pushReplacementNamed(RoutesName.certification);
-                      }
+                              viewModel.next();
+                            }
                           : null,
                       color: viewModel.projects.isNotEmpty
                           ? AppColors.primaryColor

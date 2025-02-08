@@ -32,3 +32,16 @@ class ValidateColorButtonState extends ProjectState {
   final bool validate;
   const ValidateColorButtonState({required this.validate});
 }
+
+class AddProjectLoading extends ProjectState {
+  const AddProjectLoading();
+}
+
+class AddProjectSuccess extends ProjectState {
+  const AddProjectSuccess();
+}
+
+class AddProjectFailure extends ProjectState {
+  final String error;
+  const AddProjectFailure({required this.error});
+}

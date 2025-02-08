@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:short_path/core/common/api/api_result.dart';
+import 'package:short_path/src/data/api/core/error/error_handler.dart';
 
 import '../../../../domain/entities/user_info/Project_Entity.dart';
 import '../../../../domain/usecases/Project/project_usecase.dart';
@@ -15,7 +17,7 @@ class ProjectViewmodel extends Cubit<ProjectState> {
 
   final ProjectUsecase projectUsecase;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  final TextEditingController projectLinkController = TextEditingController();
   final TextEditingController projectTitleController = TextEditingController();
   final TextEditingController roleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -35,6 +37,12 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   String? validateProjectTitle(String? value) {
     return (value == null || value.trim().isEmpty)
         ? 'Project Title is required'
+        : null;
+  }
+
+  String? validateProjectLink(String? value) {
+    return (value == null || value.trim().isEmpty)
+        ? 'Project Link is required'
         : null;
   }
 
@@ -61,6 +69,7 @@ class ProjectViewmodel extends Cubit<ProjectState> {
         role: roleController.text.trim(),
         description: descriptionController.text.trim(),
         technologiesUsed: technologiesUsedController.text.trim(),
+        projectLink: '',
       );
 
       projects.add(project);
@@ -79,12 +88,24 @@ class ProjectViewmodel extends Cubit<ProjectState> {
     emit(ProjectUpdated()); // Notify UI
   }
 
-  void next() {
+  void next() async {
     if (projects.isNotEmpty) {
-      for (var project in projects) {
-        projectUsecase.invoke(project);
+      try {
+        emit(AddProjectLoading());
+        var response =
+            await projectUsecase.invoke(ProjectsEntity(projects: projects));
+        switch (response) {
+          case Success<void>():
+            emit(AddProjectSuccess());
+            break;
+          case Failures<void>():
+            var errorMessage =
+                ErrorHandler.fromException(response.exception).errorMessage;
+            emit(AddProjectFailure(error: errorMessage));
+        }
+      } catch (e) {
+        emit(AddProjectFailure(error: e.toString()));
       }
-      emit(ProjectUpdated());
     }
   }
 
@@ -101,7 +122,7 @@ class ProjectViewmodel extends Cubit<ProjectState> {
     roleController.clear();
     descriptionController.clear();
     technologiesUsedController.clear();
-    validateColorButton(); // Revalidate after clearing fields
+    projectLinkController.clear();
   }
 
   @override

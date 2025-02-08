@@ -1,4 +1,4 @@
-import 'package:short_path/src/data/api/core/api_request_model/education_request.dart';
+import '../../api/core/api_request_model/user_info/education_request.dart';
 
 class EducationDto {
   EducationDto({
@@ -41,12 +41,14 @@ class EducationsDto {
     String? location,
     DateTime? graduationDate,
     List<ProjectsDto>? projects,
+    String? fieldOfStudy,
   }) {
     _degreeCertification = degreeCertification;
     _institutionName = institutionName;
     _location = location;
     _graduationDate = graduationDate;
     _projects = projects;
+    _fieldOfStudy = fieldOfStudy;
   }
 
   EducationsDto.fromJson(dynamic json) {
@@ -66,12 +68,14 @@ class EducationsDto {
   String? _location;
   DateTime? _graduationDate;
   List<ProjectsDto>? _projects;
+  String? _fieldOfStudy;
 
   String? get degreeCertification => _degreeCertification;
   String? get institutionName => _institutionName;
   String? get location => _location;
   DateTime? get graduationDate => _graduationDate;
   List<ProjectsDto>? get projects => _projects;
+  String? get fieldOfStudy => _fieldOfStudy;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -92,6 +96,7 @@ class EducationsDto {
       location: _location,
       graduationDate: _graduationDate,
       projects: _projects?.map((e) => e.toRequest()).toList(),
+      fieldOfStudy: _fieldOfStudy,
     );
   }
 }

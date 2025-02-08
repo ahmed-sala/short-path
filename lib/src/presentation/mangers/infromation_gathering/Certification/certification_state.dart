@@ -27,10 +27,24 @@ class DateEarnedChanged extends CertificationState {
 }
 
 class ExpirationDateChanged extends CertificationState {
-  const ExpirationDateChanged();
+  final DateTime? date;
+  const ExpirationDateChanged(this.date);
 }
 
 class ValidateColorButtonState extends CertificationState {
   final bool validate;
   const ValidateColorButtonState({required this.validate});
+}
+
+class AddCertificationsSuccess extends CertificationState {
+  const AddCertificationsSuccess();
+}
+
+class AddCertificationsFailure extends CertificationState {
+  final String message;
+  const AddCertificationsFailure({required this.message});
+}
+
+class AddCertificationsLoading extends CertificationState {
+  const AddCertificationsLoading();
 }
