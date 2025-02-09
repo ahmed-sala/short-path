@@ -11,9 +11,7 @@ import 'Project_State.dart';
 @injectable
 @singleton
 class ProjectViewmodel extends Cubit<ProjectState> {
-  ProjectViewmodel(this.projectUsecase) : super(ProjectInitialState()) {
-    _attachListeners();
-  }
+  ProjectViewmodel(this.projectUsecase) : super(ProjectInitialState());
   String? role;
   final ProjectUsecase projectUsecase;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -26,13 +24,6 @@ class ProjectViewmodel extends Cubit<ProjectState> {
 
   List<ProjectEntity> projects = []; // List to store projects
   bool validate = false;
-
-  void _attachListeners() {
-    projectTitleController.addListener(validateColorButton);
-    roleController.addListener(validateColorButton);
-    descriptionController.addListener(validateColorButton);
-    technologiesUsedController.addListener(validateColorButton);
-  }
 
   String? validateProjectTitle(String? value) {
     return (value == null || value.trim().isEmpty)
