@@ -61,8 +61,8 @@ class EducationProjectScreen extends StatelessWidget {
                     children: [
                       Center(
                           child: EducationHeader(
-                            title: 'Education Projects',
-                          )),
+                        title: 'Education Projects',
+                      )),
                       verticalSpace(30),
                       CustomTextFormField(
                         hintText: 'Enter Project Name',
@@ -94,19 +94,26 @@ class EducationProjectScreen extends StatelessWidget {
                           Expanded(
                             flex: 4,
                             child: Autocomplete<String>(
-                              optionsBuilder: (TextEditingValue textEditingValue) {
+                              optionsBuilder:
+                                  (TextEditingValue textEditingValue) {
                                 if (textEditingValue.text.isEmpty) {
                                   return const Iterable<String>.empty();
                                 }
-                                return suggestedTechnologies.where((String option) {
-                                  return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                                return suggestedTechnologies
+                                    .where((String option) {
+                                  return option.toLowerCase().contains(
+                                      textEditingValue.text.toLowerCase());
                                 });
                               },
                               onSelected: (String selection) {
-                                viewModel.toolsTechnologiesController.text = selection;
+                                viewModel.toolsTechnologiesController.text =
+                                    selection;
                                 viewModel.addToolsTechnologies(selection);
                               },
-                              fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                              fieldViewBuilder: (BuildContext context,
+                                  TextEditingController textEditingController,
+                                  FocusNode focusNode,
+                                  VoidCallback onFieldSubmitted) {
                                 return TextFormField(
                                   controller: textEditingController,
                                   focusNode: focusNode,
@@ -115,7 +122,8 @@ class EducationProjectScreen extends StatelessWidget {
                                     labelText: 'Tools/Technologies Used',
                                   ),
                                   onChanged: (value) {
-                                    viewModel.toolsTechnologiesController.text = value;
+                                    viewModel.toolsTechnologiesController.text =
+                                        value;
                                   },
                                 );
                               },
@@ -192,7 +200,7 @@ class EducationProjectScreen extends StatelessWidget {
                                   ),
                                   verticalSpace(5),
                                   Text(
-                                      'Project Description: ${project.projectDescription}',
+                                    'Project Description: ${project.projectDescription}',
                                     style: TextStyle(fontSize: 14.sp),
                                   ),
                                   verticalSpace(5),
@@ -206,7 +214,9 @@ class EducationProjectScreen extends StatelessWidget {
                                   ),
                                   verticalSpace(5),
                                   // Display Tools/Technologies Used
-                                  if (project.toolsTechnologies != null && project.toolsTechnologies!.isNotEmpty) ...[
+                                  if (project.toolsTechnologies != null &&
+                                      project
+                                          .toolsTechnologies!.isNotEmpty) ...[
                                     Text(
                                       'Tools/Technologies: ${project.toolsTechnologies!.join(', ')}',
                                       style: TextStyle(
@@ -224,8 +234,8 @@ class EducationProjectScreen extends StatelessWidget {
                                             color: Colors.red),
                                         onPressed: () {
                                           final scaffoldMessenger =
-                                          ScaffoldMessenger.maybeOf(
-                                              context);
+                                              ScaffoldMessenger.maybeOf(
+                                                  context);
                                           if (scaffoldMessenger == null) {
                                             debugPrint(
                                                 'ScaffoldMessenger not found.');
@@ -254,7 +264,7 @@ class EducationProjectScreen extends StatelessWidget {
                                                       content: Text(
                                                           '${project.projectName} restored!'),
                                                       backgroundColor:
-                                                      Colors.green,
+                                                          Colors.green,
                                                     ),
                                                   );
                                                 },
@@ -279,8 +289,8 @@ class EducationProjectScreen extends StatelessWidget {
                   text: 'Add New Education',
                   onPressed: viewModel.projects.isNotEmpty
                       ? () {
-                    viewModel.addEducation();
-                  }
+                          viewModel.addEducation();
+                        }
                       : null,
                   color: viewModel.projects.isNotEmpty
                       ? AppColors.primaryColor

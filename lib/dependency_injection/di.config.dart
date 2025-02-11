@@ -63,6 +63,8 @@ import '../src/presentation/mangers/user_info/profile/profile_viewmodel.dart'
     as _i4;
 import '../src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart'
     as _i639;
+import '../src/presentation/mangers/user_info/work_experience/work_experience_viewmodel.dart'
+    as _i277;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -81,9 +83,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => sharedPrefModule.sharedPreferences,
       preResolve: true,
     );
+    gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
     gh.factory<_i428.EducationProjectUsecase>(
         () => _i428.EducationProjectUsecase());
-    gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
+    gh.factory<_i277.WorkExperienceViewModel>(
+        () => _i277.WorkExperienceViewModel());
     gh.factory<_i563.AdditionalInfoUsecase>(
         () => _i563.AdditionalInfoUsecase());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
@@ -110,12 +114,12 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i692.AuthUseCase>(
         () => _i692.AuthUseCase(gh<_i367.AuthRepository>()));
+    gh.factory<_i748.UserInfoUsecase>(
+        () => _i748.UserInfoUsecase(gh<_i175.UserInfoRepository>()));
     gh.factory<_i665.CertificationUsecase>(
         () => _i665.CertificationUsecase(gh<_i175.UserInfoRepository>()));
     gh.factory<_i859.ProjectUsecase>(
         () => _i859.ProjectUsecase(gh<_i175.UserInfoRepository>()));
-    gh.factory<_i748.UserInfoUsecase>(
-        () => _i748.UserInfoUsecase(gh<_i175.UserInfoRepository>()));
     gh.factory<_i4.ProfileViewmodel>(
         () => _i4.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i312.LoginViewModel>(
@@ -128,10 +132,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1013.ProjectViewmodel(gh<_i859.ProjectUsecase>()));
     gh.factory<_i228.EducationViewmodelNew>(
         () => _i228.EducationViewmodelNew(gh<_i748.UserInfoUsecase>()));
-    gh.factory<_i208.LanguageViewmodel>(
-        () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i639.SkillGatheringViewmodel>(
         () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i208.LanguageViewmodel>(
+        () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
     return this;
   }
 }

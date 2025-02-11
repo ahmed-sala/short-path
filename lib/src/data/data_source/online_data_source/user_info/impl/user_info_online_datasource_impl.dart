@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/skill_request.dart';
+import 'package:short_path/src/data/dto_models/user_info/Additional_info_dto.dart';
 import 'package:short_path/src/data/dto_models/user_info/EducationDto.dart';
 import 'package:short_path/src/data/dto_models/user_info/ProjectDto.dart';
 import 'package:short_path/src/data/dto_models/user_info/certification_do.dart';
@@ -77,8 +78,16 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
   }
 
   @override
-  Future<void> addWorkExperience(WorkExperiencesDto workExperiencesRequest, String token) async {
+  Future<void> addWorkExperience(
+      WorkExperiencesDto workExperiencesRequest, String token) async {
     var workExperience = workExperiencesRequest.toWorkExperienceRequest();
     await _apiServices.addWorkExperience(workExperience, "Bearer $token");
+  }
+
+  @override
+  Future<void> addAdditionalInfo(
+      AdditionalInfoDto additionalInfoDto, String token) {
+    // TODO: implement addAdditionalInfo
+    throw UnimplementedError();
   }
 }
