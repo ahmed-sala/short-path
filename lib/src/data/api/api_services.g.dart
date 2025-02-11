@@ -12,6 +12,7 @@ class _ApiServices implements ApiServices {
   _ApiServices(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   }) {
     baseUrl ??= 'http://10.0.2.2:8099/';
   }
@@ -19,6 +20,8 @@ class _ApiServices implements ApiServices {
   final Dio _dio;
 
   String? baseUrl;
+
+  final ParseErrorLogger? errorLogger;
 
   @override
   Future<AuthResponse> login(LoginRequest loginRequest) async {
@@ -48,6 +51,7 @@ class _ApiServices implements ApiServices {
     try {
       _value = AuthResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
     return _value;
@@ -81,6 +85,7 @@ class _ApiServices implements ApiServices {
     try {
       _value = AuthResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
     return _value;

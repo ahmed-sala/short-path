@@ -12,7 +12,33 @@ import '../../../../shared_widgets/custom_auth_text_feild.dart';
 import '../../../widgets/user info/education/education_header.dart';
 
 class EducationProjectScreen extends StatelessWidget {
-  const EducationProjectScreen({super.key});
+  final List<String> suggestedTechnologies = [
+    'Flutter',
+    'Dart',
+    'React',
+    'Angular',
+    'Vue.js',
+    'Node.js',
+    'Python',
+    'Java',
+    'C#',
+    'JavaScript',
+    'TypeScript',
+    'Swift',
+    'Kotlin',
+    'Go',
+    'Ruby',
+    'PHP',
+    'SQL',
+    'MongoDB',
+    'Firebase',
+    'AWS',
+    'Docker',
+    'Kubernetes',
+    'Git',
+    'Jenkins',
+    'CI/CD',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +61,8 @@ class EducationProjectScreen extends StatelessWidget {
                     children: [
                       Center(
                           child: EducationHeader(
-                        title: 'Education Projects',
-                      )),
+                            title: 'Education Projects',
+                          )),
                       verticalSpace(30),
                       CustomTextFormField(
                         hintText: 'Enter Project Name',
@@ -67,12 +93,32 @@ class EducationProjectScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 4,
-                            child: CustomTextFormField(
-                              hintText: 'Enter Tools/Technologies Used',
-                              keyboardType: TextInputType.text,
-                              controller: viewModel.toolsTechnologiesController,
-                              labelText: 'Tools/Technologies Used',
-                              validator: (value) => null,
+                            child: Autocomplete<String>(
+                              optionsBuilder: (TextEditingValue textEditingValue) {
+                                if (textEditingValue.text.isEmpty) {
+                                  return const Iterable<String>.empty();
+                                }
+                                return suggestedTechnologies.where((String option) {
+                                  return option.toLowerCase().contains(textEditingValue.text.toLowerCase());
+                                });
+                              },
+                              onSelected: (String selection) {
+                                viewModel.toolsTechnologiesController.text = selection;
+                                viewModel.addToolsTechnologies(selection);
+                              },
+                              fieldViewBuilder: (BuildContext context, TextEditingController textEditingController, FocusNode focusNode, VoidCallback onFieldSubmitted) {
+                                return TextFormField(
+                                  controller: textEditingController,
+                                  focusNode: focusNode,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter Tools/Technologies Used',
+                                    labelText: 'Tools/Technologies Used',
+                                  ),
+                                  onChanged: (value) {
+                                    viewModel.toolsTechnologiesController.text = value;
+                                  },
+                                );
+                              },
                             ),
                           ),
                           SizedBox(
@@ -138,16 +184,15 @@ class EducationProjectScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    project.projectName!,
+                                    'Project Name: ${project.projectName}',
                                     style: TextStyle(
                                       fontSize: 16.sp,
-                                      fontWeight: FontWeight.bold,
                                       color: AppColors.primaryColor,
                                     ),
                                   ),
                                   verticalSpace(5),
                                   Text(
-                                    project.projectDescription!,
+                                      'Project Description: ${project.projectDescription}',
                                     style: TextStyle(fontSize: 14.sp),
                                   ),
                                   verticalSpace(5),
@@ -160,6 +205,17 @@ class EducationProjectScreen extends StatelessWidget {
                                     ),
                                   ),
                                   verticalSpace(5),
+                                  // Display Tools/Technologies Used
+                                  if (project.toolsTechnologies != null && project.toolsTechnologies!.isNotEmpty) ...[
+                                    Text(
+                                      'Tools/Technologies: ${project.toolsTechnologies!.join(', ')}',
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: Colors.grey[700],
+                                      ),
+                                    ),
+                                    verticalSpace(5),
+                                  ],
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
@@ -168,8 +224,8 @@ class EducationProjectScreen extends StatelessWidget {
                                             color: Colors.red),
                                         onPressed: () {
                                           final scaffoldMessenger =
-                                              ScaffoldMessenger.maybeOf(
-                                                  context);
+                                          ScaffoldMessenger.maybeOf(
+                                              context);
                                           if (scaffoldMessenger == null) {
                                             debugPrint(
                                                 'ScaffoldMessenger not found.');
@@ -198,7 +254,7 @@ class EducationProjectScreen extends StatelessWidget {
                                                       content: Text(
                                                           '${project.projectName} restored!'),
                                                       backgroundColor:
-                                                          Colors.green,
+                                                      Colors.green,
                                                     ),
                                                   );
                                                 },
@@ -223,8 +279,8 @@ class EducationProjectScreen extends StatelessWidget {
                   text: 'Add New Education',
                   onPressed: viewModel.projects.isNotEmpty
                       ? () {
-                          viewModel.addEducation();
-                        }
+                    viewModel.addEducation();
+                  }
                       : null,
                   color: viewModel.projects.isNotEmpty
                       ? AppColors.primaryColor

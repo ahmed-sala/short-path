@@ -45,6 +45,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                     // Form for Adding Additional Info
                     Form(
                       key: viewModel.formKey,
+                      autovalidateMode: AutovalidateMode.disabled, // Disable global auto-validation
                       onChanged: viewModel.validateColorButton,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,8 +55,12 @@ class AdditionalInfoScreen extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             controller: viewModel.hobbiesAndInterestsController,
                             labelText: 'Hobbies and Interests',
-                            validator: (value) =>
-                                viewModel.validateField(value, 'Hobbies and Interests'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Hobbies and Interests cannot be empty';
+                              }
+                              return null;
+                            },
                           ),
                           verticalSpace(20),
                           CustomTextFormField(
@@ -63,8 +68,12 @@ class AdditionalInfoScreen extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             controller: viewModel.publicationsController,
                             labelText: 'Publications',
-                            validator: (value) =>
-                                viewModel.validateField(value, 'Publications'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Publications cannot be empty';
+                              }
+                              return null;
+                            },
                           ),
                           verticalSpace(20),
                           CustomTextFormField(
@@ -72,8 +81,12 @@ class AdditionalInfoScreen extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             controller: viewModel.awardsAndHonorsController,
                             labelText: 'Awards and Honors',
-                            validator: (value) =>
-                                viewModel.validateField(value, 'Awards and Honors'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Awards and Honors cannot be empty';
+                              }
+                              return null;
+                            },
                           ),
                           verticalSpace(20),
                           CustomTextFormField(
@@ -81,8 +94,12 @@ class AdditionalInfoScreen extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             controller: viewModel.volunteerWorkDescriptionController,
                             labelText: 'Volunteer Work Description',
-                            validator: (value) =>
-                                viewModel.validateField(value, 'Volunteer Work Description'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Volunteer Work Description cannot be empty';
+                              }
+                              return null;
+                            },
                           ),
                           verticalSpace(20),
                           // Month and Year Selection
@@ -141,8 +158,12 @@ class AdditionalInfoScreen extends StatelessWidget {
                           verticalSpace(20),
                           CustomAuthButton(
                             text: 'Add Additional Info',
-                            onPressed: viewModel.addAdditionalInfo,
-                            color: AppColors.primaryColor,
+                            onPressed: viewModel.validate
+                                ? viewModel.addAdditionalInfo
+                                : null,
+                            color: viewModel.validate
+                                ? AppColors.primaryColor
+                                : const Color(0xFF5C6673),
                           ),
                           verticalSpace(30),
                         ],
@@ -206,14 +227,31 @@ class AdditionalInfoScreen extends StatelessWidget {
                                           IconButton(
                                             icon: const Icon(Icons.delete, color: Colors.red),
                                             onPressed: () {
-                                              final scaffoldMessenger = ScaffoldMessenger
-                                                  .maybeOf(context);
+                                              final scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
                                               if (scaffoldMessenger == null) {
-                                                debugPrint(
-                                                    'ScaffoldMessenger not found.');
+                                                debugPrint('ScaffoldMessenger not found.');
                                                 return;
                                               }
-                                            }
+
+                                              // Call the removeAdditionalInfo method
+                                              viewModel.removeAdditionalInfo(additionalInfo);
+
+                                              // Show a Snackbar to confirm deletion
+                                              scaffoldMessenger.showSnackBar(
+                                                SnackBar(
+                                                  content: Text('${additionalInfo.hobbiesAndInterests} deleted!'),
+                                                  backgroundColor: Colors.red,
+                                                  action: SnackBarAction(
+                                                    label: 'Undo',
+                                                    onPressed: () {
+                                                      // Undo the deletion
+                                                      viewModel.additionalInfoList.add(additionalInfo);
+                                                      viewModel.emit(const AdditionalInfoUpdated()); // Rebuild the UI
+                                                    },
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                           ),
                                         ],
                                       ),
