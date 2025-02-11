@@ -14,7 +14,33 @@ import '../../../widgets/user info/education/education_project_list.dart';
 import '../../../widgets/user info/profile/suggestion_list.dart';
 
 class EducationProjectScreen extends StatelessWidget {
-  const EducationProjectScreen({super.key});
+  final List<String> suggestedTechnologies = [
+    'Flutter',
+    'Dart',
+    'React',
+    'Angular',
+    'Vue.js',
+    'Node.js',
+    'Python',
+    'Java',
+    'C#',
+    'JavaScript',
+    'TypeScript',
+    'Swift',
+    'Kotlin',
+    'Go',
+    'Ruby',
+    'PHP',
+    'SQL',
+    'MongoDB',
+    'Firebase',
+    'AWS',
+    'Docker',
+    'Kubernetes',
+    'Git',
+    'Jenkins',
+    'CI/CD',
+  ];
 
   @override
   Widget build(BuildContext context) {

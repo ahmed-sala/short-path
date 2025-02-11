@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import 'package:short_path/src/data/api/core/api_request_model/user_info/additional_infromation_request.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/profile_info_request.dart';
 import 'package:short_path/src/data/api/core/api_response_model/auth_response.dart';
 
@@ -63,6 +64,11 @@ abstract class ApiServices {
   @POST(ApisEndPoints.workExperience)
   Future<void> addWorkExperience(
     @Body() WorkExperienceRequest workExperienceRequest,
+    @Header('Authorization') String token,
+  );
+  @POST(ApisEndPoints.additionalInfo)
+  Future<void> addAdditionalInfo(
+    @Body() AdditionalInfromationRequest additionalInfromationRequest,
     @Header('Authorization') String token,
   );
 }

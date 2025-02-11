@@ -7,6 +7,6 @@ abstract class ApisEndPoints {
   static const String education = "education/";
   static const String certification = "certifications/";
   static const String project = "projects/";
-
   static const String workExperience = "work-experience/";
+  static const String additionalInfo = "additional-information/";
 }

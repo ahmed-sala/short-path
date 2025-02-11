@@ -33,6 +33,8 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   final TextEditingController toolsTechnologiesController =
       TextEditingController();
   final TextEditingController fieldOfStudyController = TextEditingController();
+
+  // List of tools/technologies
   List<String> tollsTechnologies = [];
   List<String> filteredToolSuggestions = [];
 
@@ -137,7 +139,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
           projectName: projectNameController.text,
           projectDescription: projectDescriptionController.text,
           projectLink: projectLinkController.text,
-          toolsTechnologiesUsed: List.from(tollsTechnologies),
+          toolsTechnologies: List.from(tollsTechnologies),
         ),
       );
 
@@ -205,13 +207,14 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   }
 
   void addToolsTechnologies(String value) {
-    if (value.isNotEmpty) {
+    if (value.isNotEmpty && !tollsTechnologies.contains(value)) {
       tollsTechnologies.add(value);
       toolsTechnologiesController.clear();
       emit(ToolsAndTechnologiesAdded());
     }
   }
 
+  // Remove tools/technologies from the list
   void removeToolsTechnologies(String value) {
     if (value.isNotEmpty) {
       tollsTechnologies.remove(value);
