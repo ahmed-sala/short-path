@@ -28,7 +28,6 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
           children: [
             // Skill Input
             Expanded(
-              flex: 3,
               child: CustomTextFormField(
                 labelText: 'Skill',
                 hintText: 'Enter your skill',
@@ -55,7 +54,6 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
             const SizedBox(width: 8),
             // Proficiency Dropdown
             Expanded(
-              flex: 2,
               child: CustomDropdownButtonFormField<String>(
                 labelText: 'Proficiency',
                 hintText: 'Select proficiency',

@@ -28,6 +28,7 @@ class OnboardingNextState extends EducationState {
 
 class UpdateSelectedDateState extends EducationState {
   final DateTime? selectedDate;
+
   const UpdateSelectedDateState(this.selectedDate);
 }
 
@@ -57,6 +58,10 @@ class ToolsAndTechnologiesRemoved extends EducationState {
   const ToolsAndTechnologiesRemoved();
 }
 
+class ToolsAndTechnologiesSelected extends EducationState {
+  const ToolsAndTechnologiesSelected();
+}
+
 class AddEducationLoadingState extends EducationState {
   const AddEducationLoadingState();
 }
@@ -67,6 +72,7 @@ class AddEducationSuccessState extends EducationState {
 
 class AddEducationErrorState extends EducationState {
   final String message;
+
   const AddEducationErrorState(this.message);
 }
 
