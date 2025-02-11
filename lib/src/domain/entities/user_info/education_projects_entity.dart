@@ -4,12 +4,13 @@ class EducationProjectsEntity {
   final String? projectName;
   final String? projectDescription;
   final String? projectLink;
-  final List<String>? toolsTechnologiesUsed;
+  final List<String>? toolsTechnologies; // Correct field name
+
   EducationProjectsEntity({
     this.projectName,
     this.projectDescription,
     this.projectLink,
-    this.toolsTechnologiesUsed,
+    this.toolsTechnologies, // Correct field name
   });
 
   ProjectsDto toDto() {
@@ -17,7 +18,7 @@ class EducationProjectsEntity {
       projectName: projectName,
       projectDescription: projectDescription,
       projectLink: projectLink,
-      toolsTechnologiesUsed: toolsTechnologiesUsed,
+      toolsTechnologiesUsed: toolsTechnologies, // Map to DTO field
     );
   }
 }

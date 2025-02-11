@@ -1,23 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../../domain/entities/user_info/additional_info_entity.dart';
+import '../../../../domain/usecases/additional_info/additional_info_usecase.dart';
 import 'additional_info_state.dart';
 
 @injectable
 class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
-  AdditionalInfoViewmodel() : super(const AdditionalInfoInitialState());
+  final AdditionalInfoUsecase _usecase;
+
+  AdditionalInfoViewmodel(this._usecase) : super(AdditionalInfoInitialState());
 
   // Controllers for text fields
   final hobbiesAndInterestsController = TextEditingController();
   final publicationsController = TextEditingController();
   final awardsAndHonorsController = TextEditingController();
   final volunteerWorkDescriptionController = TextEditingController();
+
+  // Default values for month and year
   String selectedMonth = 'January'; // Default month
   int selectedYear = DateTime.now().year; // Default year
 
+  // Form key for validation
   final formKey = GlobalKey<FormState>();
 
+  // Track form validity
+  bool _validate = false;
+  bool get validate => _validate;
+
+  // List to store additional info entries
   List<AdditionalInfoEntity> additionalInfoList = [];
 
   // Validation methods
@@ -28,16 +40,22 @@ class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
     return null;
   }
 
+  // Validate a single field and emit a state
+  void validateSingleField(String? value, String fieldName) {
+    final error = validateField(value, fieldName);
+    emit(ValidateSingleFieldState(fieldName, error)); // Emit a new state
+  }
+
   // Set selected month
   void setMonth(String month) {
     selectedMonth = month;
-    emit(const AdditionalInfoUpdated());
+    emit(AdditionalInfoUpdated()); // Emit a new state
   }
 
   // Set selected year
   void setYear(int year) {
     selectedYear = year;
-    emit(const AdditionalInfoUpdated());
+    emit(AdditionalInfoUpdated()); // Emit a new state
   }
 
   // Add additional info
@@ -62,21 +80,23 @@ class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
       awardsAndHonorsController.clear();
       volunteerWorkDescriptionController.clear();
 
-      emit(const AdditionalInfoUpdated());
+      // Invoke the use case
+      _usecase.invoke(additionalInfo);
+
+      emit(AdditionalInfoUpdated()); // Emit a new state
     }
   }
 
   // Remove additional info
   void removeAdditionalInfo(AdditionalInfoEntity additionalInfo) {
-    print('Removing item: ${additionalInfo.hobbiesAndInterests}'); // Debug
-    additionalInfoList = List.from(additionalInfoList)..remove(additionalInfo); // Force new list reference
-    print('List length after removal: ${additionalInfoList.length}'); // Debug
-    emit(const AdditionalInfoUpdated()); // Emit a new state
+    additionalInfoList.remove(additionalInfo);
+    _usecase.removeAdditionalInfo(additionalInfo); // Invoke the use case
+    emit(AdditionalInfoUpdated()); // Emit a new state
   }
 
   // Validate button color
   void validateColorButton() {
-    bool isValid = formKey.currentState?.validate() ?? false;
-    emit(ValidateColorButtonState(validate: isValid));
+    _validate = formKey.currentState?.validate() ?? false;
+    emit(ValidateColorButtonState(validate: _validate));
   }
 }

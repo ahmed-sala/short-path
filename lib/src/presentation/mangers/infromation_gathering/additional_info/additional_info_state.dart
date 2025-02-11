@@ -14,3 +14,9 @@ class ValidateColorButtonState extends AdditionalInfoState {
   final bool validate;
   const ValidateColorButtonState({required this.validate});
 }
+
+class ValidateSingleFieldState extends AdditionalInfoState {
+  final String fieldName;
+  final String? error;
+  const ValidateSingleFieldState(this.fieldName, this.error);
+}

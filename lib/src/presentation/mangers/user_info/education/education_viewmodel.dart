@@ -26,12 +26,15 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   final TextEditingController location = TextEditingController();
   final TextEditingController projectNameController = TextEditingController();
   final TextEditingController projectDescriptionController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController projectLinkController = TextEditingController();
   final TextEditingController toolsTechnologiesController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController fieldOfStudyController = TextEditingController();
+
+  // List of tools/technologies
   List<String> tollsTechnologies = [];
+
   // Form Keys
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<FormState> educationProjectFormKey = GlobalKey<FormState>();
@@ -114,6 +117,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
           projectName: projectNameController.text,
           projectDescription: projectDescriptionController.text,
           projectLink: projectLinkController.text,
+          toolsTechnologies: tollsTechnologies, // Correct field name
         ),
       );
 
@@ -180,14 +184,16 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     }
   }
 
+  // Add tools/technologies to the list
   void addToolsTechnologies(String value) {
-    if (value.isNotEmpty) {
+    if (value.isNotEmpty && !tollsTechnologies.contains(value)) {
       tollsTechnologies.add(value);
       toolsTechnologiesController.clear();
       emit(ToolsAndTechnologiesAdded());
     }
   }
 
+  // Remove tools/technologies from the list
   void removeToolsTechnologies(String value) {
     if (value.isNotEmpty) {
       tollsTechnologies.remove(value);
