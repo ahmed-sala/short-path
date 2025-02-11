@@ -53,10 +53,10 @@ class EducationProjectList extends StatelessWidget {
                   ),
                 ),
                 verticalSpace(5),
-                if (project.toolsTechnologiesUsed!.isNotEmpty)
+                if (project.toolsTechnologies!.isNotEmpty)
                   Wrap(
                     spacing: 8,
-                    children: project.toolsTechnologiesUsed!
+                    children: project.toolsTechnologies!
                         .map((tool) => Chip(label: Text(tool)))
                         .toList(),
                   ),

@@ -26,11 +26,6 @@ abstract interface class UserInfoOnlineDataSource {
       CertificationDto certificationRequest, String token);
   Future<void> addProjects(ProjectDto projectRequest, String token);
 
-  Future<void> addWorkExperience(
-    WorkExperiencesDto workExperiencesRequest,
-    String token,
-  );
-
   Future<void> addAdditionalInfo(
       AdditionalInfoDto additionalInfoDto, String token);
 }

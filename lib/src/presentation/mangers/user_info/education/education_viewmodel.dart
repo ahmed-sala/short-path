@@ -28,10 +28,10 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   final TextEditingController location = TextEditingController();
   final TextEditingController projectNameController = TextEditingController();
   final TextEditingController projectDescriptionController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController projectLinkController = TextEditingController();
   final TextEditingController toolsTechnologiesController =
-  TextEditingController();
+      TextEditingController();
   final TextEditingController fieldOfStudyController = TextEditingController();
 
   // List of tools/technologies
@@ -139,7 +139,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
           projectName: projectNameController.text,
           projectDescription: projectDescriptionController.text,
           projectLink: projectLinkController.text,
-          toolsTechnologiesUsed: List.from(tollsTechnologies),
+          toolsTechnologies: List.from(tollsTechnologies),
         ),
       );
 
