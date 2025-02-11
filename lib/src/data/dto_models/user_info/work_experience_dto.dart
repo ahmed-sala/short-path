@@ -6,8 +6,8 @@ class WorkExperienceDto {
   final String companyField;
   final String jobType;
   final String jobLocation;
-  final String startDate;
-  final String endDate;
+  final DateTime startDate;
+  final DateTime endDate;
   final String summary;
   final List<String> toolsTechnologiesUsed;
 
@@ -45,8 +45,8 @@ class WorkExperiencesDto {
 
   WorkExperienceRequest toWorkExperienceRequest() {
     return WorkExperienceRequest(
-      workExperiences: workExperiences.map((e) => e.toWorkExperiences()).toList(),
+      workExperiences:
+          workExperiences.map((e) => e.toWorkExperiences()).toList(),
     );
   }
 }
-

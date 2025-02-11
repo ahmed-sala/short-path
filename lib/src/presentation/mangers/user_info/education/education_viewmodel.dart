@@ -7,6 +7,7 @@ import 'package:short_path/src/domain/entities/user_info/education_detail_entity
 import 'package:short_path/src/domain/entities/user_info/education_entity.dart';
 import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
 
+import '../../../../data/static_data/demo_data_list.dart';
 import '../../../../domain/entities/user_info/education_projects_entity.dart';
 import '../../../screens/screen/user info/education_screen/education_projects_screen.dart';
 import '../../../screens/screen/user info/education_screen/education_screen.dart';
@@ -15,6 +16,7 @@ import 'education_state.dart';
 @injectable
 class EducationViewmodelNew extends Cubit<EducationState> {
   final UserInfoUsecase _userInfoUsecase;
+
   EducationViewmodelNew(this._userInfoUsecase)
       : super(EducationInitialState()) {
     _initializeListeners();
@@ -34,6 +36,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
 
   // List of tools/technologies
   List<String> tollsTechnologies = [];
+  List<String> filteredToolSuggestions = [];
 
   // Form Keys
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -42,6 +45,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   // Data Variables
   List<EducationDetailEntity> educationDetails = [];
   List<EducationProjectsEntity> projects = [];
+
   DateTime? selectedDate;
   bool validate = false;
   int currentPage = 0;
@@ -57,6 +61,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     projectDescriptionController.addListener(_onInputChanged);
     projectLinkController.addListener(_onInputChanged);
     toolsTechnologiesController.addListener(_onInputChanged);
+    toolsTechnologiesController.addListener(onToolChanged);
   }
 
   void _onInputChanged() {
@@ -68,6 +73,23 @@ class EducationViewmodelNew extends Cubit<EducationState> {
         location.text.isNotEmpty &&
         (formKey.currentState?.validate() ?? false);
     emit(ValidateColorButtonState());
+  }
+
+  void onToolChanged() {
+    filteredToolSuggestions = toolsTechnologiesController.text.isEmpty
+        ? technicalSkills
+        : technicalSkills
+            .where((tool) => tool
+                .toLowerCase()
+                .startsWith(toolsTechnologiesController.text.toLowerCase()))
+            .toList();
+    emit(ToolsTechnologiesChanged());
+  }
+
+  void selectTool(int index) {
+    toolsTechnologiesController.text = filteredToolSuggestions[index];
+    filteredToolSuggestions = [];
+    emit(ToolsAndTechnologiesSelected());
   }
 
   void updateSelectedDegree(String? degree) {
@@ -117,7 +139,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
           projectName: projectNameController.text,
           projectDescription: projectDescriptionController.text,
           projectLink: projectLinkController.text,
-          toolsTechnologies: tollsTechnologies, // Correct field name
+          toolsTechnologiesUsed: List.from(tollsTechnologies),
         ),
       );
 
@@ -184,7 +206,6 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     }
   }
 
-  // Add tools/technologies to the list
   void addToolsTechnologies(String value) {
     if (value.isNotEmpty && !tollsTechnologies.contains(value)) {
       tollsTechnologies.add(value);

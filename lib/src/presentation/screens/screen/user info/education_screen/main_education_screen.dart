@@ -62,6 +62,8 @@ class MainEducationScreen extends StatelessWidget {
                 state is DateUpdatedState ||
                 state is ToolsAndTechnologiesAdded ||
                 state is ToolsAndTechnologiesRemoved ||
+                state is ToolsAndTechnologiesSelected ||
+                state is ToolsTechnologiesChanged ||
                 state is AddEducationLoadingState ||
                 state is AddEducationSuccessState ||
                 state is AddEducationErrorState) {

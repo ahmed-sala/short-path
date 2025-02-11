@@ -81,7 +81,7 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
   Future<void> addWorkExperience(
       WorkExperiencesDto workExperiencesRequest, String token) async {
     var workExperience = workExperiencesRequest.toWorkExperienceRequest();
-    await _apiServices.addWorkExperience(workExperience, "Bearer $token");
+    await _apiServices.addWorkExperience(workExperience, token);
   }
 
   @override

@@ -7,7 +7,8 @@ import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
-import 'package:short_path/src/presentation/shared_widgets/custom_drop_down_field.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/project/project_list.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
 
 import '../../../../../../core/dialogs/show_hide_loading.dart';
 import '../../../../../short_path.dart';
@@ -46,17 +47,6 @@ class ProjectScreen extends StatelessWidget {
                   showLoading(context, 'Adding Projects');
                 }
               },
-              buildWhen: (previous, current) =>
-                  current is ProjectInitialState ||
-                  current is ValidateColorButtonState ||
-                  current is ProjectUpdated,
-              listenWhen: (previous, current) {
-                if (previous is AddProjectLoading ||
-                    current is AddProjectFailure) {
-                  hideLoading();
-                }
-                return current is! ProjectInitialState;
-              },
               builder: (context, state) {
                 final viewModel = context.read<ProjectViewmodel>();
 
@@ -66,7 +56,6 @@ class ProjectScreen extends StatelessWidget {
                     // Form for Adding Project
                     Form(
                       key: viewModel.formKey,
-                      onChanged: viewModel.validateColorButton,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -80,18 +69,25 @@ class ProjectScreen extends StatelessWidget {
                           verticalSpace(20),
 
                           // Role Field with Dropdown Suggestions
-                          CustomDropDownField(
-                            value: viewModel.roleController.text,
-                            hintText: 'Select role',
-                            items: ['Full-time', 'Part-time', 'Freelance'],
+                          CustomDropdownButtonFormField(
+                            labelText: 'Role',
+                            hintText: 'Select Role',
+                            value: viewModel.role,
+                            items: ['Full-time', 'Part-time', 'Freelance']
+                                .map(
+                                  (jobLocation) => DropdownMenuItem(
+                                    value: jobLocation,
+                                    child: Text(jobLocation),
+                                  ),
+                                )
+                                .toList(),
                             onChanged: (String? newValue) {
                               if (newValue != null) {
-                                viewModel.roleController.text = newValue;
+                                viewModel.role = newValue;
                                 viewModel.validateColorButton();
                               }
                             },
                             validator: viewModel.validateRole,
-                            label: 'Role',
                           ),
 
                           verticalSpace(20),
@@ -143,107 +139,8 @@ class ProjectScreen extends StatelessWidget {
                             ),
                           ),
                           verticalSpace(10),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: viewModel.projects.length,
-                            itemBuilder: (context, index) {
-                              final project = viewModel.projects[index];
-
-                              return Card(
-                                margin: EdgeInsets.only(bottom: 10.h),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  side: const BorderSide(
-                                      color: AppColors.primaryColor, width: 1),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(12.w),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        project.projectTitle,
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: AppColors.primaryColor,
-                                        ),
-                                      ),
-                                      verticalSpace(5),
-                                      Text(
-                                        'Role: ${project.role}',
-                                        style: TextStyle(fontSize: 14.sp),
-                                      ),
-                                      verticalSpace(5),
-                                      Text(
-                                        'Description: ${project.description}',
-                                        style: TextStyle(fontSize: 14.sp),
-                                      ),
-                                      verticalSpace(5),
-                                      Text(
-                                        'Technologies Used: ${project.technologiesUsed}',
-                                        style: TextStyle(
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      verticalSpace(10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(Icons.delete,
-                                                color: Colors.red),
-                                            onPressed: () {
-                                              final scaffoldMessenger =
-                                                  ScaffoldMessenger.maybeOf(
-                                                      context);
-                                              if (scaffoldMessenger == null) {
-                                                debugPrint(
-                                                    'ScaffoldMessenger not found.');
-                                                return;
-                                              }
-
-                                              scaffoldMessenger
-                                                  .hideCurrentSnackBar();
-                                              viewModel.removeProject(project);
-
-                                              scaffoldMessenger.showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                      '${project.projectTitle} removed!'),
-                                                  backgroundColor: Colors.red,
-                                                  action: SnackBarAction(
-                                                    label: 'Undo',
-                                                    onPressed: () {
-                                                      scaffoldMessenger
-                                                          .hideCurrentSnackBar();
-                                                      viewModel.addProjectBack(
-                                                          project);
-                                                      scaffoldMessenger
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                              '${project.projectTitle} restored!'),
-                                                          backgroundColor:
-                                                              Colors.green,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
+                          ProjectList(
+                            viewModel: viewModel,
                           ),
                         ],
                       ),

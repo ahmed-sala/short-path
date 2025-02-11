@@ -7,12 +7,15 @@ import '../../entities/user_info/Certification_Entity.dart';
 import '../../entities/user_info/Project_Entity.dart';
 import '../../entities/user_info/education_entity.dart';
 import '../../entities/user_info/work_experience_entity.dart';
+import '../../entities/user_info/work_experience_entity.dart';
 
 abstract interface class UserInfoRepository {
   Future<ApiResult<void>> saveProfile(ProfileEntity profileDto);
   Future<ApiResult<void>> saveSkills(SkillEntity skillEntity);
 
   Future<ApiResult<void>> saveLanguages(List<LanguageEntity> languages);
+  Future<ApiResult<void>> saveWorkExperiences(
+      List<WorkExperienceEntity> workExperiences);
   Future<ApiResult<void>> saveEducation(EducationEntity educationEntity);
   Future<ApiResult<void>> saveCertification(
       CertificationsEntity certificationEntity);

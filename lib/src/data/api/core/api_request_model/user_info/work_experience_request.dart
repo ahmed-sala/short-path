@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:short_path/src/domain/entities/user_info/work_experience_entity.dart';
 
@@ -8,7 +9,7 @@ class WorkExperienceRequest {
   @JsonKey(name: "workExperiences")
   final List<WorkExperiences>? workExperiences;
 
-  WorkExperienceRequest ({
+  WorkExperienceRequest({
     this.workExperiences,
   });
 
@@ -20,9 +21,12 @@ class WorkExperienceRequest {
     return _$WorkExperienceRequestToJson(this);
   }
 
-  factory WorkExperienceRequest.fromDomainDto(List<WorkExperienceEntity> workExperiences) {
+  factory WorkExperienceRequest.fromDomainDto(
+      List<WorkExperienceEntity> workExperiences) {
     return WorkExperienceRequest(
-      workExperiences: workExperiences.map((e) => WorkExperiences.fromDomainEntity(e)).toList(),
+      workExperiences: workExperiences
+          .map((e) => WorkExperiences.fromDomainEntity(e))
+          .toList(),
     );
   }
 }
@@ -39,16 +43,19 @@ class WorkExperiences {
   final String? jobType;
   @JsonKey(name: "jobLocation")
   final String? jobLocation;
+
   @JsonKey(name: "startDate")
-  final String? startDate;
+  @LocalDateConverter()
+  final DateTime? startDate;
   @JsonKey(name: "endDate")
-  final String? endDate;
+  @LocalDateConverter()
+  final DateTime? endDate;
   @JsonKey(name: "summary")
   final String? summary;
   @JsonKey(name: "toolsTechnologiesUsed")
   final List<String>? toolsTechnologiesUsed;
 
-  WorkExperiences ({
+  WorkExperiences({
     this.jobTitle,
     this.companyName,
     this.companyField,
@@ -68,7 +75,8 @@ class WorkExperiences {
     return _$WorkExperiencesToJson(this);
   }
 
-  factory WorkExperiences.fromDomainEntity(WorkExperienceEntity workExperience) {
+  factory WorkExperiences.fromDomainEntity(
+      WorkExperienceEntity workExperience) {
     return WorkExperiences(
       jobTitle: workExperience.jobTitle,
       companyName: workExperience.companyName,
@@ -83,4 +91,16 @@ class WorkExperiences {
   }
 }
 
+class LocalDateConverter implements JsonConverter<DateTime?, String?> {
+  const LocalDateConverter();
 
+  @override
+  DateTime? fromJson(String? json) {
+    return json != null ? DateTime.parse(json) : null;
+  }
+
+  @override
+  String? toJson(DateTime? date) {
+    return date != null ? DateFormat("yyyy-MM-dd").format(date) : null;
+  }
+}

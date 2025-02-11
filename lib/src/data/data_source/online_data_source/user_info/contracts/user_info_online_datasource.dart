@@ -16,6 +16,11 @@ abstract interface class UserInfoOnlineDataSource {
   Future<void> addSkills(SkillsDto skillsRequest, String token);
 
   Future<void> addLanguage(LanguagesDto languagesRequest, String token);
+
+  Future<void> addWorkExperience(
+    WorkExperiencesDto workExperiencesRequest,
+    String token,
+  );
   Future<void> addEducation(EducationDto educationRequest, String token);
   Future<void> addCertification(
       CertificationDto certificationRequest, String token);

@@ -65,7 +65,7 @@ class AppRoute {
 
       case RoutesName.workExperience:
         return _handelMaterialPageRoute(
-            settings: settings, widget: const WorkExperienceScreen());
+            settings: settings, widget: WorkExperienceScreen());
 
       default:
         return _handelMaterialPageRoute(
