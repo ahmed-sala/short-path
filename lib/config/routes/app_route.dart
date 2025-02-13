@@ -49,7 +49,7 @@ class AppRoute {
 
       case RoutesName.project:
         return _handelMaterialPageRoute(
-            settings: settings, widget: const ProjectScreen());
+            settings: settings, widget:  ProjectScreen());
 
       case RoutesName.certification:
         return _handelMaterialPageRoute(
