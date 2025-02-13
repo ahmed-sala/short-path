@@ -40,20 +40,32 @@ class ProjectList extends StatelessWidget {
                 ),
                 verticalSpace(5),
                 Text(
-                  'Role: ${project.role}',
+                  project.role,
                   style: TextStyle(fontSize: 14.sp),
                 ),
                 verticalSpace(5),
                 Text(
-                  'Description: ${project.description}',
+                  project.description,
                   style: TextStyle(fontSize: 14.sp),
                 ),
                 verticalSpace(5),
                 Text(
-                  'Technologies Used: ${project.technologiesUsed}',
-                  style:
-                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+                  'Link: ${project.projectLink}',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
+                verticalSpace(5),
+                if (project.technologiesUsed.isNotEmpty)
+                  Wrap(
+                    spacing: 8,
+                    children: project.technologiesUsed
+                        .split(',') // Split the string into a list of tools
+                        .map((tool) => Chip(label: Text(tool.trim()))) // Trim any extra spaces
+                        .toList(),
+                  ),
                 verticalSpace(10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -61,8 +73,7 @@ class ProjectList extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () {
-                        final scaffoldMessenger =
-                            ScaffoldMessenger.maybeOf(context);
+                        final scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
                         if (scaffoldMessenger == null) {
                           debugPrint('ScaffoldMessenger not found.');
                           return;
@@ -82,8 +93,7 @@ class ProjectList extends StatelessWidget {
                                 viewModel.addProjectBack(project);
                                 scaffoldMessenger.showSnackBar(
                                   SnackBar(
-                                    content: Text(
-                                        '${project.projectTitle} restored!'),
+                                    content: Text('${project.projectTitle} restored!'),
                                     backgroundColor: Colors.green,
                                   ),
                                 );

@@ -83,7 +83,7 @@ class ProjectViewmodel extends Cubit<ProjectState> {
     if (formKey.currentState?.validate() ?? false) {
       final project = ProjectEntity(
         projectTitle: projectTitleController.text.trim(),
-        role: role ?? '',
+        role: roleController.text.trim(),
         description: descriptionController.text.trim(),
         technologiesUsed: toolsTechnologies.join(', '),
         projectLink: projectLinkController.text.trim(),
