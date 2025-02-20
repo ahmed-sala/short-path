@@ -38,7 +38,8 @@ class CertificationScreen extends StatelessWidget {
                 if (state is AddCertificationsLoading) {
                   showLoading(context, 'Adding Certifications');
                 } else if (state is AddCertificationsSuccess) {
-                  navKey.currentState!.pushReplacementNamed(RoutesName.project);
+                  navKey.currentState!.pushNamedAndRemoveUntil(
+                      RoutesName.additionalinfo, (route) => false);
                 } else if (state is AddCertificationsFailure) {
                   showAwesomeDialog(context,
                       title: 'Error',

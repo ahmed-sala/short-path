@@ -42,8 +42,8 @@ class LanguageScreen extends StatelessWidget {
                       showLoading(context, 'Adding languages');
                     }
                     if (state is AddLanguageSuccess) {
-                      navKey.currentState!
-                          .pushReplacementNamed(RoutesName.education);
+                      navKey.currentState!.pushNamedAndRemoveUntil(
+                          RoutesName.skillGathering, (route) => false);
                     }
                     if (state is AddLanguageError) {
                       showAwesomeDialog(context,

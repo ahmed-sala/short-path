@@ -6,8 +6,6 @@ import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
-import 'package:short_path/src/data/static_data/demo_data_list.dart';
-import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
 
 import '../../../../../../core/dialogs/awesome_dialoge.dart';
 import '../../../../../../core/dialogs/show_hide_loading.dart';
@@ -18,11 +16,8 @@ import '../../../../shared_widgets/custom_auth_button.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';
 import '../../../widgets/user info/profile/header_widget.dart';
 import '../../../widgets/user info/profile/job_title_input.dart';
-import '../../../widgets/user info/profile/language_input.dart';
-import '../../../widgets/user info/profile/language_list_widget.dart';
 import '../../../widgets/user info/profile/portfolio_input.dart';
 import '../../../widgets/user info/profile/portfolio_list_widget.dart';
-import '../../../widgets/user info/profile/suggestion_list.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -47,8 +42,8 @@ class ProfileScreen extends StatelessWidget {
                   case ProfileLoading():
                     showLoading(context, 'Adding profile...');
                   case ProfileUpdateSuccess():
-                    navKey.currentState!
-                        .pushReplacementNamed(RoutesName.skillGathering);
+                    navKey.currentState!.pushNamedAndRemoveUntil(
+                        RoutesName.language, (route) => false);
                   case ProfileUpdateError():
                     showAwesomeDialog(context,
                         title: 'error',
