@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../../core/styles/spacing.dart';
-import '../../../../mangers/infromation_gathering/Project/Project_Viewmodel.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/core/styles/spacing.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Project/Project_Viewmodel.dart';
 
 class ProjectList extends StatelessWidget {
   const ProjectList({super.key, required this.viewModel});
@@ -63,7 +62,8 @@ class ProjectList extends StatelessWidget {
                     spacing: 8,
                     children: project.technologiesUsed
                         .split(',') // Split the string into a list of tools
-                        .map((tool) => Chip(label: Text(tool.trim()))) // Trim any extra spaces
+                        .map((tool) => Chip(
+                            label: Text(tool.trim()))) // Trim any extra spaces
                         .toList(),
                   ),
                 verticalSpace(10),
@@ -73,7 +73,8 @@ class ProjectList extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () {
-                        final scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
+                        final scaffoldMessenger =
+                            ScaffoldMessenger.maybeOf(context);
                         if (scaffoldMessenger == null) {
                           debugPrint('ScaffoldMessenger not found.');
                           return;
@@ -93,7 +94,8 @@ class ProjectList extends StatelessWidget {
                                 viewModel.addProjectBack(project);
                                 scaffoldMessenger.showSnackBar(
                                   SnackBar(
-                                    content: Text('${project.projectTitle} restored!'),
+                                    content: Text(
+                                        '${project.projectTitle} restored!'),
                                     backgroundColor: Colors.green,
                                   ),
                                 );

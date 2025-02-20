@@ -81,3 +81,9 @@ class AddWorkExperienceLoading extends WorkExperienceState {
 class SessionExpired extends WorkExperienceState {
   const SessionExpired();
 }
+
+class CurrentlyWorkingChanged extends WorkExperienceState {
+  final bool isCurrentlyWorking;
+
+  const CurrentlyWorkingChanged(this.isCurrentlyWorking);
+}

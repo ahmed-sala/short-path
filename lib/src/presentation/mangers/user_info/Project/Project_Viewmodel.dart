@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/data/api/core/error/error_handler.dart';
+import 'package:short_path/src/data/static_data/demo_data_list.dart';
 
 import '../../../../domain/entities/user_info/Project_Entity.dart';
 import '../../../../domain/usecases/Project/project_usecase.dart';
 import 'Project_State.dart';
 
 @injectable
-@singleton
 class ProjectViewmodel extends Cubit<ProjectState> {
   ProjectViewmodel(this.projectUsecase) : super(ProjectInitialState()) {
     // Add a listener to the technologiesUsedController
@@ -17,12 +17,13 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   }
 
   final ProjectUsecase projectUsecase;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController projectTitleController = TextEditingController();
   final TextEditingController projectLinkController = TextEditingController();
   final TextEditingController roleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final TextEditingController technologiesUsedController = TextEditingController();
+  final TextEditingController technologiesUsedController =
+      TextEditingController();
 
   List<ProjectEntity> projects = [];
   List<String> toolsTechnologies = [];
@@ -30,54 +31,6 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   bool validate = false;
 
   String? role;
-
-  final List<String> suggestedTechnologies = [
-    'Flutter',
-    'Dart',
-    'React',
-    'Angular',
-    'Vue.js',
-    'Node.js',
-    'Python',
-    'Java',
-    'C#',
-    'JavaScript',
-    'TypeScript',
-    'Swift',
-    'Kotlin',
-    'Go',
-    'Ruby',
-    'PHP',
-    'SQL',
-    'MongoDB',
-    'Firebase',
-    'AWS',
-    'Docker',
-    'Kubernetes',
-    'Git',
-    'Jenkins',
-    'CI/CD',
-  ];
-
-  String? validateProjectTitle(String? value) {
-    return (value == null || value.trim().isEmpty) ? 'Project Title is required' : null;
-  }
-
-  String? validateProjectLink(String? value) {
-    return (value == null || value.trim().isEmpty) ? 'Project Link is required' : null;
-  }
-
-  String? validateRole(String? value) {
-    return (value == null || value.trim().isEmpty) ? 'Role is required' : null;
-  }
-
-  String? validateDescription(String? value) {
-    return (value == null || value.trim().isEmpty) ? 'Description is required' : null;
-  }
-
-  String? validateTechnologiesUsed(String? value) {
-    return (value == null || value.trim().isEmpty) ? 'Technologies Used are required' : null;
-  }
 
   void addProject() {
     if (formKey.currentState?.validate() ?? false) {
@@ -120,20 +73,22 @@ class ProjectViewmodel extends Cubit<ProjectState> {
 
   void selectTool(int index) {
     final selectedTool = filteredToolSuggestions[index];
-    technologiesUsedController.text = selectedTool; // Set the text to the selected tool
-    addToolsTechnologies(selectedTool); // Add the selected tool to toolsTechnologies
+    technologiesUsedController.text =
+        selectedTool; // Set the text to the selected tool
+    addToolsTechnologies(
+        selectedTool); // Add the selected tool to toolsTechnologies
     filteredToolSuggestions = []; // Clear the suggestions list
     emit(ProjectUpdated()); // Notify the UI to rebuild
   }
 
   void onToolChanged() {
     filteredToolSuggestions = technologiesUsedController.text.isEmpty
-        ? suggestedTechnologies
-        : suggestedTechnologies
-        .where((tool) => tool
-        .toLowerCase()
-        .startsWith(technologiesUsedController.text.toLowerCase()))
-        .toList();
+        ? technicalSkills
+        : technicalSkills
+            .where((tool) => tool
+                .toLowerCase()
+                .startsWith(technologiesUsedController.text.toLowerCase()))
+            .toList();
     emit(ProjectUpdated());
   }
 
@@ -149,13 +104,15 @@ class ProjectViewmodel extends Cubit<ProjectState> {
     if (projects.isNotEmpty) {
       try {
         emit(AddProjectLoading());
-        var response = await projectUsecase.invoke(ProjectsEntity(projects: projects));
+        var response =
+            await projectUsecase.invoke(ProjectsEntity(projects: projects));
         switch (response) {
           case Success<void>():
             emit(AddProjectSuccess());
             break;
           case Failures<void>():
-            var errorMessage = ErrorHandler.fromException(response.exception).errorMessage;
+            var errorMessage =
+                ErrorHandler.fromException(response.exception).errorMessage;
             emit(AddProjectFailure(error: errorMessage));
         }
       } catch (e) {
@@ -171,11 +128,13 @@ class ProjectViewmodel extends Cubit<ProjectState> {
     technologiesUsedController.clear();
     projectLinkController.clear();
     toolsTechnologies.clear();
+    formKey = GlobalKey<FormState>();
   }
 
   @override
   Future<void> close() {
-    technologiesUsedController.removeListener(onToolChanged); // Remove the listener
+    technologiesUsedController
+        .removeListener(onToolChanged); // Remove the listener
     projectTitleController.dispose();
     roleController.dispose();
     descriptionController.dispose();

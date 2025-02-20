@@ -3,19 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/src/domain/entities/user_info/Certification_Entity.dart'; // for .sp, .h, and .w extensions
 
 class CertificationList extends StatelessWidget {
-  /// The list of certifications to display.
   final List<CertificationEntity> certifications;
 
-  /// Called when a certification should be removed.
   final void Function(CertificationEntity certification) onRemove;
 
-  /// Called when a removed certification should be restored.
   final void Function(CertificationEntity certification) onUndo;
 
-  /// The header text above the list.
   final String headerText;
 
-  /// The primary color used for card borders and text.
   final Color primaryColor;
 
   const CertificationList({

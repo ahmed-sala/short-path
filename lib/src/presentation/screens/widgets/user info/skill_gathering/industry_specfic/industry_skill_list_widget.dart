@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
-
-import '../../../../../mangers/user_info/skill_gathering/skill_gathering_state.dart';
-import '../../../../../mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
+import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 
 class IndustrySkillListWidget extends StatelessWidget {
   const IndustrySkillListWidget({super.key});

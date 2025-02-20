@@ -2,22 +2,22 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/config/helpers/validations.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/core/dialogs/awesome_dialoge.dart';
+import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
-
-import '../../../../../../core/dialogs/awesome_dialoge.dart';
-import '../../../../../../core/dialogs/show_hide_loading.dart';
-import '../../../../../short_path.dart';
-import '../../../../mangers/user_info/profile/profile_state.dart';
-import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
-import '../../../../shared_widgets/custom_auth_button.dart';
-import '../../../../shared_widgets/custom_auth_text_feild.dart';
-import '../../../widgets/user info/profile/header_widget.dart';
-import '../../../widgets/user info/profile/job_title_input.dart';
-import '../../../widgets/user info/profile/portfolio_input.dart';
-import '../../../widgets/user info/profile/portfolio_list_widget.dart';
+import 'package:short_path/src/presentation/mangers/user_info/profile/profile_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/profile/profile_viewmodel.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/header_widget.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/job_title_input.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/portfolio_input.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/portfolio_list_widget.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
+import 'package:short_path/src/short_path.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -88,7 +88,9 @@ class ProfileScreen extends StatelessWidget {
                           keyboardType: TextInputType.url,
                           controller: viewModel.linkedInController,
                           labelText: 'LinkedIn Profile',
-                          validator: viewModel.validateLinkedInProfile,
+                          validator: (value) {
+                            return validateLink(value);
+                          },
                         ),
                         verticalSpace(20),
                         CustomTextFormField(
@@ -96,7 +98,9 @@ class ProfileScreen extends StatelessWidget {
                           keyboardType: TextInputType.url,
                           controller: viewModel.profilePictureController,
                           labelText: 'Profile Picture',
-                          validator: viewModel.validateProfilePicture,
+                          validator: (value) {
+                            return validateLink(value);
+                          },
                         ),
                         verticalSpace(20),
                         CustomTextFormField(
@@ -104,7 +108,9 @@ class ProfileScreen extends StatelessWidget {
                           keyboardType: TextInputType.url,
                           controller: viewModel.bioController,
                           labelText: 'Summary',
-                          validator: viewModel.validateProfilePicture,
+                          validator: (value) {
+                            return validateSummary(value);
+                          },
                         ),
                         verticalSpace(20),
                         // LanguageInput(viewModel: viewModel),

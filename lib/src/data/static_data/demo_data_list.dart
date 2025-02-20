@@ -1,4 +1,4 @@
-import '../dto_models/onboarding/onboarding_model.dart';
+import 'package:short_path/src/data/dto_models/onboarding/onboarding_model.dart';
 
 final List<Onboard> demoData = [
   Onboard(

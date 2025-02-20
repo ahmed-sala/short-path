@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
-
-import '../../../../../../core/styles/spacing.dart';
-import '../../../../shared_widgets/next_back_buttuns.dart';
+import 'package:short_path/src/presentation/shared_widgets/next_back_buttuns.dart';
 
 class DetailedEducation extends StatefulWidget {
   const DetailedEducation({super.key});

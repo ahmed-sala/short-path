@@ -222,18 +222,6 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     }
   }
 
-  // Validators
-  String? validateProjectName(String? value) =>
-      (value == null || value.isEmpty) ? 'Project Name is required' : null;
-
-  String? validateProjectDescription(String? value) =>
-      (value == null || value.isEmpty)
-          ? 'Project Description is required'
-          : null;
-
-  String? validateProjectLink(String? value) =>
-      (value == null || value.isEmpty) ? 'Project Link is required' : null;
-
   // Utility Methods
   void _clearEducationFields() {
     institutionName.clear();

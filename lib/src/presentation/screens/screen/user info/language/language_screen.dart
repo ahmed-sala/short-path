@@ -5,17 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/core/styles/spacing.dart';
+import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Language/language_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/language_input.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/language_list_widget.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/suggestion_list.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:short_path/src/short_path.dart';
-
-import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../../core/styles/spacing.dart';
-import '../../../../../../dependency_injection/di.dart';
-import '../../../../mangers/user_info/Language/language_state.dart';
-import '../../../../mangers/user_info/Language/language_viewmodel.dart';
-import '../../../../shared_widgets/custom_auth_button.dart';
-import '../../../widgets/user info/profile/language_input.dart';
-import '../../../widgets/user info/profile/language_list_widget.dart';
-import '../../../widgets/user info/profile/suggestion_list.dart';
 
 class LanguageScreen extends StatelessWidget {
   const LanguageScreen({super.key});

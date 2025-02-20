@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/additional_info/additional_info_state.dart';
-import 'package:short_path/src/presentation/mangers/infromation_gathering/additional_info/additional_info_viewmodel.dart';
+import 'package:short_path/src/presentation/mangers/user_info/additional_info/additional_info_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/additional_info/additional_info_viewmodel.dart';
 
 class VolanteerList extends StatelessWidget {
   const VolanteerList({super.key});

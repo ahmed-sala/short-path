@@ -48,15 +48,6 @@ class ProfileViewmodel extends Cubit<ProfileState> {
     'Native'
   ];
 
-  String? validateJobTitle(String? value) =>
-      value?.isEmpty == true ? 'Please enter your job title' : null;
-
-  String? validateLinkedInProfile(String? value) =>
-      value?.isEmpty == true ? 'Please enter your LinkedIn profile URL' : null;
-
-  String? validateProfilePicture(String? value) =>
-      value?.isEmpty == true ? 'Please enter your profile picture URL' : null;
-
   void onJobTitleChanged() {
     filteredJobSuggestions = jobTitleController.text.isEmpty
         ? jobSuggestions
@@ -92,8 +83,7 @@ class ProfileViewmodel extends Cubit<ProfileState> {
 
       print('Profile: ${profileEntity.portfolioLinks}');
 
-      var response =
-          await userInfoUsecase.invokeProfile(profileEntity);
+      var response = await userInfoUsecase.invokeProfile(profileEntity);
       print('Response: $response');
       switch (response) {
         case Success<void>():

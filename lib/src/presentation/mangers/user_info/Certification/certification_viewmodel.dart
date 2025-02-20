@@ -27,19 +27,6 @@ class CertificationViewmodel extends Cubit<CertificationState> {
   List<CertificationEntity> certifications = [];
 
   // Validation methods for fields
-  String? validateCertificationName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Certification Name cannot be empty';
-    }
-    return null;
-  }
-
-  String? validateIssuingOrganization(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Issuing Organization cannot be empty';
-    }
-    return null;
-  }
 
   // Set the selected date for Date Earned
   void setDateEarned(DateTime date) {

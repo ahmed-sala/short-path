@@ -1,47 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/config/helpers/validations.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
+import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/education/education_header.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/education/education_project_list.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/education/tools_list.dart';
-
-import '../../../../mangers/user_info/education/education_state.dart';
-import '../../../../mangers/user_info/education/education_viewmodel.dart';
-import '../../../../shared_widgets/custom_auth_button.dart';
-import '../../../../shared_widgets/custom_auth_text_feild.dart';
-import '../../../widgets/user info/education/education_header.dart';
-import '../../../widgets/user info/education/education_project_list.dart';
-import '../../../widgets/user info/profile/suggestion_list.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/suggestion_list.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 
 class EducationProjectScreen extends StatelessWidget {
-  final List<String> suggestedTechnologies = [
-    'Flutter',
-    'Dart',
-    'React',
-    'Angular',
-    'Vue.js',
-    'Node.js',
-    'Python',
-    'Java',
-    'C#',
-    'JavaScript',
-    'TypeScript',
-    'Swift',
-    'Kotlin',
-    'Go',
-    'Ruby',
-    'PHP',
-    'SQL',
-    'MongoDB',
-    'Firebase',
-    'AWS',
-    'Docker',
-    'Kubernetes',
-    'Git',
-    'Jenkins',
-    'CI/CD',
-  ];
-
   @override
   Widget build(BuildContext context) {
     var viewModel = context.read<EducationViewmodelNew>();
@@ -71,7 +43,9 @@ class EducationProjectScreen extends StatelessWidget {
                         keyboardType: TextInputType.text,
                         controller: viewModel.projectNameController,
                         labelText: 'Project Name',
-                        validator: viewModel.validateProjectName,
+                        validator: (value) {
+                          return validateProjectName(value);
+                        },
                       ),
                       verticalSpace(20),
                       CustomTextFormField(
@@ -79,7 +53,9 @@ class EducationProjectScreen extends StatelessWidget {
                         keyboardType: TextInputType.multiline,
                         controller: viewModel.projectDescriptionController,
                         labelText: 'Project Description',
-                        validator: viewModel.validateProjectDescription,
+                        validator: (value) {
+                          return validateProjectDescription(value);
+                        },
                       ),
                       verticalSpace(20),
                       CustomTextFormField(
@@ -87,7 +63,9 @@ class EducationProjectScreen extends StatelessWidget {
                         keyboardType: TextInputType.url,
                         controller: viewModel.projectLinkController,
                         labelText: 'Project Link',
-                        validator: viewModel.validateProjectLink,
+                        validator: (value) {
+                          return validateLink(value);
+                        },
                       ),
                       verticalSpace(20),
                       Row(

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_result.dart';
-
-import '../../../../data/api/core/error/error_handler.dart';
-import '../../../../domain/usecases/auth/auth_use_case.dart';
-import 'login_actions.dart';
-import 'login_states.dart';
+import 'package:short_path/src/data/api/core/error/error_handler.dart';
+import 'package:short_path/src/domain/usecases/auth/auth_use_case.dart';
+import 'package:short_path/src/presentation/mangers/auth/login/login_actions.dart';
+import 'package:short_path/src/presentation/mangers/auth/login/login_states.dart';
 
 @injectable
 class LoginViewModel extends Cubit<LoginScreenState> {

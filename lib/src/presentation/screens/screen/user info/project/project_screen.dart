@@ -2,28 +2,29 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/config/helpers/validations.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
+import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Project/Project_State.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Project/Project_Viewmodel.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/suggestion_list.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/project/project_list.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/project/tool_list.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
-import '../../../../../../core/dialogs/show_hide_loading.dart';
-import '../../../../../short_path.dart';
-import '../../../../mangers/infromation_gathering/Project/Project_State.dart';
-import '../../../../mangers/infromation_gathering/Project/Project_Viewmodel.dart';
-import '../../../../shared_widgets/custom_auth_button.dart';
-import '../../../../shared_widgets/custom_auth_text_feild.dart';
-import '../../../widgets/user info/project/tool_list.dart';
-import '../../../widgets/user info/profile/suggestion_list.dart';
+import 'package:short_path/src/short_path.dart';
 
 class ProjectScreen extends StatelessWidget {
-  const ProjectScreen({super.key});
+  ProjectScreen({super.key});
+  ProjectViewmodel viewModel = getIt<ProjectViewmodel>();
 
   @override
   Widget build(BuildContext context) {
-    ProjectViewmodel viewModel = getIt<ProjectViewmodel>();
     return BlocProvider(
       create: (context) => viewModel,
       child: Scaffold(
@@ -62,28 +63,33 @@ class ProjectScreen extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             controller: viewModel.projectTitleController,
                             labelText: 'Project Title',
-                            validator: viewModel.validateProjectTitle,
+                            validator: (value) {
+                              return validateProjectName(value);
+                            },
                           ),
                           verticalSpace(20),
                           CustomDropdownButtonFormField(
                             labelText: 'Role',
                             hintText: 'Select Role',
-                            value: viewModel.roleController.text.isEmpty ? null : viewModel.roleController.text,
+                            value: viewModel.roleController.text.isEmpty
+                                ? null
+                                : viewModel.roleController.text,
                             items: ['Full-time', 'Part-time', 'Freelance']
                                 .map(
                                   (jobLocation) => DropdownMenuItem(
-                                value: jobLocation,
-                                child: Text(jobLocation),
-                              ),
-                            )
+                                    value: jobLocation,
+                                    child: Text(jobLocation),
+                                  ),
+                                )
                                 .toList(),
                             onChanged: (String? newValue) {
                               if (newValue != null) {
                                 viewModel.roleController.text = newValue;
-                                viewModel.validateColorButton();
                               }
                             },
-                            validator: viewModel.validateRole,
+                            validator: (value) {
+                              return validateRole(value);
+                            },
                           ),
                           verticalSpace(20),
                           CustomTextFormField(
@@ -91,7 +97,9 @@ class ProjectScreen extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             controller: viewModel.projectLinkController,
                             labelText: 'Project Link',
-                            validator: viewModel.validateProjectLink,
+                            validator: (value) {
+                              return validateLink(value);
+                            },
                           ),
                           verticalSpace(20),
                           CustomTextFormField(
@@ -99,7 +107,9 @@ class ProjectScreen extends StatelessWidget {
                             keyboardType: TextInputType.multiline,
                             controller: viewModel.descriptionController,
                             labelText: 'Description',
-                            validator: viewModel.validateDescription,
+                            validator: (value) {
+                              return validateProjectDescription(value);
+                            },
                           ),
                           verticalSpace(20),
                           Row(
@@ -110,7 +120,8 @@ class ProjectScreen extends StatelessWidget {
                                 child: CustomTextFormField(
                                   hintText: 'Enter Tools/Technologies Used',
                                   keyboardType: TextInputType.text,
-                                  controller: viewModel.technologiesUsedController,
+                                  controller:
+                                      viewModel.technologiesUsedController,
                                   labelText: 'Tools/Technologies Used',
                                   validator: (value) => null,
                                 ),
@@ -122,7 +133,8 @@ class ProjectScreen extends StatelessWidget {
                                     icon: const Icon(Icons.add),
                                     onPressed: () {
                                       viewModel.addToolsTechnologies(
-                                        viewModel.technologiesUsedController.text,
+                                        viewModel
+                                            .technologiesUsedController.text,
                                       );
                                     },
                                   ),
@@ -131,7 +143,8 @@ class ProjectScreen extends StatelessWidget {
                             ],
                           ),
                           if (viewModel.filteredToolSuggestions.isNotEmpty &&
-                              viewModel.technologiesUsedController.text.isNotEmpty) // Ensure the text field is not empty
+                              viewModel.technologiesUsedController.text
+                                  .isNotEmpty) // Ensure the text field is not empty
                             SuggestionList(
                               suggestions: viewModel.filteredToolSuggestions,
                               onTap: viewModel.selectTool,
@@ -172,8 +185,8 @@ class ProjectScreen extends StatelessWidget {
                       text: 'NEXT',
                       onPressed: viewModel.projects.isNotEmpty
                           ? () {
-                        context.read<ProjectViewmodel>().next();
-                      }
+                              context.read<ProjectViewmodel>().next();
+                            }
                           : null,
                       color: viewModel.projects.isNotEmpty
                           ? AppColors.primaryColor

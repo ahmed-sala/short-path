@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/src/presentation/screens/screen/auth/login_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/auth/register_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/home/home_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/onboarding/auth_decision.dart';
+import 'package:short_path/src/presentation/screens/screen/onboarding/onboarding_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/user info/skiils/skill_information_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/additional_info/additional_info_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/certification/certification_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen/main_education_screen.dart';
@@ -7,13 +13,6 @@ import 'package:short_path/src/presentation/screens/screen/user%20info/language/
 import 'package:short_path/src/presentation/screens/screen/user%20info/profile_screen/profile_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/project/project_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/work_experience/work_experience_screen.dart';
-
-import '../../src/presentation/screens/screen/auth/login_screen.dart';
-import '../../src/presentation/screens/screen/auth/register_screen.dart';
-import '../../src/presentation/screens/screen/home/home_screen.dart';
-import '../../src/presentation/screens/screen/onboarding/auth_decision.dart';
-import '../../src/presentation/screens/screen/onboarding/onboarding_screen.dart';
-import '../../src/presentation/screens/screen/user info/skiils/skill_information_screen.dart';
 
 class AppRoute {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -49,7 +48,7 @@ class AppRoute {
 
       case RoutesName.project:
         return _handelMaterialPageRoute(
-            settings: settings, widget:  ProjectScreen());
+            settings: settings, widget: ProjectScreen());
 
       case RoutesName.certification:
         return _handelMaterialPageRoute(

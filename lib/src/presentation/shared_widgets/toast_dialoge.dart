@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../../../core/styles/colors/app_colore.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
 
 class ToastDialog {
   static void show(String message, Color backgroundColor) {

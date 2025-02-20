@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../../core/styles/colors/app_colore.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
 
 class NoAccountRow extends StatelessWidget {
   const NoAccountRow(

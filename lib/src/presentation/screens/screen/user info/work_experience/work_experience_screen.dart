@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/config/helpers/validations.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
@@ -63,7 +64,8 @@ class WorkExperienceScreen extends StatelessWidget {
               },
               builder: (context, state) {
                 final viewModel = context.read<WorkExperienceViewModel>();
-                final dateError = viewModel.validateDates();
+                final dateError = validateDates(viewModel.startDate,
+                    viewModel.endDate, viewModel.isCurrentlyWorking);
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +79,9 @@ class WorkExperienceScreen extends StatelessWidget {
                             controller: viewModel.jobTitleController,
                             labelText: 'Job Title',
                             hintText: 'Enter Job Title',
-                            validator: viewModel.validateJobTitle,
+                            validator: (value) {
+                              return validateJobTitle(value);
+                            },
                             keyboardType: TextInputType.text,
                           ),
                           verticalSpace(20),
@@ -86,7 +90,9 @@ class WorkExperienceScreen extends StatelessWidget {
                             controller: viewModel.companyNameController,
                             labelText: 'Company Name',
                             hintText: 'Enter Company Name',
-                            validator: viewModel.validateCompanyName,
+                            validator: (value) {
+                              return validateCompanyName(value);
+                            },
                             keyboardType: TextInputType.text,
                           ),
                           verticalSpace(20),
@@ -95,7 +101,9 @@ class WorkExperienceScreen extends StatelessWidget {
                             controller: viewModel.companyFieldController,
                             labelText: 'Company Field',
                             hintText: 'Enter Company Field',
-                            validator: viewModel.validateCompanyField,
+                            validator: (value) {
+                              return validateCompanyField(value);
+                            },
                             keyboardType: TextInputType.text,
                           ),
                           verticalSpace(20),
@@ -113,7 +121,9 @@ class WorkExperienceScreen extends StatelessWidget {
                                 )
                                 .toList(),
                             onChanged: viewModel.selectJobType,
-                            validator: viewModel.validateJobType,
+                            validator: (value) {
+                              return validateJobType(value);
+                            },
                           ),
                           verticalSpace(20),
 
@@ -130,7 +140,9 @@ class WorkExperienceScreen extends StatelessWidget {
                                 )
                                 .toList(),
                             onChanged: viewModel.selectJobLocation,
-                            validator: viewModel.validateJobLocation,
+                            validator: (value) {
+                              return validateJobLocation(value);
+                            },
                           ),
                           verticalSpace(20),
 
@@ -138,24 +150,44 @@ class WorkExperienceScreen extends StatelessWidget {
                           DateInputField(
                             selectedDate: viewModel.startDate,
                             onDateSelected: viewModel.selectStartDate,
-                            labelText: 'Graduation Date',
+                            labelText: 'Start Date',
+                          ),
+
+// Checkbox: Currently Working Here
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: viewModel.isCurrentlyWorking,
+                                checkColor: Colors.white,
+                                fillColor: MaterialStateProperty.resolveWith(
+                                    (states) => AppColors.primaryColor),
+                                onChanged: (value) {
+                                  viewModel.setCurrentlyWorking(value!);
+                                },
+                              ),
+                              const Text("Currently working here"),
+                            ],
                           ),
 
                           verticalSpace(20),
 
-                          // End Date Picker
-                          DateInputField(
-                            selectedDate: viewModel.endDate,
-                            onDateSelected: viewModel.selectEndDate,
-                            labelText: 'Graduation Date',
-                          ),
-                          verticalSpace(20),
+// Conditionally show End Date Picker
+                          if (!viewModel.isCurrentlyWorking) ...[
+                            DateInputField(
+                              selectedDate: viewModel.endDate,
+                              onDateSelected: viewModel.selectEndDate,
+                              labelText: 'End Date',
+                            ),
+                            verticalSpace(20),
+                          ],
 
                           CustomTextFormField(
                             controller: viewModel.summaryController,
                             labelText: 'Job Summary',
                             hintText: 'Enter Job Summary',
-                            validator: viewModel.validateSummary,
+                            validator: (value) {
+                              return validateSummary(value);
+                            },
                             keyboardType: TextInputType.text,
                           ),
                           verticalSpace(20),

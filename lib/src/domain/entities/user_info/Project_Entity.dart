@@ -1,4 +1,4 @@
-import '../../../data/dto_models/user_info/ProjectDto.dart';
+import 'package:short_path/src/data/dto_models/user_info/ProjectDto.dart';
 
 class ProjectsEntity {
   final List<ProjectEntity> projects;

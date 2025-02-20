@@ -85,8 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onOk: () {},
                         dialogType: DialogType.error);
                   case SuccessState():
-                    navKey.currentState!
-                        .pushReplacementNamed(RoutesName.login);
+                    navKey.currentState!.pushReplacementNamed(RoutesName.login);
                   default:
                 }
               },
@@ -138,8 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         controller: registerViewModel
                                             .firstNameController,
                                         labelText: 'First Name',
-                                        validator: (val) =>
-                                            Validations.validateName(val),
+                                        validator: (val) => validateName(val),
                                         keyboardType: TextInputType.name,
                                       ),
                                     ),
@@ -150,8 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         controller: registerViewModel
                                             .lastNameController,
                                         labelText: 'Last Name',
-                                        validator: (val) =>
-                                            Validations.validateName(val),
+                                        validator: (val) => validateName(val),
                                         keyboardType: TextInputType.name,
                                       ),
                                     ),
@@ -163,8 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   keyboardType: TextInputType.emailAddress,
                                   controller: registerViewModel.emailController,
                                   labelText: 'Email Address',
-                                  validator: (val) =>
-                                      Validations.validateEmail(val),
+                                  validator: (val) => validateEmail(val),
                                 ),
                                 verticalSpace(20),
                                 CustomTextFormField(
@@ -179,8 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   controller:
                                       registerViewModel.passwordController,
                                   labelText: 'Password',
-                                  validator: (val) =>
-                                      Validations.validatePassword(val),
+                                  validator: (val) => validatePassword(val),
                                 ),
                                 verticalSpace(20),
                                 CustomTextFormField(
@@ -198,11 +193,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   controller:
                                       registerViewModel.rePasswordController,
                                   labelText: 'Confirm Password',
-                                  validator: (val) =>
-                                      Validations.validateConfirmPassword(
-                                          val,
-                                          registerViewModel
-                                              .passwordController.text),
+                                  validator: (val) => validateConfirmPassword(
+                                      val,
+                                      registerViewModel
+                                          .passwordController.text),
                                 ),
                                 verticalSpace(20),
                                 CustomTextFormField(
@@ -210,8 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   keyboardType: TextInputType.phone,
                                   controller: registerViewModel.phoneController,
                                   labelText: 'Phone Number',
-                                  validator: (val) =>
-                                      Validations.validatePhoneNumber(val),
+                                  validator: (val) => validatePhoneNumber(val),
                                 ),
                                 verticalSpace(20),
                                 CustomTextFormField(
@@ -220,8 +213,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   controller:
                                       registerViewModel.addressController,
                                   labelText: 'Address',
-                                  validator: (val) =>
-                                      Validations.validateAddress(val),
+                                  validator: (val) => validateAddress(val),
                                 ),
                                 verticalSpace(20),
                                 GestureDetector(
