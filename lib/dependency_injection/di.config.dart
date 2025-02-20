@@ -86,8 +86,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
     gh.factory<_i428.EducationProjectUsecase>(
         () => _i428.EducationProjectUsecase());
-    gh.factory<_i563.AdditionalInfoUsecase>(
-        () => _i563.AdditionalInfoUsecase());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
         () => sharedPrefModule.secureStorage);
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
@@ -95,8 +93,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => dioProvider.providePrettyDioLogger());
     gh.factory<_i990.AuthOfflineDataSource>(
         () => _i718.authOfflineDatasourceImpl());
-    gh.factory<_i103.AdditionalInfoViewmodel>(
-        () => _i103.AdditionalInfoViewmodel(gh<_i563.AdditionalInfoUsecase>()));
     gh.singleton<_i687.ApiServices>(() => _i687.ApiServices(gh<_i361.Dio>()));
     gh.factory<_i468.UserInfoOnlineDataSource>(
         () => _i260.UserInfoOnlineDatasourceImpl(gh<_i687.ApiServices>()));
@@ -118,6 +114,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i665.CertificationUsecase(gh<_i175.UserInfoRepository>()));
     gh.factory<_i859.ProjectUsecase>(
         () => _i859.ProjectUsecase(gh<_i175.UserInfoRepository>()));
+    gh.factory<_i563.AdditionalInfoUsecase>(
+        () => _i563.AdditionalInfoUsecase(gh<_i175.UserInfoRepository>()));
     gh.factory<_i4.ProfileViewmodel>(
         () => _i4.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i277.WorkExperienceViewModel>(
@@ -128,6 +126,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i599.RegisterViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i930.CertificationViewmodel>(
         () => _i930.CertificationViewmodel(gh<_i665.CertificationUsecase>()));
+    gh.factory<_i103.AdditionalInfoViewmodel>(
+        () => _i103.AdditionalInfoViewmodel(gh<_i563.AdditionalInfoUsecase>()));
     gh.factory<_i1013.ProjectViewmodel>(
         () => _i1013.ProjectViewmodel(gh<_i859.ProjectUsecase>()));
     gh.factory<_i228.EducationViewmodelNew>(

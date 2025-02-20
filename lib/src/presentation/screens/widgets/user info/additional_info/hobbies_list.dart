@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
-import 'package:short_path/src/data/static_data/demo_data_list.dart';
+import 'package:short_path/src/presentation/mangers/infromation_gathering/additional_info/additional_info_state.dart';
+import 'package:short_path/src/presentation/mangers/infromation_gathering/additional_info/additional_info_viewmodel.dart';
 
-import '../../../../../mangers/user_info/skill_gathering/skill_gathering_state.dart';
-import '../../../../../mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
-
-class SoftSkillListWidget extends StatelessWidget {
-  const SoftSkillListWidget({super.key});
+class HobbiesList extends StatelessWidget {
+  const HobbiesList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SkillGatheringViewmodel, SkillGatheringState>(
+    return BlocBuilder<AdditionalInfoViewmodel, AdditionalInfoState>(
       builder: (context, state) {
-        final skills = context.read<SkillGatheringViewmodel>().softSkills;
-        print('Soft Skills: $skills');
+        final skills = context.read<AdditionalInfoViewmodel>().hobbiesList;
         if (skills.isEmpty) {
           return const Text(
             'No skills added yet. Start by adding some skills.',
@@ -40,11 +37,9 @@ class SoftSkillListWidget extends StatelessWidget {
 
                 scaffoldMessenger
                     .hideCurrentSnackBar(); // Dismiss any previous SnackBar
-                context.read<SkillGatheringViewmodel>().removeSkill(
-                      type: 'Soft',
-                      skill: skill,
-                    );
-                softSkills.add(skill);
+                context
+                    .read<AdditionalInfoViewmodel>()
+                    .removeHobbiesAndInterests(skill);
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
                     content: Text('$skill removed successfully!'),
@@ -54,11 +49,10 @@ class SoftSkillListWidget extends StatelessWidget {
                       onPressed: () {
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
-                        context.read<SkillGatheringViewmodel>().addSkill(
-                              type: 'Soft',
-                              skill: skill,
-                            );
-                        softSkills.remove(skill);
+                        context
+                            .read<AdditionalInfoViewmodel>()
+                            .addHobbiesAndInterests(skill);
+
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
                             content: Text('$skill added back!'),

@@ -41,8 +41,8 @@ class ProjectScreen extends StatelessWidget {
                       onOk: () {},
                       dialogType: DialogType.error);
                 } else if (state is AddProjectSuccess) {
-                  navKey.currentState!
-                      .pushReplacementNamed(RoutesName.certification);
+                  navKey.currentState!.pushNamedAndRemoveUntil(
+                      RoutesName.certification, (route) => false);
                 } else if (state is AddProjectLoading) {
                   showLoading(context, 'Adding Projects');
                 }
