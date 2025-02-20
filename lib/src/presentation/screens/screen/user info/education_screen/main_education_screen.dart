@@ -36,8 +36,8 @@ class MainEducationScreen extends StatelessWidget {
                   dialogType: DialogType.error);
             }
             if (state is AddEducationSuccessState) {
-              navKey.currentState!
-                  .pushReplacementNamed(RoutesName.certification);
+              navKey.currentState!.pushNamedAndRemoveUntil(
+                  RoutesName.workExperience, (route) => false);
             }
           },
           listenWhen: (previous, current) {

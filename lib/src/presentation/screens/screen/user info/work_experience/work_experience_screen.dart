@@ -41,8 +41,8 @@ class WorkExperienceScreen extends StatelessWidget {
                         backgroundColor: Colors.red),
                   );
                 } else if (state is AddWorkExperienceSuccess) {
-                  navKey.currentState!
-                      .pushReplacementNamed(RoutesName.education);
+                  navKey.currentState!.pushNamedAndRemoveUntil(
+                      RoutesName.project, (route) => false);
                 } else if (state is AddWorkExperienceFailed) {
                   showAwesomeDialog(context,
                       title: 'Error',
@@ -56,7 +56,8 @@ class WorkExperienceScreen extends StatelessWidget {
                       title: 'Session Expired',
                       desc: 'Your session has expired. Please login again.',
                       onOk: () {
-                    navKey.currentState!.pushReplacementNamed(RoutesName.login);
+                    navKey.currentState!.pushNamedAndRemoveUntil(
+                        RoutesName.login, (route) => false);
                   }, dialogType: DialogType.error);
                 }
               },

@@ -82,8 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         onOk: () {},
                         dialogType: DialogType.error);
                   case SuccessState():
-                    navKey.currentState!
-                        .pushReplacementNamed(RoutesName.project);
+                    navKey.currentState!.pushNamedAndRemoveUntil(
+                        RoutesName.profile, (route) => false);
                   default:
                 }
               },

@@ -46,7 +46,8 @@ class _SkillInformationScreenState extends State<SkillInformationScreen> {
           listener: (context, state) {
             switch (state) {
               case SkillsAddedSuccessState():
-                navKey.currentState!.pushReplacementNamed(RoutesName.education);
+                navKey.currentState!.pushNamedAndRemoveUntil(
+                    RoutesName.education, (route) => false);
               case SkillsAddedFailureState():
                 showAwesomeDialog(context,
                     title: 'error',
