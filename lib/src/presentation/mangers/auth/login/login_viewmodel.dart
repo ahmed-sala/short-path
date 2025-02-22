@@ -18,6 +18,7 @@ class LoginViewModel extends Cubit<LoginScreenState> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  bool isPasswordVisible = true;
 
   bool validate = false;
   void doAction(LoginScreenActions action) {
@@ -84,5 +85,12 @@ class LoginViewModel extends Cubit<LoginScreenState> {
 
   void _navigateToForgetPassword() {
     emit(NavigateToFogotPasswordState());
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordVisible = !isPasswordVisible;
+    emit(PasswordVisibilityState(
+      isPasswordVisible: isPasswordVisible,
+    ));
   }
 }

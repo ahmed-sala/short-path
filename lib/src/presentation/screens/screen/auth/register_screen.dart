@@ -1,566 +1,122 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
-import 'package:short_path/core/styles/colors/app_colore.dart';
-import 'package:short_path/core/styles/images/app_images.dart';
+import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/mangers/auth/register/register_states.dart';
+import 'package:short_path/src/presentation/mangers/auth/register/register_viewmodel.dart';
+import 'package:short_path/src/presentation/screens/widgets/auth/first_step_register.dart';
+import 'package:short_path/src/presentation/screens/widgets/auth/second_step_register.dart';
 
-import '../../../../../../config/helpers/validations.dart';
-import '../../../../../../config/routes/routes_name.dart';
-import '../../../../../../core/dialogs/show_hide_loading.dart';
-import '../../../../../../dependency_injection/di.dart';
-import '../../../../../core/styles/spacing.dart';
-import '../../../../short_path.dart';
-import '../../../mangers/auth/register/register_actions.dart';
-import '../../../mangers/auth/register/register_states.dart';
-import '../../../mangers/auth/register/register_viewmodel.dart';
-import '../../../shared_widgets/custom_auth_button.dart';
-import '../../../shared_widgets/custom_auth_text_feild.dart';
+import '../../widgets/auth/animated_form.dart';
+import '../../widgets/auth/animated_logo.dart';
+import '../../widgets/auth/custom_progress_bar.dart';
 import '../../widgets/auth/no_account_row.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
-
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen>
-    with TickerProviderStateMixin {
-  final RegisterViewModel registerViewModel = getIt<RegisterViewModel>();
-  bool passwordVisible = true;
-  int currentStep = 0;
-
-  late AnimationController _logoController;
-  late AnimationController _formController;
-  late Animation<double> _logoFadeAnimation;
-  late Animation<double> _logoRotationAnimation;
-  late Animation<Offset> _formSlideAnimation;
-  late Animation<double> _formFadeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-    _logoController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    );
-
-    _formController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-
-    _logoFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _logoController,
-        curve: Curves.easeIn,
-      ),
-    );
-
-    _logoRotationAnimation = Tween<double>(begin: -1.0, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _logoController,
-        curve: Curves.elasticOut,
-      ),
-    );
-
-    _formSlideAnimation = Tween<Offset>(
-      begin: const Offset(0, 1),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _formController,
-        curve: Curves.decelerate,
-      ),
-    );
-
-    _formFadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _formController,
-        curve: Curves.easeIn,
-      ),
-    );
-
-    _logoController.forward().whenComplete(() => _formController.forward());
-  }
-
-  @override
-  void dispose() {
-    _logoController.dispose();
-    _formController.dispose();
-    super.dispose();
-  }
-
-  void nextStep() {
-    if (currentStep < 1) {
-      setState(() => currentStep++);
-    } else {
-      registerViewModel.doAction(RegisterAction());
-    }
-  }
-
-  void previousStep() {
-    if (currentStep > 0) {
-      setState(() => currentStep--);
-    }
-  }
-
-  Widget buildProgressBar() {
-    double progressValue = (currentStep + 1) / 2;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Container(
-              height: 30,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.white.withOpacity(0.4),
-                    Colors.white.withOpacity(0.1)
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.circular(50),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.3),
-                  width: 1,
-                ),
-              ),
-              child: TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0, end: progressValue),
-                duration: const Duration(milliseconds: 1200),
-                curve: Curves.easeOutBack,
-                builder: (context, value, _) => Stack(
-                  children: [
-                    FractionallySizedBox(
-                      widthFactor: value,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFF00C6FF),
-                              Color(0xFF0072FF),
-                              Color(0xFF5B247A)
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFF00C6FF).withOpacity(0.6),
-                              blurRadius: 20,
-                              spreadRadius: 1,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      right: 0,
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blueAccent.withOpacity(0.5),
-                              blurRadius: 15,
-                              offset: const Offset(0, 5),
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.star,
-                          color: Color(0xFF1976D2),
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: 0, end: progressValue * 100),
-            duration: const Duration(milliseconds: 1200),
-            curve: Curves.easeOutCubic,
-            builder: (context, value, _) => Text(
-              '${value.toStringAsFixed(0)}%',
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
-                fontSize: 16,
-                letterSpacing: 1.2,
-                shadows: [
-                  Shadow(
-                    blurRadius: 10,
-                    color: Colors.black38,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildStepOne() {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: CustomTextFormField(
-                hintText: 'First name',
-                controller: registerViewModel.firstNameController,
-                labelText: 'First Name',
-                validator: (val) => Validations.validateName(val),
-                keyboardType: TextInputType.name,
-              ),
-            ),
-            horizontalSpace(20),
-            Expanded(
-              child: CustomTextFormField(
-                hintText: 'Last name',
-                controller: registerViewModel.lastNameController,
-                labelText: 'Last Name',
-                validator: (val) => Validations.validateName(val),
-                keyboardType: TextInputType.name,
-              ),
-            ),
-          ],
-        ),
-        verticalSpace(20),
-        CustomTextFormField(
-          hintText: 'Email',
-          keyboardType: TextInputType.emailAddress,
-          controller: registerViewModel.emailController,
-          labelText: 'Email Address',
-          validator: (val) => Validations.validateEmail(val),
-        ),
-        verticalSpace(20),
-        CustomTextFormField(
-          isPasswordVisible: passwordVisible,
-          showPassword: () {
-            setState(() {
-              passwordVisible = !passwordVisible;
-            });
-          },
-          hintText: 'Password',
-          keyboardType: TextInputType.visiblePassword,
-          controller: registerViewModel.passwordController,
-          labelText: 'Password',
-          validator: (val) => Validations.validatePassword(val),
-        ),
-        verticalSpace(20),
-        CustomTextFormField(
-          hintText: 'Confirm Password',
-          isPasswordVisible: registerViewModel.isRePasswordVisible,
-          showPassword: () {
-            setState(() {
-              registerViewModel.isRePasswordVisible =
-              !registerViewModel.isRePasswordVisible;
-            });
-          },
-          keyboardType: TextInputType.visiblePassword,
-          controller: registerViewModel.rePasswordController,
-          labelText: 'Confirm Password',
-          validator: (val) => Validations.validateConfirmPassword(
-              val, registerViewModel.passwordController.text),
-        ),
-        verticalSpace(20),
-        CustomAuthButton(
-          text: 'NEXT',
-          onPressed: nextStep,
-          color: const Color(0xFF102027),
-        ),
-      ],
-    );
-  }
-
-  Widget buildStepTwo() {
-    return Column(
-      children: [
-        CustomTextFormField(
-          hintText: 'Enter your phone number',
-          keyboardType: TextInputType.phone,
-          controller: registerViewModel.phoneController,
-          labelText: 'Phone Number',
-          validator: (val) => Validations.validatePhoneNumber(val),
-        ),
-        verticalSpace(20),
-        CustomTextFormField(
-          hintText: 'Enter your Address',
-          keyboardType: TextInputType.text,
-          controller: registerViewModel.addressController,
-          labelText: 'Address',
-          validator: (val) => Validations.validateAddress(val),
-        ),
-        verticalSpace(20),
-        GestureDetector(
-          onTap: () async {
-            DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(1900),
-              lastDate: DateTime.now(),
-            );
-            if (pickedDate != null) {
-              registerViewModel.updateSelectedDate(pickedDate);
-            }
-          },
-          child: InputDecorator(
-            decoration: InputDecoration(
-              labelText: 'Birthdate',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: Text(
-              registerViewModel.selectedDate != null
-                  ? DateFormat('M/d/yyyy').format(registerViewModel.selectedDate!)
-                  : 'Select Date',
-              style: TextStyle(
-                color: registerViewModel.selectedDate == null
-                    ? Colors.grey
-                    : Colors.black,
-              ),
-            ),
-          ),
-        ),
-        verticalSpace(5),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      registerViewModel.selectedGender = 'Male';
-                    });
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Radio<String>(
-                        value: 'Male',
-                        groupValue: registerViewModel.selectedGender,
-                        onChanged: (value) {
-                          setState(() {
-                            registerViewModel.selectedGender = value!;
-                          });
-                        },
-                        activeColor: AppColors.primaryColor,
-                      ),
-                      const Text('Male'),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 10),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      registerViewModel.selectedGender = 'Female';
-                    });
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Radio<String>(
-                        value: 'Female',
-                        groupValue: registerViewModel.selectedGender,
-                        onChanged: (value) {
-                          setState(() {
-                            registerViewModel.selectedGender = value!;
-                          });
-                        },
-                        activeColor: AppColors.primaryColor,
-                      ),
-                      const Text('Female'),
-                    ],
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-        verticalSpace(20),
-        Row(
-          children: [
-            Expanded(
-              child: CustomAuthButton(
-                text: 'BACK',
-                onPressed: previousStep,
-                color: const Color(0xFF102027),
-              ),
-            ),
-            horizontalSpace(20),
-            Expanded(
-              child: CustomAuthButton(
-                text: 'REGISTER',
-                onPressed: registerViewModel.validate ? nextStep : null,
-                color: registerViewModel.validate
-                    ? const Color(0xFF102027)
-                    : const Color(0xFFB0BC5),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RegisterViewModel>(
-      create: (_) => registerViewModel,
+      create: (_) => getIt<RegisterViewModel>(),
       child: BlocConsumer<RegisterViewModel, RegisterScreenState>(
         listener: (context, state) {
-          switch (state) {
-            case LoadingState():
-              showLoading(context, 'Registering...');
-              break;
-            case ErrorState():
-              hideLoading();
-              showAwesomeDialog(
-                context,
-                title: 'Error',
-                desc: state.exception!,
-                onOk: () {},
-                dialogType: DialogType.error,
-              );
-              break;
-            case SuccessState():
-              hideLoading();
-              navKey.currentState!.pushReplacementNamed(RoutesName.login);
-              break;
-            default:
+          if (state is LoadingState) {
+            showLoading(context, 'Registering...');
+          } else if (state is ErrorState) {
+            hideLoading();
+            showAwesomeDialog(
+              context,
+              title: 'Error',
+              desc: state.exception ?? '',
+              onOk: () {},
+              dialogType: DialogType.error,
+            );
+          } else if (state is SuccessState) {
+            hideLoading();
+            Navigator.pushReplacementNamed(context, RoutesName.login);
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            body: Stack(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFF1A237E),
-                        Color(0xFF283593),
-                        Color(0xFF1976D2),
-                        Color(0xFF64B5F6),
-                      ],
-                      stops: [0.1, 0.4, 0.7, 1.0],
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30),
-                    child: Hero(
-                      tag: 'logo',
-                      child: FadeTransition(
-                        opacity: _logoFadeAnimation,
-                        child: RotationTransition(
-                          turns: _logoRotationAnimation,
-                          child: Image.asset(
-                            AppImages.logo,
-                            width: 280.w,
-                            height: 280.h,
+          final viewModel = context.read<RegisterViewModel>();
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF1A237E),
+                  Color(0xFF283593),
+                  Color(0xFF1976D2),
+                  Color(0xFF64B5F6),
+                ],
+                stops: [0.1, 0.4, 0.7, 1.0],
+              ),
+            ),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: SingleChildScrollView(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.05),
+                child: Column(
+                  children: [
+                    // Animated logo at the top
+                    const AnimatedLogo(width: 280, height: 280),
+                    // Wrap your form in the AnimatedForm widget
+                    AnimatedForm(
+                      child: Form(
+                        key: viewModel.formKey,
+                        onChanged: () => viewModel.validateColorButton(),
+                        child: Card(
+                          elevation: 30,
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                FadeTransition(
-                  opacity: _formFadeAnimation,
-                  child: SlideTransition(
-                    position: _formSlideAnimation,
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.35),
-                        child: Form(
-                          onChanged: () => registerViewModel
-                              .doAction(ValidateColorButtonAction()),                          key: registerViewModel.formKey,
-                          child: Card(
-                            elevation: 30,
-                            shadowColor: Colors.black45,
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28),
-                            ),
-                            margin: EdgeInsets.symmetric(horizontal: 20.w),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30.w, vertical: 20.h),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Create an Account',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium
-                                        ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      color: const Color(0xFF102027),
-                                    ),
-                                  ),
-                                  verticalSpace(10),
-                                  buildProgressBar(),
-                                  verticalSpace(15),
-                                  currentStep == 0
-                                      ? buildStepOne()
-                                      : buildStepTwo(),
-                                  verticalSpace(20),
-                                  NoAccountRow(
-                                    content: 'Already have an account?',
-                                    actionText: 'Login here',
-                                    onPressed: () {
-                                      navKey.currentState!
-                                          .pushReplacementNamed(RoutesName.login);
-                                    },
-                                  ),
-                                ],
-                              ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Create an Account',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xFF102027),
+                                      ),
+                                ),
+                                const SizedBox(height: 10),
+                                // Progress Bar is added here
+                                CustomProgressBar(),
+                                const SizedBox(height: 10),
+                                viewModel.currentStep == 0
+                                    ? FirstStepRegister()
+                                    : SecondStepRegister(),
+                                const SizedBox(height: 20),
+                                NoAccountRow(
+                                  content: 'Already have an account?',
+                                  actionText: 'Login here',
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(
+                                        context, RoutesName.login);
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         },
