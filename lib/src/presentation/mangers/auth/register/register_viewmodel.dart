@@ -92,8 +92,8 @@ class RegisterViewModel extends Cubit<RegisterScreenState> {
         passwordController.text.isEmpty ||
         rePasswordController.text.isEmpty ||
         phoneController.text.isEmpty ||
-        addressController.text.isEmpty ||
-        selectedDate != null) {
+        addressController.text.isEmpty
+         ) {
       validate = false;
     } else if (!formKey.currentState!.validate()) {
       validate = false;

@@ -24,21 +24,14 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState(
-
-  );
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen>
     with TickerProviderStateMixin {
-  late AnimationController _stepController;
-  late Animation<double> _stepFadeAnimation;
-  late Animation<Offset> _stepSlideAnimation;
-
   final RegisterViewModel registerViewModel = getIt<RegisterViewModel>();
   bool passwordVisible = true;
   int currentStep = 0;
-  String selectedGender = '';
 
   late AnimationController _logoController;
   late AnimationController _formController;
@@ -49,8 +42,6 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   @override
   void initState() {
-
-
     super.initState();
     _logoController = AnimationController(
       vsync: this,
@@ -130,7 +121,10 @@ class _RegisterScreenState extends State<RegisterScreen>
               height: 30,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.white.withOpacity(0.4), Colors.white.withOpacity(0.1)],
+                  colors: [
+                    Colors.white.withOpacity(0.4),
+                    Colors.white.withOpacity(0.1)
+                  ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -158,7 +152,11 @@ class _RegisterScreenState extends State<RegisterScreen>
                       child: Container(
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
-                            colors: [Color(0xFF00C6FF), Color(0xFF0072FF), Color(0xFF5B247A)],
+                            colors: [
+                              Color(0xFF00C6FF),
+                              Color(0xFF0072FF),
+                              Color(0xFF5B247A)
+                            ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
@@ -228,88 +226,70 @@ class _RegisterScreenState extends State<RegisterScreen>
     );
   }
 
-
-
   Widget buildStepOne() {
     return Column(
       children: [
-    Row(
-    children: [
-    Expanded(
-    child: CustomTextFormField(
-      hintText: 'First name',
-      controller: registerViewModel
-          .firstNameController,
-      labelText: 'First Name',
-      validator: (val) =>
-          Validations.validateName(val),
-      keyboardType: TextInputType.name,
-    ),
-    ),
-    horizontalSpace(20),
-    Expanded(
-    child: CustomTextFormField(
-    hintText: 'Last name',
-    controller: registerViewModel
-        .lastNameController,
-    labelText: 'Last Name',
-    validator: (val) =>
-    Validations.validateName(val),
-    keyboardType: TextInputType.name,
-    ),
-    ),
-    ],
-    ),
-    verticalSpace(20),
-    CustomTextFormField(
-    hintText: 'Email',
-    keyboardType: TextInputType.emailAddress,
-    controller:
-    registerViewModel.emailController,
-    labelText: 'Email Address',
-    validator: (val) =>
-    Validations.validateEmail(val),
-    ),
-    verticalSpace(20),
-    CustomTextFormField(
-    isPasswordVisible: passwordVisible,
-    showPassword: () {
-    setState(() {
-    passwordVisible = !passwordVisible;
-    });
-    },
-    hintText: 'Password',
-    keyboardType:
-    TextInputType.visiblePassword,
-    controller:
-    registerViewModel.passwordController,
-    labelText: 'Password',
-    validator: (val) =>
-    Validations.validatePassword(val),
-    ),
-    verticalSpace(20),
-    CustomTextFormField(
-    hintText: 'Confirm Password',
-    isPasswordVisible: registerViewModel
-        .isRePasswordVisible,
-    showPassword: () {
-    setState(() {
-    registerViewModel.isRePasswordVisible =
-    !registerViewModel
-        .isRePasswordVisible;
-    });
-    },
-    keyboardType:
-    TextInputType.visiblePassword,
-    controller: registerViewModel
-        .rePasswordController,
-    labelText: 'Confirm Password',
-    validator: (val) =>
-    Validations.validateConfirmPassword(
-    val,
-    registerViewModel
-        .passwordController.text),
-    ),
+        Row(
+          children: [
+            Expanded(
+              child: CustomTextFormField(
+                hintText: 'First name',
+                controller: registerViewModel.firstNameController,
+                labelText: 'First Name',
+                validator: (val) => Validations.validateName(val),
+                keyboardType: TextInputType.name,
+              ),
+            ),
+            horizontalSpace(20),
+            Expanded(
+              child: CustomTextFormField(
+                hintText: 'Last name',
+                controller: registerViewModel.lastNameController,
+                labelText: 'Last Name',
+                validator: (val) => Validations.validateName(val),
+                keyboardType: TextInputType.name,
+              ),
+            ),
+          ],
+        ),
+        verticalSpace(20),
+        CustomTextFormField(
+          hintText: 'Email',
+          keyboardType: TextInputType.emailAddress,
+          controller: registerViewModel.emailController,
+          labelText: 'Email Address',
+          validator: (val) => Validations.validateEmail(val),
+        ),
+        verticalSpace(20),
+        CustomTextFormField(
+          isPasswordVisible: passwordVisible,
+          showPassword: () {
+            setState(() {
+              passwordVisible = !passwordVisible;
+            });
+          },
+          hintText: 'Password',
+          keyboardType: TextInputType.visiblePassword,
+          controller: registerViewModel.passwordController,
+          labelText: 'Password',
+          validator: (val) => Validations.validatePassword(val),
+        ),
+        verticalSpace(20),
+        CustomTextFormField(
+          hintText: 'Confirm Password',
+          isPasswordVisible: registerViewModel.isRePasswordVisible,
+          showPassword: () {
+            setState(() {
+              registerViewModel.isRePasswordVisible =
+              !registerViewModel.isRePasswordVisible;
+            });
+          },
+          keyboardType: TextInputType.visiblePassword,
+          controller: registerViewModel.rePasswordController,
+          labelText: 'Confirm Password',
+          validator: (val) => Validations.validateConfirmPassword(
+              val, registerViewModel.passwordController.text),
+        ),
         verticalSpace(20),
         CustomAuthButton(
           text: 'NEXT',
@@ -328,18 +308,15 @@ class _RegisterScreenState extends State<RegisterScreen>
           keyboardType: TextInputType.phone,
           controller: registerViewModel.phoneController,
           labelText: 'Phone Number',
-          validator: (val) =>
-              Validations.validatePhoneNumber(val),
+          validator: (val) => Validations.validatePhoneNumber(val),
         ),
         verticalSpace(20),
         CustomTextFormField(
           hintText: 'Enter your Address',
           keyboardType: TextInputType.text,
-          controller:
-          registerViewModel.addressController,
+          controller: registerViewModel.addressController,
           labelText: 'Address',
-          validator: (val) =>
-              Validations.validateAddress(val),
+          validator: (val) => Validations.validateAddress(val),
         ),
         verticalSpace(20),
         GestureDetector(
@@ -351,9 +328,7 @@ class _RegisterScreenState extends State<RegisterScreen>
               lastDate: DateTime.now(),
             );
             if (pickedDate != null) {
-              // Ensure this method is called
-              registerViewModel
-                  .updateSelectedDate(pickedDate);
+              registerViewModel.updateSelectedDate(pickedDate);
             }
           },
           child: InputDecorator(
@@ -365,15 +340,13 @@ class _RegisterScreenState extends State<RegisterScreen>
             ),
             child: Text(
               registerViewModel.selectedDate != null
-                  ? DateFormat('M/d/yyyy').format(
-                  registerViewModel.selectedDate!)
+                  ? DateFormat('M/d/yyyy').format(registerViewModel.selectedDate!)
                   : 'Select Date',
               style: TextStyle(
-                  color:
-                  registerViewModel.selectedDate ==
-                      null
-                      ? Colors.grey
-                      : Colors.black),
+                color: registerViewModel.selectedDate == null
+                    ? Colors.grey
+                    : Colors.black,
+              ),
             ),
           ),
         ),
@@ -382,55 +355,58 @@ class _RegisterScreenState extends State<RegisterScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedGender = 'Male';
-                      });
-                    },
-                    child: ListTile(
-                      title: const Text('Male'),
-                      leading: Radio<String>(
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      registerViewModel.selectedGender = 'Male';
+                    });
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Radio<String>(
                         value: 'Male',
-                        groupValue: selectedGender,
+                        groupValue: registerViewModel.selectedGender,
                         onChanged: (value) {
                           setState(() {
-                            selectedGender = value!;
+                            registerViewModel.selectedGender = value!;
                           });
                         },
-                        activeColor: AppColors
-                            .primaryColor, // Set the color here
+                        activeColor: AppColors.primaryColor,
                       ),
-                    ),
+                      const Text('Male'),
+                    ],
                   ),
                 ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedGender = 'Female';
-                      });
-                    },
-                    child: ListTile(
-                      title: const Text('Female',style: TextStyle(fontSize: 13),),
-                      leading: Radio<String>(
+                const SizedBox(width: 10),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      registerViewModel.selectedGender = 'Female';
+                    });
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Radio<String>(
                         value: 'Female',
-                        groupValue: selectedGender,
+                        groupValue: registerViewModel.selectedGender,
                         onChanged: (value) {
                           setState(() {
-                            selectedGender = value!;
+                            registerViewModel.selectedGender = value!;
                           });
                         },
-                        activeColor: AppColors
-                            .primaryColor, // Set the color here
+                        activeColor: AppColors.primaryColor,
                       ),
-                    ),
+                      const Text('Female'),
+                    ],
                   ),
                 ),
               ],
-            ),
+            )
           ],
         ),
         verticalSpace(20),
@@ -440,7 +416,7 @@ class _RegisterScreenState extends State<RegisterScreen>
               child: CustomAuthButton(
                 text: 'BACK',
                 onPressed: previousStep,
-                color:const Color(0xFF102027),
+                color: const Color(0xFF102027),
               ),
             ),
             horizontalSpace(20),
@@ -461,86 +437,85 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFF1A237E),
-                  Color(0xFF283593),
-                  Color(0xFF1976D2),
-                  Color(0xFF64B5F6),
-                ],
-                stops: [0.1, 0.4, 0.7, 1.0],
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 30),
-              child: Hero(
-                tag: 'logo',
-                child: FadeTransition(
-                  opacity: _logoFadeAnimation,
-                  child: RotationTransition(
-                    turns: _logoRotationAnimation,
-                    child: Image.asset(
-                      AppImages.logo,
-                      width: 280.w,
-                      height: 280.h,
+    return BlocProvider<RegisterViewModel>(
+      create: (_) => registerViewModel,
+      child: BlocConsumer<RegisterViewModel, RegisterScreenState>(
+        listener: (context, state) {
+          switch (state) {
+            case LoadingState():
+              showLoading(context, 'Registering...');
+              break;
+            case ErrorState():
+              hideLoading();
+              showAwesomeDialog(
+                context,
+                title: 'Error',
+                desc: state.exception!,
+                onOk: () {},
+                dialogType: DialogType.error,
+              );
+              break;
+            case SuccessState():
+              hideLoading();
+              navKey.currentState!.pushReplacementNamed(RoutesName.login);
+              break;
+            default:
+          }
+        },
+        builder: (context, state) {
+          return Scaffold(
+            body: Stack(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color(0xFF1A237E),
+                        Color(0xFF283593),
+                        Color(0xFF1976D2),
+                        Color(0xFF64B5F6),
+                      ],
+                      stops: [0.1, 0.4, 0.7, 1.0],
                     ),
                   ),
                 ),
-              ),
-            ),
-          ),
-          FadeTransition(
-            opacity: _formFadeAnimation,
-            child: SlideTransition(
-              position: _formSlideAnimation,
-              child: BlocProvider(
-                create: (context) => registerViewModel,
-                child: BlocConsumer<RegisterViewModel, RegisterScreenState>(
-                  buildWhen: (previous, current) =>
-                  current is InitialState ||
-                      current is ValidateColorButtonState,
-                  listenWhen: (previous, current) => current is! InitialState,
-                  listener: (context, state) {
-                    switch (state) {
-                      case LoadingState():
-                        showLoading(context, 'Registering...');
-                      case ErrorState():
-                        hideLoading();
-                        showAwesomeDialog(
-                          context,
-                          title: 'Error',
-                          desc: state.exception!,
-                          onOk: () {},
-                          dialogType: DialogType.error,
-                        );
-                      case SuccessState():
-                        hideLoading();
-                        navKey.currentState!
-                            .pushReplacementNamed(RoutesName.login);
-                      default:
-                    }
-                  },
-                  builder: (context, state) {
-                    return SingleChildScrollView(
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Hero(
+                      tag: 'logo',
+                      child: FadeTransition(
+                        opacity: _logoFadeAnimation,
+                        child: RotationTransition(
+                          turns: _logoRotationAnimation,
+                          child: Image.asset(
+                            AppImages.logo,
+                            width: 280.w,
+                            height: 280.h,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                FadeTransition(
+                  opacity: _formFadeAnimation,
+                  child: SlideTransition(
+                    position: _formSlideAnimation,
+                    child: SingleChildScrollView(
                       child: Padding(
                         padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height *0.35),
+                            top: MediaQuery.of(context).size.height * 0.35),
                         child: Form(
-                          key: registerViewModel.formKey,
+                          onChanged: () => registerViewModel
+                              .doAction(ValidateColorButtonAction()),                          key: registerViewModel.formKey,
                           child: Card(
                             elevation: 30,
                             shadowColor: Colors.black45,
-                            color: const Color(0xFFFFFFFF),
+                            color: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(28),
                             ),
@@ -573,8 +548,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                                     actionText: 'Login here',
                                     onPressed: () {
                                       navKey.currentState!
-                                          .pushReplacementNamed(
-                                          RoutesName.login);
+                                          .pushReplacementNamed(RoutesName.login);
                                     },
                                   ),
                                 ],
@@ -583,13 +557,13 @@ class _RegisterScreenState extends State<RegisterScreen>
                           ),
                         ),
                       ),
-                    );
-                  },
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
