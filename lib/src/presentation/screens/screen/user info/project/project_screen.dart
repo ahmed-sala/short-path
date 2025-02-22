@@ -16,13 +16,15 @@ import '../../../../mangers/infromation_gathering/Project/Project_State.dart';
 import '../../../../mangers/infromation_gathering/Project/Project_Viewmodel.dart';
 import '../../../../shared_widgets/custom_auth_button.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';
+import '../../../widgets/user info/profile/suggestion_list.dart';
+import '../../../widgets/user info/project/ToolList.dart';
 
 class ProjectScreen extends StatelessWidget {
-  const ProjectScreen({super.key});
+  ProjectScreen({super.key});
+  ProjectViewmodel viewModel = getIt<ProjectViewmodel>();
 
   @override
   Widget build(BuildContext context) {
-    ProjectViewmodel viewModel = getIt.get<ProjectViewmodel>();
     return BlocProvider(
       create: (context) => viewModel,
       child: Scaffold(
@@ -41,19 +43,16 @@ class ProjectScreen extends StatelessWidget {
                       onOk: () {},
                       dialogType: DialogType.error);
                 } else if (state is AddProjectSuccess) {
-                  navKey.currentState!
-                      .pushReplacementNamed(RoutesName.certification);
+                  navKey.currentState!.pushNamedAndRemoveUntil(
+                      RoutesName.certification, (route) => false);
                 } else if (state is AddProjectLoading) {
                   showLoading(context, 'Adding Projects');
                 }
               },
               builder: (context, state) {
-                final viewModel = context.read<ProjectViewmodel>();
-
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Form for Adding Project
                     Form(
                       key: viewModel.formKey,
                       child: Column(
@@ -67,29 +66,27 @@ class ProjectScreen extends StatelessWidget {
                             validator: viewModel.validateProjectTitle,
                           ),
                           verticalSpace(20),
-
-                          // Role Field with Dropdown Suggestions
                           CustomDropdownButtonFormField(
                             labelText: 'Role',
                             hintText: 'Select Role',
-                            value: viewModel.role,
+                            value: viewModel.roleController.text.isEmpty
+                                ? null
+                                : viewModel.roleController.text,
                             items: ['Full-time', 'Part-time', 'Freelance']
                                 .map(
                                   (jobLocation) => DropdownMenuItem(
-                                    value: jobLocation,
-                                    child: Text(jobLocation),
-                                  ),
-                                )
+                                value: jobLocation,
+                                child: Text(jobLocation),
+                              ),
+                            )
                                 .toList(),
                             onChanged: (String? newValue) {
                               if (newValue != null) {
-                                viewModel.role = newValue;
-                                viewModel.validateColorButton();
+                                viewModel.roleController.text = newValue;
                               }
                             },
                             validator: viewModel.validateRole,
                           ),
-
                           verticalSpace(20),
                           CustomTextFormField(
                             hintText: 'Enter Project Link',
@@ -99,7 +96,6 @@ class ProjectScreen extends StatelessWidget {
                             validator: viewModel.validateProjectLink,
                           ),
                           verticalSpace(20),
-
                           CustomTextFormField(
                             hintText: 'Enter Description',
                             keyboardType: TextInputType.multiline,
@@ -108,13 +104,48 @@ class ProjectScreen extends StatelessWidget {
                             validator: viewModel.validateDescription,
                           ),
                           verticalSpace(20),
-                          CustomTextFormField(
-                            hintText: 'Enter Technologies Used',
-                            keyboardType: TextInputType.text,
-                            controller: viewModel.technologiesUsedController,
-                            labelText: 'Technologies Used',
-                            validator: viewModel.validateTechnologiesUsed,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                flex: 4,
+                                child: CustomTextFormField(
+                                  hintText: 'Enter Tools/Technologies Used',
+                                  keyboardType: TextInputType.text,
+                                  controller:
+                                  viewModel.technologiesUsedController,
+                                  labelText: 'Tools/Technologies Used',
+                                  validator: (value) => null,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 50,
+                                child: Center(
+                                  child: IconButton(
+                                    icon: const Icon(Icons.add),
+                                    onPressed: () {
+                                      viewModel.addToolsTechnologies(
+                                        viewModel
+                                            .technologiesUsedController.text,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                          if (viewModel.filteredToolSuggestions.isNotEmpty &&
+                              viewModel.technologiesUsedController.text
+                                  .isNotEmpty) // Ensure the text field is not empty
+                            SuggestionList(
+                              suggestions: viewModel.filteredToolSuggestions,
+                              onTap: viewModel.selectTool,
+                            ),
+                          verticalSpace(20),
+                          if (viewModel.toolsTechnologies.isNotEmpty) ...[
+                            ToolList(),
+                            verticalSpace(20),
+                          ],
                           verticalSpace(20),
                           CustomAuthButton(
                             text: 'Add Project',
@@ -125,8 +156,6 @@ class ProjectScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-
-                    // Display the List of Projects
                     if (viewModel.projects.isNotEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,14 +173,12 @@ class ProjectScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-
-                    // NEXT Button
                     CustomAuthButton(
                       text: 'NEXT',
                       onPressed: viewModel.projects.isNotEmpty
                           ? () {
-                              viewModel.next();
-                            }
+                        context.read<ProjectViewmodel>().next();
+                      }
                           : null,
                       color: viewModel.projects.isNotEmpty
                           ? AppColors.primaryColor

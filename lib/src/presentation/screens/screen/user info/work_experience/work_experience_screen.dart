@@ -41,8 +41,8 @@ class WorkExperienceScreen extends StatelessWidget {
                         backgroundColor: Colors.red),
                   );
                 } else if (state is AddWorkExperienceSuccess) {
-                  navKey.currentState!
-                      .pushReplacementNamed(RoutesName.education);
+                  navKey.currentState!.pushNamedAndRemoveUntil(
+                      RoutesName.project, (route) => false);
                 } else if (state is AddWorkExperienceFailed) {
                   showAwesomeDialog(context,
                       title: 'Error',
@@ -56,8 +56,9 @@ class WorkExperienceScreen extends StatelessWidget {
                       title: 'Session Expired',
                       desc: 'Your session has expired. Please login again.',
                       onOk: () {
-                    navKey.currentState!.pushReplacementNamed(RoutesName.login);
-                  }, dialogType: DialogType.error);
+                        navKey.currentState!.pushNamedAndRemoveUntil(
+                            RoutesName.login, (route) => false);
+                      }, dialogType: DialogType.error);
                 }
               },
               builder: (context, state) {
@@ -106,10 +107,10 @@ class WorkExperienceScreen extends StatelessWidget {
                             items: viewModel.jobTypes
                                 .map(
                                   (jobType) => DropdownMenuItem(
-                                    value: jobType,
-                                    child: Text(jobType),
-                                  ),
-                                )
+                                value: jobType,
+                                child: Text(jobType),
+                              ),
+                            )
                                 .toList(),
                             onChanged: viewModel.selectJobType,
                             validator: viewModel.validateJobType,
@@ -123,10 +124,10 @@ class WorkExperienceScreen extends StatelessWidget {
                             items: viewModel.jobLocations
                                 .map(
                                   (jobLocation) => DropdownMenuItem(
-                                    value: jobLocation,
-                                    child: Text(jobLocation),
-                                  ),
-                                )
+                                value: jobLocation,
+                                child: Text(jobLocation),
+                              ),
+                            )
                                 .toList(),
                             onChanged: viewModel.selectJobLocation,
                             validator: viewModel.validateJobLocation,
@@ -137,18 +138,36 @@ class WorkExperienceScreen extends StatelessWidget {
                           DateInputField(
                             selectedDate: viewModel.startDate,
                             onDateSelected: viewModel.selectStartDate,
-                            labelText: 'Graduation Date',
+                            labelText: 'Start Date',
+                          ),
+
+// Checkbox: Currently Working Here
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: viewModel.isCurrentlyWorking,
+                                checkColor: Colors.white,
+                                fillColor: MaterialStateProperty.resolveWith(
+                                        (states) => AppColors.primaryColor),
+                                onChanged: (value) {
+                                  viewModel.setCurrentlyWorking(value!);
+                                },
+                              ),
+                              const Text("Currently working here"),
+                            ],
                           ),
 
                           verticalSpace(20),
 
-                          // End Date Picker
-                          DateInputField(
-                            selectedDate: viewModel.endDate,
-                            onDateSelected: viewModel.selectEndDate,
-                            labelText: 'Graduation Date',
-                          ),
-                          verticalSpace(20),
+// Conditionally show End Date Picker
+                          if (!viewModel.isCurrentlyWorking) ...[
+                            DateInputField(
+                              selectedDate: viewModel.endDate,
+                              onDateSelected: viewModel.selectEndDate,
+                              labelText: 'End Date',
+                            ),
+                            verticalSpace(20),
+                          ],
 
                           CustomTextFormField(
                             controller: viewModel.summaryController,
@@ -168,9 +187,9 @@ class WorkExperienceScreen extends StatelessWidget {
                                   labelText: 'Tool/Technology',
                                   hintText: 'Enter Tool/Technology',
                                   validator: (value) =>
-                                      viewModel.toolsTechnologiesUsed.isEmpty
-                                          ? 'Add at least one tool'
-                                          : null,
+                                  viewModel.toolsTechnologiesUsed.isEmpty
+                                      ? 'Add at least one tool'
+                                      : null,
                                   keyboardType: TextInputType.text,
                                 ),
                               ),
@@ -229,8 +248,8 @@ class WorkExperienceScreen extends StatelessWidget {
                       text: 'NEXT',
                       onPressed: viewModel.workExperiences.isNotEmpty
                           ? () {
-                              viewModel.next();
-                            }
+                        viewModel.next();
+                      }
                           : null,
                       color: viewModel.workExperiences.isNotEmpty
                           ? AppColors.primaryColor

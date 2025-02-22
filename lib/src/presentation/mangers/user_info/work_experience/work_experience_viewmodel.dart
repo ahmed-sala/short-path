@@ -34,15 +34,25 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   String? selectedJobLocation;
 
   bool isValid = false;
+  bool isCurrentlyWorking = false;
+
+  void setCurrentlyWorking(bool value) {
+    isCurrentlyWorking = value;
+    if (value) {
+      // If currently working, clear endDate.
+      endDate = null;
+    }
+    emit(CurrentlyWorkingChanged(isCurrentlyWorking));
+  }
 
   void onToolChanged() {
     filteredToolSuggestions = toolController.text.isEmpty
         ? technicalSkills
         : technicalSkills
-            .where((tool) => tool
-                .toLowerCase()
-                .startsWith(toolController.text.toLowerCase()))
-            .toList();
+        .where((tool) => tool
+        .toLowerCase()
+        .startsWith(toolController.text.toLowerCase()))
+        .toList();
     emit(ToolChanged());
   }
 
@@ -80,7 +90,7 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       try {
         emit(AddWorkExperienceLoading());
         final result =
-            await userInfoUsecase.invokeWorkExperience(workExperiences);
+        await userInfoUsecase.invokeWorkExperience(workExperiences);
         switch (result) {
           case Success<void>():
             emit(AddWorkExperienceSuccess());
@@ -129,9 +139,12 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
 
   String? validateDates() {
     if (startDate == null) return 'Start date is required';
-    if (endDate == null) return 'End date is required';
-    if (endDate!.isBefore(startDate!))
-      return 'End date must be after start date';
+    if (!isCurrentlyWorking) {
+      if (endDate == null) return 'End date is required';
+      if (endDate!.isBefore(startDate!)) {
+        return 'End date must be after start date';
+      }
+    }
     return null;
   }
 
@@ -189,7 +202,7 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       jobType: selectedJobType!.toUpperCase(),
       jobLocation: selectedJobLocation!.toUpperCase(),
       startDate: startDate!,
-      endDate: endDate!,
+      endDate: isCurrentlyWorking ? null : endDate!,
       summary: summaryController.text,
       toolsTechnologiesUsed: List.from(toolsTechnologiesUsed),
     ));
