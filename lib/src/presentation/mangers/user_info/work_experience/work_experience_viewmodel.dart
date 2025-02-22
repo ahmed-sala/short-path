@@ -34,6 +34,16 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   String? selectedJobLocation;
 
   bool isValid = false;
+  bool isCurrentlyWorking = false;
+
+  void setCurrentlyWorking(bool value) {
+    isCurrentlyWorking = value;
+    if (value) {
+      // If currently working, clear endDate.
+      endDate = null;
+    }
+    emit(CurrentlyWorkingChanged(isCurrentlyWorking));
+  }
 
   void onToolChanged() {
     filteredToolSuggestions = toolController.text.isEmpty
@@ -108,33 +118,6 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     emit(JobLocationSelected());
   }
 
-  // Validation methods
-  String? validateJobTitle(String? value) =>
-      value?.isEmpty ?? true ? 'Job Title is required' : null;
-
-  String? validateCompanyName(String? value) =>
-      value?.isEmpty ?? true ? 'Company Name is required' : null;
-
-  String? validateCompanyField(String? value) =>
-      value?.isEmpty ?? true ? 'Company Field is required' : null;
-
-  String? validateJobType(String? value) =>
-      (value == null || value.isEmpty) ? 'Job Type is required' : null;
-
-  String? validateJobLocation(String? value) =>
-      (value == null || value.isEmpty) ? 'Job Location is required' : null;
-
-  String? validateSummary(String? value) =>
-      value?.isEmpty ?? true ? 'Summary is required' : null;
-
-  String? validateDates() {
-    if (startDate == null) return 'Start date is required';
-    if (endDate == null) return 'End date is required';
-    if (endDate!.isBefore(startDate!))
-      return 'End date must be after start date';
-    return null;
-  }
-
   // Date selection
   void selectStartDate(DateTime date) {
     startDate = date;
@@ -171,12 +154,6 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   void addWorkExperience() {
     if (!formKey.currentState!.validate()) return;
 
-    final dateError = validateDates();
-    if (dateError != null) {
-      emit(WorkExperienceError(dateError));
-      return;
-    }
-
     if (toolsTechnologiesUsed.isEmpty) {
       emit(const WorkExperienceError('Add at least one tool/technology'));
       return;
@@ -189,7 +166,7 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       jobType: selectedJobType!.toUpperCase(),
       jobLocation: selectedJobLocation!.toUpperCase(),
       startDate: startDate!,
-      endDate: endDate!,
+      endDate: isCurrentlyWorking ? null : endDate!,
       summary: summaryController.text,
       toolsTechnologiesUsed: List.from(toolsTechnologiesUsed),
     ));

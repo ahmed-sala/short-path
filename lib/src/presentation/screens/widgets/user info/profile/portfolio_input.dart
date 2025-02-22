@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/src/presentation/mangers/user_info/profile/profile_viewmodel.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/presentation/shared_widgets/snack_bar.dart';
-
-import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
-import '../../../../shared_widgets/custom_auth_text_feild.dart';
 
 class PortfolioInput extends StatelessWidget {
   const PortfolioInput({super.key, required this.viewModel});

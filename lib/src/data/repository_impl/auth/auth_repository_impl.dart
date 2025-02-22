@@ -1,11 +1,10 @@
 import 'package:injectable/injectable.dart';
+import 'package:short_path/core/common/api/api_execute.dart';
 import 'package:short_path/core/common/api/api_result.dart';
-
-import '../../../../../core/common/api/api_execute.dart';
-import '../../../domain/entities/auth/app_user.dart';
-import '../../../domain/repositories/contract/auth_repository.dart';
-import '../../data_source/offline_data_source/auth/contracts/auth_offline_datasource.dart';
-import '../../data_source/online_data_source/auth/contracts/auth_online_datasource.dart';
+import 'package:short_path/src/data/data_source/offline_data_source/auth/contracts/auth_offline_datasource.dart';
+import 'package:short_path/src/data/data_source/online_data_source/auth/contracts/auth_online_datasource.dart';
+import 'package:short_path/src/domain/entities/auth/app_user.dart';
+import 'package:short_path/src/domain/repositories/contract/auth_repository.dart';
 
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {

@@ -4,9 +4,6 @@ import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/Language/language_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
 
-import '../../../../mangers/user_info/profile/profile_state.dart';
-import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
-
 class LanguageListWidget extends StatelessWidget {
   const LanguageListWidget({super.key});
 
@@ -50,7 +47,8 @@ class LanguageListWidget extends StatelessWidget {
                       onPressed: () {
                         scaffoldMessenger.hideCurrentSnackBar();
                         // Use the stored languageViewmodel reference.
-                        languageViewmodel.addLanguage(skill.language, skill.level);
+                        languageViewmodel.addLanguage(
+                            skill.language, skill.level);
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
                             content: Text('$skill added back!'),
@@ -62,7 +60,6 @@ class LanguageListWidget extends StatelessWidget {
                   ),
                 );
               },
-
             );
           }).toList(),
         );

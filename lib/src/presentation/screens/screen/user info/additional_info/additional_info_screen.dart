@@ -2,23 +2,22 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/domain/entities/user_info/additional_info_entity.dart';
+import 'package:short_path/src/presentation/mangers/user_info/additional_info/additional_info_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/additional_info/additional_info_viewmodel.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/additional_info/awards_list.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/additional_info/hobbies_list.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/additional_info/publication_list.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/additional_info/volanteer_list.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/short_path.dart';
-
-import '../../../../../../config/routes/routes_name.dart';
-import '../../../../../domain/entities/user_info/additional_info_entity.dart';
-import '../../../../mangers/infromation_gathering/additional_info/additional_info_state.dart';
-import '../../../../mangers/infromation_gathering/additional_info/additional_info_viewmodel.dart';
-import '../../../../shared_widgets/custom_auth_button.dart';
-import '../../../../shared_widgets/custom_auth_text_feild.dart';
-import '../../../widgets/user info/additional_info/awards_list.dart';
-import '../../../widgets/user info/additional_info/hobbies_list.dart';
-import '../../../widgets/user info/additional_info/publication_list.dart';
-import '../../../widgets/user info/additional_info/volanteer_list.dart';
 
 class AdditionalInfoScreen extends StatelessWidget {
   const AdditionalInfoScreen({super.key});

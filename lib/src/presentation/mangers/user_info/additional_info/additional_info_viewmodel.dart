@@ -43,12 +43,6 @@ class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
     return null;
   }
 
-  // Validate a single field and emit a state
-  void validateSingleField(String? value, String fieldName) {
-    final error = validateField(value, fieldName);
-    emit(ValidateSingleFieldState(fieldName, error)); // Emit a new state
-  }
-
   // Validate button color
   void validateColorButton() {
     _validate = formKey.currentState?.validate() ?? false;

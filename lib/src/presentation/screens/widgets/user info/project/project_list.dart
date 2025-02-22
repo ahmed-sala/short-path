@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../../core/styles/spacing.dart';
-import '../../../../mangers/infromation_gathering/Project/Project_Viewmodel.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/core/styles/spacing.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Project/Project_Viewmodel.dart';
 
 class ProjectList extends StatelessWidget {
   const ProjectList({super.key, required this.viewModel});
@@ -40,20 +39,33 @@ class ProjectList extends StatelessWidget {
                 ),
                 verticalSpace(5),
                 Text(
-                  'Role: ${project.role}',
+                  project.role,
                   style: TextStyle(fontSize: 14.sp),
                 ),
                 verticalSpace(5),
                 Text(
-                  'Description: ${project.description}',
+                  project.description,
                   style: TextStyle(fontSize: 14.sp),
                 ),
                 verticalSpace(5),
                 Text(
-                  'Technologies Used: ${project.technologiesUsed}',
-                  style:
-                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
+                  'Link: ${project.projectLink}',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
+                verticalSpace(5),
+                if (project.technologiesUsed.isNotEmpty)
+                  Wrap(
+                    spacing: 8,
+                    children: project.technologiesUsed
+                        .split(',') // Split the string into a list of tools
+                        .map((tool) => Chip(
+                            label: Text(tool.trim()))) // Trim any extra spaces
+                        .toList(),
+                  ),
                 verticalSpace(10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,

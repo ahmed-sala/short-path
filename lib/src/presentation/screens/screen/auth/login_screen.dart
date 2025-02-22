@@ -132,8 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   keyboardType: TextInputType.emailAddress,
                                   controller: loginViewModel.emailController,
                                   labelText: 'Email Address',
-                                  validator: (val) =>
-                                      Validations.validateEmail(val),
+                                  validator: (val) => validateEmail(val),
                                 ),
                                 verticalSpace(20),
                                 CustomTextFormField(
@@ -147,8 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   keyboardType: TextInputType.visiblePassword,
                                   controller: loginViewModel.passwordController,
                                   labelText: 'Password',
-                                  validator: (val) =>
-                                      Validations.validatePassword(val),
+                                  validator: (val) => validatePassword(val),
                                 ),
                                 verticalSpace(10),
                                 Align(

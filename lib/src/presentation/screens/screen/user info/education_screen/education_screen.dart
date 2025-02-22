@@ -3,14 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/core/styles/spacing.dart';
+import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/widgets/user info/education/education_header.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
 import 'package:short_path/src/presentation/shared_widgets/date_input_feild.dart';
-
-import '../../../../../../core/styles/spacing.dart';
-import '../../../../mangers/user_info/education/education_state.dart';
-import '../../../../mangers/user_info/education/education_viewmodel.dart';
-import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
 
 class EducationScreen extends StatelessWidget {
   @override
