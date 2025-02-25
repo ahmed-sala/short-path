@@ -49,10 +49,10 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     filteredToolSuggestions = toolController.text.isEmpty
         ? technicalSkills
         : technicalSkills
-        .where((tool) => tool
-        .toLowerCase()
-        .startsWith(toolController.text.toLowerCase()))
-        .toList();
+            .where((tool) => tool
+                .toLowerCase()
+                .startsWith(toolController.text.toLowerCase()))
+            .toList();
     emit(ToolChanged());
   }
 
@@ -90,7 +90,7 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       try {
         emit(AddWorkExperienceLoading());
         final result =
-        await userInfoUsecase.invokeWorkExperience(workExperiences);
+            await userInfoUsecase.invokeWorkExperience(workExperiences);
         switch (result) {
           case Success<void>():
             emit(AddWorkExperienceSuccess());

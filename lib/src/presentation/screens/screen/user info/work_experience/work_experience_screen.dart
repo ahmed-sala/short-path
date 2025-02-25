@@ -57,14 +57,13 @@ class WorkExperienceScreen extends StatelessWidget {
                       title: 'Session Expired',
                       desc: 'Your session has expired. Please login again.',
                       onOk: () {
-                        navKey.currentState!.pushNamedAndRemoveUntil(
-                            RoutesName.login, (route) => false);
-                      }, dialogType: DialogType.error);
+                    navKey.currentState!.pushNamedAndRemoveUntil(
+                        RoutesName.login, (route) => false);
+                  }, dialogType: DialogType.error);
                 }
               },
               builder: (context, state) {
                 final viewModel = context.read<WorkExperienceViewModel>();
-                final dateError = viewModel.validateDates();
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,10 +113,10 @@ class WorkExperienceScreen extends StatelessWidget {
                             items: viewModel.jobTypes
                                 .map(
                                   (jobType) => DropdownMenuItem(
-                                value: jobType,
-                                child: Text(jobType),
-                              ),
-                            )
+                                    value: jobType,
+                                    child: Text(jobType),
+                                  ),
+                                )
                                 .toList(),
                             onChanged: viewModel.selectJobType,
                             validator: (value) {
@@ -133,10 +132,10 @@ class WorkExperienceScreen extends StatelessWidget {
                             items: viewModel.jobLocations
                                 .map(
                                   (jobLocation) => DropdownMenuItem(
-                                value: jobLocation,
-                                child: Text(jobLocation),
-                              ),
-                            )
+                                    value: jobLocation,
+                                    child: Text(jobLocation),
+                                  ),
+                                )
                                 .toList(),
                             onChanged: viewModel.selectJobLocation,
                             validator: (value) {
@@ -159,7 +158,7 @@ class WorkExperienceScreen extends StatelessWidget {
                                 value: viewModel.isCurrentlyWorking,
                                 checkColor: Colors.white,
                                 fillColor: MaterialStateProperty.resolveWith(
-                                        (states) => AppColors.primaryColor),
+                                    (states) => AppColors.primaryColor),
                                 onChanged: (value) {
                                   viewModel.setCurrentlyWorking(value!);
                                 },
@@ -200,9 +199,9 @@ class WorkExperienceScreen extends StatelessWidget {
                                   labelText: 'Tool/Technology',
                                   hintText: 'Enter Tool/Technology',
                                   validator: (value) =>
-                                  viewModel.toolsTechnologiesUsed.isEmpty
-                                      ? 'Add at least one tool'
-                                      : null,
+                                      viewModel.toolsTechnologiesUsed.isEmpty
+                                          ? 'Add at least one tool'
+                                          : null,
                                   keyboardType: TextInputType.text,
                                 ),
                               ),
@@ -261,8 +260,8 @@ class WorkExperienceScreen extends StatelessWidget {
                       text: 'NEXT',
                       onPressed: viewModel.workExperiences.isNotEmpty
                           ? () {
-                        viewModel.next();
-                      }
+                              viewModel.next();
+                            }
                           : null,
                       color: viewModel.workExperiences.isNotEmpty
                           ? AppColors.primaryColor

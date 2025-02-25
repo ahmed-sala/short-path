@@ -48,7 +48,7 @@ class AppRoute {
 
       case RoutesName.project:
         return _handelMaterialPageRoute(
-            settings: settings, widget:  ProjectScreen());
+            settings: settings, widget: ProjectScreen());
 
       case RoutesName.certification:
         return _handelMaterialPageRoute(

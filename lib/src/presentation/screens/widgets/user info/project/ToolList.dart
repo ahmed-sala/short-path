@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Project/Project_State.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Project/Project_Viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/toast_dialoge.dart';
-
-import '../../../../mangers/infromation_gathering/Project/Project_State.dart';
-import '../../../../mangers/infromation_gathering/Project/Project_Viewmodel.dart';
 
 class ToolList extends StatelessWidget {
   const ToolList({super.key});
@@ -31,8 +30,8 @@ class ToolList extends StatelessWidget {
               deleteIcon: const Icon(Icons.close, color: Colors.red),
               onDeleted: () {
                 context.read<ProjectViewmodel>().removeToolsTechnologies(
-                  skill,
-                );
+                      skill,
+                    );
                 ToastDialog.show('$skill removed', Colors.red);
               },
             );

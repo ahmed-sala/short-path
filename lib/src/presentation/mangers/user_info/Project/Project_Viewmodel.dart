@@ -23,7 +23,7 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   final TextEditingController roleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController technologiesUsedController =
-  TextEditingController();
+      TextEditingController();
 
   List<ProjectEntity> projects = [];
   List<String> toolsTechnologies = [];
@@ -105,7 +105,7 @@ class ProjectViewmodel extends Cubit<ProjectState> {
       try {
         emit(AddProjectLoading());
         var response =
-        await projectUsecase.invoke(ProjectsEntity(projects: projects));
+            await projectUsecase.invoke(ProjectsEntity(projects: projects));
         switch (response) {
           case Success<void>():
             emit(AddProjectSuccess());

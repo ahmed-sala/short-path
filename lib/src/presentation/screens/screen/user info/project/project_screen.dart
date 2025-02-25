@@ -18,15 +18,7 @@ import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.da
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
 
-import '../../../../../../core/dialogs/show_hide_loading.dart';
 import '../../../../../short_path.dart';
-import '../../../../mangers/infromation_gathering/Project/Project_State.dart';
-import '../../../../mangers/infromation_gathering/Project/Project_Viewmodel.dart';
-import '../../../../shared_widgets/custom_auth_button.dart';
-import '../../../../shared_widgets/custom_auth_text_feild.dart';
-import '../../../widgets/user info/profile/suggestion_list.dart';
-import '../../../widgets/user info/project/ToolList.dart';
-import 'package:short_path/src/short_path.dart';
 
 class ProjectScreen extends StatelessWidget {
   ProjectScreen({super.key});
@@ -86,10 +78,10 @@ class ProjectScreen extends StatelessWidget {
                             items: ['Full-time', 'Part-time', 'Freelance']
                                 .map(
                                   (jobLocation) => DropdownMenuItem(
-                                value: jobLocation,
-                                child: Text(jobLocation),
-                              ),
-                            )
+                                    value: jobLocation,
+                                    child: Text(jobLocation),
+                                  ),
+                                )
                                 .toList(),
                             onChanged: (String? newValue) {
                               if (newValue != null) {
@@ -130,7 +122,7 @@ class ProjectScreen extends StatelessWidget {
                                   hintText: 'Enter Tools/Technologies Used',
                                   keyboardType: TextInputType.text,
                                   controller:
-                                  viewModel.technologiesUsedController,
+                                      viewModel.technologiesUsedController,
                                   labelText: 'Tools/Technologies Used',
                                   validator: (value) => null,
                                 ),
@@ -194,8 +186,8 @@ class ProjectScreen extends StatelessWidget {
                       text: 'NEXT',
                       onPressed: viewModel.projects.isNotEmpty
                           ? () {
-                        context.read<ProjectViewmodel>().next();
-                      }
+                              context.read<ProjectViewmodel>().next();
+                            }
                           : null,
                       color: viewModel.projects.isNotEmpty
                           ? AppColors.primaryColor
