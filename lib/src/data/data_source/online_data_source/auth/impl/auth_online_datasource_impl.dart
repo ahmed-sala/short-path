@@ -25,8 +25,8 @@ class AuthOnlineDataSourceImpl implements AuthOnlineDatasource {
   }
 
   @override
-  Future<GetUserResponse> getUserData(String token) async {
-    var response = await _apiServices.getUserData(token);
+  Future<GetUserResponse> getUserData() async {
+    var response = await _apiServices.getUserData();
     return response;
   }
 }

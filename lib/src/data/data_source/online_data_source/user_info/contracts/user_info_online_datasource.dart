@@ -10,21 +10,25 @@ import 'package:short_path/src/data/dto_models/user_info/work_experience_dto.dar
 abstract interface class UserInfoOnlineDataSource {
   Future<void> addProfile(
     ProfileDto profileRequest,
-    String token,
   );
-  Future<void> addSkills(SkillsDto skillsRequest, String token);
+  Future<void> addSkills(SkillsDto skillsRequest);
 
-  Future<void> addLanguage(LanguagesDto languagesRequest, String token);
+  Future<void> addLanguage(LanguagesDto languagesRequest);
 
   Future<void> addWorkExperience(
     WorkExperiencesDto workExperiencesRequest,
-    String token,
   );
-  Future<void> addEducation(EducationDto educationRequest, String token);
+  Future<void> addEducation(
+    EducationDto educationRequest,
+  );
   Future<void> addCertification(
-      CertificationDto certificationRequest, String token);
-  Future<void> addProjects(ProjectDto projectRequest, String token);
+    CertificationDto certificationRequest,
+  );
+  Future<void> addProjects(
+    ProjectDto projectRequest,
+  );
 
   Future<void> addAdditionalInfo(
-      AdditionalInfoDto additionalInfoDto, String token);
+    AdditionalInfoDto additionalInfoDto,
+  );
 }

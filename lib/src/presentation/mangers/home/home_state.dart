@@ -18,3 +18,15 @@ final class UserDataError extends HomeState {
 }
 
 final class SessionExpired extends HomeState {}
+
+final class JobsLoading extends HomeState {}
+
+final class JobsLoaded extends HomeState {
+  final List<JobEntity>? jobs;
+  JobsLoaded(this.jobs);
+}
+
+final class JobsError extends HomeState {
+  final String message;
+  JobsError(this.message);
+}

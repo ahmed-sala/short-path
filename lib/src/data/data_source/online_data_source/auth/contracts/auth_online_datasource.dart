@@ -5,5 +5,5 @@ import 'package:short_path/src/data/dto_models/auth/app_user_dto.dart';
 abstract interface class AuthOnlineDatasource {
   Future<AuthResponse> login(String email, String password);
   Future<AuthResponse> register(AppUserDto appUserDto);
-  Future<GetUserResponse> getUserData(String token);
+  Future<GetUserResponse> getUserData();
 }

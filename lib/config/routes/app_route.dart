@@ -32,7 +32,7 @@ class AppRoute {
             settings: settings, widget: const RegisterScreen());
       case RoutesName.home:
         return _handelMaterialPageRoute(
-            settings: settings, widget: const HomeScreen());
+            settings: settings, widget: HomeScreen());
       case RoutesName.profile:
         return _handelMaterialPageRoute(
             settings: settings, widget: const ProfileScreen());

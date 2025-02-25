@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:short_path/src/data/api/core/api_request_model/auth/login_request.dart';
 import 'package:short_path/src/data/api/core/api_request_model/auth/register_request.dart';
@@ -13,6 +14,7 @@ import 'package:short_path/src/data/api/core/api_request_model/user_info/skill_r
 import 'package:short_path/src/data/api/core/api_request_model/user_info/work_experience_request.dart';
 import 'package:short_path/src/data/api/core/api_response_model/auth_response.dart';
 import 'package:short_path/src/data/api/core/api_response_model/get_user_response.dart';
+import 'package:short_path/src/data/api/core/api_response_model/jobs_response.dart';
 import 'package:short_path/src/data/api/core/constants/apis_baseurl.dart';
 import 'package:short_path/src/data/api/core/constants/apis_end_points.dart';
 
@@ -32,44 +34,43 @@ abstract class ApiServices {
   Future<AuthResponse> register(@Body() RegisterRequest registerRequest);
 
   @POST(ApisEndPoints.language)
-  Future<void> addLanguage(@Body() LanguageRequest languageRequest,
-      @Header('Authorization') String token);
+  Future<void> addLanguage(
+    @Body() LanguageRequest languageRequest,
+  );
 
   @POST(ApisEndPoints.skill)
   Future<void> addSkill(
-      @Body() SkillRequest skillRequest, @Header('Authorization') String token);
+    @Body() SkillRequest skillRequest,
+  );
 
   @POST(ApisEndPoints.profile)
   Future<void> addProfile(
     @Body() ProfileInfoRequest profileRequest,
-    @Header('Authorization') String token,
   );
   @POST(ApisEndPoints.education)
   Future<void> addEducation(
     @Body() EducationRequest educationRequest,
-    @Header('Authorization') String token,
   );
   @POST(ApisEndPoints.certification)
   Future<void> addCertification(
     @Body() CertificationRequest certificationRequest,
-    @Header('Authorization') String token,
   );
   @POST(ApisEndPoints.project)
   Future<void> addProject(
     @Body() ProjectRequest projectRequest,
-    @Header('Authorization') String token,
   );
 
   @POST(ApisEndPoints.workExperience)
   Future<void> addWorkExperience(
     @Body() WorkExperienceRequest workExperienceRequest,
-    @Header('Authorization') String token,
   );
   @POST(ApisEndPoints.additionalInfo)
   Future<void> addAdditionalInfo(
     @Body() AdditionalInfromationRequest additionalInfromationRequest,
-    @Header('Authorization') String token,
   );
   @GET(ApisEndPoints.getUserData)
-  Future<GetUserResponse> getUserData(@Header('Authorization') String token);
+  Future<GetUserResponse> getUserData();
+
+  @GET(ApisEndPoints.getAllJobs)
+  Future<List<JobsResponse>> getAllJobs();
 }

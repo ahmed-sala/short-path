@@ -50,7 +50,7 @@ dependencies:
   flutter_native_splash: ^2.4.4
   fluttertoast: ^8.2.10
 
-  retrofit_generator: ^9.1.5
+  retrofit_generator:
 
 
 dev_dependencies:
@@ -65,7 +65,7 @@ dev_dependencies:
   injectable_generator: ^2.4.0
   build_runner: ^2.4.13
   json_serializable: ^6.8.0
-
+  retrofit_generator:
   flutter_lints: ^4.0.0
   flutter_launcher_icons:
 flutter_icons:
