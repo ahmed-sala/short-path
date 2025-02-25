@@ -251,8 +251,10 @@ class AdditionalInfoScreen extends StatelessWidget {
                               color: AppColors.primaryColor,
                             ),
                             verticalSpace(20),
-                            if (viewModel.awardsList.isNotEmpty)
+                            if (viewModel.volunteerWorkList.isNotEmpty) ...[
+                              verticalSpace(20),
                               VolanteerList(),
+                            ],
                           ],
                         ),
                       ),
