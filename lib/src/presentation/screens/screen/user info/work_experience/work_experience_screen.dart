@@ -64,8 +64,6 @@ class WorkExperienceScreen extends StatelessWidget {
               },
               builder: (context, state) {
                 final viewModel = context.read<WorkExperienceViewModel>();
-                final dateError = validateDates(viewModel.startDate,
-                    viewModel.endDate, viewModel.isCurrentlyWorking);
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

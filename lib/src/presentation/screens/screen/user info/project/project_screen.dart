@@ -17,7 +17,8 @@ import 'package:short_path/src/presentation/screens/widgets/user%20info/project/
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
-import 'package:short_path/src/short_path.dart';
+
+import '../../../../../short_path.dart';
 
 class ProjectScreen extends StatelessWidget {
   ProjectScreen({super.key});

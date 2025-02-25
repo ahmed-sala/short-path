@@ -1,17 +1,17 @@
-sealed class RegisterScreenState {}
+// register_states.dart
+
+abstract class RegisterScreenState {}
 
 class InitialState extends RegisterScreenState {}
 
 class LoadingState extends RegisterScreenState {}
 
 class ErrorState extends RegisterScreenState {
-  String? exception;
+  final String? exception;
   ErrorState(this.exception);
 }
 
-class SuccessState extends RegisterScreenState {
-  SuccessState();
-}
+class SuccessState extends RegisterScreenState {}
 
 class GoToLoginState extends RegisterScreenState {}
 
