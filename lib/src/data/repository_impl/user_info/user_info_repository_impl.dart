@@ -1,19 +1,19 @@
 import 'package:injectable/injectable.dart';
+import 'package:short_path/core/common/api/api_execute.dart';
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/data/data_source/offline_data_source/auth/contracts/auth_offline_datasource.dart';
 import 'package:short_path/src/data/data_source/online_data_source/user_info/contracts/user_info_online_datasource.dart';
 import 'package:short_path/src/data/dto_models/user_info/language_dto.dart';
+import 'package:short_path/src/data/dto_models/user_info/work_experience_dto.dart';
 import 'package:short_path/src/domain/entities/user_info/Certification_Entity.dart';
 import 'package:short_path/src/domain/entities/user_info/Project_Entity.dart';
+import 'package:short_path/src/domain/entities/user_info/additional_info_entity.dart';
 import 'package:short_path/src/domain/entities/user_info/education_entity.dart';
 import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
 import 'package:short_path/src/domain/entities/user_info/profile_entity.dart';
 import 'package:short_path/src/domain/entities/user_info/skill_entity.dart';
+import 'package:short_path/src/domain/entities/user_info/work_experience_entity.dart';
 import 'package:short_path/src/domain/repositories/contract/user_info_repository.dart';
-
-import '../../../../core/common/api/api_execute.dart';
-import '../../../domain/entities/user_info/work_experience_entity.dart';
-import '../../dto_models/user_info/work_experience_dto.dart';
 
 @Injectable(as: UserInfoRepository)
 class UserInfoRepositoryImpl implements UserInfoRepository {
@@ -79,13 +79,26 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
   }
 
   @override
-  Future<ApiResult<void>> saveWorkExperiences(List<WorkExperienceEntity> workExperiences) async {
+  Future<ApiResult<void>> saveWorkExperiences(
+      List<WorkExperienceEntity> workExperiences) async {
     return executeApi<void>(apiCall: () async {
       WorkExperiencesDto workExperienceDto = WorkExperiencesDto(
-          workExperiences: workExperiences.map((e) => e.toWorkExperienceDto()).toList());
+          workExperiences:
+              workExperiences.map((e) => e.toWorkExperienceDto()).toList());
       var token = await _authOfflineDataSource.getToken();
-      token = 'Bearer $token';
-      await _userInfoOnlineDataSource.addWorkExperience(workExperienceDto, token);
+
+      await _userInfoOnlineDataSource.addWorkExperience(
+          workExperienceDto, token!);
+    });
+  }
+
+  @override
+  Future<ApiResult<void>> saveAdditionalInfo(
+      AdditionalInfoEntity additionalInfo) async {
+    return await executeApi<void>(apiCall: () async {
+      var token = await _authOfflineDataSource.getToken();
+      await _userInfoOnlineDataSource.addAdditionalInfo(
+          additionalInfo.toDto(), token!);
     });
   }
 }

@@ -1,4 +1,4 @@
-import '../../../data/dto_models/auth/app_user_dto.dart';
+import 'package:short_path/src/data/dto_models/auth/app_user_dto.dart';
 
 class AppUser {
   final String firstName;

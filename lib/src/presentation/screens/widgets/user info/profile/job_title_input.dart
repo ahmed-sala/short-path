@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/config/helpers/validations.dart';
+import 'package:short_path/src/presentation/mangers/user_info/profile/profile_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/suggestion_list.dart';
-
-import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
-import '../../../../shared_widgets/custom_auth_text_feild.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 
 class JobTitleInput extends StatelessWidget {
   const JobTitleInput({super.key, required this.viewModel});
@@ -18,7 +18,9 @@ class JobTitleInput extends StatelessWidget {
           keyboardType: TextInputType.text,
           controller: viewModel.jobTitleController,
           labelText: 'Job Title',
-          validator: viewModel.validateJobTitle,
+          validator: (value) {
+            return validateJobTitle(value);
+          },
         ),
         if (viewModel.filteredJobSuggestions.isNotEmpty &&
             viewModel.jobTitleController.text.isNotEmpty)

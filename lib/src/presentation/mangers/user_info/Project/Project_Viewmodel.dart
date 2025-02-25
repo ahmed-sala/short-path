@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/data/api/core/error/error_handler.dart';
+import 'package:short_path/src/data/static_data/demo_data_list.dart';
 
 import '../../../../domain/entities/user_info/Project_Entity.dart';
 import '../../../../domain/usecases/Project/project_usecase.dart';
@@ -30,62 +31,6 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   bool validate = false;
 
   String? role;
-
-  final List<String> suggestedTechnologies = [
-    'Flutter',
-    'Dart',
-    'React',
-    'Angular',
-    'Vue.js',
-    'Node.js',
-    'Python',
-    'Java',
-    'C#',
-    'JavaScript',
-    'TypeScript',
-    'Swift',
-    'Kotlin',
-    'Go',
-    'Ruby',
-    'PHP',
-    'SQL',
-    'MongoDB',
-    'Firebase',
-    'AWS',
-    'Docker',
-    'Kubernetes',
-    'Git',
-    'Jenkins',
-    'CI/CD',
-  ];
-
-  String? validateProjectTitle(String? value) {
-    return (value == null || value.trim().isEmpty)
-        ? 'Project Title is required'
-        : null;
-  }
-
-  String? validateProjectLink(String? value) {
-    return (value == null || value.trim().isEmpty)
-        ? 'Project Link is required'
-        : null;
-  }
-
-  String? validateRole(String? value) {
-    return (value == null || value.trim().isEmpty) ? 'Role is required' : null;
-  }
-
-  String? validateDescription(String? value) {
-    return (value == null || value.trim().isEmpty)
-        ? 'Description is required'
-        : null;
-  }
-
-  String? validateTechnologiesUsed(String? value) {
-    return (value == null || value.trim().isEmpty)
-        ? 'Technologies Used are required'
-        : null;
-  }
 
   void addProject() {
     if (formKey.currentState?.validate() ?? false) {
@@ -138,12 +83,12 @@ class ProjectViewmodel extends Cubit<ProjectState> {
 
   void onToolChanged() {
     filteredToolSuggestions = technologiesUsedController.text.isEmpty
-        ? suggestedTechnologies
-        : suggestedTechnologies
-        .where((tool) => tool
-        .toLowerCase()
-        .startsWith(technologiesUsedController.text.toLowerCase()))
-        .toList();
+        ? technicalSkills
+        : technicalSkills
+            .where((tool) => tool
+                .toLowerCase()
+                .startsWith(technologiesUsedController.text.toLowerCase()))
+            .toList();
     emit(ProjectUpdated());
   }
 

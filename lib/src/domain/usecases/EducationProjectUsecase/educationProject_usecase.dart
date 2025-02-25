@@ -1,6 +1,5 @@
 import 'package:injectable/injectable.dart';
-
-import '../../entities/user_info/EducationProject_Entity.dart';
+import 'package:short_path/src/domain/entities/user_info/EducationProject_Entity.dart';
 
 @injectable
 class EducationProjectUsecase {

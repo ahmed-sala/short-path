@@ -1,4 +1,4 @@
-import '../../../data/dto_models/user_info/EducationDto.dart';
+import 'package:short_path/src/data/dto_models/user_info/EducationDto.dart';
 
 class EducationProjectsEntity {
   final String? projectName;

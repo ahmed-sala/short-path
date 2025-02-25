@@ -1,8 +1,10 @@
+import 'package:short_path/src/data/dto_models/user_info/Additional_info_dto.dart';
+
 class AdditionalInfoEntity {
-  final String? hobbiesAndInterests;
-  final String? publications;
-  final String? awardsAndHonors;
-  final VolunteerWork? volunteerWork;
+  final List<String>? hobbiesAndInterests;
+  final List<String>? publications;
+  final List<String>? awardsAndHonors;
+  final List<VolunteerWorkEntity>? volunteerWork;
 
   AdditionalInfoEntity({
     this.hobbiesAndInterests,
@@ -10,16 +12,30 @@ class AdditionalInfoEntity {
     this.awardsAndHonors,
     this.volunteerWork,
   });
+  AdditionalInfoDto toDto() {
+    return AdditionalInfoDto(
+        additionalInformation: AdditionalInformationDto(
+      hobbiesAndInterests: hobbiesAndInterests,
+      publications: publications,
+      awardsAndHonors: awardsAndHonors,
+      volunteerWork: volunteerWork?.map((e) => e.toDto()).toList(),
+    ));
+  }
 }
 
-class VolunteerWork {
+class VolunteerWorkEntity {
   final String description;
-  final String month;
+  final int month;
   final int year;
 
-  VolunteerWork({
+  VolunteerWorkEntity({
     required this.description,
     required this.month,
     required this.year,
   });
+  VolunteerWorkDto toDto() {
+    return VolunteerWorkDto(
+        description: description,
+        duration: DurationDto(years: year, months: month));
+  }
 }

@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-
-import '../../../../dto_models/auth/app_user_dto.dart';
+import 'package:short_path/src/data/dto_models/auth/app_user_dto.dart';
 
 part 'register_request.g.dart';
 

@@ -1,19 +1,13 @@
 import 'package:injectable/injectable.dart';
-
-import '../../entities/user_info/additional_info_entity.dart';
+import 'package:short_path/core/common/api/api_result.dart';
+import 'package:short_path/src/domain/entities/user_info/additional_info_entity.dart';
+import 'package:short_path/src/domain/repositories/contract/user_info_repository.dart';
 
 @injectable
 class AdditionalInfoUsecase {
-  void invoke(AdditionalInfoEntity additionalInfo) {
-    print('Hobbies and Interests: ${additionalInfo.hobbiesAndInterests}');
-    print('Publications: ${additionalInfo.publications}');
-    print('Awards and Honors: ${additionalInfo.awardsAndHonors}');
-    print('Volunteer Work: ${additionalInfo.volunteerWork?.description}');
-    print('Volunteer Work Month: ${additionalInfo.volunteerWork?.month}');
-    print('Volunteer Work Year: ${additionalInfo.volunteerWork?.year}');
-  }
-
-  void removeAdditionalInfo(AdditionalInfoEntity additionalInfo) {
-    print('${additionalInfo.hobbiesAndInterests} removed!');
+  UserInfoRepository _userInfoRepository;
+  AdditionalInfoUsecase(this._userInfoRepository);
+  Future<ApiResult<void>> invoke(AdditionalInfoEntity additionalInfo) async {
+    return await _userInfoRepository.saveAdditionalInfo(additionalInfo);
   }
 }

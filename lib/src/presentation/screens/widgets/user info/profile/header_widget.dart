@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../../core/styles/spacing.dart';
+import 'package:short_path/core/styles/spacing.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({super.key});

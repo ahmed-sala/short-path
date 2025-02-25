@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
-
-import 'onboarding_state.dart';
+import 'package:short_path/src/presentation/mangers/onboarding/onboarding_state.dart';
 
 @injectable
 class OnboardingViewmodel extends Cubit<OnboardingState> {

@@ -23,6 +23,12 @@ class AdditionalInfoDto {
     }
     return map;
   }
+
+  AdditionalInfromationRequest toRequest() {
+    return AdditionalInfromationRequest(
+      additionalInformation: _additionalInformation?.toRequest(),
+    );
+  }
 }
 
 class AdditionalInformationDto {
@@ -73,6 +79,15 @@ class AdditionalInformationDto {
       map['volunteerWork'] = _volunteerWork?.map((v) => v.toJson()).toList();
     }
     return map;
+  }
+
+  AdditionalInformation toRequest() {
+    return AdditionalInformation(
+      hobbiesAndInterests: _hobbiesAndInterests,
+      publications: _publications,
+      awardsAndHonors: _awardsAndHonors,
+      volunteerWork: _volunteerWork?.map((v) => v.toRequest()).toList(),
+    );
   }
 }
 

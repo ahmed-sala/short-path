@@ -7,7 +7,7 @@ class WorkExperienceEntity {
   final String jobType;
   final String jobLocation;
   final DateTime startDate;
-  final DateTime ? endDate;
+  final DateTime? endDate;
   final String summary;
   final List<String> toolsTechnologiesUsed;
 

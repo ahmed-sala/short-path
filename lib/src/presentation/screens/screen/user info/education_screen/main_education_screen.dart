@@ -2,15 +2,14 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/core/dialogs/awesome_dialoge.dart';
+import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen/detailed_education.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/education/education_list.dart';
 import 'package:short_path/src/short_path.dart';
-
-import '../../../../../../core/dialogs/awesome_dialoge.dart';
-import '../../../../../../core/dialogs/show_hide_loading.dart';
-import '../../../../../../dependency_injection/di.dart';
-import '../../../../mangers/user_info/education/education_state.dart';
-import '../../../../mangers/user_info/education/education_viewmodel.dart';
 
 class MainEducationScreen extends StatelessWidget {
   const MainEducationScreen({super.key});
@@ -36,8 +35,8 @@ class MainEducationScreen extends StatelessWidget {
                   dialogType: DialogType.error);
             }
             if (state is AddEducationSuccessState) {
-              navKey.currentState!
-                  .pushReplacementNamed(RoutesName.certification);
+              navKey.currentState!.pushNamedAndRemoveUntil(
+                  RoutesName.workExperience, (route) => false);
             }
           },
           listenWhen: (previous, current) {

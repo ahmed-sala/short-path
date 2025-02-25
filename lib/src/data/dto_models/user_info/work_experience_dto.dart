@@ -1,4 +1,4 @@
-import '../../api/core/api_request_model/user_info/work_experience_request.dart';
+import 'package:short_path/src/data/api/core/api_request_model/user_info/work_experience_request.dart';
 
 class WorkExperienceDto {
   final String jobTitle;

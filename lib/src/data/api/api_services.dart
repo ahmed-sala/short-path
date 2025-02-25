@@ -1,21 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import 'package:short_path/src/data/api/core/api_request_model/auth/login_request.dart';
+import 'package:short_path/src/data/api/core/api_request_model/auth/register_request.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/additional_infromation_request.dart';
+import 'package:short_path/src/data/api/core/api_request_model/user_info/certification_request.dart';
+import 'package:short_path/src/data/api/core/api_request_model/user_info/education_request.dart';
+import 'package:short_path/src/data/api/core/api_request_model/user_info/language_request.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/profile_info_request.dart';
+import 'package:short_path/src/data/api/core/api_request_model/user_info/project_request.dart';
+import 'package:short_path/src/data/api/core/api_request_model/user_info/skill_request.dart';
+import 'package:short_path/src/data/api/core/api_request_model/user_info/work_experience_request.dart';
 import 'package:short_path/src/data/api/core/api_response_model/auth_response.dart';
-
-import 'core/api_request_model/auth/login_request.dart';
-import 'core/api_request_model/auth/register_request.dart';
-import 'core/api_request_model/user_info/certification_request.dart';
-import 'core/api_request_model/user_info/education_request.dart';
-import 'core/api_request_model/user_info/language_request.dart';
-import 'core/api_request_model/user_info/project_request.dart';
-import 'core/api_request_model/user_info/skill_request.dart';
-import 'core/api_request_model/user_info/work_experience_request.dart';
-import 'core/constants/apis_baseurl.dart';
-import 'core/constants/apis_end_points.dart';
+import 'package:short_path/src/data/api/core/constants/apis_baseurl.dart';
+import 'package:short_path/src/data/api/core/constants/apis_end_points.dart';
 
 part 'api_services.g.dart';
 

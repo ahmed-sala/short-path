@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
-
-import '../../../../mangers/user_info/profile/profile_state.dart';
-import '../../../../mangers/user_info/profile/profile_viewmodel.dart';
-import '../../../../shared_widgets/snack_bar.dart';
+import 'package:short_path/src/presentation/mangers/user_info/profile/profile_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/profile/profile_viewmodel.dart';
+import 'package:short_path/src/presentation/shared_widgets/snack_bar.dart';
 
 class PortfolioListWidget extends StatelessWidget {
   const PortfolioListWidget({super.key});

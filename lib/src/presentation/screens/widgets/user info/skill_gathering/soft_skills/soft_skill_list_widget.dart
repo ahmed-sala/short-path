@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
-
-import '../../../../../mangers/user_info/skill_gathering/skill_gathering_state.dart';
-import '../../../../../mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
+import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_state.dart';
+import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 
 class SoftSkillListWidget extends StatelessWidget {
   const SoftSkillListWidget({super.key});
@@ -14,6 +13,7 @@ class SoftSkillListWidget extends StatelessWidget {
     return BlocBuilder<SkillGatheringViewmodel, SkillGatheringState>(
       builder: (context, state) {
         final skills = context.read<SkillGatheringViewmodel>().softSkills;
+        print('Soft Skills: $skills');
         if (skills.isEmpty) {
           return const Text(
             'No skills added yet. Start by adding some skills.',

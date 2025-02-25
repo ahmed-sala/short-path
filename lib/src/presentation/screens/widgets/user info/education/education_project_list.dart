@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
-
-import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../../core/styles/spacing.dart';
 
 class EducationProjectList extends StatelessWidget {
   const EducationProjectList({super.key, required this.viewModel});

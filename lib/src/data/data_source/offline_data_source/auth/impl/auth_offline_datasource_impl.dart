@@ -1,9 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:short_path/config/extensions/extensions.dart';
 
-import '../../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
-import '../../../../../../config/helpers/shared_pref/shared_pref_helper.dart';
-import '../contracts/auth_offline_datasource.dart';
+import 'package:short_path/config/helpers/shared_pref/shared_pre_keys.dart';
+import 'package:short_path/config/helpers/shared_pref/shared_pref_helper.dart';
+import 'package:short_path/src/data/data_source/offline_data_source/auth/contracts/auth_offline_datasource.dart';
 
 @Injectable(as: AuthOfflineDataSource)
 class authOfflineDatasourceImpl implements AuthOfflineDataSource {

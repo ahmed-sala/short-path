@@ -2,12 +2,20 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/config/helpers/validations.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
+import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Project/Project_State.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Project/Project_Viewmodel.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/suggestion_list.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/project/project_list.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/project/tool_list.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
+import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
 
 import '../../../../../../core/dialogs/show_hide_loading.dart';
@@ -18,6 +26,7 @@ import '../../../../shared_widgets/custom_auth_button.dart';
 import '../../../../shared_widgets/custom_auth_text_feild.dart';
 import '../../../widgets/user info/profile/suggestion_list.dart';
 import '../../../widgets/user info/project/ToolList.dart';
+import 'package:short_path/src/short_path.dart';
 
 class ProjectScreen extends StatelessWidget {
   ProjectScreen({super.key});
@@ -63,7 +72,9 @@ class ProjectScreen extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             controller: viewModel.projectTitleController,
                             labelText: 'Project Title',
-                            validator: viewModel.validateProjectTitle,
+                            validator: (value) {
+                              return validateProjectName(value);
+                            },
                           ),
                           verticalSpace(20),
                           CustomDropdownButtonFormField(
@@ -85,7 +96,9 @@ class ProjectScreen extends StatelessWidget {
                                 viewModel.roleController.text = newValue;
                               }
                             },
-                            validator: viewModel.validateRole,
+                            validator: (value) {
+                              return validateRole(value);
+                            },
                           ),
                           verticalSpace(20),
                           CustomTextFormField(
@@ -93,7 +106,9 @@ class ProjectScreen extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             controller: viewModel.projectLinkController,
                             labelText: 'Project Link',
-                            validator: viewModel.validateProjectLink,
+                            validator: (value) {
+                              return validateLink(value);
+                            },
                           ),
                           verticalSpace(20),
                           CustomTextFormField(
@@ -101,7 +116,9 @@ class ProjectScreen extends StatelessWidget {
                             keyboardType: TextInputType.multiline,
                             controller: viewModel.descriptionController,
                             labelText: 'Description',
-                            validator: viewModel.validateDescription,
+                            validator: (value) {
+                              return validateProjectDescription(value);
+                            },
                           ),
                           verticalSpace(20),
                           Row(

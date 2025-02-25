@@ -1,10 +1,9 @@
 import 'package:injectable/injectable.dart';
-
-import '../../../../api/api_services.dart';
-import '../../../../api/core/api_request_model/auth/login_request.dart';
-import '../../../../api/core/api_response_model/auth_response.dart';
-import '../../../../dto_models/auth/app_user_dto.dart';
-import '../contracts/auth_online_datasource.dart';
+import 'package:short_path/src/data/api/api_services.dart';
+import 'package:short_path/src/data/api/core/api_request_model/auth/login_request.dart';
+import 'package:short_path/src/data/api/core/api_response_model/auth_response.dart';
+import 'package:short_path/src/data/data_source/online_data_source/auth/contracts/auth_online_datasource.dart';
+import 'package:short_path/src/data/dto_models/auth/app_user_dto.dart';
 
 @Injectable(as: AuthOnlineDatasource)
 class AuthOnlineDataSourceImpl implements AuthOnlineDatasource {

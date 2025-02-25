@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../../core/styles/colors/app_colore.dart';
-import '../../../widgets/user info/skill_gathering/technical_skills/tech_skill_input_widget.dart';
-import '../../../widgets/user info/skill_gathering/technical_skills/tech_skill_list_widget.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/skill_gathering/technical_skills/tech_skill_input_widget.dart';
+import 'package:short_path/src/presentation/screens/widgets/user%20info/skill_gathering/technical_skills/tech_skill_list_widget.dart';
 
 class TechnicalSkillScreen extends StatelessWidget {
   const TechnicalSkillScreen({super.key});
