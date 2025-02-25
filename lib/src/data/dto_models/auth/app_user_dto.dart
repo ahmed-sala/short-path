@@ -2,14 +2,14 @@ import 'package:short_path/src/data/api/core/api_request_model/auth/register_req
 import 'package:short_path/src/domain/entities/auth/app_user.dart';
 
 class AppUserDto {
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String password;
-  final String mobileNumber;
-  final String birthDate;
-  final String gender;
-  final String address;
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+  final String? password;
+  final String? mobileNumber;
+  final String? birthDate;
+  final String? gender;
+  final String? address;
 
   AppUserDto({
     required this.firstName,

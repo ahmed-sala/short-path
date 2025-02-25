@@ -10,4 +10,5 @@ abstract interface class AuthRepository {
   Future<String?> getToken();
   Future<void> onBoardingCompleted();
   Future<bool> isOnBoardingCompleted();
+  Future<ApiResult<AppUser?>> getUserData();
 }

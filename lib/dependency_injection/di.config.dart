@@ -49,6 +49,8 @@ import '../src/presentation/mangers/auth/register/register_viewmodel.dart'
     as _i599;
 import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
     as _i359;
+import '../src/presentation/mangers/section/section_Screen_viewmodel.dart'
+    as _i794;
 import '../src/presentation/mangers/user_info/additional_info/additional_info_viewmodel.dart'
     as _i374;
 import '../src/presentation/mangers/user_info/Certification/certification_viewmodel.dart'
@@ -86,6 +88,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
     gh.factory<_i428.EducationProjectUsecase>(
         () => _i428.EducationProjectUsecase());
+    gh.factory<_i794.SectionScreenViewmodel>(
+        () => _i794.SectionScreenViewmodel());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
         () => sharedPrefModule.secureStorage);
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());

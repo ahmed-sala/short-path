@@ -12,6 +12,7 @@ import 'package:short_path/src/data/api/core/api_request_model/user_info/project
 import 'package:short_path/src/data/api/core/api_request_model/user_info/skill_request.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/work_experience_request.dart';
 import 'package:short_path/src/data/api/core/api_response_model/auth_response.dart';
+import 'package:short_path/src/data/api/core/api_response_model/get_user_response.dart';
 import 'package:short_path/src/data/api/core/constants/apis_baseurl.dart';
 import 'package:short_path/src/data/api/core/constants/apis_end_points.dart';
 
@@ -69,4 +70,6 @@ abstract class ApiServices {
     @Body() AdditionalInfromationRequest additionalInfromationRequest,
     @Header('Authorization') String token,
   );
+  @GET(ApisEndPoints.getUserData)
+  Future<GetUserResponse> getUserData(@Header('Authorization') String token);
 }
