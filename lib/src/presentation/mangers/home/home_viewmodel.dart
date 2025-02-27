@@ -18,6 +18,11 @@ class HomeViewmodel extends Cubit<HomeState> {
   ) : super(HomeInitial());
   AppUser? appUser;
   List<JobEntity>? jobs;
+
+  List<JobEntity>? fullTimeJobs;
+  List<JobEntity>? partTimeJobs;
+  List<JobEntity>? contractorJobs;
+
   void getUserData() async {
     emit(UserDataLoading());
     var result = await _homeUsecase.invoke();
@@ -28,11 +33,11 @@ class HomeViewmodel extends Cubit<HomeState> {
         break;
       case Failures<AppUser?>():
         var errorMessages = ErrorHandler.fromException(result.exception);
-        if (errorMessages.code == 401) {
+        if (errorMessages.code == 403) {
           emit(SessionExpired());
-          emit(UserDataError(errorMessages.errorMessage));
           break;
         }
+        emit(UserDataError(errorMessages.errorMessage));
     }
   }
 
@@ -43,10 +48,26 @@ class HomeViewmodel extends Cubit<HomeState> {
       switch (result) {
         case Success<List<JobEntity>?>():
           jobs = result.data;
+          fullTimeJobs = jobs
+              ?.where((job) =>
+                  job.employmentType == "Full-time" ||
+                  job.employmentType == "Full-time and Part-time")
+              .toList();
+          partTimeJobs = jobs
+              ?.where((job) =>
+                  job.employmentType == "Part-time" ||
+                  job.employmentType == "Full-time and Part-time")
+              .toList();
+          contractorJobs =
+              jobs?.where((job) => job.employmentType == "Contractor").toList();
           emit(JobsLoaded(jobs));
           break;
         case Failures<List<JobEntity>?>():
           var errorMessages = ErrorHandler.fromException(result.exception);
+          if (errorMessages.code == 403) {
+            emit(SessionExpired());
+            break;
+          }
           emit(JobsError(errorMessages.errorMessage));
           break;
       }

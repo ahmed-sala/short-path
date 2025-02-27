@@ -51,7 +51,8 @@ dependencies:
   fluttertoast: ^8.2.10
 
   retrofit_generator:
-
+  cached_network_image:
+  skeletonizer: ^1.4.3
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ dev_dependencies:
   retrofit_generator:
   flutter_lints: ^4.0.0
   flutter_launcher_icons:
+
 flutter_icons:
   image_path: "assets/images/logo_splash.png"
   android: true

@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                     } else if (state is SuccessState) {
                       hideLoading();
                       Navigator.pushReplacementNamed(
-                          context, RoutesName.profile);
+                          context, RoutesName.sectionScreen);
                     }
                   },
                   builder: (context, state) {
