@@ -19,15 +19,16 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
   UserInfoOnlineDatasourceImpl(this._apiServices);
 
   @override
-  Future<void> addProfile(ProfileDto profileRequest, String token) async {
+  Future<void> addProfile(ProfileDto profileRequest) async {
     await _apiServices.addProfile(
       profileRequest.toProfileRequest(),
-      "Bearer $token",
     );
   }
 
   @override
-  Future<void> addSkills(SkillsDto skillsRequest, String token) async {
+  Future<void> addSkills(
+    SkillsDto skillsRequest,
+  ) async {
     var skills = skillsRequest.toSkillsRequest();
     print(skills.skills?.industrySpecificSkills);
     print(skills.skills!.technicalSkills?[0].skill);
@@ -43,17 +44,22 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
         industrySpecificSkills: skills.skills!.industrySpecificSkills,
       ),
     );
-    return await _apiServices.addSkill(skillRequest, "Bearer $token");
+    return await _apiServices.addSkill(
+      skillRequest,
+    );
   }
 
   @override
-  Future<void> addLanguage(LanguagesDto languageRequest, String token) async {
+  Future<void> addLanguage(LanguagesDto languageRequest) async {
     return await _apiServices.addLanguage(
-        languageRequest.toLanguagesRequest(), "Bearer $token");
+      languageRequest.toLanguagesRequest(),
+    );
   }
 
   @override
-  Future<void> addEducation(EducationDto educationRequest, String token) async {
+  Future<void> addEducation(
+    EducationDto educationRequest,
+  ) async {
     print(
         'Education Request: ${educationRequest.educations?[0].degreeCertification}');
     print(
@@ -61,33 +67,44 @@ class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
     print(
         'Education Request: ${educationRequest.educations?[0].projects?[0].projectName}');
     return await _apiServices.addEducation(
-        educationRequest.toRequest(), "Bearer $token");
+      educationRequest.toRequest(),
+    );
   }
 
   @override
   Future<void> addCertification(
-      CertificationDto certificationRequest, String token) async {
+    CertificationDto certificationRequest,
+  ) async {
     return await _apiServices.addCertification(
-        certificationRequest.toRequest(), "Bearer $token");
+      certificationRequest.toRequest(),
+    );
   }
 
   @override
-  Future<void> addProjects(ProjectDto projectRequest, String token) async {
+  Future<void> addProjects(
+    ProjectDto projectRequest,
+  ) async {
     return await _apiServices.addProject(
-        projectRequest.toRequest(), "Bearer $token");
+      projectRequest.toRequest(),
+    );
   }
 
   @override
   Future<void> addWorkExperience(
-      WorkExperiencesDto workExperiencesRequest, String token) async {
+    WorkExperiencesDto workExperiencesRequest,
+  ) async {
     var workExperience = workExperiencesRequest.toWorkExperienceRequest();
-    await _apiServices.addWorkExperience(workExperience, "Bearer $token");
+    await _apiServices.addWorkExperience(
+      workExperience,
+    );
   }
 
   @override
   Future<void> addAdditionalInfo(
-      AdditionalInfoDto additionalInfoDto, String token) async {
+    AdditionalInfoDto additionalInfoDto,
+  ) async {
     return await _apiServices.addAdditionalInfo(
-        additionalInfoDto.toRequest(), "Bearer $token");
+      additionalInfoDto.toRequest(),
+    );
   }
 }

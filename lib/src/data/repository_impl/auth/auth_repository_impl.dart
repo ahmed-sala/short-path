@@ -60,4 +60,12 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> isOnBoardingCompleted() {
     return _authOfflineDataSource.isOnBoardingCompleted();
   }
+
+  @override
+  Future<ApiResult<AppUser?>> getUserData() async {
+    return await executeApi<AppUser?>(apiCall: () async {
+      var response = await _authOnlineDatasource.getUserData();
+      return response.toAppUser();
+    });
+  }
 }

@@ -5,6 +5,7 @@ import 'package:short_path/src/presentation/screens/screen/auth/register_screen.
 import 'package:short_path/src/presentation/screens/screen/home/home_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/auth_decision.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/onboarding_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/section/section_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user info/skiils/skill_information_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/additional_info/additional_info_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/certification/certification_screen.dart';
@@ -31,7 +32,7 @@ class AppRoute {
             settings: settings, widget: const RegisterScreen());
       case RoutesName.home:
         return _handelMaterialPageRoute(
-            settings: settings, widget: const HomeScreen());
+            settings: settings, widget: HomeScreen());
       case RoutesName.profile:
         return _handelMaterialPageRoute(
             settings: settings, widget: const ProfileScreen());
@@ -42,6 +43,9 @@ class AppRoute {
       case RoutesName.skillGathering:
         return _handelMaterialPageRoute(
             settings: settings, widget: const SkillInformationScreen());
+      case RoutesName.sectionScreen:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: SectionScreen());
       // case RoutesName.educationproject:
       //   return _handelMaterialPageRoute(
       //       settings: settings, widget: const EducationProjectScreen());

@@ -12,6 +12,7 @@ class _ApiServices implements ApiServices {
   _ApiServices(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   }) {
     baseUrl ??= 'http://10.0.2.2:8099/';
   }
@@ -19,6 +20,8 @@ class _ApiServices implements ApiServices {
   final Dio _dio;
 
   String? baseUrl;
+
+  final ParseErrorLogger? errorLogger;
 
   @override
   Future<AuthResponse> login(LoginRequest loginRequest) async {
@@ -48,6 +51,7 @@ class _ApiServices implements ApiServices {
     try {
       _value = AuthResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
     return _value;
@@ -81,20 +85,17 @@ class _ApiServices implements ApiServices {
     try {
       _value = AuthResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
     return _value;
   }
 
   @override
-  Future<void> addLanguage(
-    LanguageRequest languageRequest,
-    String token,
-  ) async {
+  Future<void> addLanguage(LanguageRequest languageRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(languageRequest.toJson());
     final _options = _setStreamType<void>(Options(
@@ -117,14 +118,10 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<void> addSkill(
-    SkillRequest skillRequest,
-    String token,
-  ) async {
+  Future<void> addSkill(SkillRequest skillRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(skillRequest.toJson());
     final _options = _setStreamType<void>(Options(
@@ -147,14 +144,10 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<void> addProfile(
-    ProfileInfoRequest profileRequest,
-    String token,
-  ) async {
+  Future<void> addProfile(ProfileInfoRequest profileRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(profileRequest.toJson());
     final _options = _setStreamType<void>(Options(
@@ -177,14 +170,10 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<void> addEducation(
-    EducationRequest educationRequest,
-    String token,
-  ) async {
+  Future<void> addEducation(EducationRequest educationRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(educationRequest.toJson());
     final _options = _setStreamType<void>(Options(
@@ -208,13 +197,10 @@ class _ApiServices implements ApiServices {
 
   @override
   Future<void> addCertification(
-    CertificationRequest certificationRequest,
-    String token,
-  ) async {
+      CertificationRequest certificationRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(certificationRequest.toJson());
     final _options = _setStreamType<void>(Options(
@@ -237,14 +223,10 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<void> addProject(
-    ProjectRequest projectRequest,
-    String token,
-  ) async {
+  Future<void> addProject(ProjectRequest projectRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(projectRequest.toJson());
     final _options = _setStreamType<void>(Options(
@@ -268,13 +250,10 @@ class _ApiServices implements ApiServices {
 
   @override
   Future<void> addWorkExperience(
-    WorkExperienceRequest workExperienceRequest,
-    String token,
-  ) async {
+      WorkExperienceRequest workExperienceRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(workExperienceRequest.toJson());
     final _options = _setStreamType<void>(Options(
@@ -298,13 +277,10 @@ class _ApiServices implements ApiServices {
 
   @override
   Future<void> addAdditionalInfo(
-    AdditionalInfromationRequest additionalInfromationRequest,
-    String token,
-  ) async {
+      AdditionalInfromationRequest additionalInfromationRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(additionalInfromationRequest.toJson());
     final _options = _setStreamType<void>(Options(
@@ -324,6 +300,74 @@ class _ApiServices implements ApiServices {
           baseUrl,
         )));
     await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<GetUserResponse> getUserData() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<GetUserResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'user',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late GetUserResponse _value;
+    try {
+      _value = GetUserResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<List<JobsResponse>> getAllJobs() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<List<JobsResponse>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'job/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<JobsResponse> _value;
+    try {
+      _value = _result.data!
+          .map((dynamic i) => JobsResponse.fromJson(i as Map<String, dynamic>))
+          .toList();
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
