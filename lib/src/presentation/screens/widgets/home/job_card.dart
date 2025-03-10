@@ -3,6 +3,8 @@ import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/images/app_images.dart';
 import 'package:short_path/src/domain/entities/home/job_entity.dart';
 
+import '../../../../../core/styles/cached_network_image_widget.dart';
+
 class JobCard extends StatelessWidget {
   const JobCard({Key? key, required this.job}) : super(key: key);
   final JobEntity? job;
@@ -33,11 +35,10 @@ class JobCard extends StatelessWidget {
                             color: AppColors.primaryColor,
                             child: Image.asset(AppImages.appLogo,
                                 width: 35, height: 35))
-                        : Image.network(
-                            job?.image ?? '',
+                        : CachedNetworkImageWidget(
+                            imageUrl: job!.image,
                             width: 35,
                             height: 35,
-                            fit: BoxFit.contain,
                           ),
                     const SizedBox(width: 12),
                     // Job Title

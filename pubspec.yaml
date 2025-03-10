@@ -35,6 +35,10 @@ dependencies:
   get_it:
   injectable:
   dio:
+  flutter_downloader:
+
+  permission_handler: ^11.0.1
+
   retrofit:
   logger:
   json_annotation: ^4.9.0
@@ -49,10 +53,11 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.4
   fluttertoast: ^8.2.10
-
-  retrofit_generator:
+  open_file: ^3.3.2
+  path_provider: ^2.1.2
   cached_network_image:
   skeletonizer: ^1.4.3
+  lottie:
 
 dev_dependencies:
   flutter_test:

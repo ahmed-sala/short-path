@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
+import 'package:short_path/core/styles/animations/app_animation.dart';
 
 class CachedNetworkImageWidget extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final double height;
   final double width;
   final BoxFit? fit;
@@ -21,9 +23,13 @@ class CachedNetworkImageWidget extends StatelessWidget {
       fit: fit,
       height: height.h,
       width: width.w,
-      imageUrl: imageUrl,
-      progressIndicatorBuilder: (context, url, downloadProgress) => Center(
-          child: CircularProgressIndicator(value: downloadProgress.progress)),
+      imageUrl: imageUrl!,
+      progressIndicatorBuilder: (context, url, downloadProgress) =>
+          Lottie.asset(
+        AppAnimation.loading,
+        height: 50,
+        width: 50,
+      ),
       errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
