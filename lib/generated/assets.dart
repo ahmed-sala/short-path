@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String animationsLoadingShort = 'assets/animations/loading_short.json';
   static const String imagesAppIcon = 'assets/images/app_icon.png';
   static const String imagesImg = 'assets/images/img.png';
   static const String imagesLogoShort = 'assets/images/logo_short.png';
@@ -11,4 +12,5 @@ class Assets {
   static const String imagesOnboarding3 = 'assets/images/onboarding3.png';
   static const String imagesOnboarding4 = 'assets/images/onboarding4.png';
   static const String imagesWomen = 'assets/images/women.png';
+
 }

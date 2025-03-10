@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
@@ -13,13 +14,26 @@ import 'package:short_path/src/presentation/mangers/auth/login/login_viewmodel.d
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 
+import '../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
 import '../../../mangers/auth/login/login_actions.dart';
 import '../../widgets/auth/animated_form.dart';
 import '../../widgets/auth/animated_logo.dart';
 import '../../widgets/auth/no_account_row.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState()  {
+    // TODO: implement initState
+    super.initState();
+     getIt<FlutterSecureStorage>().delete(key: SharedPrefKeys.userToken);
+  }
 
   // The LoginScreen now leverages AnimatedLogo and AnimatedForm.
   @override

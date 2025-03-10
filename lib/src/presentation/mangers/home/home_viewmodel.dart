@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/data/api/core/error/error_handler.dart';
 import 'package:short_path/src/domain/entities/auth/app_user.dart';

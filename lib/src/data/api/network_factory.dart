@@ -13,11 +13,16 @@ abstract class DioProvider {
   Dio dioProvider() {
     final Dio dio = Dio(
       BaseOptions(
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
         connectTimeout: const Duration(seconds: 60),
         sendTimeout: const Duration(seconds: 60),
         receiveTimeout: const Duration(seconds: 60),
       ),
     );
+
     dio.interceptors.add(providePretty());
     dio.interceptors.add(AppInterceptors());
     return dio;

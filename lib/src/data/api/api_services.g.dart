@@ -14,7 +14,7 @@ class _ApiServices implements ApiServices {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://10.0.2.2:8099/';
+    baseUrl ??= 'http://20.199.92.203:8099/';
   }
 
   final Dio _dio;
