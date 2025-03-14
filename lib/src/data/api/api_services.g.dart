@@ -14,7 +14,7 @@ class _ApiServices implements ApiServices {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://20.199.92.203:8099/';
+    baseUrl ??= 'https://shortpath.live/';
   }
 
   final Dio _dio;

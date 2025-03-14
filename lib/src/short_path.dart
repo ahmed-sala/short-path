@@ -1,12 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:short_path/config/helpers/shared_pref/shared_pre_keys.dart';
 import 'package:short_path/config/routes/app_route.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/styles/theme/app_theme.dart';
 import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/mangers/localization/localization_viewmodel.dart';
+
+import '../core/common/common_imports.dart';
 
 final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
@@ -18,7 +21,7 @@ class ShortPath extends StatefulWidget {
 }
 
 class _ShortPathState extends State<ShortPath> {
-  String? _initialRoute = RoutesName.sectionScreen;
+  String? _initialRoute = RoutesName.login;
   bool _isInitialized = true;
 
   @override
@@ -62,9 +65,17 @@ class _ShortPathState extends State<ShortPath> {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) => MaterialApp(
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              locale: Locale(BlocProvider.of<LocalizationViewmodel>(context)
+                  .cachedLanguageCode),
               theme: AppTheme.lightTheme,
               debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
+              title: 'Short Path',
               navigatorKey: navKey,
               initialRoute: _initialRoute,
               onGenerateRoute: AppRoute.onGenerateRoute,

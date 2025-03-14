@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
@@ -29,12 +30,11 @@ class AdditionalInfoScreen extends StatelessWidget {
       create: (context) => viewModel,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Additional Information'),
+          title: Text(context.localization.additionalInformation),
         ),
         body: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              // Ensures that the child takes at least the full height of the viewport.
               minHeight: MediaQuery.of(context).size.height,
             ),
             child: Padding(
@@ -42,19 +42,21 @@ class AdditionalInfoScreen extends StatelessWidget {
               child: BlocConsumer<AdditionalInfoViewmodel, AdditionalInfoState>(
                 listener: (context, state) {
                   if (state is AddAdditionalInfoLoading) {
-                    showLoading(context, 'Adding additional info');
+                    showLoading(
+                        context, context.localization.addingAdditionalInfo);
                   } else if (state is AdditionalInfoSuccess) {
                     navKey.currentState!.pushNamedAndRemoveUntil(
                         RoutesName.home, (route) => false);
                   } else if (state is AdditionalInfoError) {
                     showAwesomeDialog(context,
-                        title: 'Error',
+                        title: context.localization.error,
                         desc: state.message,
                         onOk: () {},
                         dialogType: DialogType.error);
                   } else if (state is ExpiredToken) {
                     showAwesomeDialog(context,
-                        title: 'Error', desc: 'Session expired', onOk: () {
+                        title: context.localization.error,
+                        desc: context.localization.sessionExpired, onOk: () {
                       navKey.currentState!.pushNamedAndRemoveUntil(
                           RoutesName.login, (route) => false);
                     }, dialogType: DialogType.error);
@@ -77,7 +79,6 @@ class AdditionalInfoScreen extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ... your Form and other widgets ...
                       Form(
                         key: viewModel.formKey,
                         autovalidateMode: AutovalidateMode.disabled,
@@ -85,22 +86,23 @@ class AdditionalInfoScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Hobbies input row
                             Row(
                               children: [
                                 Expanded(
                                   flex: 4,
                                   child: CustomTextFormField(
-                                    hintText: 'Enter Hobbies and Interests',
+                                    hintText: context
+                                        .localization.enterHobbiesAndInterests,
                                     keyboardType: TextInputType.text,
                                     controller:
                                         viewModel.hobbiesAndInterestsController,
-                                    labelText: 'Hobbies and Interests',
+                                    labelText: context
+                                        .localization.hobbiesAndInterests,
                                     validator: (value) => null,
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 50, // Adjust width as needed
+                                  width: 50,
                                   child: Center(
                                     child: IconButton(
                                       icon: const Icon(Icons.add),
@@ -127,11 +129,13 @@ class AdditionalInfoScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 4,
                                   child: CustomTextFormField(
-                                    hintText: 'Enter Publications',
+                                    hintText:
+                                        context.localization.enterPublications,
                                     keyboardType: TextInputType.text,
                                     controller:
                                         viewModel.publicationsController,
-                                    labelText: 'Publications',
+                                    labelText:
+                                        context.localization.publications,
                                     validator: (value) => null,
                                   ),
                                 ),
@@ -161,11 +165,13 @@ class AdditionalInfoScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 4,
                                   child: CustomTextFormField(
-                                    hintText: 'Enter Awards and Honors',
+                                    hintText: context
+                                        .localization.enterAwardsAndHonors,
                                     keyboardType: TextInputType.text,
                                     controller:
                                         viewModel.awardsAndHonorsController,
-                                    labelText: 'Awards and Honors',
+                                    labelText:
+                                        context.localization.awardsAndHonors,
                                     validator: (value) => null,
                                   ),
                                 ),
@@ -195,12 +201,13 @@ class AdditionalInfoScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: CustomTextFormField(
-                                    hintText:
-                                        'Enter Volunteer Work Description',
+                                    hintText: context.localization
+                                        .enterVolunteerWorkDescription,
                                     keyboardType: TextInputType.text,
                                     controller: viewModel
                                         .volunteerWorkDescriptionController,
-                                    labelText: 'Volunteer Work Description',
+                                    labelText: context
+                                        .localization.volunteerWorkDescription,
                                     validator: (value) => null,
                                   ),
                                 ),
@@ -212,7 +219,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: CustomTextFormField(
-                                    labelText: 'No. years',
+                                    labelText: context.localization.noYears,
                                     hintText: '',
                                     keyboardType: TextInputType.number,
                                     controller: viewModel.noOfYearsController,
@@ -222,7 +229,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                                 horizontalSpace(20),
                                 Expanded(
                                   child: CustomTextFormField(
-                                    labelText: 'No. months',
+                                    labelText: context.localization.noMonths,
                                     hintText: '',
                                     keyboardType: TextInputType.number,
                                     controller: viewModel.noOfMonthsController,
@@ -234,7 +241,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                             verticalSpace(20),
                             // Button for adding volunteer work
                             CustomAuthButton(
-                              text: 'Add volunteer work',
+                              text: context.localization.addVolunteerWork,
                               onPressed: () {
                                 viewModel.addVolunteerWork(
                                   VolunteerWorkEntity(
@@ -259,7 +266,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                       ),
                       // NEXT button
                       CustomAuthButton(
-                        text: 'NEXT',
+                        text: context.localization.next,
                         onPressed: () {
                           viewModel.submitAdditionalInfo();
                         },

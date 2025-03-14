@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 import '../../../mangers/auth/register/register_viewmodel.dart';
 import '../../../shared_widgets/custom_auth_button.dart';
@@ -17,9 +18,9 @@ class FirstStepRegister extends StatelessWidget {
           children: [
             Expanded(
               child: CustomTextFormField(
-                hintText: 'First name',
+                hintText: context.localization.firstName,
                 controller: viewModel.firstNameController,
-                labelText: 'First Name',
+                labelText: context.localization.firstName,
                 validator: (val) => viewModel.validateName(val),
                 keyboardType: TextInputType.name,
               ),
@@ -27,9 +28,9 @@ class FirstStepRegister extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: CustomTextFormField(
-                hintText: 'Last name',
+                hintText: context.localization.lastName,
                 controller: viewModel.lastNameController,
-                labelText: 'Last Name',
+                labelText: context.localization.lastName,
                 validator: (val) => viewModel.validateName(val),
                 keyboardType: TextInputType.name,
               ),
@@ -38,36 +39,36 @@ class FirstStepRegister extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         CustomTextFormField(
-          hintText: 'Email',
+          hintText: context.localization.email,
           keyboardType: TextInputType.emailAddress,
           controller: viewModel.emailController,
-          labelText: 'Email Address',
+          labelText: context.localization.emailAddress,
           validator: (val) => viewModel.validateEmail(val),
         ),
         const SizedBox(height: 20),
         CustomTextFormField(
           isPasswordVisible: viewModel.isPasswordVisible,
           showPassword: viewModel.togglePasswordVisibility,
-          hintText: 'Password',
+          hintText: context.localization.password,
           keyboardType: TextInputType.visiblePassword,
           controller: viewModel.passwordController,
-          labelText: 'Password',
+          labelText: context.localization.password,
           validator: (val) => viewModel.validatePassword(val),
         ),
         const SizedBox(height: 20),
         CustomTextFormField(
-          hintText: 'Confirm Password',
+          hintText: context.localization.confirmPassword,
           isPasswordVisible: viewModel.isRePasswordVisible,
           showPassword: viewModel.toggleRePasswordVisibility,
           keyboardType: TextInputType.visiblePassword,
           controller: viewModel.rePasswordController,
-          labelText: 'Confirm Password',
+          labelText: context.localization.confirmPassword,
           validator: (val) => viewModel.validateConfirmPassword(
               val, viewModel.passwordController.text),
         ),
         const SizedBox(height: 20),
         CustomAuthButton(
-          text: 'NEXT',
+          text: context.localization.next,
           onPressed: viewModel.nextStep,
           color: const Color(0xFF102027),
         ),

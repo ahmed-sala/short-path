@@ -6,6 +6,7 @@ import 'package:short_path/config/helpers/validations.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
@@ -28,7 +29,7 @@ class CertificationScreen extends StatelessWidget {
       create: (context) => viewModel,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Certifications'),
+          title: Text(context.localization.certifications),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -36,13 +37,14 @@ class CertificationScreen extends StatelessWidget {
             child: BlocConsumer<CertificationViewmodel, CertificationState>(
               listener: (context, state) {
                 if (state is AddCertificationsLoading) {
-                  showLoading(context, 'Adding Certifications');
+                  showLoading(
+                      context, context.localization.addingCertifications);
                 } else if (state is AddCertificationsSuccess) {
                   navKey.currentState!.pushNamedAndRemoveUntil(
                       RoutesName.additionalinfo, (route) => false);
                 } else if (state is AddCertificationsFailure) {
                   showAwesomeDialog(context,
-                      title: 'Error',
+                      title: context.localization.error,
                       desc: state.message,
                       onOk: () {},
                       dialogType: DialogType.error);
@@ -69,19 +71,21 @@ class CertificationScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomTextFormField(
-                              hintText: 'Enter Certification Name',
+                              hintText:
+                                  context.localization.enterCertificationName,
                               keyboardType: TextInputType.text,
                               controller: viewModel.certificationNameController,
-                              labelText: 'Certification Name',
+                              labelText: context.localization.certificationName,
                               validator: (value) {
                                 return validateCertificationName(value);
                               }),
                           verticalSpace(20),
                           CustomTextFormField(
-                            hintText: 'Enter Issuing Organization',
+                            hintText:
+                                context.localization.enterIssuingOrganization,
                             keyboardType: TextInputType.text,
                             controller: viewModel.issuingOrganizationController,
-                            labelText: 'Issuing Organization',
+                            labelText: context.localization.issuingOrganization,
                             validator: (value) {
                               return validateIssuingOrganization(value);
                             },
@@ -90,17 +94,17 @@ class CertificationScreen extends StatelessWidget {
                           DateInputField(
                             selectedDate: viewModel.selectedDateEarned,
                             onDateSelected: viewModel.setDateEarned,
-                            labelText: 'Date Earned',
+                            labelText: context.localization.dateEarned,
                           ),
                           verticalSpace(20),
                           DateInputField(
                             selectedDate: viewModel.selectedExpirationDate,
                             onDateSelected: viewModel.setExpirationDate,
-                            labelText: 'Expiration Date',
+                            labelText: context.localization.expirationDate,
                           ),
                           verticalSpace(20),
                           CustomAuthButton(
-                            text: 'Add Certification',
+                            text: context.localization.addCertification,
                             onPressed: () {
                               viewModel.addCertification();
                               // Clear text fields after adding certification
@@ -131,7 +135,7 @@ class CertificationScreen extends StatelessWidget {
                           }),
                     // NEXT Button
                     CustomAuthButton(
-                      text: 'NEXT',
+                      text: context.localization.next,
                       onPressed: viewModel.certifications.isNotEmpty
                           ? () {
                               viewModel.next();

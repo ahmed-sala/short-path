@@ -11,16 +11,17 @@ part 'career_state.dart';
 class CareerViewmodel extends Cubit<CareerState> {
   CareerUsecase _careerUsecase;
   CareerViewmodel(this._careerUsecase) : super(CareerInitial());
-
+  String? filePath;
   Future<void> downloadFile() async {
     try {
       emit(DownloadCvLoading());
       final result = await _careerUsecase.downloadFile();
       switch (result) {
-        case Success<void>():
+        case Success<String>():
+          filePath = result.data;
           emit(DownloadCvSuccess());
           break;
-        case Failures<void>():
+        case Failures<String>():
           var errorMesssage =
               ErrorHandler.fromException(result.exception).errorMessage;
           emit(DownloadCvError(errorMesssage));

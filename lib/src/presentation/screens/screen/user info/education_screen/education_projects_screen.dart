@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/config/helpers/validations.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
@@ -35,34 +36,34 @@ class EducationProjectScreen extends StatelessWidget {
                     children: [
                       Center(
                           child: EducationHeader(
-                        title: 'Education Projects',
+                        title: context.localization.educationProjects,
                       )),
                       verticalSpace(30),
                       CustomTextFormField(
-                        hintText: 'Enter Project Name',
+                        hintText: context.localization.enterProjectName,
                         keyboardType: TextInputType.text,
                         controller: viewModel.projectNameController,
-                        labelText: 'Project Name',
+                        labelText: context.localization.projectName,
                         validator: (value) {
                           return validateProjectName(value);
                         },
                       ),
                       verticalSpace(20),
                       CustomTextFormField(
-                        hintText: 'Enter Project Description',
+                        hintText: context.localization.enterProjectDescription,
                         keyboardType: TextInputType.multiline,
                         controller: viewModel.projectDescriptionController,
-                        labelText: 'Project Description',
+                        labelText: context.localization.projectDescription,
                         validator: (value) {
                           return validateProjectDescription(value);
                         },
                       ),
                       verticalSpace(20),
                       CustomTextFormField(
-                        hintText: 'Enter Project Link',
+                        hintText: context.localization.enterProjectLink,
                         keyboardType: TextInputType.url,
                         controller: viewModel.projectLinkController,
-                        labelText: 'Project Link',
+                        labelText: context.localization.projectLink,
                         validator: (value) {
                           return validateLink(value);
                         },
@@ -74,10 +75,12 @@ class EducationProjectScreen extends StatelessWidget {
                           Expanded(
                             flex: 4,
                             child: CustomTextFormField(
-                              hintText: 'Enter Tools/Technologies Used',
+                              hintText: context
+                                  .localization.enterToolsTechnologiesUsed,
                               keyboardType: TextInputType.text,
                               controller: viewModel.toolsTechnologiesController,
-                              labelText: 'Tools/Technologies Used',
+                              labelText:
+                                  context.localization.toolsTechnologiesUsed,
                               validator: (value) => null,
                             ),
                           ),
@@ -108,7 +111,7 @@ class EducationProjectScreen extends StatelessWidget {
                         verticalSpace(20),
                       ],
                       CustomAuthButton(
-                        text: 'Add Project',
+                        text: context.localization.addProject,
                         onPressed: viewModel.addProject,
                         color: AppColors.primaryColor,
                       ),
@@ -123,7 +126,7 @@ class EducationProjectScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Added Projects:',
+                        context.localization.addedProjects,
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
@@ -138,7 +141,7 @@ class EducationProjectScreen extends StatelessWidget {
 
                 // NEXT Button
                 CustomAuthButton(
-                  text: 'Add New Education',
+                  text: context.localization.addNewEducation,
                   onPressed: viewModel.projects.isNotEmpty
                       ? () {
                           viewModel.addEducation();

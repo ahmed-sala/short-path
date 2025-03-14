@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/home/home_viewmodel.dart';
@@ -39,13 +40,13 @@ class HomeScreen extends StatelessWidget {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Session Expired',
+                Text(
+                  context.localization.sessionExpired,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
                 CustomAuthButton(
-                  text: 'Go to login',
+                  text: context.localization.goToLogin,
                   onPressed: () {
                     navKey.currentState!.pushNamedAndRemoveUntil(
                         RoutesName.login, (route) => false);
@@ -83,9 +84,9 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Welcome,',
-                        style: TextStyle(
+                      Text(
+                        context.localization.welcome,
+                        style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.w500,
                           color: Colors.white70,
@@ -110,15 +111,15 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Find Your Job',
-                          style: TextStyle(
+                      Text(context.localization.findYourJob,
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 16),
                       JobStatsCard(),
                       verticalSpace(20),
-                      const Text(
-                        'Recent Job List',
-                        style: TextStyle(
+                      Text(
+                        context.localization.recentJobList,
+                        style: const TextStyle(
                           color: Color(0xFF150B3D),
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

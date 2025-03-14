@@ -1,3 +1,3 @@
 abstract interface class CareerOnlineDatasource {
-  Future<void> downloadFile();
+  Future<String> downloadFile();
 }
