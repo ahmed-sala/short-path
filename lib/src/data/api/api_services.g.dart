@@ -336,12 +336,24 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<List<JobsResponse>> getAllJobs() async {
+  Future<JobsResponse> getAllJobs(
+    String term,
+    int page,
+    String sort,
+    int size,
+    JobFilterRequest filterRequest,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'term': term,
+      r'page': page,
+      r'sort': sort,
+      r'size': size,
+      r'filter': filterRequest.toJson(),
+    };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<JobsResponse>>(Options(
+    final _options = _setStreamType<JobsResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -357,12 +369,10 @@ class _ApiServices implements ApiServices {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<JobsResponse> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late JobsResponse _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => JobsResponse.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = JobsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

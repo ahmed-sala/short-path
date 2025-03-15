@@ -18,6 +18,7 @@ class CareerScreen extends StatefulWidget {
 
 class _CareerScreenState extends State<CareerScreen> {
   PDFDocument? document;
+  final CareerViewmodel careerViewmodel = getIt<CareerViewmodel>();
 
   Future<void> loadPdf(String filePath) async {
     PDFDocument pdf = await PDFDocument.fromFile(File(filePath));
@@ -28,8 +29,6 @@ class _CareerScreenState extends State<CareerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final CareerViewmodel careerViewmodel = getIt.get<CareerViewmodel>();
-
     return BlocProvider(
       create: (context) => careerViewmodel,
       child: BlocListener<CareerViewmodel, CareerState>(

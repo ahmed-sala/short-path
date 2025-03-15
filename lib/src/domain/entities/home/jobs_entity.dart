@@ -1,4 +1,25 @@
+import 'package:json_annotation/json_annotation.dart';
+
 class JobEntity {
+  final List<ContentEntity>? content;
+  final int? pageNumber;
+  final int? pageSize;
+  final int? totalElements;
+  final int? totalPages;
+  final bool? last;
+
+  JobEntity({
+    this.content,
+    this.pageNumber,
+    this.pageSize,
+    this.totalElements,
+    this.totalPages,
+    this.last,
+  });
+}
+
+@JsonSerializable()
+class ContentEntity {
   final int? id;
   final String? title;
   final String? company;
@@ -10,7 +31,7 @@ class JobEntity {
   final String? salaryRange;
   final String? url;
 
-  JobEntity({
+  ContentEntity({
     this.id,
     this.title,
     this.company,

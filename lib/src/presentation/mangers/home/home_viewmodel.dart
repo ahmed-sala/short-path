@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_result.dart';
+import 'package:short_path/src/data/api/core/api_request_model/job_filter_request.dart';
 import 'package:short_path/src/data/api/core/error/error_handler.dart';
 import 'package:short_path/src/domain/entities/auth/app_user.dart';
 import 'package:short_path/src/domain/usecases/home/home_usecase.dart';
 
-import '../../../domain/entities/home/job_entity.dart';
+import '../../../domain/entities/home/jobs_entity.dart';
 
 part 'home_state.dart';
 
@@ -17,7 +18,8 @@ class HomeViewmodel extends Cubit<HomeState> {
     this._homeUsecase,
   ) : super(HomeInitial());
   AppUser? appUser;
-  List<JobEntity>? jobs;
+
+  List<ContentEntity>? jobs;
 
   List<JobEntity>? fullTimeJobs;
   List<JobEntity>? partTimeJobs;
@@ -41,28 +43,23 @@ class HomeViewmodel extends Cubit<HomeState> {
     }
   }
 
-  void getAllJobs() async {
+  Future<void> getAllJobs() async {
     try {
       emit(JobsLoading());
-      var result = await _homeUsecase.getAllJobs();
+      var result = await _homeUsecase.getAllJobs(
+        term: '',
+        page: 0,
+        sort: 'title,asc',
+        size: 5,
+        jobFilterRequest: JobFilterRequest(),
+      );
       switch (result) {
-        case Success<List<JobEntity>?>():
-          jobs = result.data;
-          fullTimeJobs = jobs
-              ?.where((job) =>
-                  job.employmentType == "Full-time" ||
-                  job.employmentType == "Full-time and Part-time")
-              .toList();
-          partTimeJobs = jobs
-              ?.where((job) =>
-                  job.employmentType == "Part-time" ||
-                  job.employmentType == "Full-time and Part-time")
-              .toList();
-          contractorJobs =
-              jobs?.where((job) => job.employmentType == "Contractor").toList();
+        case Success<JobEntity?>():
+          jobs = result.data?.content;
+
           emit(JobsLoaded(jobs));
           break;
-        case Failures<List<JobEntity>?>():
+        case Failures<JobEntity?>():
           var errorMessages = ErrorHandler.fromException(result.exception);
           if (errorMessages.code == 403) {
             emit(SessionExpired());

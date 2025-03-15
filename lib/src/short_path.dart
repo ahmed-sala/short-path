@@ -21,7 +21,7 @@ class ShortPath extends StatefulWidget {
 }
 
 class _ShortPathState extends State<ShortPath> {
-  String? _initialRoute = RoutesName.login;
+  String? _initialRoute = RoutesName.sectionScreen;
   bool _isInitialized = true;
 
   @override
@@ -60,25 +60,33 @@ class _ShortPathState extends State<ShortPath> {
           .shrink(); // Display nothing until initialization is complete
     }
 
-    return ScreenUtilInit(
-        designSize: const Size(375, 812),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) => MaterialApp(
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              locale: Locale(BlocProvider.of<LocalizationViewmodel>(context)
-                  .cachedLanguageCode),
-              theme: AppTheme.lightTheme,
-              debugShowCheckedModeBanner: false,
-              title: 'Short Path',
-              navigatorKey: navKey,
-              initialRoute: _initialRoute,
-              onGenerateRoute: AppRoute.onGenerateRoute,
-            ));
+    return BlocProvider(
+      create: (context) => getIt<LocalizationViewmodel>(),
+      child: BlocBuilder<LocalizationViewmodel, LocalizationState>(
+        builder: (context, state) {
+          return ScreenUtilInit(
+              designSize: const Size(375, 812),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (context, child) => MaterialApp(
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    locale: Locale(
+                        BlocProvider.of<LocalizationViewmodel>(context)
+                            .cachedLanguageCode),
+                    theme: AppTheme.lightTheme,
+                    debugShowCheckedModeBanner: false,
+                    title: 'Short Path',
+                    navigatorKey: navKey,
+                    initialRoute: _initialRoute,
+                    onGenerateRoute: AppRoute.onGenerateRoute,
+                  ));
+        },
+      ),
+    );
   }
 }
