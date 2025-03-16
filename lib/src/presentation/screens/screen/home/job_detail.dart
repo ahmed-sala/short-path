@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:short_path/src/domain/entities/home/job_entity.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../../../../core/styles/cached_network_image_widget.dart';
 import '../../../../../core/styles/colors/app_colore.dart';
 import '../../../../../core/styles/images/app_images.dart';
 import '../../../shared_widgets/custom_auth_button.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class JobDetail extends StatefulWidget {
   const JobDetail({Key? key}) : super(key: key);
@@ -27,7 +28,8 @@ class _JobDetailState extends State<JobDetail> {
   @override
   Widget build(BuildContext context) {
     // Retrieve the JobEntity passed via Navigator
-    final jobDetail = ModalRoute.of(context)?.settings.arguments as JobEntity?;
+    final jobDetail =
+        ModalRoute.of(context)?.settings.arguments as ContentEntity?;
 
     // Fallback data for non-nullable fields
     final jobTitle = jobDetail?.title ?? '';
@@ -67,7 +69,8 @@ class _JobDetailState extends State<JobDetail> {
                   borderRadius: BorderRadius.circular(40),
                 ),
                 backgroundColor: Colors.white, // Button background
-                padding: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 8.0.h),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 8.0.h),
               ),
               child: Text(
                 'APPLY NOW',
@@ -98,20 +101,20 @@ class _JobDetailState extends State<JobDetail> {
                   padding: const EdgeInsets.all(12.0),
                   child: jobDetail?.image == '' || jobDetail?.image == null
                       ? Container(
-                    width: 35,
-                    height: 35,
-                    color: AppColors.primaryColor,
-                    child: Image.asset(
-                      AppImages.appLogo,
-                      width: 35,
-                      height: 35,
-                    ),
-                  )
+                          width: 35,
+                          height: 35,
+                          color: AppColors.primaryColor,
+                          child: Image.asset(
+                            AppImages.appLogo,
+                            width: 35,
+                            height: 35,
+                          ),
+                        )
                       : CachedNetworkImageWidget(
-                    imageUrl: jobDetail!.image,
-                    width: 35,
-                    height: 35,
-                  ),
+                          imageUrl: jobDetail!.image,
+                          width: 35,
+                          height: 35,
+                        ),
                 ),
               ),
             ),
@@ -144,7 +147,8 @@ class _JobDetailState extends State<JobDetail> {
                   ),
                 ),
                 SizedBox(width: 6.0.w),
-                Text('•', style: TextStyle(fontSize: 14.0.sp, color: Colors.black54)),
+                Text('•',
+                    style: TextStyle(fontSize: 14.0.sp, color: Colors.black54)),
                 SizedBox(width: 6.0.w),
                 Flexible(
                   child: Text(
@@ -154,7 +158,8 @@ class _JobDetailState extends State<JobDetail> {
                   ),
                 ),
                 SizedBox(width: 6.0.w),
-                Text('•', style: TextStyle(fontSize: 14.0.sp, color: Colors.black54)),
+                Text('•',
+                    style: TextStyle(fontSize: 14.0.sp, color: Colors.black54)),
                 SizedBox(width: 6.0.w),
                 Flexible(
                   child: Text(
@@ -169,7 +174,10 @@ class _JobDetailState extends State<JobDetail> {
             // Job Description title
             Text(
               'Job Description',
-              style: TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 16.0.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
             SizedBox(height: 8.h),
             // Job Description text with expansion toggle
@@ -177,14 +185,18 @@ class _JobDetailState extends State<JobDetail> {
               description,
               style: TextStyle(fontSize: 14.0.sp, color: Colors.black54),
               maxLines: _isExpanded ? null : 3,
-              overflow: _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+              overflow:
+                  _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
             ),
             SizedBox(height: 8.h),
             // Conditionally display Salary Range section if exists
             if (salaryRangeValue != null && salaryRangeValue.isNotEmpty) ...[
               Text(
                 'Salary Range',
-                style: TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 16.0.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
               SizedBox(height: 8.h),
               Text(
@@ -194,10 +206,14 @@ class _JobDetailState extends State<JobDetail> {
               SizedBox(height: 8.h),
             ],
             // Conditionally display Employment Type section if exists
-            if (employmentTypeValue != null && employmentTypeValue.isNotEmpty) ...[
+            if (employmentTypeValue != null &&
+                employmentTypeValue.isNotEmpty) ...[
               Text(
                 'Employment Type',
-                style: TextStyle(fontSize: 16.0.sp, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 16.0.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
               SizedBox(height: 8.h),
               Text(
@@ -212,7 +228,8 @@ class _JobDetailState extends State<JobDetail> {
               child: TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFFE7E1FC),
-                  padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.0.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.0.h),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
