@@ -1,10 +1,54 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:short_path/src/domain/entities/home/job_entity.dart';
+import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
 
 part 'jobs_response.g.dart';
 
 @JsonSerializable()
 class JobsResponse {
+  @JsonKey(name: "content")
+  final List<Content>? content;
+  @JsonKey(name: "pageNumber")
+  final int? pageNumber;
+  @JsonKey(name: "pageSize")
+  final int? pageSize;
+  @JsonKey(name: "totalElements")
+  final int? totalElements;
+  @JsonKey(name: "totalPages")
+  final int? totalPages;
+  @JsonKey(name: "last")
+  final bool? last;
+
+  JobsResponse({
+    this.content,
+    this.pageNumber,
+    this.pageSize,
+    this.totalElements,
+    this.totalPages,
+    this.last,
+  });
+
+  factory JobsResponse.fromJson(Map<String, dynamic> json) {
+    return _$JobsResponseFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$JobsResponseToJson(this);
+  }
+
+  JobEntity toEntity() {
+    return JobEntity(
+      content: content?.map((e) => e.toEntity()).toList(),
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+      totalElements: totalElements,
+      totalPages: totalPages,
+      last: last,
+    );
+  }
+}
+
+@JsonSerializable()
+class Content {
   @JsonKey(name: "id")
   final int? id;
   @JsonKey(name: "title")
@@ -26,7 +70,7 @@ class JobsResponse {
   @JsonKey(name: "url")
   final String? url;
 
-  JobsResponse({
+  Content({
     this.id,
     this.title,
     this.company,
@@ -39,16 +83,16 @@ class JobsResponse {
     this.url,
   });
 
-  factory JobsResponse.fromJson(Map<String, dynamic> json) {
-    return _$JobsResponseFromJson(json);
+  factory Content.fromJson(Map<String, dynamic> json) {
+    return _$ContentFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$JobsResponseToJson(this);
+    return _$ContentToJson(this);
   }
 
-  JobEntity toEntity() {
-    return JobEntity(
+  ContentEntity toEntity() {
+    return ContentEntity(
       id: id,
       title: title,
       company: company,

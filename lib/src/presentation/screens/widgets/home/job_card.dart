@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/images/app_images.dart';
-import 'package:short_path/src/domain/entities/home/job_entity.dart';
+import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
 
 import '../../../../../core/styles/cached_network_image_widget.dart';
 
 class JobCard extends StatelessWidget {
   const JobCard({Key? key, required this.job}) : super(key: key);
-  final JobEntity? job;
+  final ContentEntity? job;
   @override
   Widget build(BuildContext context) {
     return Card(

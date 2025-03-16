@@ -3,8 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  flutter_localization
   permission_handler_windows
   rive_common
+  syncfusion_pdfviewer_windows
   url_launcher_windows
 )
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 import '../../../../../../config/routes/routes_name.dart';
 import '../../../../../../core/styles/colors/app_colore.dart';
@@ -32,12 +33,12 @@ class SmartDeskScreen extends StatelessWidget {
             height: 400,
           ),
           const SizedBox(height: 24.0),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
-              'Join the Smart Desk Community',
+              context.localization.joinTheShortPathCommunity,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: AppColors.secondaryColor,
@@ -45,12 +46,12 @@ class SmartDeskScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16.0),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
-              'Get started by joining the Smart Desk community. Create an account or sign in to continue.',
+              context.localization.getStartedByJoiningShortPath,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.greyColor,
                 height: 1.5,
@@ -66,7 +67,7 @@ class SmartDeskScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: CustomAuthButton(
-                      text: 'SIGN IN'.toUpperCase(),
+                      text: context.localization.signIn,
                       onPressed: () {
                         navKey.currentState!
                             .pushReplacementNamed(RoutesName.login);
@@ -95,7 +96,7 @@ class SmartDeskScreen extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        'REGISTER'.toUpperCase(),
+                        context.localization.signUp,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,

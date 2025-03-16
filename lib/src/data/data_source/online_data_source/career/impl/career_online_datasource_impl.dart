@@ -15,7 +15,7 @@ import '../contract/career_online_datasource.dart';
 @Injectable(as: CareerOnlineDatasource)
 class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
   @override
-  Future<void> downloadFile() async {
+  Future<String> downloadFile() async {
     try {
       String? token = await getIt<FlutterSecureStorage>()
           .read(key: SharedPrefKeys.userToken);
@@ -62,9 +62,12 @@ class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
 
       final fileSize = await file.length();
       print('File saved at: $filePath, size: $fileSize bytes');
+
       print('Download completed');
+      return filePath;
     } catch (e) {
       print('Download failed: $e');
+      throw (Exception('Download failed: $e'));
     }
   }
 }

@@ -6,7 +6,7 @@ import 'package:short_path/src/domain/repositories/contract/career_repository.da
 class CareerUsecase {
   CareerRepository _careerRepository;
   CareerUsecase(this._careerRepository);
-  Future<ApiResult<void>> downloadFile() async {
+  Future<ApiResult<String>> downloadFile() async {
     return await _careerRepository.downloadFile();
   }
 }

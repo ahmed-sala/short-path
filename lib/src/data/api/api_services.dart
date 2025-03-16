@@ -4,6 +4,7 @@ import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:short_path/src/data/api/core/api_request_model/auth/login_request.dart';
 import 'package:short_path/src/data/api/core/api_request_model/auth/register_request.dart';
+import 'package:short_path/src/data/api/core/api_request_model/job_filter_request.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/additional_infromation_request.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/certification_request.dart';
 import 'package:short_path/src/data/api/core/api_request_model/user_info/education_request.dart';
@@ -72,5 +73,11 @@ abstract class ApiServices {
   Future<GetUserResponse> getUserData();
 
   @GET(ApisEndPoints.getAllJobs)
-  Future<List<JobsResponse>> getAllJobs();
+  Future<JobsResponse> getAllJobs(
+    @Query("term") String term,
+    @Query("page") int page,
+    @Query("sort", encoded: true) String sort,
+    @Query("size") int size,
+    @Query('filter') JobFilterRequest filterRequest,
+  );
 }

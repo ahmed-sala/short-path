@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../mangers/home/home_viewmodel.dart';
 
 class JobStatsCard extends StatelessWidget {
-  const JobStatsCard({Key? key}) : super(key: key);
-
+  const JobStatsCard({Key? key, required this.viewModel}) : super(key: key);
+  final HomeViewmodel viewModel;
   @override
   Widget build(BuildContext context) {
-    var viewModel = context.read<HomeViewmodel>();
     return IntrinsicHeight(
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -29,7 +27,7 @@ class JobStatsCard extends StatelessWidget {
                   Icon(Icons.insert_drive_file, size: 40),
                   SizedBox(height: 8),
                   Text(
-                    viewModel.contractorJobs?.length.toString() ?? "0",
+                    this.viewModel.contractorJobs?.length.toString() ?? "0",
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,

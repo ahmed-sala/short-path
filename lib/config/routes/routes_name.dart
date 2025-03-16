@@ -19,5 +19,6 @@ class RoutesName {
   static const String additionalinfo = 'additionalinfo';
   static const String workExperience = 'workExperience';
   static const String sectionScreen = 'sectionScreen';
+  static const String jobsScreen = 'jobsScreen';
   static const String jobDetail = 'jobDetail';
 }

@@ -22,11 +22,16 @@ final class SessionExpired extends HomeState {}
 final class JobsLoading extends HomeState {}
 
 final class JobsLoaded extends HomeState {
-  final List<JobEntity>? jobs;
+  final List<ContentEntity>? jobs;
   JobsLoaded(this.jobs);
 }
 
 final class JobsError extends HomeState {
   final String message;
   JobsError(this.message);
+}
+
+final class SearchModeState extends HomeState {
+  final bool isSearching;
+  SearchModeState(this.isSearching);
 }

@@ -64,6 +64,9 @@ import '../src/presentation/mangers/auth/register/register_viewmodel.dart'
     as _i599;
 import '../src/presentation/mangers/career/career_viewmodel.dart' as _i510;
 import '../src/presentation/mangers/home/home_viewmodel.dart' as _i190;
+import '../src/presentation/mangers/home/jobs/jobs_viewmodel.dart' as _i132;
+import '../src/presentation/mangers/localization/localization_viewmodel.dart'
+    as _i841;
 import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
     as _i359;
 import '../src/presentation/mangers/section/section_Screen_viewmodel.dart'
@@ -104,6 +107,8 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i428.EducationProjectUsecase>(
         () => _i428.EducationProjectUsecase());
+    gh.factory<_i841.LocalizationViewmodel>(
+        () => _i841.LocalizationViewmodel());
     gh.factory<_i359.OnboardingViewmodel>(() => _i359.OnboardingViewmodel());
     gh.factory<_i794.SectionScreenViewmodel>(
         () => _i794.SectionScreenViewmodel());
@@ -153,6 +158,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i748.UserInfoUsecase(gh<_i175.UserInfoRepository>()));
     gh.factory<_i190.HomeViewmodel>(
         () => _i190.HomeViewmodel(gh<_i991.HomeUsecase>()));
+    gh.factory<_i132.JobsViewmodel>(
+        () => _i132.JobsViewmodel(gh<_i991.HomeUsecase>()));
     gh.factory<_i4.ProfileViewmodel>(
         () => _i4.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i277.WorkExperienceViewModel>(
