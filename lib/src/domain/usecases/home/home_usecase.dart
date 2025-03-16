@@ -1,9 +1,11 @@
 import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/domain/entities/auth/app_user.dart';
-import 'package:short_path/src/domain/entities/home/job_entity.dart';
 import 'package:short_path/src/domain/repositories/contract/auth_repository.dart';
 import 'package:short_path/src/domain/repositories/contract/home_repository.dart';
+
+import '../../../data/api/core/api_request_model/job_filter_request.dart';
+import '../../entities/home/jobs_entity.dart';
 
 @injectable
 class HomeUsecase {
@@ -15,7 +17,19 @@ class HomeUsecase {
     return _authRepository.getUserData();
   }
 
-  Future<ApiResult<List<JobEntity>?>> getAllJobs() async {
-    return await _homeRepository.getAllJobs();
+  Future<ApiResult<JobEntity?>> getAllJobs({
+    String? term,
+    int? page,
+    String? sort,
+    int? size,
+    JobFilterRequest? jobFilterRequest,
+  }) async {
+    return await _homeRepository.getAllJobs(
+      term: term,
+      page: page,
+      sort: sort,
+      size: size,
+      jobFilterRequest: jobFilterRequest,
+    );
   }
 }

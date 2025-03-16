@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/section/section_screen_states.dart';
 
@@ -77,15 +78,15 @@ class SectionScreen extends StatelessWidget {
                       items: [
                         _buildBottomNavItem(
                           Icons.home_outlined,
-                          'Home',
+                          context.localization.home,
                         ),
                         _buildBottomNavItem(
                           Icons.card_giftcard,
-                          'Career',
+                          context.localization.career,
                         ),
                         _buildBottomNavItem(
                           Icons.person_2_outlined,
-                          'Profile',
+                          context.localization.profile,
                         ),
                       ],
                     ),

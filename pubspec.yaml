@@ -38,7 +38,7 @@ dependencies:
   flutter_downloader:
 
   permission_handler: ^11.0.1
-
+  easy_pdf_viewer: ^1.0.8
   retrofit:
   logger:
   json_annotation: ^4.9.0
@@ -47,7 +47,7 @@ dependencies:
   shared_preferences:
   flutter_secure_storage:
   flutter_screenutil: ^5.9.3
-  intl: ^0.18.0
+  intl: ^0.19.0
   pull_down_button: ^0.10.2  # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -58,6 +58,11 @@ dependencies:
   cached_network_image:
   skeletonizer: ^1.4.3
   lottie:
+  flutter_pdfview: ^1.4.0
+  syncfusion_flutter_pdfviewer: ^25.2.7
+  flutter_media_downloader:
+  flutter_localization: ^0.3.0
+  rxdart: ^0.27.0
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +96,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
 
   # To add assets to your application, add an assets section, like this:
@@ -110,6 +116,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/animations/loading_short.json
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

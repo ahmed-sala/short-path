@@ -8,6 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/auth/login/login_states.dart';
 import 'package:short_path/src/presentation/mangers/auth/login/login_viewmodel.dart';
@@ -29,10 +30,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   @override
-  void initState()  {
+  void initState() {
     // TODO: implement initState
     super.initState();
-     getIt<FlutterSecureStorage>().delete(key: SharedPrefKeys.userToken);
+    getIt<FlutterSecureStorage>().delete(key: SharedPrefKeys.userToken);
   }
 
   // The LoginScreen now leverages AnimatedLogo and AnimatedForm.
@@ -75,16 +76,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: BlocConsumer<LoginViewModel, LoginScreenState>(
                   buildWhen: (previous, current) =>
                       current is InitialState ||
-                      current is ValidateColorButtonState,
+                      current is ValidateColorButtonState ||
+                      current is PasswordVisibilityState,
                   listenWhen: (previous, current) => current is! InitialState,
                   listener: (context, state) {
                     if (state is LoadingState) {
-                      showLoading(context, 'Logging in...');
+                      showLoading(context, context.localization.loggingIn);
                     } else if (state is ErrorState) {
                       hideLoading();
                       showAwesomeDialog(
                         context,
-                        title: 'Error',
+                        title: context.localization.error,
                         desc: state.exception,
                         onOk: () {},
                         dialogType: DialogType.error,
@@ -98,7 +100,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   builder: (context, state) {
                     final viewModel = context.read<LoginViewModel>();
                     if (state is InitialState ||
-                        state is ValidateColorButtonState) {
+                        state is ValidateColorButtonState ||
+                        state is PasswordVisibilityState) {
                       return SingleChildScrollView(
                         child: AnimatedForm(
                           child: Padding(
@@ -124,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Welcome Back!',
+                                        context.localization.welcomeBack,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headlineMedium
@@ -135,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                       SizedBox(height: 10.h),
                                       Text(
-                                        'Log in to continue',
+                                        context.localization.logInToContinue,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall
@@ -145,11 +148,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                       SizedBox(height: 30.h),
                                       CustomTextFormField(
-                                        hintText: 'Enter your email',
+                                        hintText:
+                                            context.localization.enterYourEmail,
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         controller: viewModel.emailController,
-                                        labelText: 'Email Address',
+                                        labelText:
+                                            context.localization.emailAddress,
                                         validator: (val) =>
                                             null, // Replace with your validation logic
                                       ),
@@ -159,12 +164,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                             viewModel.isPasswordVisible,
                                         showPassword:
                                             viewModel.togglePasswordVisibility,
-                                        hintText: 'Enter your password',
+                                        hintText: context
+                                            .localization.enterYourPassword,
                                         keyboardType:
                                             TextInputType.visiblePassword,
                                         controller:
                                             viewModel.passwordController,
-                                        labelText: 'Password',
+                                        labelText:
+                                            context.localization.password,
                                         validator: (val) =>
                                             null, // Replace with your validation logic
                                       ),
@@ -173,9 +180,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         alignment: Alignment.centerRight,
                                         child: TextButton(
                                           onPressed: () {},
-                                          child: const Text(
-                                            'Forgot Password?',
-                                            style: TextStyle(
+                                          child: Text(
+                                            context.localization.forgotPassword,
+                                            style: const TextStyle(
                                               color: Color(0xFF546E7A),
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -188,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             const Duration(milliseconds: 300),
                                         opacity: viewModel.validate ? 1.0 : 0.5,
                                         child: CustomAuthButton(
-                                          text: 'SIGN IN',
+                                          text: context.localization.signIn,
                                           onPressed: viewModel.validate
                                               ? () => viewModel
                                                   .doAction(LoginAction())
@@ -200,8 +207,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                       SizedBox(height: 20.h),
                                       NoAccountRow(
-                                        content: 'Don’t have an account?',
-                                        actionText: 'Register here',
+                                        content: context
+                                            .localization.dontHaveAnAccount,
+                                        actionText:
+                                            context.localization.registerHere,
                                         onPressed: () {
                                           Navigator.pushReplacementNamed(
                                               context, RoutesName.register);

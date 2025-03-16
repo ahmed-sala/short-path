@@ -7,6 +7,27 @@ part of 'jobs_response.dart';
 // **************************************************************************
 
 JobsResponse _$JobsResponseFromJson(Map<String, dynamic> json) => JobsResponse(
+      content: (json['content'] as List<dynamic>?)
+          ?.map((e) => Content.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      pageNumber: (json['pageNumber'] as num?)?.toInt(),
+      pageSize: (json['pageSize'] as num?)?.toInt(),
+      totalElements: (json['totalElements'] as num?)?.toInt(),
+      totalPages: (json['totalPages'] as num?)?.toInt(),
+      last: json['last'] as bool?,
+    );
+
+Map<String, dynamic> _$JobsResponseToJson(JobsResponse instance) =>
+    <String, dynamic>{
+      'content': instance.content,
+      'pageNumber': instance.pageNumber,
+      'pageSize': instance.pageSize,
+      'totalElements': instance.totalElements,
+      'totalPages': instance.totalPages,
+      'last': instance.last,
+    };
+
+Content _$ContentFromJson(Map<String, dynamic> json) => Content(
       id: (json['id'] as num?)?.toInt(),
       title: json['title'] as String?,
       company: json['company'] as String?,
@@ -19,8 +40,7 @@ JobsResponse _$JobsResponseFromJson(Map<String, dynamic> json) => JobsResponse(
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$JobsResponseToJson(JobsResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'company': instance.company,

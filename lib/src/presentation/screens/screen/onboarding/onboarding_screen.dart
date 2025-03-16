@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/shared_widgets/next_back_buttuns.dart';
@@ -44,7 +45,7 @@ class OnboardingScreen extends StatelessWidget {
                                   RoutesName.authDecision);
                             },
                             child: Text(
-                              'Skip',
+                              context.localization.skip,
                               style: TextStyle(
                                 color: AppColors.primaryColor,
                                 fontSize: 16.0.sp,

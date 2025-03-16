@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/auth/register/register_states.dart';
 import 'package:short_path/src/presentation/mangers/auth/register/register_viewmodel.dart';
@@ -25,12 +26,12 @@ class RegisterScreen extends StatelessWidget {
       child: BlocConsumer<RegisterViewModel, RegisterScreenState>(
         listener: (context, state) {
           if (state is LoadingState) {
-            showLoading(context, 'Registering...');
+            showLoading(context, context.localization.registering);
           } else if (state is ErrorState) {
             hideLoading();
             showAwesomeDialog(
               context,
-              title: 'Error',
+              title: context.localization.error,
               desc: state.exception ?? '',
               onOk: () {},
               dialogType: DialogType.error,
@@ -83,7 +84,7 @@ class RegisterScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Create an Account',
+                                  context.localization.createAnAccount,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headlineMedium
@@ -101,8 +102,9 @@ class RegisterScreen extends StatelessWidget {
                                     : SecondStepRegister(),
                                 const SizedBox(height: 20),
                                 NoAccountRow(
-                                  content: 'Already have an account?',
-                                  actionText: 'Login here',
+                                  content:
+                                      context.localization.alreadyHaveAnAccount,
+                                  actionText: context.localization.logInHere,
                                   onPressed: () {
                                     Navigator.pushReplacementNamed(
                                         context, RoutesName.login);
