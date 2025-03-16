@@ -38,7 +38,7 @@ dependencies:
   flutter_downloader:
 
   permission_handler: ^11.0.1
-
+  url_launcher: ^6.1.7
   retrofit:
   logger:
   json_annotation: ^4.9.0

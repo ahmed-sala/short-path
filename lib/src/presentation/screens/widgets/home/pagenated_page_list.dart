@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/src/domain/entities/home/job_entity.dart';
+import 'package:short_path/src/short_path.dart';
 
 import '../../../../../core/styles/colors/app_colore.dart';
 import 'job_card.dart';
@@ -196,7 +198,15 @@ class _PaginatedJobListState extends State<PaginatedJobList> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: currentJobs.length,
-          itemBuilder: (context, index) => JobCard(job: currentJobs[index]),
+          itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                navKey.currentState!.pushNamed(
+                  RoutesName.jobDetail,
+                  arguments: currentJobs[index],
+                );
+              },
+              child: JobCard(job: currentJobs[index])),
+
           separatorBuilder: (context, index) => const SizedBox(height: 8),
         ),
         const SizedBox(height: 16),
