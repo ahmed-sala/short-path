@@ -1,4 +1,7 @@
 import 'package:short_path/src/data/api/core/api_request_model/user_info/skill_request.dart';
+import 'package:short_path/src/domain/entities/user_info/skill_entity.dart';
+
+import '../../../domain/entities/user_info/tech_skill_entity.dart';
 
 class SkillsDto {
   final List<TechnicalSkillsDto> technicalSkills;
@@ -19,6 +22,14 @@ class SkillsDto {
       ),
     );
   }
+
+  SkillEntity toDomainEntity() {
+    return SkillEntity(
+      technicalSkills: technicalSkills.map((e) => e.toDomainEntity()).toList(),
+      softSkills: softSkills,
+      industrySpecificSkills: industrySpecificSkills,
+    );
+  }
 }
 
 class TechnicalSkillsDto {
@@ -32,6 +43,13 @@ class TechnicalSkillsDto {
 
   TechnicalSkills toTechRequest() {
     return TechnicalSkills(
+      skill: skill,
+      proficiency: proficiency,
+    );
+  }
+
+  TechnicalSkillEntity toDomainEntity() {
+    return TechnicalSkillEntity(
       skill: skill,
       proficiency: proficiency,
     );

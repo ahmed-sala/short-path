@@ -61,7 +61,7 @@ class ProjectList extends StatelessWidget {
                   Wrap(
                     spacing: 8,
                     children: project.technologiesUsed
-                        .split(',') // Split the string into a list of tools
+                        // Split the string into a list of tools
                         .map((tool) => Chip(
                             label: Text(tool.trim()))) // Trim any extra spaces
                         .toList(),

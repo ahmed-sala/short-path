@@ -40,10 +40,11 @@ class ProfileResponse {
 
   ProfileDto toDto() {
     return ProfileDto(
-      bio: bio??'',
-      linkedInProfile: linkedInProfile??'',
-      portfolioWebsites: portfolioWebsites??[],
-      professionalTitle: professionalTitle??'',
-      profilePhotoUrl: profilePhotoUrl??'',
+      bio: bio ?? '',
+      linkedInProfile: linkedInProfile ?? '',
+      portfolioWebsites: portfolioWebsites ?? [],
+      professionalTitle: professionalTitle ?? '',
+      profilePhotoUrl: profilePhotoUrl ?? '',
     );
+  }
 }

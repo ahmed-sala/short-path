@@ -1,5 +1,7 @@
 import 'package:short_path/src/data/api/core/api_request_model/user_info/additional_infromation_request.dart';
 
+import '../../../domain/entities/user_info/additional_info_entity.dart';
+
 class AdditionalInfoDto {
   AdditionalInfoDto({
     AdditionalInformationDto? additionalInformation,
@@ -89,6 +91,15 @@ class AdditionalInformationDto {
       volunteerWork: _volunteerWork?.map((v) => v.toRequest()).toList(),
     );
   }
+
+  AdditionalInfoEntity toEntity() {
+    return AdditionalInfoEntity(
+      hobbiesAndInterests: hobbiesAndInterests ?? [],
+      publications: publications ?? [],
+      awardsAndHonors: awardsAndHonors ?? [],
+      volunteerWork: volunteerWork?.map((e) => e.toEntity()).toList() ?? [],
+    );
+  }
 }
 
 class VolunteerWorkDto {
@@ -139,6 +150,14 @@ class VolunteerWorkDto {
       role: _role,
       duration: _duration?.toRequest(),
       description: _description,
+    );
+  }
+
+  VolunteerWorkEntity toEntity() {
+    return VolunteerWorkEntity(
+      description: description ?? '',
+      month: duration!._months ?? 0,
+      year: duration!._years ?? 0,
     );
   }
 }

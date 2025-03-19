@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:short_path/src/data/dto_models/user_info/work_experience_dto.dart';
 

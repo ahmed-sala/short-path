@@ -1,5 +1,7 @@
 import 'package:short_path/src/data/api/core/api_request_model/user_info/work_experience_request.dart';
 
+import '../../../domain/entities/user_info/work_experience_entity.dart';
+
 class WorkExperienceDto {
   final String jobTitle;
   final String companyName;
@@ -25,6 +27,20 @@ class WorkExperienceDto {
 
   WorkExperiences toWorkExperiences() {
     return WorkExperiences(
+      jobTitle: jobTitle,
+      companyName: companyName,
+      companyField: companyField,
+      jobType: jobType,
+      jobLocation: jobLocation,
+      startDate: startDate,
+      endDate: endDate,
+      summary: summary,
+      toolsTechnologiesUsed: toolsTechnologiesUsed,
+    );
+  }
+
+  WorkExperienceEntity toDomainEntity() {
+    return WorkExperienceEntity(
       jobTitle: jobTitle,
       companyName: companyName,
       companyField: companyField,

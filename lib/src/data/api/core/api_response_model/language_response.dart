@@ -37,8 +37,8 @@ class LanguageResponse {
 
   LanguageDto toDto() {
     return LanguageDto(
-      language: language??'',
-      proficiency: proficiency??'',
+      language: language ?? '',
+      proficiency: proficiency ?? '',
     );
-
+  }
 }

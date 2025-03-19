@@ -1,8 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:short_path/src/data/dto_models/user_info/Additional_info_dto.dart';
 
-import '../../../dto_models/user_info/EducationDto.dart';
-
 part 'additional_info_response.g.dart';
 
 @JsonSerializable()
@@ -79,16 +77,6 @@ class VolunteerWork {
       role: role,
       duration: DurationDto(years: int.parse(duration!)),
       description: description,
-    );
-  }
-
-  ProjectsDto toDto() {
-    return ProjectsDto(
-      projectTitle: projectTitle,
-      role: role,
-      description: description,
-      projectLink: projectLink,
-      technologiesUsed: technologiesUsed,
     );
   }
 }

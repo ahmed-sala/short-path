@@ -38,7 +38,7 @@ class ProjectViewmodel extends Cubit<ProjectState> {
         projectTitle: projectTitleController.text.trim(),
         role: roleController.text.trim(),
         description: descriptionController.text.trim(),
-        technologiesUsed: toolsTechnologies.join(', '),
+        technologiesUsed: toolsTechnologies,
         projectLink: projectLinkController.text.trim(),
       );
 

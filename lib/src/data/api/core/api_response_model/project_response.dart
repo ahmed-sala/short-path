@@ -45,5 +45,5 @@ class ProjectResponse {
       description: description??'',
       projectLink: projectLink??'',
       technologiesUsed: technologiesUsed??[],
-    );
+    );}
 }
