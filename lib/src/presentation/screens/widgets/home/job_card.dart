@@ -3,7 +3,9 @@ import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/images/app_images.dart';
 import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
 
+import '../../../../../config/routes/routes_name.dart';
 import '../../../../../core/styles/cached_network_image_widget.dart';
+import '../../../../short_path.dart';
 
 class JobCard extends StatelessWidget {
   const JobCard({Key? key, required this.job}) : super(key: key);
@@ -28,18 +30,37 @@ class JobCard extends StatelessWidget {
                 Row(
                   children: [
                     // Company Logo (placeholder)
-                    job?.image == ''
-                        ? Container(
-                            width: 35,
-                            height: 35,
-                            color: AppColors.primaryColor,
-                            child: Image.asset(AppImages.appLogo,
-                                width: 35, height: 35))
-                        : CachedNetworkImageWidget(
-                            imageUrl: job!.image,
-                            width: 35,
-                            height: 35,
-                          ),
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        // Wrap image in ClipOval for a perfect circle
+                        child: ClipOval(
+                          child: job?.image == '' || job?.image == null
+                              ? Container(
+                                  width: 40,
+                                  height: 40,
+                                  color: AppColors.primaryColor,
+                                  child: Image.asset(
+                                    AppImages.appLogo,
+                                    width: 40,
+                                    height: 40,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : CachedNetworkImageWidget(
+                                  imageUrl: job!.image,
+                                  width: 40,
+                                  height: 40,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(width: 12),
                     // Job Title
                     Text(
@@ -130,20 +151,26 @@ class JobCard extends StatelessWidget {
                 ],
                 const Spacer(),
                 // Apply button
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFF6B2C),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Text(
-                    'Apply',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontFamily: 'DM Sans',
-                      fontWeight: FontWeight.w600,
+                InkWell(
+                  onTap: () {
+                    navKey.currentState!
+                        .pushNamed(RoutesName.jobDetail, arguments: job);
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFF6B2C),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Text(
+                      'Read more',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontFamily: 'DM Sans',
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

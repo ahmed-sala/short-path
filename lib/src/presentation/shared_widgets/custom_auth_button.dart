@@ -8,13 +8,19 @@ class CustomAuthButton extends StatelessWidget {
     required this.color,
     this.textColor = Colors.white,
     this.validate = true,
+    this.borderColor,
+    this.borderRadius,
+    this.textStyle,
   });
 
   final String? text;
   final void Function()? onPressed;
   final Color color;
   final Color? textColor;
+  final Color? borderColor;
   final bool validate;
+  final BorderRadius? borderRadius;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +32,22 @@ class CustomAuthButton extends StatelessWidget {
             validate ? color : Colors.grey.shade400, // Disabled color
         minimumSize: const Size(double.infinity, 60),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.0),
+          borderRadius:
+              borderRadius != null ? borderRadius! : BorderRadius.circular(10),
+          side: borderColor != null
+              ? BorderSide(color: borderColor!, width: 1.0)
+              : BorderSide.none,
         ),
       ),
       child: Text(
         text ?? '',
-        style: TextStyle(
-          fontWeight: FontWeight.w400,
-          fontSize: 16.0,
-          color: validate ? textColor : Colors.black54, // Disabled text color
-        ),
+        style: textStyle ??
+            TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 16.0,
+              color:
+                  validate ? textColor : Colors.black54, // Disabled text color
+            ),
       ),
     );
   }

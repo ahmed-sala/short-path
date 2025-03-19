@@ -27,248 +27,311 @@ class _JobDetailState extends State<JobDetail> {
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve the JobEntity passed via Navigator
     final jobDetail =
         ModalRoute.of(context)?.settings.arguments as ContentEntity?;
 
-    // Fallback data for non-nullable fields
     final jobTitle = jobDetail?.title ?? '';
     final company = jobDetail?.company ?? '';
     final location = jobDetail?.location ?? '';
     final postedAgo = jobDetail?.datePosted ?? '';
     final description = jobDetail?.description ?? '...';
     final url = jobDetail?.url ?? '';
-
-    // Get salaryRange and employmentType values without fallback
     final salaryRangeValue = jobDetail?.salaryRange;
     final employmentTypeValue = jobDetail?.employmentType;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0,
+        elevation: 1,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        // APPLY NOW button as an ElevatedButton with border and shadow
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16.0.w),
-            child: ElevatedButton(
-              onPressed: () async {
-                if (url.isNotEmpty) {
-                  await _launchUrl(url);
-                } else {
-                  debugPrint('No URL available');
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                side: BorderSide(color: AppColors.primaryColor, width: 1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                backgroundColor: Colors.white, // Button background
-                padding:
-                    EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 8.0.h),
-              ),
-              child: Text(
-                'APPLY NOW',
-                style: TextStyle(
-                  color: AppColors.primaryColor,
-                  fontSize: 16.0.sp,
-                ),
-              ),
+      ),
+      // "APPLY NOW" button remains at the bottom of the screen
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(16.0.w),
+        child: ElevatedButton(
+          onPressed: () async {
+            if (url.isNotEmpty) {
+              await _launchUrl(url);
+            } else {
+              debugPrint('No URL available');
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 20.0.w, vertical: 12.0.h),
+            elevation: 4,
+          ),
+          child: Text(
+            'APPLY NOW',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.0.sp,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ],
+        ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+        padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 16.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Company Logo
+            // Company Logo and Title
             Center(
-              child: Container(
-                width: 80,
-                height: 80,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFE0F2FF),
-                  shape: BoxShape.circle,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: jobDetail?.image == '' || jobDetail?.image == null
-                      ? Container(
-                          width: 35,
-                          height: 35,
-                          color: AppColors.primaryColor,
-                          child: Image.asset(
-                            AppImages.appLogo,
-                            width: 35,
-                            height: 35,
-                          ),
-                        )
-                      : CachedNetworkImageWidget(
-                          imageUrl: jobDetail!.image,
-                          width: 35,
-                          height: 35,
-                        ),
-                ),
+              child: Column(
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: ClipOval(
+                        child:
+                            jobDetail?.image == '' || jobDetail?.image == null
+                                ? Container(
+                                    width: 35,
+                                    height: 35,
+                                    color: AppColors.primaryColor,
+                                    child: Image.asset(
+                                      AppImages.appLogo,
+                                      width: 35,
+                                      height: 35,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : CachedNetworkImageWidget(
+                                    imageUrl: jobDetail!.image,
+                                    width: 35,
+                                    height: 35,
+                                    fit: BoxFit.cover,
+                                  ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 12.h),
+                  Text(
+                    jobTitle,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20.0.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 16.h),
-            // Job Title
+            // Company, Location, Posted Info
             Center(
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.0.w),
-                child: Text(
-                  jobTitle,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 8.h),
-            // Company - Location - Posted Time with Flexible children to avoid overflow
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: Text(
+              child: Wrap(
+                spacing: 6.0.w,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
                     company,
                     style: TextStyle(fontSize: 14.0.sp, color: Colors.black54),
-                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                SizedBox(width: 6.0.w),
-                Text('•',
-                    style: TextStyle(fontSize: 14.0.sp, color: Colors.black54)),
-                SizedBox(width: 6.0.w),
-                Flexible(
-                  child: Text(
+                  const Icon(Icons.circle, size: 5, color: Colors.black54),
+                  Text(
                     location,
                     style: TextStyle(fontSize: 14.0.sp, color: Colors.black54),
-                    overflow: TextOverflow.ellipsis,
                   ),
-                ),
-                SizedBox(width: 6.0.w),
-                Text('•',
-                    style: TextStyle(fontSize: 14.0.sp, color: Colors.black54)),
-                SizedBox(width: 6.0.w),
-                Flexible(
-                  child: Text(
+                  const Icon(Icons.circle, size: 5, color: Colors.black54),
+                  Text(
                     postedAgo,
                     style: TextStyle(fontSize: 14.0.sp, color: Colors.black54),
-                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 16.h),
+            // Row with "CREATE COVER SHEET" and "CREATE CV" buttons
+            Row(
+              children: [
+                Expanded(
+                  child: CustomAuthButton(
+                    text: 'COVER SHEET',
+                    onPressed: () {
+                      // Handle create cover sheet action
+                    },
+                    color: AppColors.whiteColor,
+                    textColor: AppColors.primaryColor,
+                    borderColor: AppColors.primaryColor,
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.0.sp,
+                      color: AppColors.primaryColor,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(40)),
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: CustomAuthButton(
+                    text: 'CREATE CV',
+                    onPressed: () {
+                      // Handle create CV action
+                    },
+                    color: AppColors.primaryColor,
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.0.sp,
+                      color: AppColors.whiteColor,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(40)),
                   ),
                 ),
               ],
             ),
             SizedBox(height: 24.h),
-            // Job Description title
-            Text(
-              'Job Description',
-              style: TextStyle(
-                  fontSize: 16.0.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-            SizedBox(height: 8.h),
-            // Job Description text with expansion toggle
-            Text(
-              description,
-              style: TextStyle(fontSize: 14.0.sp, color: Colors.black54),
-              maxLines: _isExpanded ? null : 3,
-              overflow:
-                  _isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
-            ),
-            SizedBox(height: 8.h),
-            // Conditionally display Salary Range section if exists
-            if (salaryRangeValue != null && salaryRangeValue.isNotEmpty) ...[
-              Text(
-                'Salary Range',
-                style: TextStyle(
-                    fontSize: 16.0.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+            // Job Description Card with Read More functionality
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-              SizedBox(height: 8.h),
-              Text(
-                salaryRangeValue,
-                style: TextStyle(fontSize: 14.0.sp, color: Colors.black54),
-              ),
-              SizedBox(height: 8.h),
-            ],
-            // Conditionally display Employment Type section if exists
-            if (employmentTypeValue != null &&
-                employmentTypeValue.isNotEmpty) ...[
-              Text(
-                'Employment Type',
-                style: TextStyle(
-                    fontSize: 16.0.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                employmentTypeValue,
-                style: TextStyle(fontSize: 14.0.sp, color: Colors.black54),
-              ),
-              SizedBox(height: 8.h),
-            ],
-            // Read More / Read Less toggle button with rounded corners
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: const Color(0xFFE7E1FC),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.0.h),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () {
+              elevation: 2,
+              child: InkWell(
+                onTap: () {
                   setState(() {
                     _isExpanded = !_isExpanded;
                   });
                 },
-                child: Text(
-                  _isExpanded ? 'Read less' : 'Read more',
-                  style: TextStyle(color: Colors.black, fontSize: 16.0.sp),
+                child: Padding(
+                  padding: EdgeInsets.all(16.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Job Description',
+                        style: TextStyle(
+                          fontSize: 16.0.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      AnimatedCrossFade(
+                        firstChild: Text(
+                          description,
+                          style: TextStyle(
+                            fontSize: 14.0.sp,
+                            color: Colors.black54,
+                          ),
+                          maxLines: 12,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        secondChild: Text(
+                          description,
+                          style: TextStyle(
+                            fontSize: 14.0.sp,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        crossFadeState: _isExpanded
+                            ? CrossFadeState.showSecond
+                            : CrossFadeState.showFirst,
+                        duration: const Duration(milliseconds: 300),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            setState(() {
+                              _isExpanded = !_isExpanded;
+                            });
+                          },
+                          child: Text(
+                            _isExpanded ? 'Read less' : 'Read more',
+                            style: TextStyle(
+                              fontSize: 14.0.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 24.h),
-            // Column with CREATE COVER SHEET and CREATE CV buttons, one under the other
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-              child: Column(
-                children: [
-                  CustomAuthButton(
-                    text: 'CREATE COVER SHEET',
-                    onPressed: () {
-                      // TODO: handle create cover sheet action
-                    },
-                    color: AppColors.primaryColor,
+            SizedBox(height: 16.h),
+            // Optional Salary Range section
+            if (salaryRangeValue != null && salaryRangeValue.isNotEmpty)
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 2,
+                child: Padding(
+                  padding: EdgeInsets.all(16.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Salary Range',
+                        style: TextStyle(
+                          fontSize: 16.0.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        salaryRangeValue,
+                        style: TextStyle(
+                          fontSize: 14.0.sp,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 16.h),
-                  CustomAuthButton(
-                    text: 'CREATE CV',
-                    onPressed: () {
-                      // TODO: handle create CV action
-                    },
-                    color: AppColors.primaryColor,
-                  ),
-                ],
+                ),
               ),
-            ),
+            if (salaryRangeValue != null && salaryRangeValue.isNotEmpty)
+              SizedBox(height: 16.h),
+            // Optional Employment Type section
+            if (employmentTypeValue != null && employmentTypeValue.isNotEmpty)
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 2,
+                child: Padding(
+                  padding: EdgeInsets.all(16.0.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Employment Type',
+                        style: TextStyle(
+                          fontSize: 16.0.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(height: 8.h),
+                      Text(
+                        employmentTypeValue,
+                        style: TextStyle(
+                          fontSize: 14.0.sp,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             SizedBox(height: 24.h),
           ],
         ),
