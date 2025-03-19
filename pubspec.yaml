@@ -38,6 +38,7 @@ dependencies:
   flutter_downloader:
 
   permission_handler: ^11.0.1
+  url_launcher: ^6.1.7
   easy_pdf_viewer: ^1.0.8
   retrofit:
   logger:

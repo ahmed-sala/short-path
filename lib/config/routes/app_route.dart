@@ -3,6 +3,7 @@ import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/src/presentation/screens/screen/auth/login_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/auth/register_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/home/home_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/home/job_detail.dart';
 import 'package:short_path/src/presentation/screens/screen/home/jobs_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/auth_decision.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/onboarding_screen.dart';
@@ -53,6 +54,11 @@ class AppRoute {
       // case RoutesName.educationproject:
       //   return _handelMaterialPageRoute(
       //       settings: settings, widget: const EducationProjectScreen());
+
+      case RoutesName.jobDetail:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: JobDetail());
+
 
       case RoutesName.project:
         return _handelMaterialPageRoute(
