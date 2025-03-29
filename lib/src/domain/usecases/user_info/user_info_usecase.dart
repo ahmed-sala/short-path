@@ -23,6 +23,7 @@ class UserInfoUsecase {
 
   Future<ApiResult<void>> invokeLanguages(
       List<LanguageEntity> languages) async {
+    print('The languages is ${languages}');
     return await _userInfoRepository.saveLanguages(languages);
   }
 

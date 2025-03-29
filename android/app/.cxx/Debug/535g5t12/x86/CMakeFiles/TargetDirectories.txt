@@ -1,0 +1,2 @@
+G:/short_path/android/app/.cxx/Debug/535g5t12/x86/CMakeFiles/edit_cache.dir
+G:/short_path/android/app/.cxx/Debug/535g5t12/x86/CMakeFiles/rebuild_cache.dir

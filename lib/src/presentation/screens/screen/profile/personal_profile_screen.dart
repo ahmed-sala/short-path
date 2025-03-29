@@ -1,4 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
+import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/mangers/profile/personal_profile_viewmodel.dart';
+import 'package:short_path/src/presentation/screens/widgets/home/session_expiration_widget.dart';
+import 'package:short_path/src/presentation/screens/widgets/profile/education_widget.dart';
+import 'package:short_path/src/presentation/screens/widgets/profile/profile_header_widget.dart';
+import 'package:short_path/src/presentation/screens/widgets/profile/profile_info_widget.dart';
+
+import '../../widgets/profile/personal_info_widget.dart';
+import '../../widgets/profile/skills_widget.dart';
+import '../../widgets/profile/work_experince_widget.dart';
 
 class PersonalProfileScreen extends StatefulWidget {
   @override
@@ -10,11 +22,17 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen>
   TabController? _tabController;
   final List<Tab> myTabs = <Tab>[
     Tab(text: 'Personal Info'),
-    Tab(text: 'Experience'),
+    Tab(text: 'Profile'),
+    Tab(text: 'Work Experience'),
     Tab(text: 'Skills'),
     Tab(text: 'Education'),
+    Tab(text: 'Languages'),
+    Tab(text: 'Certifications'),
+    Tab(text: 'Projects'),
+    Tab(text: 'Additional Info'),
   ];
 
+  PersonalProfileCubit personalProfileCubit = getIt<PersonalProfileCubit>();
   @override
   void initState() {
     super.initState();
@@ -25,36 +43,6 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen>
   void dispose() {
     _tabController!.dispose();
     super.dispose();
-  }
-
-  Widget _buildProfileHeader() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-      child: Row(
-        children: [
-          // Profile Picture
-          GestureDetector(
-            onTap: () {
-              // Open profile image update option
-            },
-            child: CircleAvatar(
-              radius: 40.0,
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-            ),
-          ),
-          SizedBox(width: 16.0),
-          // Name and Title
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('John Doe', style: Theme.of(context).textTheme.titleLarge),
-              Text('Flutter Developer',
-                  style: Theme.of(context).textTheme.titleMedium),
-            ],
-          ),
-        ],
-      ),
-    );
   }
 
   Widget _buildStatsSection() {
@@ -86,19 +74,38 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen>
     return Expanded(
       child: Column(
         children: [
-          TabBar(
-            controller: _tabController,
-            indicatorColor: Theme.of(context).primaryColor,
-            labelColor: Theme.of(context).primaryColor,
-            unselectedLabelColor: Colors.grey,
-            tabs: myTabs,
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: TabBar(
+              isScrollable: true,
+              controller: _tabController,
+              indicatorColor: AppColors.primaryColor,
+              labelColor: AppColors.primaryColor,
+              unselectedLabelColor: Colors.grey,
+              tabs: myTabs,
+            ),
           ),
           Expanded(
             child: TabBarView(
               controller: _tabController,
               children: myTabs.map((Tab tab) {
-                // Replace with actual content widgets for each section
-                return Center(child: Text('Content for ${tab.text}'));
+                if (tab.text == 'Personal Info') {
+                  return const PersonalInfoWidget();
+                }
+                if (tab.text == 'Profile') {
+                  return const ProfileInfoWidget();
+                }
+                if (tab.text == 'Work Experience') {
+                  return const WorkExperienceWidget();
+                }
+                if (tab.text == 'Skills') {
+                  return const SkillsWidget();
+                }
+                if (tab.text == 'Education') {
+                  return const EducationWidget();
+                } else {
+                  return Center(child: Text('Content for ${tab.text}'));
+                }
               }).toList(),
             ),
           ),
@@ -110,16 +117,50 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Drawer for the hamburger menu
+
       appBar: AppBar(
         title: Text('Profile'),
       ),
-      body: Column(
-        children: [
-          _buildProfileHeader(),
-          _buildStatsSection(),
-          SizedBox(height: 16.0),
-          _buildTabSection(),
-        ],
+
+      body: BlocProvider(
+        create: (context) {
+          personalProfileCubit.getUser();
+          personalProfileCubit.getProfile();
+          personalProfileCubit.getAdditionalInfo();
+          personalProfileCubit.getLanguages();
+          personalProfileCubit.getSkills();
+          personalProfileCubit.getCertification();
+          personalProfileCubit.getEducation();
+          personalProfileCubit.getWorkExperiences();
+          personalProfileCubit.getProjects();
+
+          return personalProfileCubit;
+        },
+        child: BlocConsumer<PersonalProfileCubit, PersonalProfileState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            if (state is PersonalProfileLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (state is PersonalProfileError) {
+              return Center(child: Text('Error'));
+            }
+            if (state is SessionExpired) {
+              return const SessionExpirationWidget();
+            }
+            return Column(
+              children: [
+                const ProfileHeaderWidget(),
+                _buildStatsSection(),
+                const SizedBox(height: 16.0),
+                _buildTabSection(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

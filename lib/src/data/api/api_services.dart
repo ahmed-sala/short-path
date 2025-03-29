@@ -53,7 +53,7 @@ abstract class ApiServices {
   Future<void> addSkill(
     @Body() SkillRequest skillRequest,
   );
-  @POST(ApisEndPoints.skill)
+  @GET(ApisEndPoints.skill)
   Future<SkillsResponse> getSkill();
 
   @POST(ApisEndPoints.profile)

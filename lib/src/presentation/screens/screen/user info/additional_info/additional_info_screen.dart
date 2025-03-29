@@ -46,7 +46,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                         context, context.localization.addingAdditionalInfo);
                   } else if (state is AdditionalInfoSuccess) {
                     navKey.currentState!.pushNamedAndRemoveUntil(
-                        RoutesName.home, (route) => false);
+                        RoutesName.sectionScreen, (route) => false);
                   } else if (state is AdditionalInfoError) {
                     showAwesomeDialog(context,
                         title: context.localization.error,

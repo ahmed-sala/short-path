@@ -46,6 +46,8 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
     return await executeApi<void>(apiCall: () async {
       LanguagesDto languagesDto = LanguagesDto(
           languages: languages.map((e) => e.toLanguageDto()).toList());
+
+      print("The languages is ${languagesDto.languages}");
       await _userInfoOnlineDataSource.addLanguage(
         languagesDto,
       );

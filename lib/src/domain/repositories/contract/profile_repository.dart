@@ -15,7 +15,7 @@ abstract interface class ProfileRepository {
   Future<ApiResult<List<LanguageEntity>?>> getLanguages();
   Future<ApiResult<List<WorkExperienceEntity>?>> getWorkExperiences();
   Future<ApiResult<EducationEntity?>> getEducation();
-  Future<ApiResult<CertificationsEntity?>> saveCertification();
-  Future<ApiResult<ProjectsEntity?>> saveProjects();
-  Future<ApiResult<AdditionalInfoEntity?>> saveAdditionalInfo();
+  Future<ApiResult<CertificationsEntity?>> getCertification();
+  Future<ApiResult<ProjectsEntity?>> getProjects();
+  Future<ApiResult<AdditionalInfoEntity?>> getAdditionalInfo();
 }

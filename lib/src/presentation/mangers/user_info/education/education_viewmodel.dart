@@ -112,7 +112,8 @@ class EducationViewmodelNew extends Cubit<EducationState> {
         institutionName: institutionName.text,
         location: location.text,
         graduationDate: selectedDate,
-        projects: projects,
+        projects: List.from(projects) // Pass a copy of the projects list
+        ,
         fieldOfStudy: fieldOfStudyController.text,
       ),
     );

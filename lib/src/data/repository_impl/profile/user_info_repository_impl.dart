@@ -77,7 +77,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<ApiResult<AdditionalInfoEntity?>> saveAdditionalInfo() async {
+  Future<ApiResult<AdditionalInfoEntity?>> getAdditionalInfo() async {
     return await executeApi<AdditionalInfoEntity?>(apiCall: () async {
       var additionalInfo = await _ProfileOnlineDataSource.getAdditionalInfo();
       return additionalInfo.toEntity();
@@ -85,7 +85,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<ApiResult<CertificationsEntity?>> saveCertification() async {
+  Future<ApiResult<CertificationsEntity?>> getCertification() async {
     return await executeApi<CertificationsEntity?>(apiCall: () async {
       var certification = await _ProfileOnlineDataSource.getCertification();
       List<CertificationEntity> certificationEntity = [];
@@ -98,7 +98,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<ApiResult<ProjectsEntity?>> saveProjects() async {
+  Future<ApiResult<ProjectsEntity?>> getProjects() async {
     return await executeApi<ProjectsEntity?>(apiCall: () async {
       var projects = await _ProfileOnlineDataSource.getProjects();
       List<ProjectEntity> projectEntity = [];
