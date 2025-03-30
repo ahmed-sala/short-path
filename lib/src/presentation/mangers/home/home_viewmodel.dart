@@ -25,25 +25,33 @@ class HomeViewmodel extends Cubit<HomeState> {
   List<JobEntity>? partTimeJobs;
   List<JobEntity>? contractorJobs;
 
-  void getUserData() async {
+  Future<void> getUserData() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(UserDataLoading());
     var result = await _homeUsecase.invoke();
+
+    if (isClosed) return;
+
     switch (result) {
       case Success<AppUser?>():
         appUser = result.data;
-        emit(UserDataLoaded(appUser));
+        if (!isClosed)
+          emit(UserDataLoaded(appUser)); // ✅ Only emit if still active
         break;
       case Failures<AppUser?>():
         var errorMessages = ErrorHandler.fromException(result.exception);
         if (errorMessages.code == 403) {
-          emit(SessionExpired());
+          if (!isClosed) emit(SessionExpired());
           break;
         }
-        emit(UserDataError(errorMessages.errorMessage));
+        if (!isClosed) emit(UserDataError(errorMessages.errorMessage));
     }
   }
 
   Future<void> getAllJobs() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     try {
       emit(JobsLoading());
       var result = await _homeUsecase.getAllJobs(
@@ -53,23 +61,26 @@ class HomeViewmodel extends Cubit<HomeState> {
         size: 5,
         jobFilterRequest: JobFilterRequest(),
       );
+
+      if (isClosed) return; // ✅ Prevent state emission if Cubit is closed
+
       switch (result) {
         case Success<JobEntity?>():
           jobs = result.data?.content;
-
-          emit(JobsLoaded(jobs));
+          if (!isClosed) emit(JobsLoaded(jobs)); // ✅ Ensure it's still active
           break;
         case Failures<JobEntity?>():
           var errorMessages = ErrorHandler.fromException(result.exception);
           if (errorMessages.code == 403) {
-            emit(SessionExpired());
+            if (!isClosed) emit(SessionExpired());
             break;
           }
-          emit(JobsError(errorMessages.errorMessage));
+          if (!isClosed) emit(JobsError(errorMessages.errorMessage));
           break;
       }
     } catch (e) {
-      emit(JobsError(e.toString()));
+      if (!isClosed)
+        emit(JobsError(e.toString())); // ✅ Avoid emitting after close
     }
   }
 }

@@ -20,7 +20,8 @@ part 'personal_profile_state.dart';
 
 @injectable
 class PersonalProfileCubit extends Cubit<PersonalProfileState> {
-  ProfileUsecase _profileUsecase;
+  final ProfileUsecase _profileUsecase;
+
   PersonalProfileCubit(this._profileUsecase) : super(PersonalProfileInitial());
 
   ProfileEntity? profileEntity;
@@ -34,151 +35,196 @@ class PersonalProfileCubit extends Cubit<PersonalProfileState> {
   AppUser? appUser;
 
   void getProfile() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(ProfileLoadingState());
+
     final result = await _profileUsecase.getProfile();
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     switch (result) {
       case Success<ProfileEntity?>():
         profileEntity = result.data;
-        emit(ProfileLoadedState());
+        if (!isClosed) emit(ProfileLoadedState());
         break;
       case Failures<ProfileEntity?>():
         var errorMessages = ErrorHandler.fromException(result.exception);
         if (errorMessages.code == 401 || errorMessages.code == 403) {
-          emit(SessionExpired(errorMessages.errorMessage));
+          if (!isClosed) emit(SessionExpired(errorMessages.errorMessage));
         }
-        emit(PersonalProfileError(errorMessages.errorMessage));
+        if (!isClosed) emit(PersonalProfileError(errorMessages.errorMessage));
     }
   }
 
   void getSkills() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(SkillsLoadingState());
+
     final result = await _profileUsecase.getSkills();
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     switch (result) {
       case Success<SkillEntity?>():
         skillEntity = result.data;
-        emit(SkillsLoadedState());
+        if (!isClosed) emit(SkillsLoadedState());
         break;
       case Failures<SkillEntity?>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
-        emit(PersonalProfileError(errorMessages));
+        if (!isClosed) emit(PersonalProfileError(errorMessages));
     }
   }
 
   void getLanguages() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(LanguagesLoadingState());
+
     final result = await _profileUsecase.getLanguages();
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     switch (result) {
       case Success<List<LanguageEntity>?>():
         languageEntity = result.data;
-        emit(LanguagesLoadedState());
+        if (!isClosed) emit(LanguagesLoadedState());
         break;
       case Failures<List<LanguageEntity>?>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
-        emit(PersonalProfileError(errorMessages));
+        if (!isClosed) emit(PersonalProfileError(errorMessages));
     }
   }
 
   void getWorkExperiences() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(WorkExperienceLoadingState());
+
     final result = await _profileUsecase.getWorkExperiences();
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     switch (result) {
       case Success<List<WorkExperienceEntity>?>():
         workExperienceEntity = result.data;
-        emit(WorkExperienceLoadedState());
+        if (!isClosed) emit(WorkExperienceLoadedState());
         break;
       case Failures<List<WorkExperienceEntity>?>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
-        emit(PersonalProfileError(errorMessages));
+        if (!isClosed) emit(PersonalProfileError(errorMessages));
     }
   }
 
   void getEducation() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(EducationLoadingState());
+
     final result = await _profileUsecase.getEducation();
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     switch (result) {
       case Success<EducationEntity?>():
         educationEntity = result.data;
-        emit(EducationLoadedState());
+        if (!isClosed) emit(EducationLoadedState());
         break;
       case Failures<EducationEntity?>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
-        emit(PersonalProfileError(errorMessages));
+        if (!isClosed) emit(PersonalProfileError(errorMessages));
     }
   }
 
   void getCertification() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(CertificationsLoadingState());
+
     final result = await _profileUsecase.getCertification();
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     switch (result) {
       case Success<CertificationsEntity?>():
         certificationsEntity = result.data;
-        emit(CertificationsLoadedState());
+        if (!isClosed) emit(CertificationsLoadedState());
         break;
       case Failures<CertificationsEntity?>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
-        emit(PersonalProfileError(errorMessages));
+        if (!isClosed) emit(PersonalProfileError(errorMessages));
     }
   }
 
   void getProjects() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(ProjectsLoadingState());
+
     final result = await _profileUsecase.getProjects();
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     switch (result) {
       case Success<ProjectsEntity?>():
         projectsEntity = result.data;
-        emit(ProjectsLoadedState());
+        if (!isClosed) emit(ProjectsLoadedState());
         break;
       case Failures<ProjectsEntity?>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
-        emit(PersonalProfileError(errorMessages));
+        if (!isClosed) emit(PersonalProfileError(errorMessages));
     }
   }
 
   void getAdditionalInfo() async {
     print('getAdditionalInfo called');
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
 
     emit(AdditionalInfoLoadingState());
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     final result = await _profileUsecase.getAdditionalInfo();
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     switch (result) {
       case Success<AdditionalInfoEntity?>():
         additionalInfoEntity = result.data;
         print('the additional info is ${additionalInfoEntity}');
-
-        emit(AdditionalInfoLoadedState());
+        if (!isClosed) emit(AdditionalInfoLoadedState());
         break;
       case Failures<AdditionalInfoEntity?>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
         print('Error fetching additional info: $errorMessages');
-
-        emit(PersonalProfileError(errorMessages));
+        if (!isClosed) emit(PersonalProfileError(errorMessages));
     }
   }
 
   void getUser() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(PersonalProfileLoading());
+
     final result = await _profileUsecase.getUser();
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     switch (result) {
       case Success<AppUser?>():
         appUser = result.data;
-        emit(PersonalProfileLoaded());
+        if (!isClosed) emit(PersonalProfileLoaded());
         break;
       case Failures<AppUser?>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
-        emit(PersonalProfileError(errorMessages));
+        if (!isClosed) emit(PersonalProfileError(errorMessages));
     }
   }
 
   void logout() async {
+    if (isClosed) return; // Ensure Cubit is not closed before emitting
+
     emit(LogOutLoadingState());
     await _profileUsecase.logout();
-    emit(LogOutLoadedState());
+    if (!isClosed) emit(LogOutLoadedState());
   }
 }

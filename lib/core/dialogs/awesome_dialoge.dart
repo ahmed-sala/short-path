@@ -25,3 +25,56 @@ showAwesomeDialog(BuildContext context,
     },
   ).show();
 }
+
+void showCustomDialog(
+  BuildContext context, {
+  required String title,
+  required String message,
+  required VoidCallback onConfirm,
+  VoidCallback? onCancel,
+}) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // Prevent closing by tapping outside
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15), // Rounded corners
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 28),
+            SizedBox(width: 10),
+            Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+          ],
+        ),
+        content: Text(
+          message,
+          style: TextStyle(fontSize: 16),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              if (onCancel != null) onCancel();
+            },
+            child: Text("Cancel", style: TextStyle(color: Colors.grey[700])),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              onConfirm();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent, // Red confirm button
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: Text("Confirm", style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      );
+    },
+  );
+}
