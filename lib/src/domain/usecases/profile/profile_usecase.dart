@@ -54,4 +54,8 @@ class ProfileUsecase {
   Future<ApiResult<AppUser?>> getUser() {
     return _authRepository.getUserData();
   }
+
+  Future<void>logout() async {
+    await _authRepository.logout();
+  }
 }

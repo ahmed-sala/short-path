@@ -1,5 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/profile/personal_profile_viewmodel.dart';
@@ -8,6 +12,7 @@ import 'package:short_path/src/presentation/screens/widgets/profile/certificatio
 import 'package:short_path/src/presentation/screens/widgets/profile/education_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/profile_header_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/profile_info_widget.dart';
+import 'package:short_path/src/short_path.dart';
 
 import '../../widgets/profile/additional_info_widget.dart';
 import '../../widgets/profile/language_widget.dart';
@@ -111,7 +116,32 @@ class PersonalProfileScreen extends StatelessWidget {
     return DefaultTabController(
       length: myTabs.length,
       child: Scaffold(
-        appBar: AppBar(title: Text('Profile')),
+        appBar: AppBar(
+          title: const Text('Profile'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  showAwesomeDialog(context,
+                      title: 'Warning',
+                      onCancel: () {},
+                      desc: 'Are You Sure You Want To Log Out', onOk: () {
+                    navKey.currentState!.pop();
+                    EasyLoading.show(status: 'Loading...');
+                    personalProfileCubit.logout();
+                    navKey.currentState!.pushNamedAndRemoveUntil(
+                      RoutesName.login,
+                      (route) => false,
+                    );
+
+                    EasyLoading.dismiss();
+                  }, dialogType: DialogType.warning);
+                },
+                icon: const Icon(
+                  Icons.logout_outlined,
+                  color: Colors.red,
+                ))
+          ],
+        ),
         body: BlocProvider(
           create: (context) {
             personalProfileCubit.getUser();
@@ -127,7 +157,7 @@ class PersonalProfileScreen extends StatelessWidget {
           },
           child: BlocConsumer<PersonalProfileCubit, PersonalProfileState>(
             listener: (context, state) {
-              // Handle state changes if needed.
+              if (state is LogOutLoadingState) {}
             },
             builder: (context, state) {
               if (state is PersonalProfileLoading) {

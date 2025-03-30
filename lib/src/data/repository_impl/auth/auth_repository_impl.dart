@@ -11,20 +11,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthOnlineDatasource _authOnlineDatasource;
   AuthOfflineDataSource _authOfflineDataSource;
   AuthRepositoryImpl(this._authOnlineDatasource, this._authOfflineDataSource);
-  @override
-  Future<void> deleteToken() {
-    return _authOfflineDataSource.deleteToken();
-  }
 
-  @override
-  Future<String?> getToken() {
-    return _authOfflineDataSource.getToken();
-  }
-
-  @override
-  Future<bool> isLoggedUser() {
-    return _authOfflineDataSource.isLoggedUser();
-  }
 
   @override
   Future<ApiResult<void>> login(String email, String password) async {
@@ -46,20 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
     });
   }
 
-  @override
-  Future<void> saveToken(String token) {
-    return _authOfflineDataSource.saveToken(token);
-  }
 
-  @override
-  Future<void> onBoardingCompleted() {
-    return _authOfflineDataSource.onBoardingCompleted();
-  }
-
-  @override
-  Future<bool> isOnBoardingCompleted() {
-    return _authOfflineDataSource.isOnBoardingCompleted();
-  }
 
   @override
   Future<ApiResult<AppUser?>> getUserData() async {
@@ -67,5 +41,10 @@ class AuthRepositoryImpl implements AuthRepository {
       var response = await _authOnlineDatasource.getUserData();
       return response.toAppUser();
     });
+  }
+
+  @override
+  Future<void> logout()async {
+    await _authOfflineDataSource.deleteToken();
   }
 }

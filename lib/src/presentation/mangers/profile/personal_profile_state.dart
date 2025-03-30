@@ -70,3 +70,6 @@ class TabChangedState extends PersonalProfileState {
   @override
   List<Object?> get props => [index];
 }
+
+class LogOutLoadingState extends PersonalProfileState {}
+class LogOutLoadedState extends PersonalProfileState {}

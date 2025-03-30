@@ -175,4 +175,10 @@ class PersonalProfileCubit extends Cubit<PersonalProfileState> {
         emit(PersonalProfileError(errorMessages));
     }
   }
+
+  void logout() async {
+    emit(LogOutLoadingState());
+    await _profileUsecase.logout();
+    emit(LogOutLoadedState());
+  }
 }
