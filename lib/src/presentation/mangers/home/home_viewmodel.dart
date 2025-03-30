@@ -26,7 +26,7 @@ class HomeViewmodel extends Cubit<HomeState> {
   List<JobEntity>? contractorJobs;
 
   Future<void> getUserData() async {
-    if (isClosed) return; // Ensure Cubit is not closed before emitting
+    if (isClosed) return;
 
     emit(UserDataLoading());
     var result = await _homeUsecase.invoke();
@@ -37,7 +37,7 @@ class HomeViewmodel extends Cubit<HomeState> {
       case Success<AppUser?>():
         appUser = result.data;
         if (!isClosed)
-          emit(UserDataLoaded(appUser)); // ✅ Only emit if still active
+          emit(UserDataLoaded(appUser));
         break;
       case Failures<AppUser?>():
         var errorMessages = ErrorHandler.fromException(result.exception);
@@ -50,7 +50,7 @@ class HomeViewmodel extends Cubit<HomeState> {
   }
 
   Future<void> getAllJobs() async {
-    if (isClosed) return; // Ensure Cubit is not closed before emitting
+    if (isClosed) return;
 
     try {
       emit(JobsLoading());
@@ -62,12 +62,12 @@ class HomeViewmodel extends Cubit<HomeState> {
         jobFilterRequest: JobFilterRequest(),
       );
 
-      if (isClosed) return; // ✅ Prevent state emission if Cubit is closed
+      if (isClosed) return;
 
       switch (result) {
         case Success<JobEntity?>():
           jobs = result.data?.content;
-          if (!isClosed) emit(JobsLoaded(jobs)); // ✅ Ensure it's still active
+          if (!isClosed) emit(JobsLoaded(jobs));
           break;
         case Failures<JobEntity?>():
           var errorMessages = ErrorHandler.fromException(result.exception);
@@ -80,7 +80,7 @@ class HomeViewmodel extends Cubit<HomeState> {
       }
     } catch (e) {
       if (!isClosed)
-        emit(JobsError(e.toString())); // ✅ Avoid emitting after close
+        emit(JobsError(e.toString()));
     }
   }
 }
