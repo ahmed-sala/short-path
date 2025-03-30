@@ -65,6 +65,10 @@ class ProfileInfoWidget extends StatelessWidget {
           return const Center(child: Text('No profile data available.'));
         }
 
+        if (state is ProfileLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
         return ListView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           children: [

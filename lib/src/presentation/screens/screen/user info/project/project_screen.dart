@@ -124,6 +124,7 @@ class ProjectScreen extends StatelessWidget {
                                   controller:
                                       viewModel.technologiesUsedController,
                                   labelText: 'Tools/Technologies Used',
+                                  // No validation required here
                                   validator: (value) => null,
                                 ),
                               ),
@@ -135,7 +136,8 @@ class ProjectScreen extends StatelessWidget {
                                     onPressed: () {
                                       viewModel.addToolsTechnologies(
                                         viewModel
-                                            .technologiesUsedController.text,
+                                            .technologiesUsedController.text
+                                            .trim(),
                                       );
                                     },
                                   ),
@@ -144,8 +146,8 @@ class ProjectScreen extends StatelessWidget {
                             ],
                           ),
                           if (viewModel.filteredToolSuggestions.isNotEmpty &&
-                              viewModel.technologiesUsedController.text
-                                  .isNotEmpty) // Ensure the text field is not empty
+                              viewModel
+                                  .technologiesUsedController.text.isNotEmpty)
                             SuggestionList(
                               suggestions: viewModel.filteredToolSuggestions,
                               onTap: viewModel.selectTool,

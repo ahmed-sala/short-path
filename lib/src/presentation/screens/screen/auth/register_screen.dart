@@ -1,9 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
-import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/auth/register/register_states.dart';
@@ -26,9 +26,11 @@ class RegisterScreen extends StatelessWidget {
       child: BlocConsumer<RegisterViewModel, RegisterScreenState>(
         listener: (context, state) {
           if (state is LoadingState) {
-            showLoading(context, context.localization.registering);
+            EasyLoading.show(
+              status: context.localization.registering,
+            );
           } else if (state is ErrorState) {
-            hideLoading();
+            EasyLoading.removeAllCallbacks();
             showAwesomeDialog(
               context,
               title: context.localization.error,
@@ -37,7 +39,9 @@ class RegisterScreen extends StatelessWidget {
               dialogType: DialogType.error,
             );
           } else if (state is SuccessState) {
-            hideLoading();
+            EasyLoading.removeAllCallbacks();
+            EasyLoading.showSuccess("Registration Successful");
+
             Navigator.pushReplacementNamed(context, RoutesName.login);
           }
         },

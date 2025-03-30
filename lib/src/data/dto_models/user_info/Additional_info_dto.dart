@@ -156,8 +156,8 @@ class VolunteerWorkDto {
   VolunteerWorkEntity toEntity() {
     return VolunteerWorkEntity(
       description: description ?? '',
-      month: duration!._months ?? 0,
-      year: duration!._years ?? 0,
+      month: duration?._months ?? 0,
+      year: duration?._years ?? 0,
     );
   }
 }

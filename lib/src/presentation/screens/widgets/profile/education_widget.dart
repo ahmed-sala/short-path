@@ -29,6 +29,9 @@ class EducationWidget extends StatelessWidget {
         if (educationDetails == null || educationDetails.isEmpty) {
           return const Center(child: Text('No education details available.'));
         }
+        if (state is EducationLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
         return Padding(
           padding: const EdgeInsets.all(16.0),
@@ -120,7 +123,7 @@ class EducationWidget extends StatelessWidget {
                   ),
                   const Divider(height: 24, thickness: 1),
 
-                  // Projects for this education
+                  // Projects
                   if (education.projects.isNotEmpty) ...[
                     const Text(
                       "Projects:",

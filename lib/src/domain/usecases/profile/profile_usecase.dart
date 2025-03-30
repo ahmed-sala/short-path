@@ -19,36 +19,36 @@ class ProfileUsecase {
   AuthRepository _authRepository;
   ProfileUsecase(this._profileRepository, this._authRepository);
 
-  Future<ApiResult<ProfileEntity?>> getProfile() {
-    return _profileRepository.getProfile();
+  Future<ApiResult<ProfileEntity?>> getProfile() async {
+    return await _profileRepository.getProfile();
   }
 
-  Future<ApiResult<SkillEntity?>> getSkills() {
-    return _profileRepository.getSkills();
+  Future<ApiResult<SkillEntity?>> getSkills() async {
+    return await _profileRepository.getSkills();
   }
 
-  Future<ApiResult<List<LanguageEntity>?>> getLanguages() {
-    return _profileRepository.getLanguages();
+  Future<ApiResult<List<LanguageEntity>?>> getLanguages() async {
+    return await _profileRepository.getLanguages();
   }
 
-  Future<ApiResult<List<WorkExperienceEntity>?>> getWorkExperiences() {
-    return _profileRepository.getWorkExperiences();
+  Future<ApiResult<List<WorkExperienceEntity>?>> getWorkExperiences() async {
+    return await _profileRepository.getWorkExperiences();
   }
 
-  Future<ApiResult<EducationEntity?>> getEducation() {
-    return _profileRepository.getEducation();
+  Future<ApiResult<EducationEntity?>> getEducation() async {
+    return await _profileRepository.getEducation();
   }
 
-  Future<ApiResult<CertificationsEntity?>> getCertification() {
-    return _profileRepository.getCertification();
+  Future<ApiResult<CertificationsEntity?>> getCertification() async {
+    return await _profileRepository.getCertification();
   }
 
-  Future<ApiResult<ProjectsEntity?>> getProjects() {
-    return _profileRepository.getProjects();
+  Future<ApiResult<ProjectsEntity?>> getProjects() async {
+    return await _profileRepository.getProjects();
   }
 
-  Future<ApiResult<AdditionalInfoEntity?>> getAdditionalInfo() {
-    return _profileRepository.getAdditionalInfo();
+  Future<ApiResult<AdditionalInfoEntity?>> getAdditionalInfo() async {
+    return await _profileRepository.getAdditionalInfo();
   }
 
   Future<ApiResult<AppUser?>> getUser() {

@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:short_path/src/data/dto_models/user_info/Additional_info_dto.dart';
+
+import '../../../dto_models/user_info/Additional_info_dto.dart';
 
 part 'additional_info_response.g.dart';
 
@@ -75,7 +76,6 @@ class VolunteerWork {
     return VolunteerWorkDto(
       organizationName: organizationName,
       role: role,
-      duration: DurationDto(years: int.parse(duration!)),
       description: description,
     );
   }

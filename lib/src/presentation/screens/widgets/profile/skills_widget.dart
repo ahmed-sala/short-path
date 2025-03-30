@@ -62,6 +62,9 @@ class SkillsWidget extends StatelessWidget {
           return const Center(child: Text('No skills available.'));
         }
 
+        if (state is SkillsLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

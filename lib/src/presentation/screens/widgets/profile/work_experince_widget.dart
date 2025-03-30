@@ -30,6 +30,9 @@ class WorkExperienceWidget extends StatelessWidget {
           return const Center(child: Text('No work experience available.'));
         }
 
+        if (state is WorkExperienceLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
