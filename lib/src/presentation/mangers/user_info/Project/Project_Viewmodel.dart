@@ -32,13 +32,21 @@ class ProjectViewmodel extends Cubit<ProjectState> {
 
   String? role;
 
+  // When the add button is pressed for the project, if the technologies field still has a value, add it
   void addProject() {
     if (formKey.currentState?.validate() ?? false) {
+      // Check if there is a tool left in the text field that hasn't been added
+      final currentTool = technologiesUsedController.text.trim();
+      if (currentTool.isNotEmpty && !toolsTechnologies.contains(currentTool)) {
+        toolsTechnologies.add(currentTool);
+      }
+
       final project = ProjectEntity(
         projectTitle: projectTitleController.text.trim(),
         role: roleController.text.trim(),
         description: descriptionController.text.trim(),
-        technologiesUsed: toolsTechnologies.join(', '),
+        technologiesUsed:
+            List.from(toolsTechnologies), // copy list to avoid future mutations
         projectLink: projectLinkController.text.trim(),
       );
 

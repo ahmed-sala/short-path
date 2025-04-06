@@ -34,6 +34,14 @@ import '../src/data/data_source/online_data_source/home/contract/home_online_dat
     as _i177;
 import '../src/data/data_source/online_data_source/home/impl/home_online_datasource_impl.dart'
     as _i36;
+import '../src/data/data_source/online_data_source/profile/contracts/profile_online_datasource.dart'
+    as _i263;
+import '../src/data/data_source/online_data_source/profile/contracts/user_info_online_datasource.dart'
+    as _i747;
+import '../src/data/data_source/online_data_source/profile/impl/profile_online_datasource_impl.dart'
+    as _i636;
+import '../src/data/data_source/online_data_source/profile/impl/user_info_online_datasource_impl.dart'
+    as _i699;
 import '../src/data/data_source/online_data_source/user_info/contracts/user_info_online_datasource.dart'
     as _i468;
 import '../src/data/data_source/online_data_source/user_info/impl/user_info_online_datasource_impl.dart'
@@ -42,11 +50,14 @@ import '../src/data/repository_impl/auth/auth_repository_impl.dart' as _i946;
 import '../src/data/repository_impl/career/career_repository_impl.dart'
     as _i726;
 import '../src/data/repository_impl/home/home_repository_impl.dart' as _i210;
+import '../src/data/repository_impl/profile/user_info_repository_impl.dart'
+    as _i488;
 import '../src/data/repository_impl/user_info/user_info_repository_impl.dart'
     as _i300;
 import '../src/domain/repositories/contract/auth_repository.dart' as _i367;
 import '../src/domain/repositories/contract/career_repository.dart' as _i645;
 import '../src/domain/repositories/contract/home_repository.dart' as _i363;
+import '../src/domain/repositories/contract/profile_repository.dart' as _i552;
 import '../src/domain/repositories/contract/user_info_repository.dart' as _i175;
 import '../src/domain/usecases/additional_info/additional_info_usecase.dart'
     as _i563;
@@ -57,6 +68,7 @@ import '../src/domain/usecases/Certification/certification_usecase.dart'
 import '../src/domain/usecases/EducationProjectUsecase/educationProject_usecase.dart'
     as _i428;
 import '../src/domain/usecases/home/home_usecase.dart' as _i991;
+import '../src/domain/usecases/profile/profile_usecase.dart' as _i501;
 import '../src/domain/usecases/Project/project_usecase.dart' as _i859;
 import '../src/domain/usecases/user_info/user_info_usecase.dart' as _i748;
 import '../src/presentation/mangers/auth/login/login_viewmodel.dart' as _i312;
@@ -69,6 +81,8 @@ import '../src/presentation/mangers/localization/localization_viewmodel.dart'
     as _i841;
 import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
     as _i359;
+import '../src/presentation/mangers/profile/personal_profile_viewmodel.dart'
+    as _i1046;
 import '../src/presentation/mangers/section/section_Screen_viewmodel.dart'
     as _i794;
 import '../src/presentation/mangers/user_info/additional_info/additional_info_viewmodel.dart'
@@ -124,10 +138,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i687.ApiServices>(() => _i687.ApiServices(gh<_i361.Dio>()));
     gh.factory<_i177.HomeOnlineDatasource>(
         () => _i36.HomeOnlineDatasourceImpl(gh<_i687.ApiServices>()));
+    gh.factory<_i263.ProfileOnlineDataSource>(
+        () => _i636.ProfileOnlineDatasourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i468.UserInfoOnlineDataSource>(
         () => _i260.UserInfoOnlineDatasourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i144.AuthOnlineDatasource>(
         () => _i116.AuthOnlineDataSourceImpl(gh<_i687.ApiServices>()));
+    gh.factory<_i747.UserInfoOnlineDataSource>(
+        () => _i699.UserInfoOnlineDatasourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i367.AuthRepository>(() => _i946.AuthRepositoryImpl(
           gh<_i144.AuthOnlineDatasource>(),
           gh<_i990.AuthOfflineDataSource>(),
@@ -142,6 +160,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i468.UserInfoOnlineDataSource>(),
           gh<_i990.AuthOfflineDataSource>(),
         ));
+    gh.factory<_i552.ProfileRepository>(
+        () => _i488.ProfileRepositoryImpl(gh<_i263.ProfileOnlineDataSource>()));
     gh.factory<_i991.HomeUsecase>(() => _i991.HomeUsecase(
           gh<_i367.AuthRepository>(),
           gh<_i363.HomeRepository>(),
@@ -176,6 +196,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i510.CareerViewmodel(gh<_i720.CareerUsecase>()));
     gh.factory<_i374.AdditionalInfoViewmodel>(
         () => _i374.AdditionalInfoViewmodel(gh<_i563.AdditionalInfoUsecase>()));
+    gh.factory<_i501.ProfileUsecase>(() => _i501.ProfileUsecase(
+          gh<_i552.ProfileRepository>(),
+          gh<_i367.AuthRepository>(),
+        ));
     gh.factory<_i213.ProjectViewmodel>(
         () => _i213.ProjectViewmodel(gh<_i859.ProjectUsecase>()));
     gh.factory<_i228.EducationViewmodelNew>(
@@ -184,6 +208,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i639.SkillGatheringViewmodel>(
         () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i1046.PersonalProfileCubit>(
+        () => _i1046.PersonalProfileCubit(gh<_i501.ProfileUsecase>()));
     return this;
   }
 }

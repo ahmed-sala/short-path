@@ -1,13 +1,11 @@
 // login_screen.dart
 
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:short_path/config/routes/routes_name.dart';
-import 'package:short_path/core/dialogs/awesome_dialoge.dart';
-import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/auth/login/login_states.dart';
@@ -81,18 +79,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   listenWhen: (previous, current) => current is! InitialState,
                   listener: (context, state) {
                     if (state is LoadingState) {
-                      showLoading(context, context.localization.loggingIn);
+                      EasyLoading.show(status: context.localization.loggingIn);
                     } else if (state is ErrorState) {
-                      hideLoading();
-                      showAwesomeDialog(
-                        context,
-                        title: context.localization.error,
-                        desc: state.exception,
-                        onOk: () {},
-                        dialogType: DialogType.error,
+                      EasyLoading.dismiss();
+                      EasyLoading.showError(
+                        state.exception,
+                        duration: const Duration(seconds: 5),
                       );
                     } else if (state is SuccessState) {
-                      hideLoading();
+                      EasyLoading.dismiss();
+                      EasyLoading.showSuccess(
+                        'Success!',
+                      );
+
                       Navigator.pushReplacementNamed(
                           context, RoutesName.sectionScreen);
                     }

@@ -1,4 +1,5 @@
 import 'package:short_path/src/data/api/core/api_request_model/user_info/profile_info_request.dart';
+import 'package:short_path/src/domain/entities/user_info/profile_entity.dart';
 
 class ProfileDto {
   final String bio;
@@ -24,6 +25,16 @@ class ProfileDto {
         professionalTitle: professionalTitle,
         profilePhotoUrl: profilePhotoUrl,
       ),
+    );
+  }
+
+  ProfileEntity toDomainEntity() {
+    return ProfileEntity(
+      bio: bio,
+      linkedIn: linkedInProfile,
+      portfolioLinks: portfolioWebsites,
+      jobTitle: professionalTitle,
+      profilePicture: profilePhotoUrl,
     );
   }
 }

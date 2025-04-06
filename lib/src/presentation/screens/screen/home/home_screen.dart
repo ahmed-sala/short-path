@@ -25,13 +25,7 @@ class HomeScreen extends StatelessWidget {
         homeViewmodel.getAllJobs();
         return homeViewmodel;
       },
-      child: BlocConsumer<HomeViewmodel, HomeState>(
-        listener: (context, state) {
-          if (state is HomeInitial) {
-            homeViewmodel.getUserData();
-            homeViewmodel.getAllJobs();
-          }
-        },
+      child: BlocBuilder<HomeViewmodel, HomeState>(
         builder: (context, state) {
           if (state is SessionExpired || state is UserDataError) {
             return const SessionExpirationWidget();

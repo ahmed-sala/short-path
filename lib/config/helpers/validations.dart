@@ -79,8 +79,6 @@ String? validateProjectDescription(String? value) =>
 String? validateLink(String? value) {
   if (value == null || value.isEmpty) {
     return 'Link is required';
-  } else if (Uri.parse(value).isAbsolute) {
-    return 'Invalid URL';
   }
   return null;
 }

@@ -36,6 +36,7 @@ dependencies:
   injectable:
   dio:
   flutter_downloader:
+  device_info_plus: ^11.3.0
 
   permission_handler: ^11.0.1
   url_launcher: ^6.1.7
@@ -46,7 +47,7 @@ dependencies:
   awesome_dialog: ^3.2.1
   google_fonts:
   shared_preferences:
-  flutter_secure_storage:
+  flutter_secure_storage: ^9.2.4
   flutter_screenutil: ^5.9.3
   intl: ^0.19.0
   pull_down_button: ^0.10.2  # The following adds the Cupertino Icons font to your application.
@@ -60,11 +61,14 @@ dependencies:
   skeletonizer: ^1.4.3
   lottie:
   flutter_pdfview: ^1.4.0
-  syncfusion_flutter_pdfviewer: ^25.2.7
+  syncfusion_flutter_pdfviewer: 29.1.33
   flutter_media_downloader:
   flutter_localization: ^0.3.0
   rxdart: ^0.27.0
-
+  font_awesome_flutter:
+  flutter_easyloading: ^3.0.5
+  country_flags: ^3.2.0
+  equatable:
 dev_dependencies:
   flutter_test:
     sdk: flutter
