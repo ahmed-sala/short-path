@@ -102,6 +102,6 @@ abstract class ApiServices {
     @Query("page") int page,
     @Query("sort", encoded: true) String sort,
     @Query("size") int size,
-    @Query('filter') JobFilterRequest filterRequest,
+    @Query('filter', encoded: true) JobFilterRequest filterRequest,
   );
 }

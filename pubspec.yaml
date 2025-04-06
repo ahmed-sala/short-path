@@ -36,6 +36,7 @@ dependencies:
   injectable:
   dio:
   flutter_downloader:
+  device_info_plus: ^11.3.0
 
   permission_handler: ^11.0.1
   url_launcher: ^6.1.7
