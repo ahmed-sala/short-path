@@ -35,14 +35,12 @@ dependencies:
   get_it:
   injectable:
   dio:
-  flutter_downloader:
   device_info_plus: ^11.3.0
 
   permission_handler: ^11.0.1
   url_launcher: ^6.1.7
   easy_pdf_viewer: ^1.0.8
   retrofit:
-  logger:
   json_annotation: ^4.9.0
   awesome_dialog: ^3.2.1
   google_fonts:
@@ -60,8 +58,6 @@ dependencies:
   cached_network_image:
   skeletonizer: ^1.4.3
   lottie:
-  flutter_pdfview: ^1.4.0
-  syncfusion_flutter_pdfviewer: 29.1.33
   flutter_media_downloader:
   flutter_localization: ^0.3.0
   rxdart: ^0.27.0
@@ -69,6 +65,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   country_flags: ^3.2.0
   equatable:
+  flutter_downloader:
 dev_dependencies:
   flutter_test:
     sdk: flutter

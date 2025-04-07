@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
+
+import '../../../../../shared_widgets/toast_dialoge.dart';
 
 class IndustrySkillListWidget extends StatelessWidget {
   const IndustrySkillListWidget({super.key});
@@ -13,8 +16,8 @@ class IndustrySkillListWidget extends StatelessWidget {
       builder: (context, state) {
         final skills = context.read<SkillGatheringViewmodel>().industrySkills;
         if (skills.isEmpty) {
-          return const Text(
-            'No skills added yet. Start by adding some skills.',
+          return Text(
+            context.localization.noSkillsAddedYetStartByAddingSomeSkills,
             style: TextStyle(color: Colors.grey),
           );
         }
@@ -44,10 +47,11 @@ class IndustrySkillListWidget extends StatelessWidget {
 
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
-                    content: Text('$skill removed successfully!'),
+                    content: Text(
+                        '$skill ${context.localization.removedSuccessfully}'),
                     backgroundColor: Colors.red,
                     action: SnackBarAction(
-                      label: 'Undo',
+                      label: context.localization.undo,
                       onPressed: () {
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
@@ -55,12 +59,9 @@ class IndustrySkillListWidget extends StatelessWidget {
                               type: 'Industry',
                               skill: skill,
                             );
-                        scaffoldMessenger.showSnackBar(
-                          SnackBar(
-                            content: Text('$skill added back!'),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
+                        ToastDialog.show(
+                            '$skill ${context.localization.skillAddedSuccessfully}',
+                            Colors.green);
                       },
                     ),
                   ),

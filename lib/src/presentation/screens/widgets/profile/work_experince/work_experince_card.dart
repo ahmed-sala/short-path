@@ -1,3 +1,4 @@
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/domain/entities/user_info/work_experience_entity.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -26,9 +27,9 @@ class WorkExperienceCard extends StatelessWidget {
               // Header: Job Title and Company Name
               Row(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     backgroundColor: AppColors.primaryColor,
-                    child: const Icon(Icons.work, color: Colors.white),
+                    child: Icon(Icons.work, color: Colors.white),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -58,25 +59,29 @@ class WorkExperienceCard extends StatelessWidget {
               const SizedBox(height: 12),
               // Work details using the reusable listTile widget
               ReusableWidgets.listTile(
-                title: 'Company Field',
+                context: context,
+                title: context.localization.companyField,
                 subtitle: work.companyField,
                 leadingIcon: Icons.business,
               ),
               const SizedBox(height: 8),
               ReusableWidgets.listTile(
-                title: 'Location',
+                context: context,
+                title: context.localization.location,
                 subtitle: work.jobLocation,
                 leadingIcon: Icons.location_on,
               ),
               const SizedBox(height: 8),
               ReusableWidgets.listTile(
-                title: 'Job Type',
+                context: context,
+                title: context.localization.jobType,
                 subtitle: work.jobType,
                 leadingIcon: Icons.work_outline,
               ),
               const SizedBox(height: 8),
               ReusableWidgets.listTile(
-                title: 'Duration',
+                context: context,
+                title: context.localization.duration,
                 subtitle: duration,
                 leadingIcon: Icons.date_range,
               ),

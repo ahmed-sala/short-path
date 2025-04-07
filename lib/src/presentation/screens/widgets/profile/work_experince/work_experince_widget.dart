@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/presentation/mangers/profile/personal_profile_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/work_experince/work_experince_card.dart';
 
@@ -17,7 +18,8 @@ class WorkExperienceWidget extends StatelessWidget {
         final workExperiences = cubit.workExperienceEntity;
 
         if (workExperiences == null || workExperiences.isEmpty) {
-          return const Center(child: Text('No work experience available.'));
+          return Center(
+              child: Text(context.localization.noWorkExperienceAvailable));
         }
         if (state is WorkExperienceLoadingState) {
           return const Center(child: CircularProgressIndicator());
@@ -30,7 +32,7 @@ class WorkExperienceWidget extends StatelessWidget {
               children: workExperiences.map((work) {
                 final String duration = work.endDate != null
                     ? '${_formatDate(work.startDate)} - ${_formatDate(work.endDate!)}'
-                    : '${_formatDate(work.startDate)} - Present';
+                    : '${_formatDate(work.startDate)} - ${context.localization.present}';
 
                 return WorkExperienceCard(work: work, duration: duration);
               }).toList(),

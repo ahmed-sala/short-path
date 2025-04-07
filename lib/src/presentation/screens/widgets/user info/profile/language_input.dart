@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
@@ -14,10 +15,10 @@ class LanguageInput extends StatelessWidget {
       children: [
         Expanded(
           child: CustomTextFormField(
-            hintText: 'Enter a language',
+            hintText: context.localization.enterALanguage,
             keyboardType: TextInputType.text,
             controller: viewModel.languageController,
-            labelText: 'Language',
+            labelText: context.localization.language,
             validator: (String? text) {
               return null;
             },
@@ -26,7 +27,7 @@ class LanguageInput extends StatelessWidget {
         const SizedBox(width: 16),
         Expanded(
           child: CustomDropdownButtonFormField<String>(
-            labelText: 'Level',
+            labelText: context.localization.level,
             items: viewModel.languageLevels
                 .map((level) => DropdownMenuItem(
                       child: Text(level),

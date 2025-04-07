@@ -1,3 +1,5 @@
+import 'package:short_path/core/extensions/extensions.dart';
+
 import '../../../../../core/common/common_imports.dart';
 import '../../../mangers/home/jobs/jobs_viewmodel.dart';
 
@@ -17,8 +19,8 @@ class JobSearchWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
         controller: searchController,
-        decoration: const InputDecoration(
-          labelText: "Search",
+        decoration: InputDecoration(
+          labelText: context.localization.search,
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.search),
         ),

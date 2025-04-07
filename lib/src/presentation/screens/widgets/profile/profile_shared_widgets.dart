@@ -1,3 +1,5 @@
+import 'package:short_path/core/extensions/extensions.dart';
+
 import '../../../../../core/common/common_imports.dart';
 import '../../../../../core/styles/colors/app_colore.dart';
 
@@ -29,6 +31,7 @@ class ReusableWidgets {
     required String? subtitle,
     IconData? leadingIcon,
     Widget? trailing,
+    required BuildContext context,
   }) {
     return ListTile(
       leading: leadingIcon != null
@@ -39,7 +42,7 @@ class ReusableWidgets {
         style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
       ),
       subtitle: Text(
-        subtitle?.isNotEmpty == true ? subtitle! : 'Not provided',
+        subtitle?.isNotEmpty == true ? subtitle! : context.localization.loading,
         style: const TextStyle(fontSize: 14, color: Colors.black54),
       ),
       trailing: trailing,

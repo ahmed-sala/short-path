@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
+
+import '../../../../shared_widgets/toast_dialoge.dart';
 
 class ToolsListWidget extends StatelessWidget {
   const ToolsListWidget({super.key});
@@ -13,9 +17,9 @@ class ToolsListWidget extends StatelessWidget {
       builder: (context, state) {
         final skills = context.read<EducationViewmodelNew>().tollsTechnologies;
         if (skills.isEmpty) {
-          return const Text(
-            'No skills added yet. Start by adding some skills.',
-            style: TextStyle(color: Colors.grey),
+          return Text(
+            context.localization.nothingAddedYet,
+            style: const TextStyle(color: Colors.grey),
           );
         }
         return Wrap(
@@ -42,23 +46,22 @@ class ToolsListWidget extends StatelessWidget {
                     .removeToolsTechnologies(skill);
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
-                    content: Text('$skill removed successfully!'),
+                    content: Text(
+                        '$skill ${context.localization.removedSuccessfully}'),
                     backgroundColor: Colors.red,
                     action: SnackBarAction(
-                      label: 'Undo',
+                      label: context.localization.undo,
                       onPressed: () {
+                        Fluttertoast.cancel();
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
                         context
                             .read<EducationViewmodelNew>()
                             .addToolsTechnologies(skill);
 
-                        scaffoldMessenger.showSnackBar(
-                          SnackBar(
-                            content: Text('$skill added back!'),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
+                        ToastDialog.show(
+                            '$skill ${context.localization.addedBack}',
+                            Colors.green);
                       },
                     ),
                   ),

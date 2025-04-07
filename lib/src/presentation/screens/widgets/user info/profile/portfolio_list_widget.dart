@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/profile/profile_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/profile/profile_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/snack_bar.dart';
+
+import '../../../../shared_widgets/toast_dialoge.dart';
 
 class PortfolioListWidget extends StatelessWidget {
   const PortfolioListWidget({super.key});
@@ -15,16 +18,13 @@ class PortfolioListWidget extends StatelessWidget {
         if (state is PortfolioLinkRemoved) {
           showSnackBar(
             context,
-            '${state.link} removed successfully!',
+            '${state.link} ${context.localization.removedSuccessfully}',
             Colors.red,
-            actionLabel: 'Undo',
+            actionLabel: context.localization.undo,
             onActionPressed: () {
               context.read<ProfileViewmodel>().addPortfolioLink(state.link);
-              showSnackBar(
-                context,
-                '${state.link} added back!',
-                Colors.green,
-              );
+              ToastDialog.show(
+                  context.localization.addedSuccessfully, Colors.green);
             },
           );
         }
@@ -33,11 +33,11 @@ class PortfolioListWidget extends StatelessWidget {
         final portfolioLinks = context.read<ProfileViewmodel>().portfolioLinks;
 
         if (portfolioLinks.isEmpty) {
-          return const Padding(
-            padding: EdgeInsets.all(16.0),
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Text(
-              'No portfolio links added yet. Start by adding some links.',
-              style: TextStyle(color: Colors.grey, fontSize: 16),
+              context.localization.nothingAddedYet,
+              style: const TextStyle(color: Colors.grey, fontSize: 16),
             ),
           );
         }

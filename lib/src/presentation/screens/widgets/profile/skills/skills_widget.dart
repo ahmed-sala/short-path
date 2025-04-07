@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/skills/tech_skills_widget.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -16,7 +17,7 @@ class SkillsWidget extends StatelessWidget {
         final skills = cubit.skillEntity;
 
         if (skills == null) {
-          return const Center(child: Text('No skills available.'));
+          return Center(child: Text(context.localization.noSkillsAvailable));
         }
         if (state is SkillsLoadingState) {
           return const Center(child: CircularProgressIndicator());
@@ -26,7 +27,8 @@ class SkillsWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ReusableWidgets.sectionTitle('Technical Skills', Icons.build),
+              ReusableWidgets.sectionTitle(
+                  context.localization.technicalSkills, Icons.build),
               const SizedBox(height: 12),
               ...skills.technicalSkills.map(
                 (skill) => TechnicalSkillWidget(
@@ -36,7 +38,7 @@ class SkillsWidget extends StatelessWidget {
               ),
               const Divider(height: 24),
               ReusableWidgets.sectionTitle(
-                  'Soft Skills', Icons.sentiment_satisfied),
+                  context.localization.softSkills, Icons.sentiment_satisfied),
               const SizedBox(height: 12),
               Wrap(
                 spacing: 8.0,
@@ -47,7 +49,7 @@ class SkillsWidget extends StatelessWidget {
               ),
               const Divider(height: 24),
               ReusableWidgets.sectionTitle(
-                  'Industry-Specific Skills', Icons.business),
+                  context.localization.industrySpecificSkills, Icons.business),
               const SizedBox(height: 12),
               Wrap(
                 spacing: 8.0,

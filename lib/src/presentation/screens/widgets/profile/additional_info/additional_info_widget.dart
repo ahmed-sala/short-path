@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/profile_shared_widgets.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -24,7 +25,7 @@ class AdditionalInfoWidget extends StatelessWidget {
               if (additionalInfo?.hobbiesAndInterests != null &&
                   additionalInfo!.hobbiesAndInterests!.isNotEmpty) ...[
                 ReusableWidgets.sectionTitle(
-                    "Hobbies & Interests", Icons.favorite),
+                    context.localization.hobbiesInterests, Icons.favorite),
                 Wrap(
                   spacing: 8.0,
                   runSpacing: 4.0,
@@ -37,21 +38,21 @@ class AdditionalInfoWidget extends StatelessWidget {
               if (additionalInfo?.publications != null &&
                   additionalInfo!.publications!.isNotEmpty) ...[
                 ReusableWidgets.sectionTitle(
-                    "Publications", Icons.library_books),
+                    context.localization.publications, Icons.library_books),
                 ItemList(items: additionalInfo.publications!),
                 const SizedBox(height: 16),
               ],
               if (additionalInfo?.awardsAndHonors != null &&
                   additionalInfo!.awardsAndHonors!.isNotEmpty) ...[
                 ReusableWidgets.sectionTitle(
-                    "Awards & Honors", Icons.emoji_events),
+                    context.localization.awardsAndHonors, Icons.emoji_events),
                 ItemList(items: additionalInfo.publications!),
                 const SizedBox(height: 16),
               ],
               if (additionalInfo?.volunteerWork != null &&
                   additionalInfo!.volunteerWork!.isNotEmpty) ...[
-                ReusableWidgets.sectionTitle(
-                    "Volunteer Work", Icons.volunteer_activism),
+                ReusableWidgets.sectionTitle(context.localization.volunteerWork,
+                    Icons.volunteer_activism),
                 Column(
                   children: additionalInfo.volunteerWork!
                       .map((work) => ListTile(

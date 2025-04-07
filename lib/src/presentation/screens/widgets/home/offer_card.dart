@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 class OfferCard extends StatelessWidget {
   const OfferCard({super.key});
@@ -7,13 +8,13 @@ class OfferCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 8,
@@ -30,8 +31,8 @@ class OfferCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Transform Your Job Description\ninto a Professional CV!',
-                  style: TextStyle(
+                  context.localization.transformToDes,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -53,8 +54,8 @@ class OfferCard extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Get Started',
-                    style: TextStyle(
+                    context.localization.getStarted,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),

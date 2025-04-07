@@ -1,3 +1,4 @@
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/state_item_widget.dart';
 
 import '../../../../../core/common/common_imports.dart';
@@ -13,16 +14,12 @@ class StatesSectionWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           StateItemWidget(
-            label: 'Projects',
+            label: context.localization.projects,
             value: '12',
           ),
           StateItemWidget(
-            label: 'Experience',
-            value: '5 yrs',
-          ),
-          StateItemWidget(
-            label: 'Clients',
-            value: '8',
+            label: context.localization.experience,
+            value: '5 ${context.localization.yrs}',
           ),
         ],
       ),

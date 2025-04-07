@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     } else if (state is SuccessState) {
                       EasyLoading.dismiss();
                       EasyLoading.showSuccess(
-                        'Success!',
+                        context.localization.success,
                       );
 
                       Navigator.pushReplacementNamed(

@@ -1,3 +1,5 @@
+import 'package:short_path/core/extensions/extensions.dart';
+
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../../../core/styles/colors/app_colore.dart';
 import '../profile_shared_widgets.dart';
@@ -47,12 +49,10 @@ class ProjectCard extends StatelessWidget {
           const SizedBox(height: 12),
           // Link
           GestureDetector(
-            onTap: () {
-              // TODO: Implement URL launch logic here.
-            },
+            onTap: () {},
             child: Text(
               project.projectLink,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.primaryColor,
                 decoration: TextDecoration.underline,
@@ -63,9 +63,9 @@ class ProjectCard extends StatelessWidget {
           // Technologies Used
           if (project.technologiesUsed != null &&
               project.technologiesUsed.isNotEmpty) ...[
-            const Text(
-              "Technologies:",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Text(
+              context.localization.technologies,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Wrap(

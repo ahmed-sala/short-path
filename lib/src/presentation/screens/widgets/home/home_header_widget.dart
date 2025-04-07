@@ -35,12 +35,15 @@ class HomeHeaderWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          Text(
-            '${homeViewmodel.appUser?.firstName ?? ''} ${homeViewmodel.appUser?.lastName ?? ''}',
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: Text(
+              '${homeViewmodel.appUser?.firstName ?? ''} ${homeViewmodel.appUser?.lastName ?? ''}',
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ),
         ],

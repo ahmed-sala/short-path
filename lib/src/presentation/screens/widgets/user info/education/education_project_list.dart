@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
+
+import '../../../../shared_widgets/toast_dialoge.dart';
 
 class EducationProjectList extends StatelessWidget {
   const EducationProjectList({super.key, required this.viewModel});
@@ -44,7 +48,7 @@ class EducationProjectList extends StatelessWidget {
                 ),
                 verticalSpace(5),
                 Text(
-                  'Link: ${project.projectLink}',
+                  '${context.localization.link}: ${project.projectLink}',
                   style: TextStyle(
                     fontSize: 14.sp,
                     color: Colors.blue,
@@ -77,20 +81,18 @@ class EducationProjectList extends StatelessWidget {
 
                         scaffoldMessenger.showSnackBar(
                           SnackBar(
-                            content: Text('${project.projectName} removed!'),
+                            content: Text(
+                                '${project.projectName} ${context.localization.removedSuccessfully}'),
                             backgroundColor: Colors.red,
                             action: SnackBarAction(
-                              label: 'Undo',
+                              label: context.localization.undo,
                               onPressed: () {
+                                Fluttertoast.cancel();
                                 scaffoldMessenger.hideCurrentSnackBar();
                                 viewModel.addProjectBack(project);
-                                scaffoldMessenger.showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                        '${project.projectName} restored!'),
-                                    backgroundColor: Colors.green,
-                                  ),
-                                );
+                                ToastDialog.show(
+                                    '${project.projectName} ${context.localization.addedBack}',
+                                    Colors.green);
                               },
                             ),
                           ),

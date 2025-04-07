@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
 import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
+
+import '../../../../../shared_widgets/toast_dialoge.dart';
 
 class SoftSkillInputWidget extends StatefulWidget {
   SoftSkillInputWidget({super.key});
@@ -28,14 +32,11 @@ class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
             Expanded(
               flex: 3,
               child: CustomTextFormField(
-                labelText: 'Skill',
-                hintText: 'Enter your skill',
+                labelText: context.localization.skill,
+                hintText: context.localization.enterYourSkill,
                 keyboardType: TextInputType.text,
                 controller: viewModel.softSkillController,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a skill';
-                  }
                   return null;
                 },
                 onChanged: (value) {
@@ -57,6 +58,7 @@ class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
               icon: const Icon(Icons.add_circle,
                   color: AppColors.primaryColor, size: 30),
               onPressed: () {
+                Fluttertoast.cancel();
                 final skill = viewModel.softSkillController.text.trim();
                 if (skill.isNotEmpty) {
                   viewModel.addSkill(
@@ -69,12 +71,9 @@ class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
                     viewModel.filteredSuggestions = [];
                     _showSuggestions = false;
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Skill added successfully!'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
+                  ToastDialog.show(
+                      '${context.localization.skill} $skill ${context.localization.skillAddedSuccessfully}',
+                      Colors.green);
                 }
               },
             ),

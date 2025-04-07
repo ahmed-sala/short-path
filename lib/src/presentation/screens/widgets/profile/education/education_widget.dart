@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../mangers/profile/personal_profile_viewmodel.dart';
@@ -15,7 +16,8 @@ class EducationWidget extends StatelessWidget {
         final educationDetails = cubit.educationEntity?.educationDetails;
 
         if (educationDetails == null || educationDetails.isEmpty) {
-          return const Center(child: Text('No education details available.'));
+          return Center(
+              child: Text(context.localization.noEducationDetailsAvailable));
         }
         if (state is EducationLoadingState) {
           return const Center(child: CircularProgressIndicator());

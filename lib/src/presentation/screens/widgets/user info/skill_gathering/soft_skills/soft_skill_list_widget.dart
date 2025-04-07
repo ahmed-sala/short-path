@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
 import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_state.dart';
@@ -13,11 +15,10 @@ class SoftSkillListWidget extends StatelessWidget {
     return BlocBuilder<SkillGatheringViewmodel, SkillGatheringState>(
       builder: (context, state) {
         final skills = context.read<SkillGatheringViewmodel>().softSkills;
-        print('Soft Skills: $skills');
         if (skills.isEmpty) {
-          return const Text(
-            'No skills added yet. Start by adding some skills.',
-            style: TextStyle(color: Colors.grey),
+          return Text(
+            context.localization.noSkillsAddedYetStartByAddingSomeSkills,
+            style: const TextStyle(color: Colors.grey),
           );
         }
         return Wrap(
@@ -46,11 +47,13 @@ class SoftSkillListWidget extends StatelessWidget {
                 softSkills.add(skill);
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
-                    content: Text('$skill removed successfully!'),
+                    content: Text(
+                        '$skill ${context.localization.removedSuccessfully}'),
                     backgroundColor: Colors.red,
                     action: SnackBarAction(
-                      label: 'Undo',
+                      label: context.localization.undo,
                       onPressed: () {
+                        Fluttertoast.cancel();
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
                         context.read<SkillGatheringViewmodel>().addSkill(
@@ -58,12 +61,8 @@ class SoftSkillListWidget extends StatelessWidget {
                               skill: skill,
                             );
                         softSkills.remove(skill);
-                        scaffoldMessenger.showSnackBar(
-                          SnackBar(
-                            content: Text('$skill added back!'),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
+                        Fluttertoast.showToast(
+                            msg: '$skill ${context.localization.addedBack}');
                       },
                     ),
                   ),

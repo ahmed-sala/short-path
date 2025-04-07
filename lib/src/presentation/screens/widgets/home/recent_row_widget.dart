@@ -27,8 +27,8 @@ class RecentRowWidget extends StatelessWidget {
               onTap: () {
                 navKey.currentState!.pushNamed(RoutesName.jobsScreen);
               },
-              child: const Text(
-                'See All',
+              child: Text(
+                context.localization.seeAll,
                 style: TextStyle(
                   color: AppColors.primaryColor,
                   decoration: TextDecoration.underline,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/spacing.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -10,7 +11,7 @@ class HeaderWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Create Your CV',
+          context.localization.createYourCV,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
@@ -18,7 +19,7 @@ class HeaderWidget extends StatelessWidget {
         ),
         verticalSpace(10),
         Text(
-          'Fill in your details',
+          context.localization.fillInYourDetails,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: Colors.grey[600],

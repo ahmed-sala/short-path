@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/project/project_card.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -15,7 +16,7 @@ class ProjectsWidget extends StatelessWidget {
         final projects = cubit.projectsEntity?.projects;
 
         if (projects == null || projects.isEmpty) {
-          return const Center(child: Text('No projects available.'));
+          return Center(child: Text(context.localization.noProjectsAvailable));
         }
         if (state is ProjectsLoadingState) {
           return const Center(child: CircularProgressIndicator());

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/Project/Project_State.dart';
 import 'package:short_path/src/presentation/mangers/user_info/Project/Project_Viewmodel.dart';
@@ -14,9 +16,9 @@ class ToolList extends StatelessWidget {
       builder: (context, state) {
         final skills = context.read<ProjectViewmodel>().toolsTechnologies;
         if (skills.isEmpty) {
-          return const Text(
-            'No skills added yet. Start by adding some skills.',
-            style: TextStyle(color: Colors.grey),
+          return Text(
+            context.localization.nothingAddedYet,
+            style: const TextStyle(color: Colors.grey),
           );
         }
         return Wrap(
@@ -29,10 +31,13 @@ class ToolList extends StatelessWidget {
               labelStyle: const TextStyle(color: AppColors.primaryColor),
               deleteIcon: const Icon(Icons.close, color: Colors.red),
               onDeleted: () {
+                Fluttertoast.cancel();
                 context.read<ProjectViewmodel>().removeToolsTechnologies(
                       skill,
                     );
-                ToastDialog.show('$skill removed', Colors.red);
+                ToastDialog.show(
+                    '$skill ${context.localization.removedSuccessfully}',
+                    Colors.red);
               },
             );
           }).toList(),

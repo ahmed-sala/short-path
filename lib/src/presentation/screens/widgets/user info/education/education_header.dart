@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/spacing.dart';
 
 class EducationHeader extends StatelessWidget {
@@ -19,7 +20,7 @@ class EducationHeader extends StatelessWidget {
         ),
         verticalSpace(10),
         Text(
-          'Fill in your education details',
+          context.localization.fillInYourEducationDetails,
           textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme
