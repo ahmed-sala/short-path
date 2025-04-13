@@ -15,8 +15,10 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../config/helpers/dio_module.dart' as _i644;
 import '../config/helpers/shared_pref/shared_pref_module.dart' as _i222;
 import '../src/data/api/api_services.dart' as _i687;
+import '../src/data/api/dio_client.dart' as _i885;
 import '../src/data/api/network_factory.dart' as _i13;
 import '../src/data/data_source/offline_data_source/auth/contracts/auth_offline_datasource.dart'
     as _i990;
@@ -115,6 +117,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final sharedPrefModule = _$SharedPrefModule();
     final dioProvider = _$DioProvider();
+    final registerModule = _$RegisterModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => sharedPrefModule.sharedPreferences,
       preResolve: true,
@@ -131,11 +134,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
     gh.lazySingleton<_i528.PrettyDioLogger>(() => dioProvider.providePretty());
     gh.lazySingleton<_i13.AppInterceptors>(() => _i13.AppInterceptors());
+    gh.lazySingleton<_i885.DioClient>(() => registerModule.dioClient);
     gh.factory<_i990.AuthOfflineDataSource>(
         () => _i718.authOfflineDatasourceImpl());
-    gh.factory<_i658.CareerOnlineDatasource>(
-        () => _i656.CareerOnlineDatasourceImpl());
     gh.singleton<_i687.ApiServices>(() => _i687.ApiServices(gh<_i361.Dio>()));
+    gh.factory<_i658.CareerOnlineDatasource>(
+        () => _i656.CareerOnlineDatasourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i177.HomeOnlineDatasource>(
         () => _i36.HomeOnlineDatasourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i263.ProfileOnlineDataSource>(
@@ -192,8 +196,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i599.RegisterViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i744.CertificationViewmodel>(
         () => _i744.CertificationViewmodel(gh<_i665.CertificationUsecase>()));
-    gh.factory<_i510.CareerViewmodel>(
-        () => _i510.CareerViewmodel(gh<_i720.CareerUsecase>()));
     gh.factory<_i374.AdditionalInfoViewmodel>(
         () => _i374.AdditionalInfoViewmodel(gh<_i563.AdditionalInfoUsecase>()));
     gh.factory<_i501.ProfileUsecase>(() => _i501.ProfileUsecase(
@@ -208,6 +210,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i639.SkillGatheringViewmodel>(
         () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i510.CareerViewmodel>(() => _i510.CareerViewmodel(
+          gh<_i720.CareerUsecase>(),
+          gh<_i991.HomeUsecase>(),
+        ));
     gh.factory<_i1046.PersonalProfileCubit>(
         () => _i1046.PersonalProfileCubit(gh<_i501.ProfileUsecase>()));
     return this;
@@ -217,3 +223,5 @@ extension GetItInjectableX on _i174.GetIt {
 class _$SharedPrefModule extends _i222.SharedPrefModule {}
 
 class _$DioProvider extends _i13.DioProvider {}
+
+class _$RegisterModule extends _i644.RegisterModule {}

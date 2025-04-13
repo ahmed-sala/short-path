@@ -13,3 +13,12 @@ final class DownloadCvError extends CareerState {
 }
 
 final class DownloadCvSuccess extends CareerState {}
+
+final class GenerateCoverSheetLoading extends CareerState {}
+
+final class GenerateCoverSheetError extends CareerState {
+  final String message;
+  GenerateCoverSheetError(this.message);
+}
+
+final class GenerateCoverSheetSuccess extends CareerState {}
