@@ -119,6 +119,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/animations/loading_short.json
+    - assets/animations/empty_list_animmation.json
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

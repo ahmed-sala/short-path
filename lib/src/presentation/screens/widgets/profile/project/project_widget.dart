@@ -21,13 +21,15 @@ class ProjectsWidget extends StatelessWidget {
         if (state is ProjectsLoadingState) {
           return const Center(child: CircularProgressIndicator());
         }
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: projects
-                .map((project) => ProjectCard(project: project))
-                .toList(),
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: projects
+                  .map((project) => ProjectCard(project: project))
+                  .toList(),
+            ),
           ),
         );
       },

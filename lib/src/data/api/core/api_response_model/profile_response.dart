@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:short_path/src/data/dto_models/user_info/profile_dto.dart';
+
+import '../../../dto_models/user_info/profile_dto.dart';
 
 part 'profile_response.g.dart';
 
@@ -19,6 +20,10 @@ class ProfileResponse {
   final String? professionalTitle;
   @JsonKey(name: "profilePhotoUrl")
   final String? profilePhotoUrl;
+  @JsonKey(name: "yearOfExperience")
+  final int? yearOfExperience;
+  @JsonKey(name: "projectsCompleted")
+  final int? projectsCompleted;
 
   ProfileResponse({
     this.id,
@@ -28,6 +33,8 @@ class ProfileResponse {
     this.portfolioWebsites,
     this.professionalTitle,
     this.profilePhotoUrl,
+    this.yearOfExperience,
+    this.projectsCompleted,
   });
 
   factory ProfileResponse.fromJson(Map<String, dynamic> json) {
@@ -40,6 +47,8 @@ class ProfileResponse {
 
   ProfileDto toDto() {
     return ProfileDto(
+      yearOfExperience: yearOfExperience ?? 0,
+      projectsCompleted: projectsCompleted ?? 0,
       bio: bio ?? '',
       linkedInProfile: linkedInProfile ?? '',
       portfolioWebsites: portfolioWebsites ?? [],

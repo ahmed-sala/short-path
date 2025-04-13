@@ -9,9 +9,9 @@ class CareerRepositoryImpl implements CareerRepository {
   CareerOnlineDatasource _careerOnlineDatasource;
   CareerRepositoryImpl(this._careerOnlineDatasource);
   @override
-  Future<ApiResult<String>> downloadFile() async {
+  Future<ApiResult<String>> downloadFile(String jobDescription) async {
     return await executeApi<String>(apiCall: () async {
-      var result = await _careerOnlineDatasource.downloadFile();
+      var result = await _careerOnlineDatasource.downloadFile(jobDescription);
       return result;
     });
   }

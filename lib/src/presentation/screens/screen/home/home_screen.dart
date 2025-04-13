@@ -4,6 +4,7 @@ import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/home/home_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/widgets/home/home_header_widget.dart';
+import 'package:short_path/src/presentation/screens/widgets/home/no_jobs_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/home/recent_row_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/home/session_expiration_widget.dart';
 
@@ -70,7 +71,9 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 const RecentRowWidget(),
-                const JobListWidget(),
+                homeViewmodel.jobs == null
+                    ? const JobListWidget()
+                    : const NoJobsWidget(),
               ],
             ),
           ),

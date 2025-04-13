@@ -11,5 +11,5 @@ abstract class ApisEndPoints {
   static const String additionalInfo = "additional-information/";
   static const String getUserData = "user";
   static const String getAllJobs = "job/";
-  static const String downloadCv = "file/download";
+  static const String downloadCv = "cv/generate";
 }

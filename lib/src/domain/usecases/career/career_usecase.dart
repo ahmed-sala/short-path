@@ -7,6 +7,7 @@ class CareerUsecase {
   CareerRepository _careerRepository;
   CareerUsecase(this._careerRepository);
   Future<ApiResult<String>> downloadFile() async {
-    return await _careerRepository.downloadFile();
+    return await _careerRepository.downloadFile(
+        "We are looking for a Senior Full-Stack Developer experienced in PHP (Laravel), MySQL, and Docker. You will design scalable backends and integrate with modern frontends. Excellent proficiency in microservices, CI/CD pipelines with Jenkins, and container orchestration is required.");
   }
 }

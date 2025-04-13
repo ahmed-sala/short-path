@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
+import 'package:short_path/src/presentation/shared_widgets/image_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../../core/styles/cached_network_image_widget.dart';
 import '../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../core/styles/images/app_images.dart';
 import '../../../shared_widgets/custom_auth_button.dart';
 
 class JobDetail extends StatefulWidget {
@@ -87,36 +86,8 @@ class _JobDetailState extends State<JobDetail> {
             Center(
               child: Column(
                 children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: ClipOval(
-                        child:
-                            jobDetail?.image == '' || jobDetail?.image == null
-                                ? Container(
-                                    width: 35,
-                                    height: 35,
-                                    color: AppColors.primaryColor,
-                                    child: Image.asset(
-                                      AppImages.appLogo,
-                                      width: 35,
-                                      height: 35,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                : CachedNetworkImageWidget(
-                                    imageUrl: jobDetail!.image,
-                                    width: 35,
-                                    height: 35,
-                                    fit: BoxFit.cover,
-                                  ),
-                      ),
-                    ),
+                  ImageWidget(
+                    imageUrl: jobDetail?.image,
                   ),
                   SizedBox(height: 12.h),
                   Text(

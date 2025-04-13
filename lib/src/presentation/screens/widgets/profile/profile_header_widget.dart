@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/extensions/extensions.dart';
-import 'package:short_path/core/styles/cached_network_image_widget.dart';
 import 'package:short_path/src/presentation/mangers/profile/personal_profile_viewmodel.dart';
+import 'package:short_path/src/presentation/shared_widgets/image_widget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../core/common/common_imports.dart';
@@ -17,7 +17,7 @@ class ProfileHeaderWidget extends StatelessWidget {
         bool isLoading = viewmodel.appUser == null;
 
         var profilePicture =
-            'https://${viewmodel.profileEntity?.profilePicture}'; // Placeholder URL
+            '${viewmodel.profileEntity?.profilePicture}'; // Placeholder URL
         return Directionality(
           textDirection: TextDirection.ltr,
           child: Padding(
@@ -28,17 +28,10 @@ class ProfileHeaderWidget extends StatelessWidget {
               child: Row(
                 children: [
                   // Profile Picture
-                  GestureDetector(
-                    onTap: () {
-                      // Open profile image update option
-                    },
-                    child: CircleAvatar(
-                      radius: 40.0,
-                      child: CachedNetworkImageWidget(
-                          imageUrl: profilePicture,
-                          width: double.infinity,
-                          height: double.infinity),
-                    ),
+                  ImageWidget(
+                    imageUrl: viewmodel.profileEntity?.profilePicture,
+                    width: 120,
+                    height: 120,
                   ),
                   const SizedBox(width: 16.0),
                   // Name and Title

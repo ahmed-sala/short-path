@@ -15,45 +15,41 @@ import '../contract/career_online_datasource.dart';
 @Injectable(as: CareerOnlineDatasource)
 class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
   @override
-  Future<String> downloadFile() async {
+  Future<String> downloadFile(String jobDescription) async {
     try {
       String? token = await getIt<FlutterSecureStorage>()
           .read(key: SharedPrefKeys.userToken);
 
-      // Initialize Dio with a connection timeout of 10 seconds
       dio.Dio client = dio.Dio(
         dio.BaseOptions(
           connectTimeout: const Duration(seconds: 10),
         ),
       );
 
-      dio.Response<dio.ResponseBody> response = await client.get(
+      dio.Response<dio.ResponseBody> response = await client.post(
         '${ApisBaseurl.baseUrl}${ApisEndPoints.downloadCv}',
+        data: {
+          "jobDescription": jobDescription,
+        },
         options: dio.Options(
           responseType: dio.ResponseType.stream,
           headers: {
             "Authorization": "Bearer $token",
+            "Content-Type": "application/json",
           },
         ),
       );
 
-      // Determine the directory to store the file.
       Directory directory;
       if (Platform.isAndroid) {
-        // On Android, use the public Downloads directory.
-        // NOTE: This is a hard-coded path and may need to be adjusted for different devices.
-        // Alternatively, consider using a package like 'downloads_path_provider_28' for a more robust solution.
         directory = Directory('/storage/emulated/0/Download');
       } else {
-        // For iOS or other platforms, use the app's document directory.
         directory = await getApplicationDocumentsDirectory();
       }
 
-      // Create the file path using the determined directory.
       String filePath = path.join(directory.path, 'file.pdf');
       File file = File(filePath);
 
-      // Write the stream to the file.
       IOSink sink = file.openWrite();
       await for (var chunk in response.data!.stream) {
         sink.add(chunk);
@@ -63,11 +59,10 @@ class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
       final fileSize = await file.length();
       print('File saved at: $filePath, size: $fileSize bytes');
 
-      print('Download completed');
       return filePath;
     } catch (e) {
       print('Download failed: $e');
-      throw (Exception('Download failed: $e'));
+      throw Exception('Download failed: $e');
     }
   }
 }
