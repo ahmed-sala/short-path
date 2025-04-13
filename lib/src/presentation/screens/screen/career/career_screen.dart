@@ -3,23 +3,18 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/career/career_viewmodel.dart';
 
+import 'cover_sheet_screen.dart';
 import 'cv_screen.dart';
 
-class CareerScreen extends StatefulWidget {
-  const CareerScreen({super.key});
+class CareerScreen extends StatelessWidget {
+  CareerScreen({super.key});
 
-  @override
-  State<CareerScreen> createState() => _CareerScreenState();
-}
-
-class _CareerScreenState extends State<CareerScreen> {
-  final TextEditingController _jobDescriptionController =
-      TextEditingController();
   final CareerViewmodel careerViewmodel = getIt<CareerViewmodel>();
 
   // Check if permission is already granted without prompting the user.
@@ -57,7 +52,7 @@ class _CareerScreenState extends State<CareerScreen> {
     }
   }
 
-  Future<void> _handleCreateCV() async {
+  Future<void> _handleCreateCV(BuildContext context) async {
     // First check if permission is already granted.
     bool alreadyGranted = await _hasStoragePermission();
     if (alreadyGranted) {
@@ -109,21 +104,6 @@ class _CareerScreenState extends State<CareerScreen> {
     }
   }
 
-  // For the cover sheet, we'll just show a toast with the job description.
-  void _handleCreateCoverSheet() {
-    String jobDesc = _jobDescriptionController.text;
-    Fluttertoast.showToast(
-      msg: "Cover sheet created for job: $jobDesc",
-      backgroundColor: Colors.blue,
-    );
-  }
-
-  @override
-  void dispose() {
-    _jobDescriptionController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -131,7 +111,6 @@ class _CareerScreenState extends State<CareerScreen> {
       child: BlocListener<CareerViewmodel, CareerState>(
         listener: (context, state) async {
           if (state is DownloadCvSuccess) {
-            // When download succeeds, navigate to a new screen to display the CV.
             if (careerViewmodel.filePath?.isNotEmpty ?? false) {
               Navigator.push(
                 context,
@@ -142,6 +121,30 @@ class _CareerScreenState extends State<CareerScreen> {
               );
             }
           } else if (state is DownloadCvError) {
+            EasyLoading.dismiss();
+            Fluttertoast.showToast(
+              msg: state.message,
+              backgroundColor: Colors.red,
+            );
+          }
+          if (state is GenerateCoverSheetLoading) {
+            EasyLoading.show(status: 'Loading...');
+          }
+          if (state is GenerateCoverSheetSuccess) {
+            EasyLoading.dismiss();
+            EasyLoading.showSuccess(
+              'Cover sheet generated successfully!',
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CoverSheetScreen(
+                  response: careerViewmodel.coverSheet,
+                ),
+              ),
+            );
+          } else if (state is GenerateCoverSheetError) {
+            EasyLoading.dismiss();
             Fluttertoast.showToast(
               msg: state.message,
               backgroundColor: Colors.red,
@@ -157,7 +160,7 @@ class _CareerScreenState extends State<CareerScreen> {
               children: [
                 // Job description text field
                 TextField(
-                  controller: _jobDescriptionController,
+                  controller: careerViewmodel.jobDescribtion,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Job Description',
@@ -170,11 +173,29 @@ class _CareerScreenState extends State<CareerScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
-                      onPressed: _handleCreateCV,
+                      onPressed: () {
+                        if (careerViewmodel.jobDescribtion.text.isEmpty) {
+                          Fluttertoast.showToast(
+                            msg: "Please enter a job description.",
+                            backgroundColor: Colors.red,
+                          );
+                        } else {
+                          _handleCreateCV(context);
+                        }
+                      },
                       child: const Text('Create CV'),
                     ),
                     ElevatedButton(
-                      onPressed: _handleCreateCoverSheet,
+                      onPressed: () {
+                        if (careerViewmodel.jobDescribtion.text.isEmpty) {
+                          Fluttertoast.showToast(
+                            msg: "Please enter a job description.",
+                            backgroundColor: Colors.red,
+                          );
+                        } else {
+                          careerViewmodel.generateCoverSheet();
+                        }
+                      },
                       child: const Text('Create Cover Sheet'),
                     ),
                   ],

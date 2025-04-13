@@ -16,6 +16,7 @@ import 'package:short_path/src/data/api/core/api_request_model/user_info/work_ex
 import 'package:short_path/src/data/api/core/api_response_model/additional_info_response.dart';
 import 'package:short_path/src/data/api/core/api_response_model/auth_response.dart';
 import 'package:short_path/src/data/api/core/api_response_model/certificate_respone.dart';
+import 'package:short_path/src/data/api/core/api_response_model/cover_sheet_response.dart';
 import 'package:short_path/src/data/api/core/api_response_model/education_response.dart';
 import 'package:short_path/src/data/api/core/api_response_model/get_user_response.dart';
 import 'package:short_path/src/data/api/core/api_response_model/jobs_response.dart';
@@ -103,5 +104,9 @@ abstract class ApiServices {
     @Query("sort", encoded: true) String sort,
     @Query("size") int size,
     @Query('filter', encoded: true) JobFilterRequest filterRequest,
+  );
+  @GET(ApisEndPoints.generateCoverSheet)
+  Future<CoverSheetResponse> generateCoverSheet(
+    @Query("job") String jobDescription,
   );
 }
