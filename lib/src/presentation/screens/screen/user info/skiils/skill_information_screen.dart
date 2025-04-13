@@ -41,65 +41,68 @@ class _SkillInformationScreenState extends State<SkillInformationScreen> {
       ),
       body: BlocProvider(
         create: (context) => getIt<SkillGatheringViewmodel>(),
-        child: BlocConsumer<SkillGatheringViewmodel, SkillGatheringState>(
-          listener: (context, state) {
-            switch (state) {
-              case SkillsAddedSuccessState():
-                navKey.currentState!.pushNamedAndRemoveUntil(
-                    RoutesName.education, (route) => false);
-              case SkillsAddedFailureState():
-                showAwesomeDialog(context,
-                    title: 'error',
-                    desc: state.message,
-                    onOk: () {},
-                    dialogType: DialogType.error);
-              case SkillsAddedLoadingState():
-                showLoading(context, 'Adding Skills...');
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: BlocConsumer<SkillGatheringViewmodel, SkillGatheringState>(
+            listener: (context, state) {
+              switch (state) {
+                case SkillsAddedSuccessState():
+                  navKey.currentState!.pushNamedAndRemoveUntil(
+                      RoutesName.education, (route) => false);
+                case SkillsAddedFailureState():
+                  showAwesomeDialog(context,
+                      title: 'error',
+                      desc: state.message,
+                      onOk: () {},
+                      dialogType: DialogType.error);
+                case SkillsAddedLoadingState():
+                  showLoading(context, 'Adding Skills...');
 
-              default:
-            }
-          },
-          listenWhen: (previous, current) {
-            if (previous is SkillsAddedLoadingState ||
-                current is SkillsAddedFailureState) {
-              hideLoading();
-            }
-            return current is! InitialSkillGatheringState;
-          },
-          builder: (context, state) {
-            final skillGatheringViewmodel =
-                context.read<SkillGatheringViewmodel>();
+                default:
+              }
+            },
+            listenWhen: (previous, current) {
+              if (previous is SkillsAddedLoadingState ||
+                  current is SkillsAddedFailureState) {
+                hideLoading();
+              }
+              return current is! InitialSkillGatheringState;
+            },
+            builder: (context, state) {
+              final skillGatheringViewmodel =
+                  context.read<SkillGatheringViewmodel>();
 
-            return Column(
-              children: [
-                // PageView with pageController
-                Expanded(
-                  child: PageView.builder(
-                    controller: _pageController,
-                    onPageChanged: (index) {
-                      // Update ViewModel when page changes
-                      skillGatheringViewmodel.changePage(index);
-                    },
-                    itemCount: skillGatheringViewmodel.pages.length,
-                    itemBuilder: (context, index) {
-                      return skillGatheringViewmodel.pages[index];
-                    },
+              return Column(
+                children: [
+                  // PageView with pageController
+                  Expanded(
+                    child: PageView.builder(
+                      controller: _pageController,
+                      onPageChanged: (index) {
+                        // Update ViewModel when page changes
+                        skillGatheringViewmodel.changePage(index);
+                      },
+                      itemCount: skillGatheringViewmodel.pages.length,
+                      itemBuilder: (context, index) {
+                        return skillGatheringViewmodel.pages[index];
+                      },
+                    ),
                   ),
-                ),
-                // NextBackButtons widget for navigation
-                NextBackButtuns(
-                  finish: () {
-                    skillGatheringViewmodel.addAllSkills();
-                  },
-                  pageController: _pageController,
-                  length: skillGatheringViewmodel.pages.length,
-                  changePage: skillGatheringViewmodel.changePage,
-                  currentPage: skillGatheringViewmodel.currentPage,
-                ),
-                verticalSpace(24),
-              ],
-            );
-          },
+                  // NextBackButtons widget for navigation
+                  NextBackButtuns(
+                    finish: () {
+                      skillGatheringViewmodel.addAllSkills();
+                    },
+                    pageController: _pageController,
+                    length: skillGatheringViewmodel.pages.length,
+                    changePage: skillGatheringViewmodel.changePage,
+                    currentPage: skillGatheringViewmodel.currentPage,
+                  ),
+                  verticalSpace(24),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

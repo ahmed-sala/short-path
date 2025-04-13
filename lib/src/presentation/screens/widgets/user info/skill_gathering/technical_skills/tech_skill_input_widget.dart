@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
 import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
+
+import '../../../../../shared_widgets/toast_dialoge.dart';
 
 class TechSkillInputWidget extends StatefulWidget {
   TechSkillInputWidget({super.key});
@@ -28,14 +32,11 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
             // Skill Input
             Expanded(
               child: CustomTextFormField(
-                labelText: 'Skill',
-                hintText: 'Enter your skill',
+                labelText: context.localization.skill,
+                hintText: context.localization.enterYourSkill,
                 keyboardType: TextInputType.text,
                 controller: viewModel.techSkillController,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a skill';
-                  }
                   return null;
                 },
                 onChanged: (value) {
@@ -54,8 +55,8 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
             // Proficiency Dropdown
             Expanded(
               child: CustomDropdownButtonFormField<String>(
-                labelText: 'Proficiency',
-                hintText: 'Select proficiency',
+                labelText: context.localization.proficiency,
+                hintText: context.localization.selectProficiency,
                 value: viewModel.selectedProficiency,
                 onChanged: (String? newValue) {
                   setState(() {
@@ -76,6 +77,7 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
               icon: const Icon(Icons.add_circle,
                   color: AppColors.primaryColor, size: 30),
               onPressed: () {
+                Fluttertoast.cancel();
                 final skill = viewModel.techSkillController.text.trim();
                 if (skill.isNotEmpty) {
                   viewModel.addSkill(
@@ -88,12 +90,9 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
                     viewModel.filteredSuggestions = [];
                     _showSuggestions = false;
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Skill added successfully!'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
+                  ToastDialog.show(
+                      '${context.localization.skillAddedSuccessfully} $skill',
+                      Colors.green);
                 }
               },
             ),

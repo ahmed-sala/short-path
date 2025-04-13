@@ -1,3 +1,4 @@
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/domain/entities/user_info/education_projects_entity.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -14,9 +15,9 @@ class EducationProjectsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Projects:",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        Text(
+          context.localization.projects,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         Column(

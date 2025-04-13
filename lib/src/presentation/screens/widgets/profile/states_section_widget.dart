@@ -1,3 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
+import 'package:short_path/src/presentation/mangers/profile/personal_profile_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/state_item_widget.dart';
 
 import '../../../../../core/common/common_imports.dart';
@@ -7,22 +10,20 @@ class StatesSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var viewModel = context.read<PersonalProfileCubit>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           StateItemWidget(
-            label: 'Projects',
-            value: '12',
+            label: context.localization.projects,
+            value: viewModel.profileEntity!.projectsCompleted.toString(),
           ),
           StateItemWidget(
-            label: 'Experience',
-            value: '5 yrs',
-          ),
-          StateItemWidget(
-            label: 'Clients',
-            value: '8',
+            label: context.localization.experience,
+            value:
+                '${viewModel.profileEntity?.yearOfExperience.toString()} ${context.localization.yrs}',
           ),
         ],
       ),

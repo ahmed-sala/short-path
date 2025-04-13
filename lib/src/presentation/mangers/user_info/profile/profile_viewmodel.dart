@@ -74,6 +74,8 @@ class ProfileViewmodel extends Cubit<ProfileState> {
     if (formKey.currentState!.validate()) {
       emit(ProfileLoading());
       ProfileEntity profileEntity = ProfileEntity(
+        yearOfExperience: 0,
+        projectsCompleted: 0,
         bio: bioController.text,
         jobTitle: jobTitleController.text,
         linkedIn: linkedInController.text,

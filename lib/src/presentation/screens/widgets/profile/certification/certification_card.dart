@@ -1,3 +1,4 @@
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/domain/entities/user_info/Certification_Entity.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -46,7 +47,7 @@ class CertificationCard extends StatelessWidget {
               const Icon(Icons.calendar_today, size: 20, color: Colors.grey),
               const SizedBox(width: 8),
               Text(
-                "Earned: ${formatDate(cert.dateEarned)}",
+                "${context.localization.earned}: ${formatDate(cert.dateEarned)}",
                 style: const TextStyle(fontSize: 14, color: Colors.black87),
               ),
             ],
@@ -62,8 +63,8 @@ class CertificationCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 cert.expirationDate == null
-                    ? "No Expiration"
-                    : "Expires: ${formatDate(cert.expirationDate)}",
+                    ? context.localization.noExpiration
+                    : "${context.localization.expires}: ${formatDate(cert.expirationDate)}",
                 style: TextStyle(
                   fontSize: 14,
                   color:

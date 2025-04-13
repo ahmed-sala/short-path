@@ -1,3 +1,4 @@
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/domain/entities/user_info/education_detail_entity.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -22,13 +23,15 @@ class EducationHeaderSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                education.degreeCertification ?? "Unknown Degree",
+                education.degreeCertification ??
+                    context.localization.unknownDegree,
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 4),
               Text(
-                education.institutionName ?? "Unknown Institution",
+                education.institutionName ??
+                    context.localization.unknownInstitution,
                 style:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),

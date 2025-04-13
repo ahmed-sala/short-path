@@ -12,12 +12,10 @@ import '../core/common/common_imports.dart';
 final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
 class ShortPath extends StatelessWidget {
-  const ShortPath({Key? key}) : super(key: key);
-
+  ShortPath({Key? key}) : super(key: key);
+  LocalizationViewmodel localizationViewmodel = getIt<LocalizationViewmodel>();
   @override
   Widget build(BuildContext context) {
-    LocalizationViewmodel localizationViewmodel =
-        getIt<LocalizationViewmodel>();
     return BlocProvider(
       create: (context) => localizationViewmodel,
       child: BlocBuilder<LocalizationViewmodel, LocalizationState>(
@@ -32,6 +30,10 @@ class ShortPath extends StatelessWidget {
                       GlobalMaterialLocalizations.delegate,
                       GlobalWidgetsLocalizations.delegate,
                       GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: const [
+                      Locale('en'),
+                      Locale('ar'),
                     ],
                     locale: Locale(localizationViewmodel.cachedLanguageCode),
                     theme: AppTheme.lightTheme,

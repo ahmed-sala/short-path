@@ -32,5 +32,5 @@ void main() async {
   configLoading();
   await configureDependencies();
   Bloc.observer = MyBlocObserver();
-  runApp(const ShortPath());
+  runApp(ShortPath());
 }

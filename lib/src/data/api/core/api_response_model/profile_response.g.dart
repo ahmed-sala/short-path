@@ -17,6 +17,8 @@ ProfileResponse _$ProfileResponseFromJson(Map<String, dynamic> json) =>
           .toList(),
       professionalTitle: json['professionalTitle'] as String?,
       profilePhotoUrl: json['profilePhotoUrl'] as String?,
+      yearOfExperience: (json['yearOfExperience'] as num?)?.toInt(),
+      projectsCompleted: (json['projectsCompleted'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ProfileResponseToJson(ProfileResponse instance) =>
@@ -28,4 +30,6 @@ Map<String, dynamic> _$ProfileResponseToJson(ProfileResponse instance) =>
       'portfolioWebsites': instance.portfolioWebsites,
       'professionalTitle': instance.professionalTitle,
       'profilePhotoUrl': instance.profilePhotoUrl,
+      'yearOfExperience': instance.yearOfExperience,
+      'projectsCompleted': instance.projectsCompleted,
     };

@@ -7,8 +7,11 @@ class ProfileDto {
   final List<String> portfolioWebsites;
   final String professionalTitle;
   final String profilePhotoUrl;
-
+  final int yearOfExperience;
+  final int projectsCompleted;
   ProfileDto({
+    required this.yearOfExperience,
+    required this.projectsCompleted,
     required this.bio,
     required this.linkedInProfile,
     required this.portfolioWebsites,
@@ -35,6 +38,8 @@ class ProfileDto {
       portfolioLinks: portfolioWebsites,
       jobTitle: professionalTitle,
       profilePicture: profilePhotoUrl,
+      yearOfExperience: yearOfExperience,
+      projectsCompleted: projectsCompleted,
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 import '../../../../../../core/common/common_imports.dart';
 import '../profile_shared_widgets.dart';
@@ -27,17 +28,19 @@ class EducationCard extends StatelessWidget {
           const SizedBox(height: 12),
           EducationInfoRow(
             icon: Icons.book,
-            text: education.fieldOfStudy ?? "Field not specified",
+            text: education.fieldOfStudy ??
+                context.localization.fieldNotSpecified,
           ),
           const SizedBox(height: 8),
           EducationInfoRow(
             icon: Icons.location_on,
-            text: education.location ?? "Location not specified",
+            text:
+                education.location ?? context.localization.locationNotSpecified,
           ),
           const SizedBox(height: 8),
           EducationInfoRow(
             icon: Icons.date_range,
-            text: "Graduation: $graduation",
+            text: "${context.localization.graduation}: $graduation",
           ),
           const Divider(height: 24, thickness: 1),
           if (education.projects != null && education.projects.isNotEmpty)

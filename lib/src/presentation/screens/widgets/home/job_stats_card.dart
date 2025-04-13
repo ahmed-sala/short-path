@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 import '../../../mangers/home/home_viewmodel.dart';
 
@@ -27,15 +28,15 @@ class JobStatsCard extends StatelessWidget {
                   Icon(Icons.insert_drive_file, size: 40),
                   SizedBox(height: 8),
                   Text(
-                    this.viewModel.contractorJobs?.length.toString() ?? "0",
-                    style: TextStyle(
+                    viewModel.contractorJobs?.length.toString() ?? "0",
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    "Contractor",
-                    style: TextStyle(fontSize: 16),
+                    context.localization.contractor,
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ],
               ),
@@ -61,14 +62,14 @@ class JobStatsCard extends StatelessWidget {
                     children: [
                       Text(
                         viewModel.fullTimeJobs?.length.toString() ?? "0",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "Full Time",
-                        style: TextStyle(fontSize: 16),
+                        context.localization.fullTime,
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
@@ -88,13 +89,13 @@ class JobStatsCard extends StatelessWidget {
                     children: [
                       Text(
                         viewModel.partTimeJobs?.length.toString() ?? "0",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        "Part Time",
+                        context.localization.partTime,
                         style: TextStyle(fontSize: 16),
                       ),
                     ],

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
+
+import '../../../../shared_widgets/toast_dialoge.dart';
 
 class EducationListWidget extends StatelessWidget {
   const EducationListWidget({super.key});
@@ -13,9 +17,9 @@ class EducationListWidget extends StatelessWidget {
       builder: (context, state) {
         final skills = context.read<EducationViewmodelNew>().educationDetails;
         if (skills.isEmpty) {
-          return const Text(
-            'No skills added yet. Start by adding some skills.',
-            style: TextStyle(color: Colors.grey),
+          return Text(
+            context.localization.nothingAddedYet,
+            style: const TextStyle(color: Colors.grey),
           );
         }
         return Wrap(
@@ -40,22 +44,20 @@ class EducationListWidget extends StatelessWidget {
                 context.read<EducationViewmodelNew>().removeEducation(skill);
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
-                    content:
-                        Text('${skill.institutionName} removed successfully!'),
+                    content: Text(
+                        '${skill.institutionName} ${context.localization.removedSuccessfully}'),
                     backgroundColor: Colors.red,
                     action: SnackBarAction(
-                      label: 'Undo',
+                      label: context.localization.undo,
                       onPressed: () {
+                        Fluttertoast.cancel();
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
                         context.read<EducationViewmodelNew>().addEducation();
 
-                        scaffoldMessenger.showSnackBar(
-                          SnackBar(
-                            content: Text('$skill added back!'),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
+                        ToastDialog.show(
+                            '${skill.institutionName} ${context.localization.addedBack}',
+                            Colors.green);
                       },
                     ),
                   ),

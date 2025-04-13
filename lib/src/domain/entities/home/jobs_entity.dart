@@ -1,5 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-
 class JobEntity {
   final List<ContentEntity>? content;
   final int? pageNumber;
@@ -18,7 +16,6 @@ class JobEntity {
   });
 }
 
-@JsonSerializable()
 class ContentEntity {
   final int? id;
   final String? title;

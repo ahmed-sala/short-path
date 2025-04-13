@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
 import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
+
+import '../../../../../shared_widgets/toast_dialoge.dart';
 
 class IndustrySkillInputWidget extends StatefulWidget {
   const IndustrySkillInputWidget({super.key});
@@ -29,14 +32,11 @@ class _IndustrySkillInputWidgetState extends State<IndustrySkillInputWidget> {
             Expanded(
               flex: 3,
               child: CustomTextFormField(
-                labelText: 'Skill',
-                hintText: 'Enter your skill',
+                labelText: context.localization.skill,
+                hintText: context.localization.enterYourSkill,
                 keyboardType: TextInputType.text,
                 controller: viewModel.industrySpecificSkillController,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a skill';
-                  }
                   return null;
                 },
                 onChanged: (value) {
@@ -70,12 +70,9 @@ class _IndustrySkillInputWidgetState extends State<IndustrySkillInputWidget> {
                     viewModel.filteredSuggestions = [];
                     _showSuggestions = false;
                   });
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Skill added successfully!'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
+                  ToastDialog.show(
+                      '$skill ${context.localization.skillAddedSuccessfully}',
+                      Colors.green);
                 }
               },
             ),

@@ -36,8 +36,7 @@ class HomeViewmodel extends Cubit<HomeState> {
     switch (result) {
       case Success<AppUser?>():
         appUser = result.data;
-        if (!isClosed)
-          emit(UserDataLoaded(appUser));
+        if (!isClosed) emit(UserDataLoaded(appUser));
         break;
       case Failures<AppUser?>():
         var errorMessages = ErrorHandler.fromException(result.exception);
@@ -79,8 +78,7 @@ class HomeViewmodel extends Cubit<HomeState> {
           break;
       }
     } catch (e) {
-      if (!isClosed)
-        emit(JobsError(e.toString()));
+      if (!isClosed) emit(JobsError(e.toString()));
     }
   }
 }

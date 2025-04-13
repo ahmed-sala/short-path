@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../mangers/profile/personal_profile_viewmodel.dart';
@@ -20,7 +21,8 @@ class CertificationsWidget extends StatelessWidget {
         final certifications = cubit.certificationsEntity?.certifications;
 
         if (certifications == null || certifications.isEmpty) {
-          return const Center(child: Text('No certifications available.'));
+          return Center(
+              child: Text(context.localization.noCertificationsAvailable));
         }
         if (state is CertificationsLoadingState) {
           return const Center(child: CircularProgressIndicator());
@@ -31,8 +33,10 @@ class CertificationsWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: certifications
-                .map((cert) =>
-                    CertificationCard(cert: cert, formatDate: _formatDate))
+                .map((cert) => CertificationCard(
+                      cert: cert,
+                      formatDate: _formatDate,
+                    ))
                 .toList(),
           ),
         );

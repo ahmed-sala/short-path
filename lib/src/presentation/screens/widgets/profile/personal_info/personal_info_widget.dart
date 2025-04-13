@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/personal_info/personal_info_tile.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -22,31 +23,33 @@ class PersonalInfoWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             children: [
               PersonalInfoTile(
-                title: 'Email',
+                title: context.localization.email,
                 subtitle: appUser?.email,
                 leadingIcon: Icons.email,
               ),
               const Divider(),
               PersonalInfoTile(
-                title: 'Mobile Number',
+                title: context.localization.phoneNumber,
                 subtitle: appUser?.mobileNumber,
                 leadingIcon: Icons.phone,
               ),
               const Divider(),
               PersonalInfoTile(
-                title: 'Birth Date',
+                title: context.localization.birthDate,
                 subtitle: appUser?.birthDate,
                 leadingIcon: Icons.cake,
               ),
               const Divider(),
               PersonalInfoTile(
-                title: 'Gender',
-                subtitle: appUser?.gender == '0' ? 'Male' : 'Female',
+                title: context.localization.gender,
+                subtitle: appUser?.gender == '0'
+                    ? context.localization.male
+                    : context.localization.female,
                 leadingIcon: Icons.person,
               ),
               const Divider(),
               PersonalInfoTile(
-                title: 'Address',
+                title: context.localization.address,
                 subtitle: appUser?.address,
                 leadingIcon: Icons.home,
               ),

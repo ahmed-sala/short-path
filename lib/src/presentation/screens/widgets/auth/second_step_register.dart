@@ -99,7 +99,7 @@ class SecondStepRegister extends StatelessWidget {
                 onPressed: viewModel.validate ? viewModel.nextStep : null,
                 color: viewModel.validate
                     ? const Color(0xFF102027)
-                    : const Color(0xFFB0BC5),
+                    : const Color(0x0ffb0bc5),
               ),
             ),
           ],

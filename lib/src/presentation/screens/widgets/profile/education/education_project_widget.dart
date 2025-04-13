@@ -1,3 +1,5 @@
+import 'package:short_path/core/extensions/extensions.dart';
+
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../../../core/styles/colors/app_colore.dart';
 import '../profile_shared_widgets.dart';
@@ -16,7 +18,7 @@ class EducationProjectWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            project.projectName ?? "Untitled Project",
+            project.projectName ?? context.localization.untitledProject,
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
           if (project.projectDescription != null) ...[

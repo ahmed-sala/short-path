@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/images/app_images.dart';
 import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
@@ -119,10 +120,9 @@ class JobCard extends StatelessWidget {
                     ),
                     child: Text(
                       job?.datePosted ?? "",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFF514A6B),
                         fontSize: 14,
-                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -140,10 +140,9 @@ class JobCard extends StatelessWidget {
                     ),
                     child: Text(
                       job?.employmentType ?? "",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFF514A6B),
                         fontSize: 14,
-                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -163,12 +162,11 @@ class JobCard extends StatelessWidget {
                       color: const Color(0xFFFF6B2C),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Text(
-                      'Read more',
-                      style: TextStyle(
+                    child: Text(
+                      context.localization.readMore,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
-                        fontFamily: 'DM Sans',
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -185,7 +183,7 @@ class JobCard extends StatelessWidget {
   String truncateTitle(String title) {
     final words = title.split(' ');
     if (words.length > 3) {
-      return words.sublist(0, 3).join(' ') + '...';
+      return '${words.sublist(0, 3).join(' ')}...';
     }
     return title;
   }

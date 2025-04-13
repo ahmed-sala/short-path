@@ -1,4 +1,5 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -18,7 +19,7 @@ class ProtofolioIconItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (links.isEmpty) return const Text('Not provided');
+    if (links.isEmpty) return Text(context.localization.notProvided);
     return Wrap(
       spacing: 12.0,
       children: links.map((link) {

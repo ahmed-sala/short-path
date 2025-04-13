@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/project/project_card.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -15,18 +16,20 @@ class ProjectsWidget extends StatelessWidget {
         final projects = cubit.projectsEntity?.projects;
 
         if (projects == null || projects.isEmpty) {
-          return const Center(child: Text('No projects available.'));
+          return Center(child: Text(context.localization.noProjectsAvailable));
         }
         if (state is ProjectsLoadingState) {
           return const Center(child: CircularProgressIndicator());
         }
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: projects
-                .map((project) => ProjectCard(project: project))
-                .toList(),
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: projects
+                  .map((project) => ProjectCard(project: project))
+                  .toList(),
+            ),
           ),
         );
       },

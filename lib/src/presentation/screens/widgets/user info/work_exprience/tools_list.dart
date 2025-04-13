@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/data/static_data/demo_data_list.dart';
 import 'package:short_path/src/presentation/mangers/user_info/work_experience/work_experience_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/work_experience/work_experience_viewmodel.dart';
+
+import '../../../../shared_widgets/toast_dialoge.dart';
 
 class ToolsList extends StatelessWidget {
   const ToolsList({super.key});
@@ -15,9 +19,9 @@ class ToolsList extends StatelessWidget {
         final skills =
             context.read<WorkExperienceViewModel>().toolsTechnologiesUsed;
         if (skills.isEmpty) {
-          return const Text(
-            'No skills added yet. Start by adding some skills.',
-            style: TextStyle(color: Colors.grey),
+          return Text(
+            context.localization.nothingAddedYet,
+            style: const TextStyle(color: Colors.grey),
           );
         }
         return Wrap(
@@ -45,23 +49,22 @@ class ToolsList extends StatelessWidget {
                 softSkills.add(skill);
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
-                    content: Text('$skill removed successfully!'),
+                    content: Text(
+                        '$skill ${context.localization.removedSuccessfully}'),
                     backgroundColor: Colors.red,
                     action: SnackBarAction(
-                      label: 'Undo',
+                      label: context.localization.undo,
                       onPressed: () {
+                        Fluttertoast.cancel();
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
                         context.read<WorkExperienceViewModel>().addTool(
                               skill,
                             );
                         softSkills.remove(skill);
-                        scaffoldMessenger.showSnackBar(
-                          SnackBar(
-                            content: Text('$skill added back!'),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
+                        ToastDialog.show(
+                            '$skill ${context.localization.addedBack}',
+                            Colors.green);
                       },
                     ),
                   ),

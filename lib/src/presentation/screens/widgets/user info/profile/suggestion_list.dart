@@ -11,9 +11,8 @@ class SuggestionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Building SuggestionList with ${suggestions.length} items"); // Debug print
-
-    const double listTileHeight = 56.0; // Adjust if your ListTile height is different
+    const double listTileHeight =
+        56.0; // Adjust if your ListTile height is different
     // Determine whether the list should be scrollable (i.e., more than 5 items)
     final bool isScrollable = suggestions.length > 5;
 

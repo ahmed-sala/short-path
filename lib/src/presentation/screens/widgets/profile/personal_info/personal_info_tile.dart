@@ -16,9 +16,9 @@ class PersonalInfoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ReusableWidgets.listTile(
-      title: title,
-      subtitle: subtitle,
-      leadingIcon: leadingIcon,
-    );
+        title: title,
+        subtitle: subtitle,
+        leadingIcon: leadingIcon,
+        context: context);
   }
 }

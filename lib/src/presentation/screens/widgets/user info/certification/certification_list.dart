@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:short_path/src/domain/entities/user_info/Certification_Entity.dart'; // for .sp, .h, and .w extensions
+import 'package:short_path/core/extensions/extensions.dart';
+import 'package:short_path/src/domain/entities/user_info/Certification_Entity.dart';
+import 'package:short_path/src/presentation/shared_widgets/toast_dialoge.dart'; // for .sp, .h, and .w extensions
 
 class CertificationList extends StatelessWidget {
   final List<CertificationEntity> certifications;
@@ -9,8 +11,6 @@ class CertificationList extends StatelessWidget {
 
   final void Function(CertificationEntity certification) onUndo;
 
-  final String headerText;
-
   final Color primaryColor;
 
   const CertificationList({
@@ -18,7 +18,6 @@ class CertificationList extends StatelessWidget {
     required this.certifications,
     required this.onRemove,
     required this.onUndo,
-    this.headerText = 'Added Certifications:',
     this.primaryColor = Colors.blue,
   }) : super(key: key);
 
@@ -28,7 +27,7 @@ class CertificationList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          headerText,
+          context.localization.addedCertifications,
           style: TextStyle(
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
@@ -62,17 +61,17 @@ class CertificationList extends StatelessWidget {
                     ),
                     SizedBox(height: 5.h),
                     Text(
-                      'Issued by: ${certification.issuingOrganization}',
+                      '${context.localization.issuedBy}: ${certification.issuingOrganization}',
                       style: TextStyle(fontSize: 14.sp),
                     ),
                     SizedBox(height: 5.h),
                     Text(
-                      'Date Earned: ${certification.dateEarned}',
+                      '${context.localization.dateEarned}: ${certification.dateEarned}',
                       style: TextStyle(fontSize: 14.sp),
                     ),
                     SizedBox(height: 5.h),
                     Text(
-                      'Expiration Date: ${certification.expirationDate}',
+                      '${context.localization.expirationDate}: ${certification.expirationDate}',
                       style: TextStyle(fontSize: 14.sp),
                     ),
                     SizedBox(height: 10.h),
@@ -97,20 +96,16 @@ class CertificationList extends StatelessWidget {
                             scaffoldMessenger.showSnackBar(
                               SnackBar(
                                 content: Text(
-                                    '${certification.certificationName} removed!'),
+                                    '${certification.certificationName} ${context.localization.removedSuccessfully}'),
                                 backgroundColor: Colors.red,
                                 action: SnackBarAction(
-                                  label: 'Undo',
+                                  label: context.localization.undo,
                                   onPressed: () {
                                     scaffoldMessenger.hideCurrentSnackBar();
                                     onUndo(certification);
-                                    scaffoldMessenger.showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            '${certification.certificationName} restored!'),
-                                        backgroundColor: Colors.green,
-                                      ),
-                                    );
+                                    ToastDialog.show(
+                                        '${certification.certificationName} ${context.localization.addedBack}',
+                                        Colors.green);
                                   },
                                 ),
                               ),

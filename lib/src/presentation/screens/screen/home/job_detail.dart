@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
+import 'package:short_path/src/presentation/shared_widgets/image_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../../core/styles/cached_network_image_widget.dart';
 import '../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../core/styles/images/app_images.dart';
 import '../../../shared_widgets/custom_auth_button.dart';
 
 class JobDetail extends StatefulWidget {
@@ -50,7 +50,7 @@ class _JobDetailState extends State<JobDetail> {
       ),
       // "APPLY NOW" button remains at the bottom of the screen
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(16.0.w),
+        padding: EdgeInsets.only(bottom: 24.0.h, left: 16.0.w, right: 16.0.w),
         child: ElevatedButton(
           onPressed: () async {
             if (url.isNotEmpty) {
@@ -68,7 +68,7 @@ class _JobDetailState extends State<JobDetail> {
             elevation: 4,
           ),
           child: Text(
-            'APPLY NOW',
+            context.localization.applyNow,
             style: TextStyle(
               color: Colors.white,
               fontSize: 16.0.sp,
@@ -86,36 +86,8 @@ class _JobDetailState extends State<JobDetail> {
             Center(
               child: Column(
                 children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: ClipOval(
-                        child:
-                            jobDetail?.image == '' || jobDetail?.image == null
-                                ? Container(
-                                    width: 35,
-                                    height: 35,
-                                    color: AppColors.primaryColor,
-                                    child: Image.asset(
-                                      AppImages.appLogo,
-                                      width: 35,
-                                      height: 35,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                : CachedNetworkImageWidget(
-                                    imageUrl: jobDetail!.image,
-                                    width: 35,
-                                    height: 35,
-                                    fit: BoxFit.cover,
-                                  ),
-                      ),
-                    ),
+                  ImageWidget(
+                    imageUrl: jobDetail?.image,
                   ),
                   SizedBox(height: 12.h),
                   Text(
@@ -160,7 +132,7 @@ class _JobDetailState extends State<JobDetail> {
               children: [
                 Expanded(
                   child: CustomAuthButton(
-                    text: 'COVER SHEET',
+                    text: context.localization.coverSheet,
                     onPressed: () {
                       // Handle create cover sheet action
                     },
@@ -178,7 +150,7 @@ class _JobDetailState extends State<JobDetail> {
                 SizedBox(width: 16.w),
                 Expanded(
                   child: CustomAuthButton(
-                    text: 'CREATE CV',
+                    text: context.localization.createCv,
                     onPressed: () {
                       // Handle create CV action
                     },
@@ -212,7 +184,7 @@ class _JobDetailState extends State<JobDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Job Description',
+                        context.localization.jobDescription,
                         style: TextStyle(
                           fontSize: 16.0.sp,
                           fontWeight: FontWeight.bold,
@@ -251,7 +223,9 @@ class _JobDetailState extends State<JobDetail> {
                             });
                           },
                           child: Text(
-                            _isExpanded ? 'Read less' : 'Read more',
+                            _isExpanded
+                                ? context.localization.readLess
+                                : context.localization.readMore,
                             style: TextStyle(
                               fontSize: 14.0.sp,
                               fontWeight: FontWeight.w600,
@@ -279,7 +253,7 @@ class _JobDetailState extends State<JobDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Salary Range',
+                        context.localization.salaryRange,
                         style: TextStyle(
                           fontSize: 16.0.sp,
                           fontWeight: FontWeight.bold,
@@ -313,7 +287,7 @@ class _JobDetailState extends State<JobDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Employment Type',
+                        context.localization.employmentType,
                         style: TextStyle(
                           fontSize: 16.0.sp,
                           fontWeight: FontWeight.bold,
