@@ -1,0 +1,35 @@
+import 'dart:typed_data';
+
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:injectable/injectable.dart';
+import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/data/api/api_services.dart';
+
+import '../../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
+import '../../../../api/core/constants/apis_end_points.dart';
+import '../../../../api/dio_client.dart';
+import '../contract/career_online_datasource.dart';
+
+@Injectable(as: CareerOnlineDatasource)
+class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
+  final ApiServices _apiServices;
+
+  CareerOnlineDatasourceImpl(this._apiServices);
+
+  @override
+  Future<Stream<Uint8List>> downloadFile(String jobDescription) async {
+    String? token =
+        await getIt<FlutterSecureStorage>().read(key: SharedPrefKeys.userToken);
+    final response = await DioClient.downloadPdf(
+      endPoint: ApisEndPoints.downloadCv,
+      token: token!,
+    );
+    return response.data!.stream;
+  }
+
+  @override
+  Future<String?> generateCoverSheet(String jobDescription) async {
+    var response = await _apiServices.generateCoverSheet(jobDescription);
+    return response.coverSheet;
+  }
+}

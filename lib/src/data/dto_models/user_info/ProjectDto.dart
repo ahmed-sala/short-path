@@ -1,4 +1,5 @@
 import 'package:short_path/src/data/api/core/api_request_model/user_info/project_request.dart';
+import 'package:short_path/src/domain/entities/user_info/Project_Entity.dart';
 
 class ProjectDto {
   ProjectDto({
@@ -87,6 +88,16 @@ class ProjectsMainDto {
       description: _description,
       projectLink: _projectLink,
       technologiesUsed: _technologiesUsed,
+    );
+  }
+
+  ProjectEntity toEntity() {
+    return ProjectEntity(
+      projectTitle: _projectTitle ?? '',
+      role: _role ?? '',
+      description: _description ?? '',
+      projectLink: _projectLink ?? '',
+      technologiesUsed: _technologiesUsed ?? [],
     );
   }
 }

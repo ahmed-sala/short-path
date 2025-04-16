@@ -66,11 +66,14 @@ class MainEducationScreen extends StatelessWidget {
                 state is AddEducationLoadingState ||
                 state is AddEducationSuccessState ||
                 state is AddEducationErrorState) {
-              return Column(
-                children: [
-                  EducationListWidget(),
-                  Expanded(child: DetailedEducation()),
-                ],
+              return const Directionality(
+                textDirection: TextDirection.ltr,
+                child: Column(
+                  children: [
+                    EducationListWidget(),
+                    Expanded(child: DetailedEducation()),
+                  ],
+                ),
               );
             }
             return Container();

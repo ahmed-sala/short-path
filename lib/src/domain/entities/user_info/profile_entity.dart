@@ -7,8 +7,11 @@ class ProfileEntity {
   final String linkedIn;
   final String profilePicture;
   final String bio;
-
+  final int yearOfExperience;
+  final int projectsCompleted;
   ProfileEntity({
+    required this.yearOfExperience,
+    required this.projectsCompleted,
     required this.portfolioLinks,
     required this.jobTitle,
     required this.linkedIn,
@@ -17,6 +20,8 @@ class ProfileEntity {
   });
   ProfileDto toProfileDto() {
     return ProfileDto(
+      yearOfExperience: yearOfExperience,
+      projectsCompleted: projectsCompleted,
       bio: bio,
       linkedInProfile: linkedIn,
       portfolioWebsites: portfolioLinks,

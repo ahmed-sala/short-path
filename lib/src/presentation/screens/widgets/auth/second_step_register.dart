@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/shared_widgets/date_input_feild.dart';
 
@@ -16,18 +17,18 @@ class SecondStepRegister extends StatelessWidget {
     return Column(
       children: [
         CustomTextFormField(
-          hintText: 'Enter your phone number',
+          hintText: context.localization.enterYourPhoneNumber,
           keyboardType: TextInputType.phone,
           controller: viewModel.phoneController,
-          labelText: 'Phone Number',
+          labelText: context.localization.phoneNumber,
           validator: (val) => viewModel.validatePhoneNumber(val),
         ),
         const SizedBox(height: 20),
         CustomTextFormField(
-          hintText: 'Enter your Address',
+          hintText: context.localization.enterYourAddress,
           keyboardType: TextInputType.text,
           controller: viewModel.addressController,
-          labelText: 'Address',
+          labelText: context.localization.address,
           validator: (val) => viewModel.validateAddress(val),
         ),
         const SizedBox(height: 20),
@@ -54,7 +55,7 @@ class SecondStepRegister extends StatelessWidget {
                     focusColor: AppColors.primaryColor,
                     hoverColor: AppColors.primaryColor,
                   ),
-                  const Text('Male'),
+                  Text(context.localization.male),
                 ],
               ),
             ),
@@ -86,7 +87,7 @@ class SecondStepRegister extends StatelessWidget {
           children: [
             Expanded(
               child: CustomAuthButton(
-                text: 'BACK',
+                text: context.localization.back,
                 onPressed: viewModel.previousStep,
                 color: const Color(0xFF102027),
               ),
@@ -94,11 +95,11 @@ class SecondStepRegister extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: CustomAuthButton(
-                text: 'REGISTER',
+                text: context.localization.register,
                 onPressed: viewModel.validate ? viewModel.nextStep : null,
                 color: viewModel.validate
                     ? const Color(0xFF102027)
-                    : const Color(0xFFB0BC5),
+                    : const Color(0x0ffb0bc5),
               ),
             ),
           ],

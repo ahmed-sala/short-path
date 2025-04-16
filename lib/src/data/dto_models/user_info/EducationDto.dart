@@ -1,5 +1,8 @@
 import 'package:short_path/src/data/api/core/api_request_model/user_info/education_request.dart';
 
+import '../../../domain/entities/user_info/education_detail_entity.dart';
+import '../../../domain/entities/user_info/education_projects_entity.dart';
+
 class EducationDto {
   EducationDto({
     List<EducationsDto>? educations,
@@ -99,6 +102,17 @@ class EducationsDto {
       fieldOfStudy: _fieldOfStudy,
     );
   }
+
+  EducationDetailEntity toEntity() {
+    return EducationDetailEntity(
+      degreeCertification: _degreeCertification,
+      institutionName: _institutionName,
+      location: _location,
+      graduationDate: _graduationDate,
+      projects: _projects!.map((e) => e.toEntity()).toList(),
+      fieldOfStudy: _fieldOfStudy,
+    );
+  }
 }
 
 class ProjectsDto {
@@ -147,6 +161,15 @@ class ProjectsDto {
       projectDescription: _projectDescription,
       projectLink: _projectLink,
       toolsTechnologiesUsed: _toolsTechnologiesUsed,
+    );
+  }
+
+  EducationProjectsEntity toEntity() {
+    return EducationProjectsEntity(
+      projectName: _projectName,
+      projectDescription: _projectDescription,
+      projectLink: _projectLink,
+      toolsTechnologies: _toolsTechnologiesUsed ?? [],
     );
   }
 }

@@ -26,18 +26,18 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
   @override
   Future<ApiResult<void>> saveProfile(ProfileEntity profileDto) async {
     return executeApi<void>(apiCall: () async {
-      var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addProfile(
-          profileDto.toProfileDto(), token!);
+        profileDto.toProfileDto(),
+      );
     });
   }
 
   @override
   Future<ApiResult<void>> saveSkills(SkillEntity skillEntity) async {
     return await executeApi<void>(apiCall: () async {
-      var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addSkills(
-          skillEntity.toSkillsDto(), token!);
+        skillEntity.toSkillsDto(),
+      );
     });
   }
 
@@ -46,17 +46,20 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
     return await executeApi<void>(apiCall: () async {
       LanguagesDto languagesDto = LanguagesDto(
           languages: languages.map((e) => e.toLanguageDto()).toList());
-      var token = await _authOfflineDataSource.getToken();
-      await _userInfoOnlineDataSource.addLanguage(languagesDto, token!);
+
+      print("The languages is ${languagesDto.languages}");
+      await _userInfoOnlineDataSource.addLanguage(
+        languagesDto,
+      );
     });
   }
 
   @override
   Future<ApiResult<void>> saveEducation(EducationEntity educationEntity) async {
     return await executeApi<void>(apiCall: () async {
-      var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addEducation(
-          educationEntity.toDto(), token!);
+        educationEntity.toDto(),
+      );
     });
   }
 
@@ -64,17 +67,16 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
   Future<ApiResult<void>> saveCertification(
       CertificationsEntity certificationEntity) async {
     return await executeApi<void>(apiCall: () async {
-      var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addCertification(
-          certificationEntity.toDto(), token!);
+        certificationEntity.toDto(),
+      );
     });
   }
 
   @override
   Future<ApiResult<void>> saveProjects(ProjectsEntity projects) async {
     return await executeApi<void>(apiCall: () async {
-      var token = await _authOfflineDataSource.getToken();
-      await _userInfoOnlineDataSource.addProjects(projects.toDto(), token!);
+      await _userInfoOnlineDataSource.addProjects(projects.toDto());
     });
   }
 
@@ -85,10 +87,10 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
       WorkExperiencesDto workExperienceDto = WorkExperiencesDto(
           workExperiences:
               workExperiences.map((e) => e.toWorkExperienceDto()).toList());
-      var token = await _authOfflineDataSource.getToken();
 
       await _userInfoOnlineDataSource.addWorkExperience(
-          workExperienceDto, token!);
+        workExperienceDto,
+      );
     });
   }
 
@@ -96,9 +98,9 @@ class UserInfoRepositoryImpl implements UserInfoRepository {
   Future<ApiResult<void>> saveAdditionalInfo(
       AdditionalInfoEntity additionalInfo) async {
     return await executeApi<void>(apiCall: () async {
-      var token = await _authOfflineDataSource.getToken();
       await _userInfoOnlineDataSource.addAdditionalInfo(
-          additionalInfo.toDto(), token!);
+        additionalInfo.toDto(),
+      );
     });
   }
 }

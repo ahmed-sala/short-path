@@ -32,170 +32,175 @@ class ProjectScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Projects'),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
-            child: BlocConsumer<ProjectViewmodel, ProjectState>(
-              listener: (context, state) {
-                if (state is AddProjectFailure) {
-                  showAwesomeDialog(context,
-                      title: 'Error',
-                      desc: state.error,
-                      onOk: () {},
-                      dialogType: DialogType.error);
-                } else if (state is AddProjectSuccess) {
-                  navKey.currentState!.pushNamedAndRemoveUntil(
-                      RoutesName.certification, (route) => false);
-                } else if (state is AddProjectLoading) {
-                  showLoading(context, 'Adding Projects');
-                }
-              },
-              builder: (context, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Form(
-                      key: viewModel.formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomTextFormField(
-                            hintText: 'Enter Project Title',
-                            keyboardType: TextInputType.text,
-                            controller: viewModel.projectTitleController,
-                            labelText: 'Project Title',
-                            validator: (value) {
-                              return validateProjectName(value);
-                            },
-                          ),
-                          verticalSpace(20),
-                          CustomDropdownButtonFormField(
-                            labelText: 'Role',
-                            hintText: 'Select Role',
-                            value: viewModel.roleController.text.isEmpty
-                                ? null
-                                : viewModel.roleController.text,
-                            items: ['Full-time', 'Part-time', 'Freelance']
-                                .map(
-                                  (jobLocation) => DropdownMenuItem(
-                                    value: jobLocation,
-                                    child: Text(jobLocation),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (String? newValue) {
-                              if (newValue != null) {
-                                viewModel.roleController.text = newValue;
-                              }
-                            },
-                            validator: (value) {
-                              return validateRole(value);
-                            },
-                          ),
-                          verticalSpace(20),
-                          CustomTextFormField(
-                            hintText: 'Enter Project Link',
-                            keyboardType: TextInputType.text,
-                            controller: viewModel.projectLinkController,
-                            labelText: 'Project Link',
-                            validator: (value) {
-                              return validateLink(value);
-                            },
-                          ),
-                          verticalSpace(20),
-                          CustomTextFormField(
-                            hintText: 'Enter Description',
-                            keyboardType: TextInputType.multiline,
-                            controller: viewModel.descriptionController,
-                            labelText: 'Description',
-                            validator: (value) {
-                              return validateProjectDescription(value);
-                            },
-                          ),
-                          verticalSpace(20),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 4,
-                                child: CustomTextFormField(
-                                  hintText: 'Enter Tools/Technologies Used',
-                                  keyboardType: TextInputType.text,
-                                  controller:
-                                      viewModel.technologiesUsedController,
-                                  labelText: 'Tools/Technologies Used',
-                                  validator: (value) => null,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 50,
-                                child: Center(
-                                  child: IconButton(
-                                    icon: const Icon(Icons.add),
-                                    onPressed: () {
-                                      viewModel.addToolsTechnologies(
-                                        viewModel
-                                            .technologiesUsedController.text,
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          if (viewModel.filteredToolSuggestions.isNotEmpty &&
-                              viewModel.technologiesUsedController.text
-                                  .isNotEmpty) // Ensure the text field is not empty
-                            SuggestionList(
-                              suggestions: viewModel.filteredToolSuggestions,
-                              onTap: viewModel.selectTool,
+        body: Directionality(
+          textDirection: TextDirection.ltr,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 30.h),
+              child: BlocConsumer<ProjectViewmodel, ProjectState>(
+                listener: (context, state) {
+                  if (state is AddProjectFailure) {
+                    showAwesomeDialog(context,
+                        title: 'Error',
+                        desc: state.error,
+                        onOk: () {},
+                        dialogType: DialogType.error);
+                  } else if (state is AddProjectSuccess) {
+                    navKey.currentState!.pushNamedAndRemoveUntil(
+                        RoutesName.certification, (route) => false);
+                  } else if (state is AddProjectLoading) {
+                    showLoading(context, 'Adding Projects');
+                  }
+                },
+                builder: (context, state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Form(
+                        key: viewModel.formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomTextFormField(
+                              hintText: 'Enter Project Title',
+                              keyboardType: TextInputType.text,
+                              controller: viewModel.projectTitleController,
+                              labelText: 'Project Title',
+                              validator: (value) {
+                                return validateProjectName(value);
+                              },
                             ),
-                          verticalSpace(20),
-                          if (viewModel.toolsTechnologies.isNotEmpty) ...[
-                            ToolList(),
                             verticalSpace(20),
-                          ],
-                          verticalSpace(20),
-                          CustomAuthButton(
-                            text: 'Add Project',
-                            onPressed: viewModel.addProject,
-                            color: AppColors.primaryColor,
-                          ),
-                          verticalSpace(30),
-                        ],
-                      ),
-                    ),
-                    if (viewModel.projects.isNotEmpty)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Added Projects:',
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
+                            CustomDropdownButtonFormField(
+                              labelText: 'Role',
+                              hintText: 'Select Role',
+                              value: viewModel.roleController.text.isEmpty
+                                  ? null
+                                  : viewModel.roleController.text,
+                              items: ['Full-time', 'Part-time', 'Freelance']
+                                  .map(
+                                    (jobLocation) => DropdownMenuItem(
+                                      value: jobLocation,
+                                      child: Text(jobLocation),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  viewModel.roleController.text = newValue;
+                                }
+                              },
+                              validator: (value) {
+                                return validateRole(value);
+                              },
                             ),
-                          ),
-                          verticalSpace(10),
-                          ProjectList(
-                            viewModel: viewModel,
-                          ),
-                        ],
+                            verticalSpace(20),
+                            CustomTextFormField(
+                              hintText: 'Enter Project Link',
+                              keyboardType: TextInputType.text,
+                              controller: viewModel.projectLinkController,
+                              labelText: 'Project Link',
+                              validator: (value) {
+                                return validateLink(value);
+                              },
+                            ),
+                            verticalSpace(20),
+                            CustomTextFormField(
+                              hintText: 'Enter Description',
+                              keyboardType: TextInputType.multiline,
+                              controller: viewModel.descriptionController,
+                              labelText: 'Description',
+                              validator: (value) {
+                                return validateProjectDescription(value);
+                              },
+                            ),
+                            verticalSpace(20),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  flex: 4,
+                                  child: CustomTextFormField(
+                                    hintText: 'Enter Tools/Technologies Used',
+                                    keyboardType: TextInputType.text,
+                                    controller:
+                                        viewModel.technologiesUsedController,
+                                    labelText: 'Tools/Technologies Used',
+                                    // No validation required here
+                                    validator: (value) => null,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  child: Center(
+                                    child: IconButton(
+                                      icon: const Icon(Icons.add),
+                                      onPressed: () {
+                                        viewModel.addToolsTechnologies(
+                                          viewModel
+                                              .technologiesUsedController.text
+                                              .trim(),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (viewModel.filteredToolSuggestions.isNotEmpty &&
+                                viewModel
+                                    .technologiesUsedController.text.isNotEmpty)
+                              SuggestionList(
+                                suggestions: viewModel.filteredToolSuggestions,
+                                onTap: viewModel.selectTool,
+                              ),
+                            verticalSpace(20),
+                            if (viewModel.toolsTechnologies.isNotEmpty) ...[
+                              ToolList(),
+                              verticalSpace(20),
+                            ],
+                            verticalSpace(20),
+                            CustomAuthButton(
+                              text: 'Add Project',
+                              onPressed: viewModel.addProject,
+                              color: AppColors.primaryColor,
+                            ),
+                            verticalSpace(30),
+                          ],
+                        ),
                       ),
-                    CustomAuthButton(
-                      text: 'NEXT',
-                      onPressed: viewModel.projects.isNotEmpty
-                          ? () {
-                              context.read<ProjectViewmodel>().next();
-                            }
-                          : null,
-                      color: viewModel.projects.isNotEmpty
-                          ? AppColors.primaryColor
-                          : const Color(0xFF5C6673),
-                    ),
-                  ],
-                );
-              },
+                      if (viewModel.projects.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Added Projects:',
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            verticalSpace(10),
+                            ProjectList(
+                              viewModel: viewModel,
+                            ),
+                          ],
+                        ),
+                      CustomAuthButton(
+                        text: 'NEXT',
+                        onPressed: viewModel.projects.isNotEmpty
+                            ? () {
+                                context.read<ProjectViewmodel>().next();
+                              }
+                            : null,
+                        color: viewModel.projects.isNotEmpty
+                            ? AppColors.primaryColor
+                            : const Color(0xFF5C6673),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ),

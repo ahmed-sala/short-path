@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/src/presentation/mangers/user_info/work_experience/work_experience_viewmodel.dart';
+
+import '../../../../shared_widgets/toast_dialoge.dart';
 
 class DetailedList extends StatelessWidget {
   const DetailedList({super.key, required this.viewModel});
@@ -35,17 +39,18 @@ class DetailedList extends StatelessWidget {
                   ),
                 ),
                 verticalSpace(5),
-                Text('Company: ${exp.companyName}'),
+                Text('${context.localization.company}: ${exp.companyName}'),
                 verticalSpace(5),
-                Text('Field: ${exp.companyField}'),
+                Text('${context.localization.field}: ${exp.companyField}'),
                 verticalSpace(5),
-                Text('Type: ${exp.jobType}'),
+                Text('${context.localization.type}: ${exp.jobType}'),
                 verticalSpace(5),
-                Text('Location: ${exp.jobLocation}'),
+                Text('${context.localization.location}: ${exp.jobLocation}'),
                 verticalSpace(5),
-                Text('Dates: ${exp.startDate} - ${exp.endDate}'),
+                Text(
+                    '${context.localization.dates}: ${exp.startDate} - ${exp.endDate}'),
                 verticalSpace(5),
-                Text('Summary: ${exp.summary}'),
+                Text('${context.localization.summary}: ${exp.summary}'),
                 verticalSpace(5),
                 if (exp.toolsTechnologiesUsed.isNotEmpty)
                   Wrap(
@@ -65,19 +70,18 @@ class DetailedList extends StatelessWidget {
 
                       scaffoldMessenger.showSnackBar(
                         SnackBar(
-                          content: Text('${exp.jobTitle} removed!'),
+                          content: Text(
+                              '${exp.jobTitle} ${context.localization.removedSuccessfully}'),
                           backgroundColor: Colors.red,
                           action: SnackBarAction(
-                            label: 'Undo',
+                            label: context.localization.undo,
                             onPressed: () {
+                              Fluttertoast.cancel();
                               scaffoldMessenger.hideCurrentSnackBar();
                               viewModel.addWorkExperienceBack(exp);
-                              scaffoldMessenger.showSnackBar(
-                                SnackBar(
-                                  content: Text('${exp.jobTitle} restored!'),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
+                              ToastDialog.show(
+                                  '${exp.jobTitle} ${context.localization.addedBack}',
+                                  Colors.green);
                             },
                           ),
                         ),

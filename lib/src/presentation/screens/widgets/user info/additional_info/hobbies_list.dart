@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/additional_info/additional_info_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/additional_info/additional_info_viewmodel.dart';
+
+import '../../../../shared_widgets/toast_dialoge.dart';
 
 class HobbiesList extends StatelessWidget {
   const HobbiesList({super.key});
@@ -13,9 +17,9 @@ class HobbiesList extends StatelessWidget {
       builder: (context, state) {
         final skills = context.read<AdditionalInfoViewmodel>().hobbiesList;
         if (skills.isEmpty) {
-          return const Text(
-            'No skills added yet. Start by adding some skills.',
-            style: TextStyle(color: Colors.grey),
+          return Text(
+            context.localization.nothingAddedYet,
+            style: const TextStyle(color: Colors.grey),
           );
         }
         return Wrap(
@@ -28,7 +32,6 @@ class HobbiesList extends StatelessWidget {
               labelStyle: const TextStyle(color: AppColors.primaryColor),
               deleteIcon: const Icon(Icons.close, color: Colors.red),
               onDeleted: () {
-                // Use ScaffoldMessenger to manage SnackBars
                 final scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
                 if (scaffoldMessenger == null) {
                   debugPrint('ScaffoldMessenger not found in the widget tree.');
@@ -42,23 +45,21 @@ class HobbiesList extends StatelessWidget {
                     .removeHobbiesAndInterests(skill);
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
-                    content: Text('$skill removed successfully!'),
+                    content: Text('$skill '
+                        '${context.localization.removedSuccessfully}'),
                     backgroundColor: Colors.red,
                     action: SnackBarAction(
-                      label: 'Undo',
+                      label: context.localization.undo,
                       onPressed: () {
+                        Fluttertoast.cancel();
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
                         context
                             .read<AdditionalInfoViewmodel>()
                             .addHobbiesAndInterests(skill);
 
-                        scaffoldMessenger.showSnackBar(
-                          SnackBar(
-                            content: Text('$skill added back!'),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
+                        ToastDialog.show(
+                            context.localization.addedBack, Colors.green);
                       },
                     ),
                   ),

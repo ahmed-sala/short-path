@@ -1,25 +1,38 @@
 // login_screen.dart
 
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:short_path/config/routes/routes_name.dart';
-import 'package:short_path/core/dialogs/awesome_dialoge.dart';
-import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/auth/login/login_states.dart';
 import 'package:short_path/src/presentation/mangers/auth/login/login_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 
+import '../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
 import '../../../mangers/auth/login/login_actions.dart';
 import '../../widgets/auth/animated_form.dart';
 import '../../widgets/auth/animated_logo.dart';
 import '../../widgets/auth/no_account_row.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getIt<FlutterSecureStorage>().delete(key: SharedPrefKeys.userToken);
+  }
 
   // The LoginScreen now leverages AnimatedLogo and AnimatedForm.
   @override
@@ -61,30 +74,33 @@ class LoginScreen extends StatelessWidget {
                 child: BlocConsumer<LoginViewModel, LoginScreenState>(
                   buildWhen: (previous, current) =>
                       current is InitialState ||
-                      current is ValidateColorButtonState,
+                      current is ValidateColorButtonState ||
+                      current is PasswordVisibilityState,
                   listenWhen: (previous, current) => current is! InitialState,
                   listener: (context, state) {
                     if (state is LoadingState) {
-                      showLoading(context, 'Logging in...');
+                      EasyLoading.show(status: context.localization.loggingIn);
                     } else if (state is ErrorState) {
-                      hideLoading();
-                      showAwesomeDialog(
-                        context,
-                        title: 'Error',
-                        desc: state.exception,
-                        onOk: () {},
-                        dialogType: DialogType.error,
+                      EasyLoading.dismiss();
+                      EasyLoading.showError(
+                        state.exception,
+                        duration: const Duration(seconds: 5),
                       );
                     } else if (state is SuccessState) {
-                      hideLoading();
+                      EasyLoading.dismiss();
+                      EasyLoading.showSuccess(
+                        context.localization.success,
+                      );
+
                       Navigator.pushReplacementNamed(
-                          context, RoutesName.profile);
+                          context, RoutesName.sectionScreen);
                     }
                   },
                   builder: (context, state) {
                     final viewModel = context.read<LoginViewModel>();
                     if (state is InitialState ||
-                        state is ValidateColorButtonState) {
+                        state is ValidateColorButtonState ||
+                        state is PasswordVisibilityState) {
                       return SingleChildScrollView(
                         child: AnimatedForm(
                           child: Padding(
@@ -110,7 +126,7 @@ class LoginScreen extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Welcome Back!',
+                                        context.localization.welcomeBack,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headlineMedium
@@ -121,7 +137,7 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                       SizedBox(height: 10.h),
                                       Text(
-                                        'Log in to continue',
+                                        context.localization.logInToContinue,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall
@@ -131,11 +147,13 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                       SizedBox(height: 30.h),
                                       CustomTextFormField(
-                                        hintText: 'Enter your email',
+                                        hintText:
+                                            context.localization.enterYourEmail,
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         controller: viewModel.emailController,
-                                        labelText: 'Email Address',
+                                        labelText:
+                                            context.localization.emailAddress,
                                         validator: (val) =>
                                             null, // Replace with your validation logic
                                       ),
@@ -145,12 +163,14 @@ class LoginScreen extends StatelessWidget {
                                             viewModel.isPasswordVisible,
                                         showPassword:
                                             viewModel.togglePasswordVisibility,
-                                        hintText: 'Enter your password',
+                                        hintText: context
+                                            .localization.enterYourPassword,
                                         keyboardType:
                                             TextInputType.visiblePassword,
                                         controller:
                                             viewModel.passwordController,
-                                        labelText: 'Password',
+                                        labelText:
+                                            context.localization.password,
                                         validator: (val) =>
                                             null, // Replace with your validation logic
                                       ),
@@ -159,9 +179,9 @@ class LoginScreen extends StatelessWidget {
                                         alignment: Alignment.centerRight,
                                         child: TextButton(
                                           onPressed: () {},
-                                          child: const Text(
-                                            'Forgot Password?',
-                                            style: TextStyle(
+                                          child: Text(
+                                            context.localization.forgotPassword,
+                                            style: const TextStyle(
                                               color: Color(0xFF546E7A),
                                               fontWeight: FontWeight.w600,
                                             ),
@@ -174,7 +194,7 @@ class LoginScreen extends StatelessWidget {
                                             const Duration(milliseconds: 300),
                                         opacity: viewModel.validate ? 1.0 : 0.5,
                                         child: CustomAuthButton(
-                                          text: 'SIGN IN',
+                                          text: context.localization.signIn,
                                           onPressed: viewModel.validate
                                               ? () => viewModel
                                                   .doAction(LoginAction())
@@ -186,8 +206,10 @@ class LoginScreen extends StatelessWidget {
                                       ),
                                       SizedBox(height: 20.h),
                                       NoAccountRow(
-                                        content: 'Don’t have an account?',
-                                        actionText: 'Register here',
+                                        content: context
+                                            .localization.dontHaveAnAccount,
+                                        actionText:
+                                            context.localization.registerHere,
                                         onPressed: () {
                                           Navigator.pushReplacementNamed(
                                               context, RoutesName.register);

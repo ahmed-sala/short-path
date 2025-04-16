@@ -18,7 +18,7 @@ class ProjectEntity {
   final String projectTitle;
   final String role;
   final String description;
-  final String technologiesUsed;
+  final List<String> technologiesUsed;
   final String projectLink;
 
   ProjectEntity({
@@ -34,7 +34,7 @@ class ProjectEntity {
       role: role,
       description: description,
       projectLink: projectLink,
-      technologiesUsed: technologiesUsed.split(","),
+      technologiesUsed: technologiesUsed,
     );
   }
 }

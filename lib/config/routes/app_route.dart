@@ -3,8 +3,11 @@ import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/src/presentation/screens/screen/auth/login_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/auth/register_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/home/home_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/home/job_detail.dart';
+import 'package:short_path/src/presentation/screens/screen/home/jobs_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/auth_decision.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/onboarding_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/section/section_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user info/skiils/skill_information_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/additional_info/additional_info_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/certification/certification_screen.dart';
@@ -31,10 +34,13 @@ class AppRoute {
             settings: settings, widget: const RegisterScreen());
       case RoutesName.home:
         return _handelMaterialPageRoute(
-            settings: settings, widget: const HomeScreen());
+            settings: settings, widget: HomeScreen());
       case RoutesName.profile:
         return _handelMaterialPageRoute(
             settings: settings, widget: const ProfileScreen());
+      case RoutesName.jobsScreen:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: const JobsScreen());
       case RoutesName.education:
         return _handelMaterialPageRoute(
             settings: settings, widget: MainEducationScreen());
@@ -42,9 +48,17 @@ class AppRoute {
       case RoutesName.skillGathering:
         return _handelMaterialPageRoute(
             settings: settings, widget: const SkillInformationScreen());
+      case RoutesName.sectionScreen:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: SectionScreen());
       // case RoutesName.educationproject:
       //   return _handelMaterialPageRoute(
       //       settings: settings, widget: const EducationProjectScreen());
+
+      case RoutesName.jobDetail:
+        return _handelMaterialPageRoute(
+            settings: settings, widget: JobDetail());
+
 
       case RoutesName.project:
         return _handelMaterialPageRoute(

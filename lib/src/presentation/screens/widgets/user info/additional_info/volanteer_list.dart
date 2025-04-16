@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/additional_info/additional_info_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/additional_info/additional_info_viewmodel.dart';
+
+import '../../../../shared_widgets/toast_dialoge.dart';
 
 class VolanteerList extends StatelessWidget {
   const VolanteerList({super.key});
@@ -47,22 +51,19 @@ class VolanteerList extends StatelessWidget {
                 // Show a SnackBar with an Undo action.
                 scaffoldMessenger.showSnackBar(
                   SnackBar(
-                    content:
-                        Text('"${work.description}" removed successfully!'),
+                    content: Text('"${work.description}" '
+                        '${context.localization.removedSuccessfully}'),
                     backgroundColor: Colors.red,
                     action: SnackBarAction(
-                      label: 'Undo',
+                      label: context.localization.undo,
                       onPressed: () {
+                        Fluttertoast.cancel();
                         scaffoldMessenger.hideCurrentSnackBar();
                         context
                             .read<AdditionalInfoViewmodel>()
                             .addVolunteerWork(work);
-                        scaffoldMessenger.showSnackBar(
-                          SnackBar(
-                            content: Text('"${work.description}" added back!'),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
+                        ToastDialog.show(
+                            context.localization.addedBack, Colors.green);
                       },
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:short_path/src/data/api/core/api_request_model/user_info/certification_request.dart';
+import 'package:short_path/src/domain/entities/user_info/Certification_Entity.dart';
 
 class CertificationDto {
   CertificationDto({
@@ -76,6 +77,15 @@ class CertificationsDto {
     return Certifications(
       certificationName: certificationName,
       issuingOrganization: issuingOrganization,
+      dateEarned: dateEarned,
+      expirationDate: expirationDate,
+    );
+  }
+
+  CertificationEntity toDomainEntity() {
+    return CertificationEntity(
+      certificationName: certificationName ?? '',
+      issuingOrganization: issuingOrganization ?? '',
       dateEarned: dateEarned,
       expirationDate: expirationDate,
     );
