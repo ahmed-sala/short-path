@@ -15,8 +15,8 @@ part 'home_state.dart';
 class HomeViewmodel extends Cubit<HomeState> {
   HomeUsecase _homeUsecase;
   HomeViewmodel(
-    this._homeUsecase,
-  ) : super(HomeInitial());
+      this._homeUsecase,
+      ) : super(HomeInitial());
   AppUser? appUser;
 
   List<ContentEntity>? jobs;
