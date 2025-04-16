@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../mangers/profile/personal_profile_viewmodel.dart';
@@ -21,16 +22,18 @@ class LanguagesWidget extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: languages
-                .map((lang) => LanguageProficiencyRow(
-                      language: lang.language,
-                      level: lang.level,
-                    ))
-                .toList(),
+        return Skeletonizer(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: languages
+                  .map((lang) => LanguageProficiencyRow(
+                        language: lang.language,
+                        level: lang.level,
+                      ))
+                  .toList(),
+            ),
           ),
         );
       },

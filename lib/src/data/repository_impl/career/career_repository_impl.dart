@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_execute.dart';
 import 'package:short_path/core/common/api/api_result.dart';
@@ -11,9 +10,9 @@ class CareerRepositoryImpl implements CareerRepository {
   CareerOnlineDatasource _careerOnlineDatasource;
   CareerRepositoryImpl(this._careerOnlineDatasource);
   @override
-  Future<ApiResult<Stream<Uint8List>>> downloadFile(
+  Future<ApiResult<Response<ResponseBody>>> downloadFile(
       String jobDescription) async {
-    return await executeApi<Stream<Uint8List>>(apiCall: () async {
+    return await executeApi<Response<ResponseBody>>(apiCall: () async {
       var result = await _careerOnlineDatasource.downloadFile(jobDescription);
       return result;
     });

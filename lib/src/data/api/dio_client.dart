@@ -6,8 +6,8 @@ class DioClient {
   static final Dio _dio = Dio(
     BaseOptions(
       baseUrl: ApisBaseurl.baseUrl,
-      connectTimeout: const Duration(seconds: 20),
-      receiveTimeout: const Duration(seconds: 20),
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
       headers: {
         'Accept': 'application/json',
       },
@@ -17,15 +17,16 @@ class DioClient {
   static Future<Response<ResponseBody>> downloadPdf({
     required String endPoint,
     required String token,
+    required Map<String, dynamic> data,
   }) async {
     try {
-      final response = await _dio.get<ResponseBody>(
+      final response = await _dio.post<ResponseBody>(
         endPoint,
+        data: data,
         options: Options(
           responseType: ResponseType.stream,
           headers: {
             'Authorization': 'Bearer $token',
-            'Accept': 'application/json',
           },
         ),
       );

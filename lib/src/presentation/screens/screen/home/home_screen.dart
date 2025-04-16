@@ -71,9 +71,9 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 const RecentRowWidget(),
-                homeViewmodel.jobs == null
-                    ? const JobListWidget()
-                    : const NoJobsWidget(),
+
+                     const JobListWidget()
+
               ],
             ),
           ),
