@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -10,16 +10,15 @@ import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/data/api/core/error/error_handler.dart';
 import 'package:short_path/src/domain/entities/auth/app_user.dart';
 import 'package:short_path/src/domain/usecases/career/career_usecase.dart';
-import 'package:short_path/src/domain/usecases/home/home_usecase.dart';
 
 part 'career_state.dart';
 
 @injectable
 class CareerViewmodel extends Cubit<CareerState> {
   CareerUsecase _careerUsecase;
-  HomeUsecase _homeUsecase;
-  CareerViewmodel(this._careerUsecase, this._homeUsecase)
-      : super(CareerInitial());
+  CareerViewmodel(
+    this._careerUsecase,
+  ) : super(CareerInitial());
   String? filePath;
   AppUser? appUser;
   String? coverSheet;
@@ -27,10 +26,17 @@ class CareerViewmodel extends Cubit<CareerState> {
   Future<void> downloadFile() async {
     try {
       emit(DownloadCvLoading());
-      _getUserInfo();
       final result = await _careerUsecase.downloadFile();
       switch (result) {
-        case Success<Stream<Uint8List>>():
+        case Success<Response<ResponseBody>>():
+          final response = result.data!;
+          final headers = response.headers;
+
+          final contentDisposition = headers.value('content-disposition');
+          final regex = RegExp(r'filename="?([^"]+)"?');
+          final match = regex.firstMatch(contentDisposition ?? '');
+          final filename = match != null ? match.group(0) : 'default.pdf';
+
           Directory directory;
           if (Platform.isAndroid) {
             directory = Directory('/storage/emulated/0/Download');
@@ -38,19 +44,20 @@ class CareerViewmodel extends Cubit<CareerState> {
             directory = await getApplicationDocumentsDirectory();
           }
 
-          String filePath =
-              path.join(directory.path, '${appUser?.firstName} cv.pdf');
-          File file = File(filePath);
+          final filePath = path.join(directory.path, filename!);
+          final file = File(filePath);
+          final sink = file.openWrite();
 
-          IOSink sink = file.openWrite();
-          await for (var chunk in result.data!) {
-            // Write the chunk to the file
+          await response.data!.stream.forEach((chunk) {
             sink.add(chunk);
-          }
+          });
+
           await sink.close();
           this.filePath = filePath;
+
           emit(DownloadCvSuccess());
-        case Failures<Stream<Uint8List>>():
+
+        case Failures<Response<ResponseBody>>():
           var errorMessage =
               ErrorHandler.fromException(result.exception).errorMessage;
           emit(DownloadCvError(errorMessage));
@@ -59,22 +66,6 @@ class CareerViewmodel extends Cubit<CareerState> {
     } catch (e) {
       emit(DownloadCvError(e.toString()));
     }
-  }
-
-  Future<void> _getUserInfo() async {
-    try {
-      final result = await _homeUsecase.invoke();
-      switch (result) {
-        case Success<AppUser?>():
-          appUser = result.data;
-          break;
-        case Failures<AppUser?>():
-          var errorMessage =
-              ErrorHandler.fromException(result.exception).errorMessage;
-          emit(DownloadCvError(errorMessage));
-          break;
-      }
-    } catch (e) {}
   }
 
   Future<void> generateCoverSheet() async {

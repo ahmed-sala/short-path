@@ -196,6 +196,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i599.RegisterViewModel(gh<_i692.AuthUseCase>()));
     gh.factory<_i744.CertificationViewmodel>(
         () => _i744.CertificationViewmodel(gh<_i665.CertificationUsecase>()));
+    gh.factory<_i510.CareerViewmodel>(
+        () => _i510.CareerViewmodel(gh<_i720.CareerUsecase>()));
     gh.factory<_i374.AdditionalInfoViewmodel>(
         () => _i374.AdditionalInfoViewmodel(gh<_i563.AdditionalInfoUsecase>()));
     gh.factory<_i501.ProfileUsecase>(() => _i501.ProfileUsecase(
@@ -210,10 +212,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i639.SkillGatheringViewmodel>(
         () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
-    gh.factory<_i510.CareerViewmodel>(() => _i510.CareerViewmodel(
-          gh<_i720.CareerUsecase>(),
-          gh<_i991.HomeUsecase>(),
-        ));
     gh.factory<_i1046.PersonalProfileCubit>(
         () => _i1046.PersonalProfileCubit(gh<_i501.ProfileUsecase>()));
     return this;
