@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/dependency_injection/di.dart';
@@ -17,14 +16,17 @@ class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
   CareerOnlineDatasourceImpl(this._apiServices);
 
   @override
-  Future<Stream<Uint8List>> downloadFile(String jobDescription) async {
+  Future<Response<ResponseBody>> downloadFile(String jobDescription) async {
     String? token =
         await getIt<FlutterSecureStorage>().read(key: SharedPrefKeys.userToken);
     final response = await DioClient.downloadPdf(
       endPoint: ApisEndPoints.downloadCv,
       token: token!,
+      data: {
+        "jobDescription": jobDescription,
+      },
     );
-    return response.data!.stream;
+    return response;
   }
 
   @override

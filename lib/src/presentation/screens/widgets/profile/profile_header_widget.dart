@@ -15,7 +15,7 @@ class ProfileHeaderWidget extends StatelessWidget {
       builder: (context, state) {
         var viewmodel = context.read<PersonalProfileCubit>();
         bool isLoading = viewmodel.appUser == null;
-
+        print('user ${viewmodel.appUser}');
         var profilePicture =
             '${viewmodel.profileEntity?.profilePicture}'; // Placeholder URL
         return Directionality(

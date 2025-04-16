@@ -7,10 +7,10 @@ import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/profile/personal_profile_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/widgets/home/session_expiration_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/profile_header_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/profile/states_section_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/profile/tab_widget.dart';
 
 import '../../widgets/profile/locallization_widget.dart';
+import '../../widgets/profile/states_section_widget.dart';
 
 class PersonalProfileScreen extends StatelessWidget {
   PersonalProfileScreen({Key? key}) : super(key: key);

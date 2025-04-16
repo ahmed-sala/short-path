@@ -23,14 +23,12 @@ class EducationWidget extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: educationDetails
-                  .map((education) => EducationCard(education: education))
-                  .toList(),
-            ),
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: educationDetails
+                .map((education) => EducationCard(education: education))
+                .toList(),
           ),
         );
       },
