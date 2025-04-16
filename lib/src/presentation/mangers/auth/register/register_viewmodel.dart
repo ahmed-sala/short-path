@@ -114,7 +114,7 @@ class RegisterViewModel extends Cubit<RegisterScreenState> {
         emit(ErrorState("Birthdate is required"));
         return;
       }
-      String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate!);
+      String formattedDate = DateFormat('dd-MM-yyyy').format(selectedDate!);
       // Convert gender to expected value (e.g., '0' for Male, '1' for Female)
       String genderValue = selectedGender == 'Male' ? '0' : '1';
 
