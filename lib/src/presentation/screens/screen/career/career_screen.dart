@@ -15,8 +15,6 @@ import 'cv_screen.dart';
 class CareerScreen extends StatelessWidget {
   CareerScreen({super.key});
 
-  final CareerViewmodel careerViewmodel = getIt<CareerViewmodel>();
-
   // Check if permission is already granted without prompting the user.
   Future<bool> _hasStoragePermission() async {
     if (Platform.isAndroid) {
@@ -52,7 +50,8 @@ class CareerScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _handleCreateCV(BuildContext context) async {
+  Future<void> _handleCreateCV(
+      BuildContext context, CareerViewmodel careerViewmodel) async {
     // First check if permission is already granted.
     bool alreadyGranted = await _hasStoragePermission();
     if (alreadyGranted) {
@@ -60,7 +59,6 @@ class CareerScreen extends StatelessWidget {
         msg: "Permission already granted! Downloading file...",
         backgroundColor: Colors.green,
       );
-      careerViewmodel.downloadFile();
       return;
     }
 
@@ -100,33 +98,17 @@ class CareerScreen extends StatelessWidget {
         msg: "Permission granted! Downloading file...",
         backgroundColor: Colors.green,
       );
-      careerViewmodel.downloadFile();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => careerViewmodel,
+      create: (context) => getIt<CareerViewmodel>(),
       child: BlocListener<CareerViewmodel, CareerState>(
         listener: (context, state) async {
-          if (state is DownloadCvSuccess) {
-            if (careerViewmodel.filePath?.isNotEmpty ?? false) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      CvScreen(filePath: careerViewmodel.filePath!),
-                ),
-              );
-            }
-          } else if (state is DownloadCvError) {
-            EasyLoading.dismiss();
-            Fluttertoast.showToast(
-              msg: state.message,
-              backgroundColor: Colors.red,
-            );
-          }
+          var careerViewmodel = context.read<CareerViewmodel>();
+
           if (state is GenerateCoverSheetLoading) {
             EasyLoading.show(status: 'Loading...');
           }
@@ -155,53 +137,62 @@ class CareerScreen extends StatelessWidget {
           appBar: AppBar(title: const Text('Career Screen')),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Job description text field
-                TextField(
-                  controller: careerViewmodel.jobDescribtion,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Job Description',
+            child: Builder(builder: (context) {
+              var careerViewmodel = context.read<CareerViewmodel>();
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Job description text field
+                  TextField(
+                    controller: careerViewmodel.jobDescribtion,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Job Description',
+                    ),
+                    maxLines: 3,
                   ),
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 20),
-                // Buttons for "Create CV" and "Create Cover Sheet"
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        if (careerViewmodel.jobDescribtion.text.isEmpty) {
-                          Fluttertoast.showToast(
-                            msg: "Please enter a job description.",
-                            backgroundColor: Colors.red,
-                          );
-                        } else {
-                          _handleCreateCV(context);
-                        }
-                      },
-                      child: const Text('Create CV'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (careerViewmodel.jobDescribtion.text.isEmpty) {
-                          Fluttertoast.showToast(
-                            msg: "Please enter a job description.",
-                            backgroundColor: Colors.red,
-                          );
-                        } else {
-                          careerViewmodel.generateCoverSheet();
-                        }
-                      },
-                      child: const Text('Create Cover Sheet'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  const SizedBox(height: 20),
+                  // Buttons for "Create CV" and "Create Cover Sheet"
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          if (careerViewmodel.jobDescribtion.text.isEmpty) {
+                            Fluttertoast.showToast(
+                              msg: "Please enter a job description.",
+                              backgroundColor: Colors.red,
+                            );
+                          } else {
+                            _handleCreateCV(context, careerViewmodel);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CvScreen(),
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Create CV'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (careerViewmodel.jobDescribtion.text.isEmpty) {
+                            Fluttertoast.showToast(
+                              msg: "Please enter a job description.",
+                              backgroundColor: Colors.red,
+                            );
+                          } else {
+                            careerViewmodel.generateCoverSheet();
+                          }
+                        },
+                        child: const Text('Create Cover Sheet'),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }),
           ),
         ),
       ),
