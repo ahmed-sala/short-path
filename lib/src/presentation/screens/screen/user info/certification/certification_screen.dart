@@ -19,6 +19,9 @@ import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feil
 import 'package:short_path/src/presentation/shared_widgets/date_input_feild.dart';
 import 'package:short_path/src/short_path.dart';
 
+import '../../../../shared_widgets/progress_bar.dart';
+import '../../../widgets/user info/profile/header_widget.dart';
+
 class CertificationScreen extends StatelessWidget {
   CertificationScreen({super.key});
   CertificationViewmodel viewModel = getIt<CertificationViewmodel>();
@@ -28,9 +31,7 @@ class CertificationScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => viewModel,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(context.localization.certifications),
-        ),
+
         body: Directionality(
           textDirection: TextDirection.ltr,
           child: SingleChildScrollView(
@@ -65,7 +66,10 @@ class CertificationScreen extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Form for Adding Certification
+                      verticalSpace(50),
+                      const Center(child: HeaderWidget()),
+                      StepProgressBar(currentStep: 6),
+                      verticalSpace(22),
                       Form(
                         key: viewModel.formKey,
                         onChanged: viewModel.validateColorButton,
