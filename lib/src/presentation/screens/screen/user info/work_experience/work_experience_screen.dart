@@ -17,6 +17,8 @@ import 'package:short_path/src/short_path.dart';
 import '../../../../../../config/routes/routes_name.dart';
 import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
 import '../../../../shared_widgets/date_input_feild.dart';
+import '../../../../shared_widgets/progress_bar.dart';
+import '../../../widgets/user info/profile/header_widget.dart';
 import '../../../widgets/user info/profile/suggestion_list.dart';
 import '../../../widgets/user info/work_exprience/detailed_list.dart';
 import '../../../widgets/user info/work_exprience/tools_list.dart';
@@ -29,7 +31,6 @@ class WorkExperienceScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => viewModel,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Work Experience')),
         body: Directionality(
           textDirection: TextDirection.ltr,
           child: SingleChildScrollView(
@@ -70,6 +71,10 @@ class WorkExperienceScreen extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      verticalSpace(50),
+                      const Center(child: HeaderWidget()),
+                      StepProgressBar(currentStep: 4),
+                      verticalSpace(22),
                       Form(
                         key: viewModel.formKey,
                         child: Column(
