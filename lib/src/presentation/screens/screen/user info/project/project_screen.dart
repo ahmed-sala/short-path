@@ -19,6 +19,8 @@ import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feil
 import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
 
 import '../../../../../short_path.dart';
+import '../../../../shared_widgets/progress_bar.dart';
+import '../../../widgets/user info/profile/header_widget.dart';
 
 class ProjectScreen extends StatelessWidget {
   ProjectScreen({super.key});
@@ -29,9 +31,6 @@ class ProjectScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => viewModel,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Projects'),
-        ),
         body: Directionality(
           textDirection: TextDirection.ltr,
           child: SingleChildScrollView(
@@ -56,6 +55,10 @@ class ProjectScreen extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      verticalSpace(50),
+                      const Center(child: HeaderWidget()),
+                      StepProgressBar(currentStep: 5),
+                      verticalSpace(22),
                       Form(
                         key: viewModel.formKey,
                         child: Column(
