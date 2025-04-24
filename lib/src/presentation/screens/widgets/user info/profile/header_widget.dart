@@ -17,14 +17,7 @@ class HeaderWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
         ),
-        verticalSpace(10),
-        Text(
-          context.localization.fillInYourDetails,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                color: Colors.grey[600],
-              ),
-        ),
+        verticalSpace(15),
       ],
     );
   }
