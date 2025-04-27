@@ -3,15 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/home/home_viewmodel.dart';
-import 'package:short_path/src/presentation/screens/widgets/home/home_header_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/home/no_jobs_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/home/recent_row_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/home/session_expiration_widget.dart';
+import 'package:short_path/src/presentation/screens/screen/home/widgets/home/home_header_widget.dart';
+import 'package:short_path/src/presentation/screens/screen/home/widgets/home/job_stats_card.dart';
+import 'package:short_path/src/presentation/screens/screen/home/widgets/home/offer_card.dart';
+import 'package:short_path/src/presentation/screens/screen/home/widgets/home/recent_row_widget.dart';
+import 'package:short_path/src/presentation/screens/screen/home/widgets/jobs/job_list_widget.dart';
+import 'package:short_path/src/presentation/screens/screen/home/widgets/session_expiration_widget.dart';
 
 import '../../../../../core/styles/spacing.dart';
-import '../../widgets/home/job_list_widget.dart';
-import '../../widgets/home/job_stats_card.dart';
-import '../../widgets/home/offer_card.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -71,9 +70,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
                 const RecentRowWidget(),
-
-                     const JobListWidget()
-
+                const JobListWidget()
               ],
             ),
           ),

@@ -5,12 +5,12 @@ import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/profile/personal_profile_viewmodel.dart';
-import 'package:short_path/src/presentation/screens/widgets/home/session_expiration_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/profile/profile_header_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/profile/tab_widget.dart';
+import 'package:short_path/src/presentation/screens/screen/profile/widgets/profile_header_widget.dart';
+import 'package:short_path/src/presentation/screens/screen/profile/widgets/states_section_widget.dart';
+import 'package:short_path/src/presentation/screens/screen/profile/widgets/tab_widget.dart';
 
-import '../../widgets/profile/locallization_widget.dart';
-import '../../widgets/profile/states_section_widget.dart';
+import '../home/widgets/session_expiration_widget.dart';
+import 'widgets/locallization_widget.dart';
 
 class PersonalProfileScreen extends StatelessWidget {
   PersonalProfileScreen({Key? key}) : super(key: key);

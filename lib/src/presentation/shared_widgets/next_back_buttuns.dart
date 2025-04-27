@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:short_path/src/presentation/screens/widgets/onboarding/dot_items.dart';
+import 'package:short_path/src/presentation/screens/screen/onboarding/widgets/dot_items.dart';
 
 class NextBackButtuns extends StatelessWidget {
   const NextBackButtuns(
