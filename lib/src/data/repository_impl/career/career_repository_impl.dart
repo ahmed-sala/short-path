@@ -9,7 +9,7 @@ import '../../../domain/entities/career/cover_sheet_entity.dart';
 
 @Injectable(as: CareerRepository)
 class CareerRepositoryImpl implements CareerRepository {
-  CareerOnlineDatasource _careerOnlineDatasource;
+  final CareerOnlineDatasource _careerOnlineDatasource;
   CareerRepositoryImpl(this._careerOnlineDatasource);
   @override
   Future<ApiResult<Response<ResponseBody>>> downloadFile(

@@ -9,7 +9,7 @@ import '../../../../../core/styles/colors/app_colore.dart';
 import '../../../shared_widgets/custom_auth_button.dart';
 
 class JobDetail extends StatefulWidget {
-  const JobDetail({Key? key}) : super(key: key);
+  const JobDetail({super.key});
 
   @override
   State<JobDetail> createState() => _JobDetailState();

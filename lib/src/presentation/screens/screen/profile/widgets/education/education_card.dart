@@ -10,7 +10,7 @@ import 'education_project_section.dart';
 class EducationCard extends StatelessWidget {
   final dynamic education;
 
-  const EducationCard({Key? key, required this.education}) : super(key: key);
+  const EducationCard({super.key, required this.education});
 
   String _formatDate(DateTime date) => DateFormat.yMMM().format(date);
 

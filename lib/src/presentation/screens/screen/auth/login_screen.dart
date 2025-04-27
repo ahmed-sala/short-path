@@ -20,7 +20,7 @@ import '../../../mangers/auth/login/login_actions.dart';
 import 'widgets/animated_form.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -201,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               : null,
                                           color: viewModel.validate
                                               ? const Color(0xFF102027)
-                                              : const Color(0xFFB0BC5),
+                                              : const Color(0x0ffb0bc5),
                                         ),
                                       ),
                                       SizedBox(height: 20.h),

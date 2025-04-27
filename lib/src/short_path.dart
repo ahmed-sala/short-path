@@ -12,7 +12,7 @@ import '../core/common/common_imports.dart';
 final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
 class ShortPath extends StatelessWidget {
-  ShortPath({Key? key}) : super(key: key);
+  ShortPath({super.key});
   LocalizationViewmodel localizationViewmodel = getIt<LocalizationViewmodel>();
   @override
   Widget build(BuildContext context) {

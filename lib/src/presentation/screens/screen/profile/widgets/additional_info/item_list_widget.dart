@@ -3,7 +3,7 @@ import '../../../../../../../core/common/common_imports.dart';
 class ItemList extends StatelessWidget {
   final List<String> items;
 
-  const ItemList({Key? key, required this.items}) : super(key: key);
+  const ItemList({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {

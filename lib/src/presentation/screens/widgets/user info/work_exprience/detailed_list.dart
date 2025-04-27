@@ -15,7 +15,7 @@ class DetailedList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: viewModel.workExperiences.length,
       itemBuilder: (context, index) {
         final exp = viewModel.workExperiences[index];
@@ -23,7 +23,7 @@ class DetailedList extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 10.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
-            side: BorderSide(color: AppColors.primaryColor, width: 1),
+            side: const BorderSide(color: AppColors.primaryColor, width: 1),
           ),
           child: Padding(
             padding: EdgeInsets.all(12.w),
@@ -62,7 +62,7 @@ class DetailedList extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: IconButton(
-                    icon: Icon(Icons.delete, color: Colors.red),
+                    icon: const Icon(Icons.delete, color: Colors.red),
                     onPressed: () {
                       final scaffoldMessenger = ScaffoldMessenger.of(context);
                       scaffoldMessenger.hideCurrentSnackBar();

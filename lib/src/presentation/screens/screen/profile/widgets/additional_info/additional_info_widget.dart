@@ -7,7 +7,7 @@ import '../profile_shared_widgets.dart';
 import 'item_list_widget.dart';
 
 class AdditionalInfoWidget extends StatelessWidget {
-  const AdditionalInfoWidget({Key? key}) : super(key: key);
+  const AdditionalInfoWidget({super.key});
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PersonalProfileCubit, PersonalProfileState>(

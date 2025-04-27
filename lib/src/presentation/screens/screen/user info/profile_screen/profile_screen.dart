@@ -77,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Center(child: HeaderWidget()),
+                          const Center(child: HeaderWidget()),
                           verticalSpace(30),
                           JobTitleInput(viewModel: viewModel),
                           verticalSpace(20),

@@ -6,7 +6,7 @@ import '../../../../../mangers/profile/personal_profile_viewmodel.dart';
 import 'education_card.dart';
 
 class EducationWidget extends StatelessWidget {
-  const EducationWidget({Key? key}) : super(key: key);
+  const EducationWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

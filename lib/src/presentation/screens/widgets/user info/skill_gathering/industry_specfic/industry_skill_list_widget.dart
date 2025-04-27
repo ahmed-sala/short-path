@@ -18,7 +18,7 @@ class IndustrySkillListWidget extends StatelessWidget {
         if (skills.isEmpty) {
           return Text(
             context.localization.noSkillsAddedYetStartByAddingSomeSkills,
-            style: TextStyle(color: Colors.grey),
+            style: const TextStyle(color: Colors.grey),
           );
         }
         return Wrap(

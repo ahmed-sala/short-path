@@ -13,7 +13,7 @@ import 'education/education_widget.dart';
 import 'languages/language_widget.dart';
 
 class TabWidget extends StatelessWidget {
-  TabWidget({super.key});
+  const TabWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

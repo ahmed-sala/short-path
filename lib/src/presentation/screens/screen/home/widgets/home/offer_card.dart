@@ -22,8 +22,8 @@ class OfferCard extends StatelessWidget {
           ),
         ],
       ),
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
           Expanded(
@@ -38,7 +38,7 @@ class OfferCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: () {
                     // Handle button press, e.g., navigate to the CV builder screen
@@ -48,7 +48,7 @@ class OfferCard extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 24,
                       vertical: 14,
                     ),
@@ -64,7 +64,7 @@ class OfferCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(

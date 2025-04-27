@@ -7,7 +7,7 @@ import '../profile_shared_widgets.dart';
 class ProjectCard extends StatelessWidget {
   final dynamic project; // Replace with your project model type
 
-  const ProjectCard({Key? key, required this.project}) : super(key: key);
+  const ProjectCard({super.key, required this.project});
 
   @override
   Widget build(BuildContext context) {

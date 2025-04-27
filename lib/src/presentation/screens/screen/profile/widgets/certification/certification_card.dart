@@ -10,8 +10,7 @@ class CertificationCard extends StatelessWidget {
   final String Function(DateTime?) formatDate;
 
   const CertificationCard(
-      {required this.cert, required this.formatDate, Key? key})
-      : super(key: key);
+      {required this.cert, required this.formatDate, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -15,8 +15,8 @@ import '../../entities/user_info/work_experience_entity.dart';
 
 @injectable
 class ProfileUsecase {
-  ProfileRepository _profileRepository;
-  AuthRepository _authRepository;
+  final ProfileRepository _profileRepository;
+  final AuthRepository _authRepository;
   ProfileUsecase(this._profileRepository, this._authRepository);
 
   Future<ApiResult<ProfileEntity?>> getProfile() async {

@@ -7,7 +7,7 @@ import '../../../../../mangers/profile/personal_profile_viewmodel.dart';
 import 'certification_card.dart';
 
 class CertificationsWidget extends StatelessWidget {
-  const CertificationsWidget({Key? key}) : super(key: key);
+  const CertificationsWidget({super.key});
 
   String _formatDate(DateTime? date) {
     return date != null ? DateFormat.yMMM().format(date) : "N/A";

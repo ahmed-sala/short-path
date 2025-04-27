@@ -6,7 +6,7 @@ import 'package:short_path/src/domain/repositories/contract/career_repository.da
 
 @injectable
 class CareerUsecase {
-  CareerRepository _careerRepository;
+  final CareerRepository _careerRepository;
   CareerUsecase(this._careerRepository);
   Future<ApiResult<Response<ResponseBody>>> downloadFile() async {
     return await _careerRepository.downloadFile(

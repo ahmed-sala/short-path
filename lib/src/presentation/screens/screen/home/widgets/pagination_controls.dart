@@ -5,8 +5,7 @@ import '../../../../mangers/home/jobs/jobs_viewmodel.dart';
 class PaginationControls extends StatelessWidget {
   final JobsViewmodel jobsViewmodel;
 
-  const PaginationControls({Key? key, required this.jobsViewmodel})
-      : super(key: key);
+  const PaginationControls({super.key, required this.jobsViewmodel});
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +102,7 @@ class PaginationControls extends StatelessWidget {
           },
         ),
         side: MaterialStateProperty.all(
-          BorderSide(color: AppColors.primaryColor),
+          const BorderSide(color: AppColors.primaryColor),
         ),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

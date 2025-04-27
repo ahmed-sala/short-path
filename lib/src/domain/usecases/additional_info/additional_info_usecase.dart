@@ -5,7 +5,7 @@ import 'package:short_path/src/domain/repositories/contract/user_info_repository
 
 @injectable
 class AdditionalInfoUsecase {
-  UserInfoRepository _userInfoRepository;
+  final UserInfoRepository _userInfoRepository;
   AdditionalInfoUsecase(this._userInfoRepository);
   Future<ApiResult<void>> invoke(AdditionalInfoEntity additionalInfo) async {
     return await _userInfoRepository.saveAdditionalInfo(additionalInfo);

@@ -26,7 +26,7 @@ class EducationProjectList extends StatelessWidget {
           margin: EdgeInsets.only(bottom: 10.h),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
-            side: BorderSide(color: AppColors.primaryColor, width: 1),
+            side: const BorderSide(color: AppColors.primaryColor, width: 1),
           ),
           child: Padding(
             padding: EdgeInsets.all(12.w),

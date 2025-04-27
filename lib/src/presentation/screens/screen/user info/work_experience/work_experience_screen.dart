@@ -22,7 +22,7 @@ import '../../../widgets/user info/work_exprience/detailed_list.dart';
 import '../../../widgets/user info/work_exprience/tools_list.dart';
 
 class WorkExperienceScreen extends StatelessWidget {
-  WorkExperienceScreen({Key? key}) : super(key: key);
+  WorkExperienceScreen({super.key});
   WorkExperienceViewModel viewModel = getIt<WorkExperienceViewModel>();
   @override
   Widget build(BuildContext context) {
@@ -159,7 +159,7 @@ class WorkExperienceScreen extends StatelessWidget {
                                 Checkbox(
                                   value: viewModel.isCurrentlyWorking,
                                   checkColor: Colors.white,
-                                  fillColor: MaterialStateProperty.resolveWith(
+                                  fillColor: WidgetStateProperty.resolveWith(
                                       (states) => AppColors.primaryColor),
                                   onChanged: (value) {
                                     viewModel.setCurrentlyWorking(value!);
@@ -267,7 +267,7 @@ class WorkExperienceScreen extends StatelessWidget {
                             : null,
                         color: viewModel.workExperiences.isNotEmpty
                             ? AppColors.primaryColor
-                            : Color(0xFF5C6673),
+                            : const Color(0xFF5C6673),
                       ),
                     ],
                   );

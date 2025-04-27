@@ -6,7 +6,7 @@ import 'package:short_path/src/presentation/mangers/profile/personal_profile_vie
 import 'package:short_path/src/presentation/screens/screen/profile/widgets/work_experince/work_experince_card.dart';
 
 class WorkExperienceWidget extends StatelessWidget {
-  const WorkExperienceWidget({Key? key}) : super(key: key);
+  const WorkExperienceWidget({super.key});
 
   String _formatDate(DateTime date) => DateFormat.yMMM().format(date);
 

@@ -123,7 +123,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                               ),
                               if (viewModel.hobbiesList.isNotEmpty) ...[
                                 verticalSpace(20),
-                                HobbiesList(),
+                                const HobbiesList(),
                               ],
                               verticalSpace(20),
                               // Publications input row
@@ -160,7 +160,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                               ),
                               if (viewModel.publicationsList.isNotEmpty) ...[
                                 verticalSpace(20),
-                                PublicationList(),
+                                const PublicationList(),
                               ],
                               verticalSpace(20),
                               // Awards input row
@@ -197,7 +197,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                               ),
                               if (viewModel.awardsList.isNotEmpty) ...[
                                 verticalSpace(20),
-                                AwardsList(),
+                                const AwardsList(),
                               ],
                               verticalSpace(20),
                               // Volunteer work description input
@@ -264,7 +264,7 @@ class AdditionalInfoScreen extends StatelessWidget {
                               ),
                               verticalSpace(20),
                               if (viewModel.awardsList.isNotEmpty) ...[
-                                VolanteerList(),
+                                const VolanteerList(),
                               ],
                             ],
                           ),

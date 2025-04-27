@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class SkeletonJobCard extends StatelessWidget {
-  const SkeletonJobCard({Key? key}) : super(key: key);
+  const SkeletonJobCard({super.key});
 
   @override
   Widget build(BuildContext context) {

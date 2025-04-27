@@ -189,7 +189,7 @@ class PersonalProfileCubit extends Cubit<PersonalProfileState> {
     switch (result) {
       case Success<AdditionalInfoEntity?>():
         additionalInfoEntity = result.data;
-        print('the additional info is ${additionalInfoEntity}');
+        print('the additional info is $additionalInfoEntity');
         if (!isClosed) emit(AdditionalInfoLoadedState());
         break;
       case Failures<AdditionalInfoEntity?>():

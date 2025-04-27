@@ -13,7 +13,7 @@ import '../home/widgets/session_expiration_widget.dart';
 import 'widgets/locallization_widget.dart';
 
 class PersonalProfileScreen extends StatelessWidget {
-  PersonalProfileScreen({Key? key}) : super(key: key);
+  PersonalProfileScreen({super.key});
 
   final PersonalProfileCubit personalProfileCubit =
       getIt<PersonalProfileCubit>();
@@ -88,11 +88,11 @@ class PersonalProfileScreen extends StatelessWidget {
               if (state is SessionExpired) {
                 return const SessionExpirationWidget();
               }
-              return Column(
+              return const Column(
                 children: [
-                  const ProfileHeaderWidget(),
-                  const StatesSectionWidget(),
-                  const SizedBox(height: 16.0),
+                  ProfileHeaderWidget(),
+                  StatesSectionWidget(),
+                  SizedBox(height: 16.0),
                   TabWidget(),
                 ],
               );

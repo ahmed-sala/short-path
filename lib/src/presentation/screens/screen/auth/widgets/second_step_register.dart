@@ -49,9 +49,9 @@ class SecondStepRegister extends StatelessWidget {
                     onChanged: (value) =>
                         viewModel.updateSelectedGender(value!),
                     fillColor:
-                        MaterialStateProperty.all(AppColors.primaryColor),
+                        WidgetStateProperty.all(AppColors.primaryColor),
                     overlayColor:
-                        MaterialStateProperty.all(AppColors.primaryColor),
+                        WidgetStateProperty.all(AppColors.primaryColor),
                     focusColor: AppColors.primaryColor,
                     hoverColor: AppColors.primaryColor,
                   ),
@@ -66,9 +66,9 @@ class SecondStepRegister extends StatelessWidget {
                 children: [
                   Radio<String>(
                     fillColor:
-                        MaterialStateProperty.all(AppColors.primaryColor),
+                        WidgetStateProperty.all(AppColors.primaryColor),
                     overlayColor:
-                        MaterialStateProperty.all(AppColors.primaryColor),
+                        WidgetStateProperty.all(AppColors.primaryColor),
                     focusColor: AppColors.primaryColor,
                     hoverColor: AppColors.primaryColor,
                     value: 'Female',

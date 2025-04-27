@@ -8,10 +8,10 @@ class JobSearchWidget extends StatelessWidget {
   final JobsViewmodel jobsViewmodel;
 
   const JobSearchWidget({
-    Key? key,
+    super.key,
     required this.searchController,
     required this.jobsViewmodel,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,8 @@ class JobSearchWidget extends StatelessWidget {
         controller: searchController,
         decoration: InputDecoration(
           labelText: context.localization.search,
-          border: OutlineInputBorder(),
-          prefixIcon: Icon(Icons.search),
+          border: const OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.search),
         ),
         onChanged: (query) => jobsViewmodel.getJobsForPage(0),
       ),

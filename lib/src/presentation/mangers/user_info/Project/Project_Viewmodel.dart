@@ -11,7 +11,7 @@ import 'Project_State.dart';
 
 @injectable
 class ProjectViewmodel extends Cubit<ProjectState> {
-  ProjectViewmodel(this.projectUsecase) : super(ProjectInitialState()) {
+  ProjectViewmodel(this.projectUsecase) : super(const ProjectInitialState()) {
     // Add a listener to the technologiesUsedController
     technologiesUsedController.addListener(onToolChanged);
   }
@@ -111,12 +111,12 @@ class ProjectViewmodel extends Cubit<ProjectState> {
   void next() async {
     if (projects.isNotEmpty) {
       try {
-        emit(AddProjectLoading());
+        emit(const AddProjectLoading());
         var response =
             await projectUsecase.invoke(ProjectsEntity(projects: projects));
         switch (response) {
           case Success<void>():
-            emit(AddProjectSuccess());
+            emit(const AddProjectSuccess());
             break;
           case Failures<void>():
             var errorMessage =

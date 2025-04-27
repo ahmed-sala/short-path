@@ -113,7 +113,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           isSummaryField ? TextInputType.multiline : widget.keyboardType,
       maxLines:
           isSummaryField ? 5 : 1, // Set maxLines to 5 if it's the Summary field
-      style: TextStyle(
+      style: const TextStyle(
         color: Color(0xFF858383),
       ),
     );

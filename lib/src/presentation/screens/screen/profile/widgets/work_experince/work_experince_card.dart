@@ -10,10 +10,10 @@ class WorkExperienceCard extends StatelessWidget {
   final String duration;
 
   const WorkExperienceCard({
-    Key? key,
+    super.key,
     required this.work,
     required this.duration,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

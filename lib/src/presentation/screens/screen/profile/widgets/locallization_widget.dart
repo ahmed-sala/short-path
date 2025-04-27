@@ -6,7 +6,7 @@ import '../../../../../../core/functions/flag_helper.dart';
 import '../../../../mangers/localization/localization_viewmodel.dart';
 
 class LocalizationIcon extends StatelessWidget {
-  const LocalizationIcon({Key? key}) : super(key: key);
+  const LocalizationIcon({super.key});
 
   void _showLanguageDialog(BuildContext context) {
     showDialog(

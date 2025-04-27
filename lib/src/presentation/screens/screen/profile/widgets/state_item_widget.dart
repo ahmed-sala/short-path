@@ -13,8 +13,8 @@ class StateItemWidget extends StatelessWidget {
     return Column(
       children: [
         Text(value,
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-        SizedBox(height: 4.0),
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4.0),
         Text(label, style: TextStyle(fontSize: 14.0, color: Colors.grey[600])),
       ],
     );

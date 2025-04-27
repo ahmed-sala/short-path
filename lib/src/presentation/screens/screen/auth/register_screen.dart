@@ -15,7 +15,7 @@ import 'widgets/animated_form.dart';
 import 'widgets/custom_progress_bar.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,7 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 10),
                                   // Progress Bar is added here
-                                  CustomProgressBar(),
+                                  const CustomProgressBar(),
                                   const SizedBox(height: 10),
                                   viewModel.currentStep == 0
                                       ? const FirstStepRegister()

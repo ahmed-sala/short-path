@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../../../core/functions/storage_permission.dart';
 import '../../../../mangers/career/career_viewmodel.dart';
+import '../cv_screen.dart';
 
 Future<void> handleCreateCV(
     BuildContext context, CareerViewmodel careerViewmodel) async {
@@ -51,6 +52,12 @@ Future<void> handleCreateCV(
     Fluttertoast.showToast(
       msg: "Permission granted! Downloading file...",
       backgroundColor: Colors.green,
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CvScreen(),
+      ),
     );
   }
 }

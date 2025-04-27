@@ -7,10 +7,10 @@ class LanguageProficiencyRow extends StatelessWidget {
   final String level;
 
   const LanguageProficiencyRow({
-    Key? key,
+    super.key,
     required this.language,
     required this.level,
-  }) : super(key: key);
+  });
 
   /// Converts a proficiency level string to a corresponding progress value.
   double _getProficiencyValue(String level) {

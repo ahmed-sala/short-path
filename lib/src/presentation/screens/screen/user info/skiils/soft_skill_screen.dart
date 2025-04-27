@@ -27,8 +27,8 @@ class SoftSkillScreen extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
+            child: const Padding(
+              padding: EdgeInsets.all(16),
               child: SoftSkillInputWidget(),
             ),
           ),
@@ -42,7 +42,7 @@ class SoftSkillScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          SoftSkillListWidget(),
+          const SoftSkillListWidget(),
         ],
       ),
     );

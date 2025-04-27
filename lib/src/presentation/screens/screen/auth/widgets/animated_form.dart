@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AnimatedForm extends StatefulWidget {
   final Widget child;
 
-  const AnimatedForm({Key? key, required this.child}) : super(key: key);
+  const AnimatedForm({super.key, required this.child});
 
   @override
   _AnimatedFormState createState() => _AnimatedFormState();

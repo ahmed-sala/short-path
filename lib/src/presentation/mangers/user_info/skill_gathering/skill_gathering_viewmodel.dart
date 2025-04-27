@@ -15,9 +15,9 @@ import '../../../screens/screen/user info/skiils/technical_skill_screen.dart';
 
 @injectable
 class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
-  UserInfoUsecase _userInfoUsecase;
+  final UserInfoUsecase _userInfoUsecase;
   SkillGatheringViewmodel(this._userInfoUsecase)
-      : super(InitialSkillGatheringState());
+      : super(const InitialSkillGatheringState());
   final TextEditingController techSkillController = TextEditingController();
   final TextEditingController softSkillController = TextEditingController();
   final TextEditingController industrySpecificSkillController =
@@ -35,9 +35,9 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
   int currentPage = 0;
 
   List<Widget> pages = [
-    TechnicalSkillScreen(),
-    SoftSkillScreen(),
-    IndustrySpecificSkillsScreen(),
+    const TechnicalSkillScreen(),
+    const SoftSkillScreen(),
+    const IndustrySpecificSkillsScreen(),
   ];
 
   void addSkill(
@@ -62,7 +62,7 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
   void changePage(int index) {
     currentPage = index;
     filteredSuggestions = [];
-    emit(OnboardingNextState()); // Emit state to notify listeners
+    emit(const OnboardingNextState()); // Emit state to notify listeners
   }
 
   void removeSkill(
@@ -83,7 +83,7 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
   }
 
   void addAllSkills() async {
-    emit(SkillsAddedLoadingState());
+    emit(const SkillsAddedLoadingState());
     try {
       SkillEntity skills = SkillEntity(
         technicalSkills: _techSkills,
@@ -93,7 +93,7 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
       var result = await _userInfoUsecase.invokeSkills(skills);
       switch (result) {
         case Success<void>():
-          emit(SkillsAddedSuccessState());
+          emit(const SkillsAddedSuccessState());
           break;
         case Failures<void>():
           final error = ErrorHandler.fromException(result.exception);

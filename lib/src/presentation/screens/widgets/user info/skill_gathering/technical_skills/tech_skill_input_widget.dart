@@ -11,7 +11,7 @@ import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButto
 import '../../../../../shared_widgets/toast_dialoge.dart';
 
 class TechSkillInputWidget extends StatefulWidget {
-  TechSkillInputWidget({super.key});
+  const TechSkillInputWidget({super.key});
 
   @override
   _TechSkillInputWidgetState createState() => _TechSkillInputWidgetState();

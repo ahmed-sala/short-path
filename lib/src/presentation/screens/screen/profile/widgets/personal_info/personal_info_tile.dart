@@ -7,11 +7,11 @@ class PersonalInfoTile extends StatelessWidget {
   final IconData leadingIcon;
 
   const PersonalInfoTile({
-    Key? key,
+    super.key,
     required this.title,
     this.subtitle,
     required this.leadingIcon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

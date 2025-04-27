@@ -5,7 +5,7 @@ import 'package:short_path/src/domain/repositories/contract/user_info_repository
 
 @injectable
 class CertificationUsecase {
-  UserInfoRepository _userInfoRepository;
+  final UserInfoRepository _userInfoRepository;
   CertificationUsecase(this._userInfoRepository);
   Future<ApiResult<void>> addCertification(
       CertificationsEntity certification) async {

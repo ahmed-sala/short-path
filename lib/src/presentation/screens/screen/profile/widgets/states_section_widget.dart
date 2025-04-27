@@ -25,7 +25,7 @@ class StatesSectionWidget extends StatelessWidget {
                 enabled: profile?.projectsCompleted == null,
                 child: StateItemWidget(
                   label: context.localization.projects,
-                  value: profile?.projectsCompleted?.toString() ?? '',
+                  value: profile?.projectsCompleted.toString() ?? '',
                 ),
               ),
               Skeletonizer(

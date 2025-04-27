@@ -14,7 +14,7 @@ import '../../../../data/static_data/demo_data_list.dart';
 @singleton
 class ProfileViewmodel extends Cubit<ProfileState> {
   UserInfoUsecase userInfoUsecase;
-  ProfileViewmodel(this.userInfoUsecase) : super(ProfileInitialState()) {
+  ProfileViewmodel(this.userInfoUsecase) : super(const ProfileInitialState()) {
     // Attach listeners to the controllers
     jobTitleController.addListener(onJobTitleChanged);
     languageController.addListener(onLanguageChanged);
@@ -56,7 +56,7 @@ class ProfileViewmodel extends Cubit<ProfileState> {
                 .toLowerCase()
                 .startsWith(jobTitleController.text.toLowerCase()))
             .toList();
-    emit(JobTitleChanged());
+    emit(const JobTitleChanged());
   }
 
   void onLanguageChanged() {
@@ -67,12 +67,12 @@ class ProfileViewmodel extends Cubit<ProfileState> {
                 .toLowerCase()
                 .startsWith(languageController.text.toLowerCase()))
             .toList();
-    emit(LanguageChanged());
+    emit(const LanguageChanged());
   }
 
   void next() async {
     if (formKey.currentState!.validate()) {
-      emit(ProfileLoading());
+      emit(const ProfileLoading());
       ProfileEntity profileEntity = ProfileEntity(
         yearOfExperience: 0,
         projectsCompleted: 0,
@@ -103,18 +103,18 @@ class ProfileViewmodel extends Cubit<ProfileState> {
   void selectJobTitle(int index) {
     jobTitleController.text = filteredJobSuggestions[index];
     filteredJobSuggestions = [];
-    emit(SelectJobTitle());
+    emit(const SelectJobTitle());
   }
 
   void selectLanguageLevel(String? value) {
     selectedLanguageLevel = value;
-    emit(SelectLanguageLevel());
+    emit(const SelectLanguageLevel());
   }
 
   void selectLanguage(int index) {
     languageController.text = filteredLanguageSuggestions[index];
     filteredLanguageSuggestions = [];
-    emit(SelectLanguage());
+    emit(const SelectLanguage());
   }
 
   void addLanguage(String language, String level) {
@@ -164,7 +164,7 @@ class ProfileViewmodel extends Cubit<ProfileState> {
     } else {
       validate = true;
     }
-    emit(ValidateColorButtonState());
+    emit(const ValidateColorButtonState());
   }
 
   @override

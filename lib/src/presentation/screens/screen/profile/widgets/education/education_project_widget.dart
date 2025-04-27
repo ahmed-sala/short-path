@@ -7,8 +7,7 @@ import '../profile_shared_widgets.dart';
 class EducationProjectWidget extends StatelessWidget {
   final dynamic project; // Replace dynamic with your actual project model
 
-  const EducationProjectWidget({Key? key, required this.project})
-      : super(key: key);
+  const EducationProjectWidget({super.key, required this.project});
 
   @override
   Widget build(BuildContext context) {

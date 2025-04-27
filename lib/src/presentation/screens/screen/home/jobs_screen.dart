@@ -10,7 +10,7 @@ import 'widgets/pagination_controls.dart';
 import 'widgets/skeleton_job_card.dart';
 
 class JobsScreen extends StatefulWidget {
-  const JobsScreen({Key? key}) : super(key: key);
+  const JobsScreen({super.key});
 
   @override
   State<JobsScreen> createState() => _JobsScreenState();

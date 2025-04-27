@@ -6,10 +6,10 @@ class TechnicalSkillWidget extends StatelessWidget {
   final String proficiency;
 
   const TechnicalSkillWidget({
-    Key? key,
+    super.key,
     required this.skill,
     required this.proficiency,
-  }) : super(key: key);
+  });
 
   double _getProficiencyLevel(String proficiency) {
     switch (proficiency.toLowerCase()) {

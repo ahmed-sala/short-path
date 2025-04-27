@@ -6,7 +6,7 @@ import '../../../../../mangers/profile/personal_profile_viewmodel.dart';
 import 'language_proficiency_row.dart';
 
 class LanguagesWidget extends StatelessWidget {
-  const LanguagesWidget({Key? key}) : super(key: key);
+  const LanguagesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

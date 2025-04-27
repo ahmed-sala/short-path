@@ -12,7 +12,7 @@ import 'certification_state.dart';
 class CertificationViewmodel extends Cubit<CertificationState> {
   final CertificationUsecase _usecase;
 
-  CertificationViewmodel(this._usecase) : super(CertificationInitialState());
+  CertificationViewmodel(this._usecase) : super(const CertificationInitialState());
 
   // Text controllers for certification details
   final certificationNameController = TextEditingController();
@@ -31,7 +31,7 @@ class CertificationViewmodel extends Cubit<CertificationState> {
   // Set the selected date for Date Earned
   void setDateEarned(DateTime date) {
     selectedDateEarned = date;
-    emit(DateEarnedChanged());
+    emit(const DateEarnedChanged());
   }
 
   // Set the selected date for Expiration Date
@@ -59,7 +59,7 @@ class CertificationViewmodel extends Cubit<CertificationState> {
       selectedDateEarned = null;
       selectedExpirationDate = null;
 
-      emit(CertificationUpdated());
+      emit(const CertificationUpdated());
     }
   }
 
@@ -68,20 +68,20 @@ class CertificationViewmodel extends Cubit<CertificationState> {
       emit(const AddCertificationsFailure(
           message: 'Please add at least one certification'));
     } else {
-      emit(AddCertificationsLoading());
+      emit(const AddCertificationsLoading());
       try {
         final result = await _usecase.addCertification(
             CertificationsEntity(certifications: certifications));
         switch (result) {
           case Success<void>():
-            emit(AddCertificationsSuccess());
+            emit(const AddCertificationsSuccess());
           case Failures<void>():
             var errorMessage =
                 ErrorHandler.fromException(result.exception).errorMessage;
             emit(AddCertificationsFailure(message: errorMessage));
         }
       } catch (e) {
-        emit(AddCertificationsFailure(message: 'An error occurred'));
+        emit(const AddCertificationsFailure(message: 'An error occurred'));
       }
     }
   }
@@ -90,13 +90,13 @@ class CertificationViewmodel extends Cubit<CertificationState> {
   void removeCertification(CertificationEntity certification) {
     certifications.remove(certification);
     _usecase.removeCertification(certification);
-    emit(CertificationUpdated());
+    emit(const CertificationUpdated());
   }
 
   // Add Certification Back (Undo Removal)
   void addCertificationBack(CertificationEntity certification) {
     certifications.add(certification);
-    emit(CertificationUpdated());
+    emit(const CertificationUpdated());
   }
 
   // Method to validate the color of the button
@@ -107,11 +107,11 @@ class CertificationViewmodel extends Cubit<CertificationState> {
 
   // Update Certification Name
   void updateCertificationName(String value) {
-    emit(CertificationNameChanged());
+    emit(const CertificationNameChanged());
   }
 
   // Update Issuing Organization
   void updateIssuingOrganization(String value) {
-    emit(IssuingOrganizationChanged());
+    emit(const IssuingOrganizationChanged());
   }
 }

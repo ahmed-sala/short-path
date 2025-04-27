@@ -11,7 +11,7 @@ part 'career_state.dart';
 
 @injectable
 class CareerViewmodel extends Cubit<CareerState> {
-  CareerUsecase _careerUsecase;
+  final CareerUsecase _careerUsecase;
   CareerViewmodel(
     this._careerUsecase,
   ) : super(CareerInitial());

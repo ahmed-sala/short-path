@@ -13,7 +13,7 @@ import 'package:short_path/src/presentation/screens/screen/home/widgets/session_
 import '../../../../../core/styles/spacing.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({super.key});
 
   final HomeViewmodel homeViewmodel = getIt<HomeViewmodel>();
 

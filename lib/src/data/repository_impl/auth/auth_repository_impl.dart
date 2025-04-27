@@ -8,8 +8,8 @@ import 'package:short_path/src/domain/repositories/contract/auth_repository.dart
 
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  AuthOnlineDatasource _authOnlineDatasource;
-  AuthOfflineDataSource _authOfflineDataSource;
+  final AuthOnlineDatasource _authOnlineDatasource;
+  final AuthOfflineDataSource _authOfflineDataSource;
   AuthRepositoryImpl(this._authOnlineDatasource, this._authOfflineDataSource);
 
 

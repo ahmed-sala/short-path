@@ -7,7 +7,7 @@ import '../../../../../mangers/profile/personal_profile_viewmodel.dart';
 import '../profile_shared_widgets.dart';
 
 class SkillsWidget extends StatelessWidget {
-  const SkillsWidget({Key? key}) : super(key: key);
+  const SkillsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

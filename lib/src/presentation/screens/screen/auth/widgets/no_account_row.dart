@@ -18,7 +18,7 @@ class NoAccountRow extends StatelessWidget {
       children: [
         Text(
           content,
-          style: TextStyle(fontSize: 16.0, color: Color(0xFF858383)),
+          style: const TextStyle(fontSize: 16.0, color: Color(0xFF858383)),
         ),
         const SizedBox(
           width: 8.0,

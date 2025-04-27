@@ -10,7 +10,7 @@ import 'package:short_path/src/presentation/screens/screen/career/widgets/tip_se
 import 'cover_sheet_screen.dart';
 
 class CareerScreen extends StatelessWidget {
-  const CareerScreen({Key? key}) : super(key: key);
+  const CareerScreen({super.key});
 
   static const Color primaryColor = Color(0xFF022D4F);
 

@@ -29,7 +29,7 @@ class CustomDropdownButtonFormField<T> extends StatefulWidget {
 class _CustomDropdownButtonFormFieldState<T>
     extends State<CustomDropdownButtonFormField<T>> {
   // Focus node to track the focus of the DropdownButtonFormField
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
 
   @override
@@ -105,7 +105,7 @@ class _CustomDropdownButtonFormFieldState<T>
         style: TextStyle(
           fontSize: 11.sp,
           fontWeight: FontWeight.w500,
-          color: Color(0xFF858383),
+          color: const Color(0xFF858383),
         ),
         isExpanded: true, // Make the dropdown take up all available width
       ),

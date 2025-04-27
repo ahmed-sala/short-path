@@ -4,7 +4,7 @@ import 'package:short_path/core/extensions/extensions.dart';
 import '../../../../../mangers/home/home_viewmodel.dart';
 
 class JobStatsCard extends StatelessWidget {
-  const JobStatsCard({Key? key, required this.viewModel}) : super(key: key);
+  const JobStatsCard({super.key, required this.viewModel});
   final HomeViewmodel viewModel;
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class JobStatsCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.insert_drive_file, size: 40),
-                  SizedBox(height: 8),
+                  const Icon(Icons.insert_drive_file, size: 40),
+                  const SizedBox(height: 8),
                   Text(
                     viewModel.contractorJobs?.length.toString() ?? "0",
                     style: const TextStyle(
@@ -96,7 +96,7 @@ class JobStatsCard extends StatelessWidget {
                       ),
                       Text(
                         context.localization.partTime,
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ],
                   ),

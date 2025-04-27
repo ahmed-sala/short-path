@@ -15,12 +15,12 @@ class DateInputField extends StatelessWidget {
   final double height;
 
   const DateInputField({
-    Key? key,
+    super.key,
     required this.selectedDate,
     required this.onDateSelected,
     this.labelText = 'Date Earned',
     this.height = 70.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

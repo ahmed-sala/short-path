@@ -3,7 +3,6 @@ import 'package:short_path/src/presentation/mangers/career/career_viewmodel.dart
 
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../../../core/styles/colors/app_colore.dart';
-import '../cv_screen.dart';
 import 'create_cv_handle.dart';
 
 class IconButtonWidget extends StatelessWidget {
@@ -28,12 +27,6 @@ class IconButtonWidget extends StatelessWidget {
           );
         } else {
           handleCreateCV(context, vm);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => CvScreen(),
-            ),
-          );
         }
       },
       icon: const Icon(Icons.description, size: 24, color: Colors.white),

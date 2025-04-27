@@ -13,7 +13,7 @@ class OnboardingViewmodel extends Cubit<OnboardingState> {
   /// Updates the page index and emits the corresponding state
   void changePage(int index) {
     currentPage = index;
-    emit(OnboardingNextState()); // Emit state to notify listeners
+    emit(const OnboardingNextState()); // Emit state to notify listeners
   }
 
   /// Handles the skip action and emits the SkipState

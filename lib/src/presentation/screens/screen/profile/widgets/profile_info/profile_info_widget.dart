@@ -9,7 +9,7 @@ import '../../../../../mangers/profile/personal_profile_viewmodel.dart';
 import '../profile_shared_widgets.dart';
 
 class ProfileInfoWidget extends StatelessWidget {
-  const ProfileInfoWidget({Key? key}) : super(key: key);
+  const ProfileInfoWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -17,8 +17,8 @@ import 'package:short_path/src/domain/repositories/contract/user_info_repository
 
 @Injectable(as: UserInfoRepository)
 class UserInfoRepositoryImpl implements UserInfoRepository {
-  UserInfoOnlineDataSource _userInfoOnlineDataSource;
-  AuthOfflineDataSource _authOfflineDataSource;
+  final UserInfoOnlineDataSource _userInfoOnlineDataSource;
+  final AuthOfflineDataSource _authOfflineDataSource;
   UserInfoRepositoryImpl(
     this._userInfoOnlineDataSource,
     this._authOfflineDataSource,

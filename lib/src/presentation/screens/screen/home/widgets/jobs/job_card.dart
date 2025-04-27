@@ -9,7 +9,7 @@ import '../../../../../../../core/styles/cached_network_image_widget.dart';
 import '../../../../../../short_path.dart';
 
 class JobCard extends StatelessWidget {
-  const JobCard({Key? key, required this.job}) : super(key: key);
+  const JobCard({super.key, required this.job});
   final ContentEntity? job;
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class JobCard extends StatelessWidget {
             if (job?.salaryRange != '') ...[
               Text(
                 "\$${job?.salaryRange ?? ''}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
