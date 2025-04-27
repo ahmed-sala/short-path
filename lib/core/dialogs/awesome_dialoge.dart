@@ -43,14 +43,14 @@ void showCustomDialog(
         ),
         title: Row(
           children: [
-            Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 28),
-            SizedBox(width: 10),
-            Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+            const Icon(Icons.warning_amber_rounded, color: Colors.orange, size: 28),
+            const SizedBox(width: 10),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
         content: Text(
           message,
-          style: TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: 16),
         ),
         actions: [
           TextButton(
@@ -71,7 +71,7 @@ void showCustomDialog(
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: Text("Confirm", style: TextStyle(color: Colors.white)),
+            child: const Text("Confirm", style: TextStyle(color: Colors.white)),
           ),
         ],
       );

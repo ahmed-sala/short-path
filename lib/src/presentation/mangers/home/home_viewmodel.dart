@@ -13,7 +13,7 @@ part 'home_state.dart';
 
 @injectable
 class HomeViewmodel extends Cubit<HomeState> {
-  HomeUsecase _homeUsecase;
+  final HomeUsecase _homeUsecase;
   HomeViewmodel(
     this._homeUsecase,
   ) : super(HomeInitial());

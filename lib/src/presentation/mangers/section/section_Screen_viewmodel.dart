@@ -26,7 +26,7 @@ class SectionScreenViewmodel extends Cubit<SectionScreenState> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    CareerScreen(),
+    const CareerScreen(),
     PersonalProfileScreen(),
   ];
 

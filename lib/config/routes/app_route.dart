@@ -43,7 +43,7 @@ class AppRoute {
             settings: settings, widget: const JobsScreen());
       case RoutesName.education:
         return _handelMaterialPageRoute(
-            settings: settings, widget: MainEducationScreen());
+            settings: settings, widget: const MainEducationScreen());
 
       case RoutesName.skillGathering:
         return _handelMaterialPageRoute(
@@ -57,7 +57,7 @@ class AppRoute {
 
       case RoutesName.jobDetail:
         return _handelMaterialPageRoute(
-            settings: settings, widget: JobDetail());
+            settings: settings, widget: const JobDetail());
 
 
       case RoutesName.project:

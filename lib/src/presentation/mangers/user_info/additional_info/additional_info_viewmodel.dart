@@ -12,7 +12,7 @@ import 'additional_info_state.dart';
 class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
   final AdditionalInfoUsecase _usecase;
 
-  AdditionalInfoViewmodel(this._usecase) : super(AdditionalInfoInitialState());
+  AdditionalInfoViewmodel(this._usecase) : super(const AdditionalInfoInitialState());
 
   // Controllers for text fields
   final hobbiesAndInterestsController = TextEditingController();
@@ -57,16 +57,16 @@ class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
       volunteerWork: volunteerWorkList,
     );
     try {
-      emit(AddAdditionalInfoLoading()); // Emit a new state
+      emit(const AddAdditionalInfoLoading()); // Emit a new state
       var response = await _usecase.invoke(additionalInfo);
       switch (response) {
         case Success<void>():
-          emit(AdditionalInfoSuccess()); // Emit a new state
+          emit(const AdditionalInfoSuccess()); // Emit a new state
           break;
         case Failures<void>():
           var error = ErrorHandler.fromException(response.exception);
           if (error.code == 401) {
-            emit(ExpiredToken());
+            emit(const ExpiredToken());
             return;
           }
           emit(AdditionalInfoError(error.errorMessage)); // Emit a new state
@@ -80,7 +80,7 @@ class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
     if (hobby.isNotEmpty) {
       hobbiesList.add(hobby);
       hobbiesAndInterestsController.clear();
-      emit(AdditionalInfoUpdated()); // Emit a new state
+      emit(const AdditionalInfoUpdated()); // Emit a new state
     }
   }
 
@@ -88,7 +88,7 @@ class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
     if (publication.isNotEmpty) {
       publicationsList.add(publication);
       publicationsController.clear();
-      emit(AdditionalInfoUpdated()); // Emit a new state
+      emit(const AdditionalInfoUpdated()); // Emit a new state
     }
   }
 
@@ -96,7 +96,7 @@ class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
     if (award.isNotEmpty) {
       awardsList.add(award);
       awardsAndHonorsController.clear();
-      emit(AdditionalInfoUpdated()); // Emit a new state
+      emit(const AdditionalInfoUpdated()); // Emit a new state
     }
   }
 
@@ -106,27 +106,27 @@ class AdditionalInfoViewmodel extends Cubit<AdditionalInfoState> {
       volunteerWorkDescriptionController.clear();
       noOfMonthsController.clear();
       noOfYearsController.clear();
-      emit(AdditionalInfoUpdated()); // Emit a new state
+      emit(const AdditionalInfoUpdated()); // Emit a new state
     }
   }
 
   void removeVolunteerWork(VolunteerWorkEntity volunteerWork) {
     volunteerWorkList.remove(volunteerWork);
-    emit(AdditionalInfoUpdated()); // Emit a new state
+    emit(const AdditionalInfoUpdated()); // Emit a new state
   }
 
   void removeHobbiesAndInterests(String hobby) {
     hobbiesList.remove(hobby);
-    emit(AdditionalInfoUpdated()); // Emit a new state
+    emit(const AdditionalInfoUpdated()); // Emit a new state
   }
 
   void removePublications(String publication) {
     publicationsList.remove(publication);
-    emit(AdditionalInfoUpdated()); // Emit a new state
+    emit(const AdditionalInfoUpdated()); // Emit a new state
   }
 
   void removeAwardsAndHonors(String award) {
     awardsList.remove(award);
-    emit(AdditionalInfoUpdated()); // Emit a new state
+    emit(const AdditionalInfoUpdated()); // Emit a new state
   }
 }

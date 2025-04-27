@@ -9,7 +9,7 @@ import 'package:short_path/src/presentation/mangers/auth/login/login_states.dart
 
 @injectable
 class LoginViewModel extends Cubit<LoginScreenState> {
-  AuthUseCase _loginUseCase;
+  final AuthUseCase _loginUseCase;
   LoginViewModel(
     this._loginUseCase,
   ) : super(InitialState());

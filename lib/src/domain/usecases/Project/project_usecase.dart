@@ -5,7 +5,7 @@ import 'package:short_path/src/domain/repositories/contract/user_info_repository
 
 @injectable
 class ProjectUsecase {
-  UserInfoRepository _userInfoRepository;
+  final UserInfoRepository _userInfoRepository;
   ProjectUsecase(this._userInfoRepository);
   Future<ApiResult<void>> invoke(ProjectsEntity project) async {
     return await _userInfoRepository.saveProjects(project);

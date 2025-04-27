@@ -9,7 +9,7 @@ import 'package:short_path/src/domain/repositories/contract/user_info_repository
 
 @injectable
 class UserInfoUsecase {
-  UserInfoRepository _userInfoRepository;
+  final UserInfoRepository _userInfoRepository;
 
   UserInfoUsecase(this._userInfoRepository);
 
@@ -23,7 +23,7 @@ class UserInfoUsecase {
 
   Future<ApiResult<void>> invokeLanguages(
       List<LanguageEntity> languages) async {
-    print('The languages is ${languages}');
+    print('The languages is $languages');
     return await _userInfoRepository.saveLanguages(languages);
   }
 

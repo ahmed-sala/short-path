@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/data/api/api_services.dart';
+import 'package:short_path/src/data/dto_models/career/cover_sheet_dto.dart';
 
 import '../../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
 import '../../../../api/core/constants/apis_end_points.dart';
@@ -30,8 +31,8 @@ class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
   }
 
   @override
-  Future<String?> generateCoverSheet(String jobDescription) async {
+  Future<CoverSheetDto?> generateCoverSheet(String jobDescription) async {
     var response = await _apiServices.generateCoverSheet(jobDescription);
-    return response.coverSheet;
+    return response.toDto();
   }
 }

@@ -12,6 +12,8 @@ import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButto
 import 'package:short_path/src/presentation/shared_widgets/date_input_feild.dart';
 
 class EducationScreen extends StatelessWidget {
+  const EducationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     var educationViewmodel = context.read<EducationViewmodelNew>();
@@ -32,7 +34,7 @@ class EducationScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
+                  const Center(
                     child: EducationHeader(
                       title: 'Add Your Education',
                     ),

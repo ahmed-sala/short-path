@@ -11,7 +11,7 @@ class AuthDecision extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SmartDeskScreen(),
     );
@@ -19,6 +19,8 @@ class AuthDecision extends StatelessWidget {
 }
 
 class SmartDeskScreen extends StatelessWidget {
+  const SmartDeskScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

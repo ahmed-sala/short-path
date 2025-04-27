@@ -11,7 +11,7 @@ import 'language_state.dart';
 
 @injectable
 class LanguageViewmodel extends Cubit<LanguageState> {
-  UserInfoUsecase _userInfoUsecase;
+  final UserInfoUsecase _userInfoUsecase;
   LanguageViewmodel(this._userInfoUsecase) : super(const LanguageInitial()) {
     // Attach listeners to the controllers
     languageController.addListener(onLanguageChanged);
@@ -41,18 +41,18 @@ class LanguageViewmodel extends Cubit<LanguageState> {
                 .toLowerCase()
                 .startsWith(languageController.text.toLowerCase()))
             .toList();
-    emit(LanguageChanged());
+    emit(const LanguageChanged());
   }
 
   void selectLanguageLevel(String? value) {
     selectedLanguageLevel = value;
-    emit(SelectLanguageLevel());
+    emit(const SelectLanguageLevel());
   }
 
   void selectLanguage(int index) {
     languageController.text = filteredLanguageSuggestions[index];
     filteredLanguageSuggestions = [];
-    emit(SelectLanguage());
+    emit(const SelectLanguage());
   }
 
   void addLanguage(String language, String level) {
@@ -76,11 +76,11 @@ class LanguageViewmodel extends Cubit<LanguageState> {
 
   void next() async {
     if (languages.isNotEmpty) {
-      emit(AddLanguageLoading());
+      emit(const AddLanguageLoading());
       var result = await _userInfoUsecase.invokeLanguages(languages);
       switch (result) {
         case Success<void>():
-          emit(AddLanguageSuccess());
+          emit(const AddLanguageSuccess());
           break;
         case Failures<void>():
           var errorMessage =

@@ -20,7 +20,7 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageController _pageController = PageController();
+    final PageController pageController = PageController();
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
@@ -60,7 +60,7 @@ class OnboardingScreen extends StatelessWidget {
                   Expanded(
                     flex: 4,
                     child: PageView.builder(
-                      controller: _pageController,
+                      controller: pageController,
                       onPageChanged: (index) {
                         _viewmodel.changePage(index);
                       },
@@ -115,7 +115,7 @@ class OnboardingScreen extends StatelessWidget {
                         navKey.currentState!
                             .pushReplacementNamed(RoutesName.authDecision);
                       },
-                      pageController: _pageController,
+                      pageController: pageController,
                       length: demoData.length,
                       changePage: _viewmodel.changePage,
                       currentPage: _viewmodel.currentPage),

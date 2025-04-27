@@ -67,6 +67,7 @@ dependencies:
   equatable:
   flutter_downloader:
   flutter_markdown:
+  flutter_email_sender:
 dev_dependencies:
   flutter_test:
     sdk: flutter
