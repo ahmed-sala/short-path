@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 
-import '../../../../../mangers/home/home_viewmodel.dart';
+import '../../../../mangers/home/home_viewmodel.dart';
 
 class JobStatsCard extends StatelessWidget {
   const JobStatsCard({super.key, required this.viewModel});

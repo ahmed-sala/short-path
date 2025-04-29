@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 
-import '../../../../../../../core/common/common_imports.dart';
-import '../../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../mangers/home/home_viewmodel.dart';
+import '../../../../../../core/common/common_imports.dart';
+import '../../../../../../core/styles/colors/app_colore.dart';
+import '../../../../mangers/home/home_viewmodel.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
   const HomeHeaderWidget({super.key});

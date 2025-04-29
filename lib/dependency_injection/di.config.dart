@@ -80,6 +80,7 @@ import '../src/presentation/mangers/career/career_viewmodel.dart' as _i510;
 import '../src/presentation/mangers/career/cv_cubit.dart' as _i218;
 import '../src/presentation/mangers/home/home_viewmodel.dart' as _i190;
 import '../src/presentation/mangers/home/jobs/jobs_viewmodel.dart' as _i132;
+import '../src/presentation/mangers/job_detail/job_detail_cubit.dart' as _i982;
 import '../src/presentation/mangers/localization/localization_viewmodel.dart'
     as _i841;
 import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
@@ -200,6 +201,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i510.CareerViewmodel>(
         () => _i510.CareerViewmodel(gh<_i720.CareerUsecase>()));
     gh.factory<_i218.CvCubit>(() => _i218.CvCubit(gh<_i720.CareerUsecase>()));
+    gh.factory<_i982.JobDetailCubit>(
+        () => _i982.JobDetailCubit(gh<_i720.CareerUsecase>()));
     gh.factory<_i374.AdditionalInfoViewmodel>(
         () => _i374.AdditionalInfoViewmodel(gh<_i563.AdditionalInfoUsecase>()));
     gh.factory<_i501.ProfileUsecase>(() => _i501.ProfileUsecase(

@@ -19,10 +19,13 @@ class CvCubit extends Cubit<CvState> {
 
   CvCubit(this._careerUsecase) : super(CvInitial());
   String? filePath;
-  Future<void> downloadFile() async {
+  Future<void> downloadFile({String? jobDescription, int? jobId}) async {
     try {
       emit(DownloadCvLoading());
-      final result = await _careerUsecase.downloadFile();
+      final result = await _careerUsecase.downloadFile(
+        jobDescription: jobDescription,
+        jobId: jobId,
+      );
       switch (result) {
         case Success<Response<ResponseBody>>():
           final response = result.data!;

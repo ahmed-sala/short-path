@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/extensions/extensions.dart';
-import 'package:short_path/src/presentation/screens/screen/home/widgets/jobs/job_card.dart';
-import 'package:short_path/src/presentation/screens/screen/home/widgets/jobs/job_search_widget.dart';
+import 'package:short_path/src/presentation/screens/screen/job/widgets/job_card.dart';
+import 'package:short_path/src/presentation/screens/screen/job/widgets/job_search_widget.dart';
 
 import '../../../../../core/common/common_imports.dart';
 import '../../../../../dependency_injection/di.dart';
 import '../../../mangers/home/jobs/jobs_viewmodel.dart';
+import '../../../shared_widgets/skeleton_job_card.dart';
 import 'widgets/pagination_controls.dart';
-import 'widgets/skeleton_job_card.dart';
 
 class JobsScreen extends StatefulWidget {
   const JobsScreen({super.key});

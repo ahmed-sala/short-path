@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../core/common/common_imports.dart';
 import '../../../../../../../core/styles/spacing.dart';
-import '../../../../../mangers/home/home_viewmodel.dart';
-import '../skeleton_job_card.dart';
+import '../../../../mangers/home/home_viewmodel.dart';
+import '../../../../shared_widgets/skeleton_job_card.dart';
 import 'job_card.dart';
 
 class JobListWidget extends StatelessWidget {

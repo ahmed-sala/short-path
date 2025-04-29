@@ -4,9 +4,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/career/career_viewmodel.dart';
-import 'package:short_path/src/presentation/screens/screen/career/widgets/buttons_section_widget.dart';
+import 'package:short_path/src/presentation/screens/screen/career/widgets/create_cv_handle.dart';
 import 'package:short_path/src/presentation/screens/screen/career/widgets/tip_section_widget.dart';
+import 'package:short_path/src/presentation/shared_widgets/buttons_section_widget.dart';
 
+import '../../../../../core/functions/send_email.dart';
 import 'cover_sheet_screen.dart';
 
 class CareerScreen extends StatelessWidget {
@@ -31,7 +33,11 @@ class CareerScreen extends StatelessWidget {
               MaterialPageRoute(
                 builder: (_) => CoverSheetScreen(
                   response: vm.coverSheet,
-                  sendEmail: vm.sendEmail,
+                  sendEmail: () => EmailHandler.sendEmails(
+                    vm.coverSheet,
+                    vm.emailSubject,
+                    vm.companyEmail,
+                  ),
                 ),
               ),
             );
@@ -122,7 +128,33 @@ class CareerScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      const ButtonsSectionWidget(),
+                      ButtonsSectionWidget(
+                        onGenerateCoverSheetTap: () {
+                          if (vm.jobDescribtion.text.isEmpty) {
+                            Fluttertoast.showToast(
+                              msg: 'Please add a job description.',
+                              backgroundColor: Colors.redAccent,
+                              textColor: Colors.white,
+                            );
+                          } else {
+                            vm.generateCoverSheet();
+                          }
+                        },
+                        onGenerateCvTap: () {
+                          if (vm.jobDescribtion.text.isEmpty) {
+                            Fluttertoast.showToast(
+                              msg: 'Please add a job description.',
+                              backgroundColor: Colors.redAccent,
+                              textColor: Colors.white,
+                            );
+                          } else {
+                            handleCreateCV(
+                              context,
+                              jobDescription: vm.jobDescribtion.text,
+                            );
+                          }
+                        },
+                      ),
                       const SizedBox(height: 24),
                       const TipSectionWidget(),
                     ],

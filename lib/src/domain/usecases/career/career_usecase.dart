@@ -8,13 +8,17 @@ import 'package:short_path/src/domain/repositories/contract/career_repository.da
 class CareerUsecase {
   final CareerRepository _careerRepository;
   CareerUsecase(this._careerRepository);
-  Future<ApiResult<Response<ResponseBody>>> downloadFile() async {
+  Future<ApiResult<Response<ResponseBody>>> downloadFile(
+      {String? jobDescription, int? jobId}) async {
     return await _careerRepository.downloadFile(
-        "We are looking for a Senior Full-Stack Developer experienced with email ahmeds66210@gmail.com in PHP (Laravel), MySQL, and Docker. You will design scalable backends and integrate with modern frontends. Excellent proficiency in microservices, CI/CD pipelines with Jenkins, and container orchestration is required.");
+      jobId: jobId,
+      jobDescription: jobDescription,
+    );
   }
 
   Future<ApiResult<CoverSheetEntity?>> generateCoverSheet(
-      String jobDescription) async {
-    return await _careerRepository.generateCoverSheet(jobDescription);
+      {String? jobDescription, int? jobId}) async {
+    return await _careerRepository.generateCoverSheet(
+        jobId: jobId, jobDescription: jobDescription);
   }
 }

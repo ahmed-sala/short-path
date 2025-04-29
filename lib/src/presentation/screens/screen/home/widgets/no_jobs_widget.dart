@@ -1,7 +1,7 @@
 import 'package:lottie/lottie.dart';
 import 'package:short_path/core/styles/animations/app_animation.dart';
 
-import '../../../../../../../core/common/common_imports.dart';
+import '../../../../../../core/common/common_imports.dart';
 
 class NoJobsWidget extends StatelessWidget {
   const NoJobsWidget({super.key});

@@ -1,13 +1,12 @@
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:short_path/src/presentation/mangers/career/career_viewmodel.dart';
-
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../../../core/styles/colors/app_colore.dart';
-import 'create_cv_handle.dart';
 
 class IconButtonWidget extends StatelessWidget {
-  const IconButtonWidget({super.key, required this.vm});
-  final CareerViewmodel vm;
+  const IconButtonWidget({
+    super.key,
+    required this.onTap,
+  });
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
@@ -18,17 +17,7 @@ class IconButtonWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
       ),
-      onPressed: () {
-        if (vm.jobDescribtion.text.isEmpty) {
-          Fluttertoast.showToast(
-            msg: 'Please add a job description.',
-            backgroundColor: Colors.redAccent,
-            textColor: Colors.white,
-          );
-        } else {
-          handleCreateCV(context, vm);
-        }
-      },
+      onPressed: onTap,
       icon: const Icon(Icons.description, size: 24, color: Colors.white),
       label: const Text(
         'Generate CV',
