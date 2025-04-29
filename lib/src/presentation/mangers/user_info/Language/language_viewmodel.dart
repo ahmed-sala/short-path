@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
@@ -34,13 +35,16 @@ class LanguageViewmodel extends Cubit<LanguageState> {
   ];
 
   void onLanguageChanged() {
-    filteredLanguageSuggestions = languageController.text.isEmpty
-        ? languageSuggestions
-        : languageSuggestions
-            .where((language) => language
-                .toLowerCase()
-                .startsWith(languageController.text.toLowerCase()))
-            .toList();
+    final input = languageController.text.trim();
+    if (input.isEmpty) {
+      filteredLanguageSuggestions = [];
+    } else {
+      filteredLanguageSuggestions = languageSuggestions
+          .where((language) =>
+              language.toLowerCase().startsWith(input.toLowerCase()))
+          .toList();
+    }
+
     emit(const LanguageChanged());
   }
 
@@ -56,16 +60,44 @@ class LanguageViewmodel extends Cubit<LanguageState> {
   }
 
   void addLanguage(String language, String level) {
-    LanguageEntity languageEntity =
-        LanguageEntity(language: language, level: level.toUpperCase());
-    if (languages.contains(languageEntity)) {
-      return;
-    } else if (languages.length == 5) {
-      return;
-    } else if (language.isEmpty) {
+    if (language.isEmpty) return;
+
+    final normalizedInput = language.toLowerCase();
+    final isInSuggestions = languageSuggestions.any(
+      (suggestion) => suggestion.toLowerCase() == normalizedInput,
+    );
+
+    if (!isInSuggestions) {
+      Fluttertoast.showToast(
+        msg: "Please choose a language from the suggestions.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+      filteredLanguageSuggestions = [];
+      emit(const LanguageChanged());
       return;
     }
+
+    final languageEntity =
+        LanguageEntity(language: language, level: level.toUpperCase());
+
+    if (languages.contains(languageEntity)) return;
+    if (languages.any((lang) => lang.language == language)) {
+      Fluttertoast.showToast(
+        msg: "Language already exists.",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+      );
+      filteredLanguageSuggestions = [];
+      emit(const LanguageChanged());
+      return;
+    }
+    if (languages.length == 5) return;
+
     languages.add(languageEntity);
+    languageController.clear();
+    selectedLanguageLevel = null;
+    filteredLanguageSuggestions = [];
     emit(NewLanguageAdded(languageEntity));
   }
 

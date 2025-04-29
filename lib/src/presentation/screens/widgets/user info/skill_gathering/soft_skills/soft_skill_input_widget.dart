@@ -7,6 +7,7 @@ import 'package:short_path/src/data/static_data/demo_data_list.dart';
 import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/skill_gathering_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 
+import '../../../../../shared_widgets/suggetion_list.dart';
 import '../../../../../shared_widgets/toast_dialoge.dart';
 
 class SoftSkillInputWidget extends StatefulWidget {
@@ -36,17 +37,21 @@ class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
                 hintText: context.localization.enterYourSkill,
                 keyboardType: TextInputType.text,
                 controller: viewModel.softSkillController,
-                validator: (value) {
-                  return null;
-                },
+                validator: (_) => null,
                 onChanged: (value) {
-                  final filteredSkills = softSkills
-                      .where((skill) =>
-                          skill.toLowerCase().contains(value.toLowerCase()))
-                      .toList();
+                  final input = value.toLowerCase();
+                  final filtered = softSkills.where((skill) {
+                    final lower = skill.toLowerCase();
+                    // match prefix and not already added
+                    return lower.contains(input) &&
+                        !viewModel.softSkills
+                            .map((s) => s.toLowerCase())
+                            .contains(lower);
+                  }).toList();
+
                   setState(() {
-                    viewModel.filteredSuggestions = filteredSkills;
-                    _showSuggestions = value.isNotEmpty;
+                    viewModel.filteredSuggestions = filtered;
+                    _showSuggestions = value.isNotEmpty && filtered.isNotEmpty;
                   });
                 },
               ),
@@ -59,57 +64,58 @@ class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
                   color: AppColors.primaryColor, size: 30),
               onPressed: () {
                 Fluttertoast.cancel();
-                final skill = viewModel.softSkillController.text.trim();
-                if (skill.isNotEmpty) {
-                  viewModel.addSkill(
-                    type: 'Soft',
-                    skill: skill,
-                  );
-                  softSkills.remove(skill);
-                  viewModel.softSkillController.clear();
-                  setState(() {
-                    viewModel.filteredSuggestions = [];
-                    _showSuggestions = false;
-                  });
+                final raw = viewModel.softSkillController.text.trim();
+                final lower = raw.toLowerCase();
+
+                // 1) Must exist in master list
+                if (!softSkills.map((s) => s.toLowerCase()).contains(lower)) {
                   ToastDialog.show(
-                      '${context.localization.skill} $skill ${context.localization.skillAddedSuccessfully}',
-                      Colors.green);
+                    'Please choose a soft skill from the suggestions',
+                    Colors.red,
+                  );
+                  return;
                 }
+
+                // 2) Prevent duplicates
+                if (viewModel.softSkills
+                    .map((s) => s.toLowerCase())
+                    .contains(lower)) {
+                  ToastDialog.show(
+                    'Soft skill "$raw" is already added',
+                    Colors.orange,
+                  );
+                  return;
+                }
+
+                // 3) All good → add and remove from master list
+                viewModel.addSkill(type: 'Soft', skill: raw);
+                softSkills.removeWhere(
+                    (s) => s.toLowerCase() == lower); // keep master clean
+
+                viewModel.softSkillController.clear();
+                setState(() {
+                  viewModel.filteredSuggestions = [];
+                  _showSuggestions = false;
+                });
+                ToastDialog.show(
+                  '${context.localization.skill} "$raw" ${context.localization.skillAddedSuccessfully}',
+                  Colors.green,
+                );
               },
             ),
           ],
         ),
-        if (_showSuggestions && viewModel.filteredSuggestions.isNotEmpty)
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            constraints: const BoxConstraints(maxHeight: 150),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: viewModel.filteredSuggestions.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(viewModel.filteredSuggestions[index]),
-                  onTap: () {
-                    viewModel.softSkillController.text =
-                        viewModel.filteredSuggestions[index];
-                    setState(() {
-                      _showSuggestions = false;
-                    });
-                  },
-                );
-              },
-            ),
+
+        // SuggestionList dropdown
+        if (_showSuggestions)
+          SuggestionList(
+            suggestions: viewModel.filteredSuggestions,
+            onTap: (selection) {
+              viewModel.softSkillController.text = selection;
+              setState(() {
+                _showSuggestions = false;
+              });
+            },
           ),
       ],
     );

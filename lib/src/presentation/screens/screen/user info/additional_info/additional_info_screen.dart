@@ -20,6 +20,9 @@ import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.da
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/short_path.dart';
 
+import '../../../../shared_widgets/progress_bar.dart';
+import '../../../widgets/user info/profile/header_widget.dart';
+
 class AdditionalInfoScreen extends StatelessWidget {
   const AdditionalInfoScreen({super.key});
 
@@ -29,9 +32,7 @@ class AdditionalInfoScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => viewModel,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(context.localization.additionalInformation),
-        ),
+
         body: Directionality(
           textDirection: TextDirection.ltr,
           child: SingleChildScrollView(
@@ -82,6 +83,11 @@ class AdditionalInfoScreen extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        verticalSpace(50),
+                        const Center(child: HeaderWidget()),
+                        StepProgressBar(currentStep: 7),
+                        verticalSpace(22),
+
                         Form(
                           key: viewModel.formKey,
                           autovalidateMode: AutovalidateMode.disabled,

@@ -17,7 +17,7 @@ class ToolsList extends StatelessWidget {
     return BlocBuilder<WorkExperienceViewModel, WorkExperienceState>(
       builder: (context, state) {
         final skills =
-            context.read<WorkExperienceViewModel>().toolsTechnologiesUsed;
+            context.read<WorkExperienceViewModel>().tollsTechnologies;
         if (skills.isEmpty) {
           return Text(
             context.localization.nothingAddedYet,
@@ -58,7 +58,7 @@ class ToolsList extends StatelessWidget {
                         Fluttertoast.cancel();
                         scaffoldMessenger
                             .hideCurrentSnackBar(); // Dismiss previous SnackBar
-                        context.read<WorkExperienceViewModel>().addTool(
+                        context.read<WorkExperienceViewModel>().selectTool(
                               skill,
                             );
                         softSkills.remove(skill);

@@ -11,6 +11,7 @@ import 'package:short_path/src/presentation/mangers/user_info/work_experience/wo
 @injectable
 class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   UserInfoUsecase userInfoUsecase;
+
   WorkExperienceViewModel(this.userInfoUsecase)
       : super(const WorkExperienceInitial()) {
     toolController.addListener(onToolChanged);
@@ -28,49 +29,13 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   DateTime? startDate;
   DateTime? endDate;
   List<WorkExperienceEntity> workExperiences = [];
-  List<String> toolsTechnologiesUsed = [];
+  List<String> tollsTechnologies = [];
   List<String> filteredToolSuggestions = [];
   String? selectedJobType;
   String? selectedJobLocation;
 
   bool isValid = false;
   bool isCurrentlyWorking = false;
-
-  void setCurrentlyWorking(bool value) {
-    isCurrentlyWorking = value;
-    if (value) {
-      // If currently working, clear endDate.
-      endDate = null;
-    }
-    emit(CurrentlyWorkingChanged(isCurrentlyWorking));
-  }
-
-  void onToolChanged() {
-    filteredToolSuggestions = toolController.text.isEmpty
-        ? technicalSkills
-        : technicalSkills
-            .where((tool) => tool
-                .toLowerCase()
-                .startsWith(toolController.text.toLowerCase()))
-            .toList();
-    emit(const ToolChanged());
-  }
-
-  void _validateForm() {
-    final bool allFieldsFilled = jobTitleController.text.isNotEmpty &&
-        companyNameController.text.isNotEmpty &&
-        companyFieldController.text.isNotEmpty &&
-        selectedJobLocation != null &&
-        selectedJobType != null &&
-        startDate != null &&
-        endDate != null &&
-        summaryController.text.isNotEmpty;
-
-    if (isValid != allFieldsFilled) {
-      isValid = allFieldsFilled;
-      emit(const WorkExperienceChanged()); // Notify UI of state change
-    }
-  }
 
   List<String> jobTypes = [
     'Full_Time',
@@ -84,6 +49,44 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     'Onsite',
     'Hybrid',
   ];
+
+  void setCurrentlyWorking(bool value) {
+    isCurrentlyWorking = value;
+    if (value) {
+      endDate = null;
+    }
+    emit(CurrentlyWorkingChanged(isCurrentlyWorking));
+  }
+
+  void onToolChanged() {
+    final input = toolController.text.toLowerCase();
+    if (input.isEmpty) {
+      filteredToolSuggestions = [];
+    } else {
+      filteredToolSuggestions = technicalSkills
+          .where((tool) =>
+              tool.toLowerCase().startsWith(input) &&
+              !tollsTechnologies.contains(tool))
+          .toList();
+    }
+    emit(ToolsTechnologiesChanged());
+  }
+
+  void _validateForm() {
+    final bool allFieldsFilled = jobTitleController.text.isNotEmpty &&
+        companyNameController.text.isNotEmpty &&
+        companyFieldController.text.isNotEmpty &&
+        selectedJobLocation != null &&
+        selectedJobType != null &&
+        startDate != null &&
+        (isCurrentlyWorking || endDate != null) &&
+        summaryController.text.isNotEmpty;
+
+    if (isValid != allFieldsFilled) {
+      isValid = allFieldsFilled;
+      emit(const WorkExperienceChanged());
+    }
+  }
 
   Future<void> next() async {
     if (workExperiences.isNotEmpty) {
@@ -103,7 +106,8 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
             emit(AddWorkExperienceFailed(errorMessage.errorMessage));
         }
       } catch (e) {
-        emit(const AddWorkExperienceFailed('An error occurred. Please try again.'));
+        emit(const AddWorkExperienceFailed(
+            'An error occurred. Please try again.'));
       }
     }
   }
@@ -118,7 +122,6 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     emit(JobLocationSelected());
   }
 
-  // Date selection
   void selectStartDate(DateTime date) {
     startDate = date;
     emit(StartDateSelected(startDate!));
@@ -129,32 +132,47 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
     emit(EndDateSelected(endDate!));
   }
 
-  // Tools management
-  void addTool(String tool) {
-    if (tool.isNotEmpty) {
-      toolsTechnologiesUsed.add(tool);
+  void _resetForm() {
+    jobTitleController.clear();
+    companyNameController.clear();
+    companyFieldController.clear();
+    summaryController.clear();
+    toolController.clear();
+    tollsTechnologies.clear();
+    selectedJobType = null;
+    selectedJobLocation = null;
+    startDate = null;
+    endDate = null;
+    isCurrentlyWorking = false;
+    formKey = GlobalKey<FormState>();
+  }
+
+  void selectTool(String selectedTool) {
+    toolController.text = selectedTool;
+    addToolsTechnologies(selectedTool);
+    filteredToolSuggestions = [];
+    emit(const ToolsAndTechnologiesAdded());
+  }
+
+  void addToolsTechnologies(String value) {
+    if (value.isNotEmpty && !tollsTechnologies.contains(value)) {
+      tollsTechnologies.add(value);
       toolController.clear();
-      print(toolsTechnologiesUsed);
-      emit(ToolAdded(tool));
+      emit(const ToolsAndTechnologiesAdded());
     }
   }
 
   void removeTool(String tool) {
-    toolsTechnologiesUsed.remove(tool);
-    emit(ToolRemoved(tool));
+    if (tool.isNotEmpty) {
+      tollsTechnologies.remove(tool);
+      emit(const ToolsAndTechnologiesRemoved());
+    }
   }
 
-  void selectTool(int index) {
-    toolController.text = filteredToolSuggestions[index];
-    filteredToolSuggestions = [];
-    emit(const ToolSelected());
-  }
-
-  // Work experience management
   void addWorkExperience() {
     if (!formKey.currentState!.validate()) return;
 
-    if (toolsTechnologiesUsed.isEmpty) {
+    if (tollsTechnologies.isEmpty) {
       emit(const WorkExperienceError('Add at least one tool/technology'));
       return;
     }
@@ -168,25 +186,11 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
       startDate: startDate!,
       endDate: isCurrentlyWorking ? null : endDate!,
       summary: summaryController.text,
-      toolsTechnologiesUsed: List.from(toolsTechnologiesUsed),
+      toolsTechnologiesUsed: List.from(tollsTechnologies),
     ));
 
     _resetForm();
     emit(const WorkExperienceAdded());
-  }
-
-  void _resetForm() {
-    jobTitleController.clear();
-    companyNameController.clear();
-    companyFieldController.clear();
-    summaryController.clear();
-    toolController.clear();
-    toolsTechnologiesUsed.clear();
-    selectedJobType = null;
-    selectedJobLocation = null;
-    startDate = null;
-    endDate = null;
-    formKey = GlobalKey<FormState>();
   }
 
   void removeWorkExperience(WorkExperienceEntity experience) {
@@ -197,6 +201,11 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   void addWorkExperienceBack(WorkExperienceEntity experience) {
     workExperiences.add(experience);
     emit(const WorkExperienceAdded());
+  }
+
+  void clearToolSuggestions() {
+    filteredToolSuggestions = [];
+    emit(const ToolSuggestionsCleared());
   }
 
   @override

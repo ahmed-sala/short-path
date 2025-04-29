@@ -15,21 +15,24 @@ import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feil
 import 'package:short_path/src/short_path.dart';
 
 import '../../../../../../config/routes/routes_name.dart';
+import '../../../../../data/static_data/demo_data_list.dart';
 import '../../../../shared_widgets/custom_drop_downButton_form_field.dart';
 import '../../../../shared_widgets/date_input_feild.dart';
-import '../../../widgets/user info/profile/suggestion_list.dart';
+import '../../../../shared_widgets/progress_bar.dart';
+import '../../../../shared_widgets/suggetion_list.dart';
+import '../../../../shared_widgets/toast_dialoge.dart';
+import '../../../widgets/user info/profile/header_widget.dart';
 import '../../../widgets/user info/work_exprience/detailed_list.dart';
 import '../../../widgets/user info/work_exprience/tools_list.dart';
 
 class WorkExperienceScreen extends StatelessWidget {
-  WorkExperienceScreen({super.key});
+  WorkExperienceScreen({Key? key}) : super(key: key);
   WorkExperienceViewModel viewModel = getIt<WorkExperienceViewModel>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => viewModel,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Work Experience')),
         body: Directionality(
           textDirection: TextDirection.ltr,
           child: SingleChildScrollView(
@@ -70,6 +73,10 @@ class WorkExperienceScreen extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      verticalSpace(50),
+                      const Center(child: HeaderWidget()),
+                      StepProgressBar(currentStep: 4),
+                      verticalSpace(22),
                       Form(
                         key: viewModel.formKey,
                         child: Column(
@@ -159,7 +166,7 @@ class WorkExperienceScreen extends StatelessWidget {
                                 Checkbox(
                                   value: viewModel.isCurrentlyWorking,
                                   checkColor: Colors.white,
-                                  fillColor: WidgetStateProperty.resolveWith(
+                                  fillColor: MaterialStateProperty.resolveWith(
                                       (states) => AppColors.primaryColor),
                                   onChanged: (value) {
                                     viewModel.setCurrentlyWorking(value!);
@@ -194,26 +201,60 @@ class WorkExperienceScreen extends StatelessWidget {
 
                             // Tool/Technology
                             Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
+                                  flex: 4,
                                   child: CustomTextFormField(
-                                    controller: viewModel.toolController,
-                                    labelText: 'Tool/Technology',
-                                    hintText: 'Enter Tool/Technology',
-                                    validator: (value) =>
-                                        viewModel.toolsTechnologiesUsed.isEmpty
-                                            ? 'Add at least one tool'
-                                            : null,
+                                    hintText: 'Enter Tools/Technologies Used',
                                     keyboardType: TextInputType.text,
+                                    controller: viewModel.toolController,
+                                    labelText: 'Tools/Technologies Used',
+                                    validator: (value) => null,
                                   ),
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.add,
-                                      color: AppColors.primaryColor),
-                                  onPressed: () {
-                                    viewModel
-                                        .addTool(viewModel.toolController.text);
-                                  },
+                                SizedBox(
+                                  width: 50,
+                                  child: Center(
+                                    child: IconButton(
+                                      icon: const Icon(Icons.add,
+                                          color: AppColors.primaryColor),
+                                      onPressed: () {
+                                        final raw = viewModel
+                                            .toolController.text
+                                            .trim();
+                                        final lower = raw.toLowerCase();
+
+                                        // must be in static list
+                                        if (!technicalSkills
+                                            .map((s) => s.toLowerCase())
+                                            .contains(lower)) {
+                                          ToastDialog.show(
+                                            'Please choose a tool from suggestions',
+                                            Colors.red,
+                                          );
+                                          return;
+                                        }
+                                        // prevent duplicates
+                                        if (viewModel.tollsTechnologies
+                                            .map((t) => t.toLowerCase())
+                                            .contains(lower)) {
+                                          ToastDialog.show(
+                                            'Tool "$raw" already added',
+                                            Colors.orange,
+                                          );
+                                          return;
+                                        }
+                                        // add + clear
+                                        viewModel.addToolsTechnologies(raw);
+                                        viewModel.toolController.clear();
+                                        // remove from master to avoid re-suggest
+                                        technicalSkills.removeWhere(
+                                            (s) => s.toLowerCase() == lower);
+                                        viewModel.filteredToolSuggestions = [];
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -221,9 +262,10 @@ class WorkExperienceScreen extends StatelessWidget {
                                 viewModel.toolController.text.isNotEmpty)
                               SuggestionList(
                                 suggestions: viewModel.filteredToolSuggestions,
-                                onTap: viewModel.selectTool,
+                                onTap: viewModel
+                                    .selectTool, // fills the field, adds it, and clears
                               ),
-                            if (viewModel.toolsTechnologiesUsed.isNotEmpty)
+                            if (viewModel.tollsTechnologies.isNotEmpty)
                               const ToolsList(),
 
                             verticalSpace(20),
@@ -267,7 +309,7 @@ class WorkExperienceScreen extends StatelessWidget {
                             : null,
                         color: viewModel.workExperiences.isNotEmpty
                             ? AppColors.primaryColor
-                            : const Color(0xFF5C6673),
+                            : Color(0xFF5C6673),
                       ),
                     ],
                   );

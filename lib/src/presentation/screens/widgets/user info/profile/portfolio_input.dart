@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/mangers/user_info/profile/profile_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
-
-import '../../../../shared_widgets/toast_dialoge.dart';
+import 'package:short_path/src/presentation/shared_widgets/snack_bar.dart';
 
 class PortfolioInput extends StatelessWidget {
   const PortfolioInput({super.key, required this.viewModel});
@@ -32,7 +30,7 @@ class PortfolioInput extends StatelessWidget {
             onPressed: () {
               if (!viewModel
                   .checkValidLink(viewModel.portfolioController.text)) {
-                ToastDialog.show(context.localization.invalidLink, Colors.red);
+                showSnackBar(context, 'Invalid link', Colors.red);
                 viewModel.portfolioController.clear();
                 return;
               }

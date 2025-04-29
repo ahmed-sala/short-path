@@ -79,24 +79,24 @@ class ProjectViewmodel extends Cubit<ProjectState> {
     emit(ProjectUpdated());
   }
 
-  void selectTool(int index) {
-    final selectedTool = filteredToolSuggestions[index];
-    technologiesUsedController.text =
-        selectedTool; // Set the text to the selected tool
-    addToolsTechnologies(
-        selectedTool); // Add the selected tool to toolsTechnologies
-    filteredToolSuggestions = []; // Clear the suggestions list
-    emit(ProjectUpdated()); // Notify the UI to rebuild
+  void selectTool(String selectedTool) {
+    technologiesUsedController.text = selectedTool;
+    addToolsTechnologies(selectedTool);
+    filteredToolSuggestions = [];
+    emit(ProjectUpdated());
   }
 
   void onToolChanged() {
-    filteredToolSuggestions = technologiesUsedController.text.isEmpty
-        ? technicalSkills
-        : technicalSkills
-            .where((tool) => tool
-                .toLowerCase()
-                .startsWith(technologiesUsedController.text.toLowerCase()))
-            .toList();
+    final input = technologiesUsedController.text.toLowerCase();
+    if (input.isEmpty) {
+      filteredToolSuggestions = [];
+    } else {
+      filteredToolSuggestions = technicalSkills
+          .where((tool) =>
+              tool.toLowerCase().startsWith(input) &&
+              !toolsTechnologies.contains(tool))
+          .toList();
+    }
     emit(ProjectUpdated());
   }
 

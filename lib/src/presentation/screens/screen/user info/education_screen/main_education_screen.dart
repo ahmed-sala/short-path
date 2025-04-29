@@ -9,7 +9,11 @@ import 'package:short_path/src/presentation/mangers/user_info/education/educatio
 import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen/detailed_education.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/education/education_list.dart';
+import 'package:short_path/src/presentation/shared_widgets/progress_bar.dart';
 import 'package:short_path/src/short_path.dart';
+
+import '../../../../../../core/styles/spacing.dart';
+import '../../../widgets/user info/profile/header_widget.dart';
 
 class MainEducationScreen extends StatelessWidget {
   const MainEducationScreen({super.key});
@@ -19,9 +23,6 @@ class MainEducationScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<EducationViewmodelNew>(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Education'),
-        ),
         body: BlocConsumer<EducationViewmodelNew, EducationState>(
           listener: (context, state) {
             if (state is AddEducationLoadingState) {
@@ -47,36 +48,28 @@ class MainEducationScreen extends StatelessWidget {
             return current is! EducationInitialState;
           },
           builder: (context, state) {
-            if (state is EducationAddedState ||
-                state is RemoveEducationState ||
-                state is EducationInitialState ||
-                state is OnboardingNextState ||
-                state is UpdateSelectedDateState ||
-                state is EducationProjectUpdated ||
-                state is ProjectDescriptionChanged ||
-                state is ProjectLinkChanged ||
-                state is ToolsTechnologiesChanged ||
-                state is ProjectNameChanged ||
-                state is ValidateColorButtonState ||
-                state is DateUpdatedState ||
-                state is ToolsAndTechnologiesAdded ||
-                state is ToolsAndTechnologiesRemoved ||
-                state is ToolsAndTechnologiesSelected ||
-                state is ToolsTechnologiesChanged ||
-                state is AddEducationLoadingState ||
-                state is AddEducationSuccessState ||
-                state is AddEducationErrorState) {
-              return const Directionality(
-                textDirection: TextDirection.ltr,
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: SafeArea(
                 child: Column(
                   children: [
-                    EducationListWidget(),
-                    Expanded(child: DetailedEducation()),
+                    verticalSpace(40),
+                    const Center(child: HeaderWidget()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: StepProgressBar(currentStep: 3),
+                    ),
+                    verticalSpace(16),
+                    const EducationListWidget(),
+                    const Expanded(
+                      flex: 2,
+                      child: DetailedEducation(),
+                    ),
+                    verticalSpace(20),
                   ],
                 ),
-              );
-            }
-            return Container();
+              ),
+            );
           },
         ),
       ),

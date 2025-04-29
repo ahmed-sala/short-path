@@ -11,7 +11,6 @@ import 'package:short_path/src/presentation/screens/screen/user info/skiils/skil
 import 'package:short_path/src/presentation/screens/screen/user%20info/additional_info/additional_info_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/certification/certification_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/education_screen/main_education_screen.dart';
-import 'package:short_path/src/presentation/screens/screen/user%20info/language/language_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/profile_screen/profile_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/project/project_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/work_experience/work_experience_screen.dart';
@@ -72,9 +71,9 @@ class AppRoute {
         return _handelMaterialPageRoute(
             settings: settings, widget: const AdditionalInfoScreen());
 
-      case RoutesName.language:
-        return _handelMaterialPageRoute(
-            settings: settings, widget: const LanguageScreen());
+      // case RoutesName.language:
+      //   return _handelMaterialPageRoute(
+      //       settings: settings, widget: const LanguageScreen());
 
       case RoutesName.workExperience:
         return _handelMaterialPageRoute(

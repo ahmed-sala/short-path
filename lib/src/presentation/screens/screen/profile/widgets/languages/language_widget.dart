@@ -22,8 +22,7 @@ class LanguagesWidget extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        return Skeletonizer(
-          child: Padding(
+        return  Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,8 +33,8 @@ class LanguagesWidget extends StatelessWidget {
                       ))
                   .toList(),
             ),
-          ),
-        );
+          )
+        ;
       },
     );
   }

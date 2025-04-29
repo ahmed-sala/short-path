@@ -8,6 +8,7 @@ import 'package:short_path/src/presentation/mangers/user_info/skill_gathering/sk
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButton_form_field.dart';
 
+import '../../../../../shared_widgets/suggetion_list.dart';
 import '../../../../../shared_widgets/toast_dialoge.dart';
 
 class TechSkillInputWidget extends StatefulWidget {
@@ -78,57 +79,61 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
                   color: AppColors.primaryColor, size: 30),
               onPressed: () {
                 Fluttertoast.cancel();
-                final skill = viewModel.techSkillController.text.trim();
-                if (skill.isNotEmpty) {
-                  viewModel.addSkill(
-                    skill: skill,
-                    proficiency: viewModel.selectedProficiency,
-                    type: 'Technical',
-                  );
-                  viewModel.techSkillController.clear();
-                  setState(() {
-                    viewModel.filteredSuggestions = [];
-                    _showSuggestions = false;
-                  });
+                final raw = viewModel.techSkillController.text.trim();
+                final skill = raw.toLowerCase();
+
+                // 1) Validate it’s in the master list
+                if (!technicalSkills
+                    .map((s) => s.toLowerCase())
+                    .contains(skill)) {
                   ToastDialog.show(
-                      '${context.localization.skillAddedSuccessfully} $skill',
-                      Colors.green);
+                    'Please choose a skill from the suggestions',
+                    Colors.red,
+                  );
+                  return;
                 }
+
+                // 2) Prevent duplicates
+                final alreadyAdded = viewModel.techSkills
+                    .map((e) => e.skill?.toLowerCase())
+                    .contains(skill);
+                if (alreadyAdded) {
+                  ToastDialog.show(
+                    'Skill “${raw}” is already added',
+                    Colors.orange,
+                  );
+                  return;
+                }
+
+                // 3) All good—add it
+                viewModel.addSkill(
+                  skill: raw,
+                  proficiency: viewModel.selectedProficiency,
+                  type: 'Technical',
+                );
+                viewModel.techSkillController.clear();
+                setState(() {
+                  viewModel.filteredSuggestions = [];
+                  _showSuggestions = false;
+                });
+                ToastDialog.show(
+                  '${context.localization.skillAddedSuccessfully} $raw',
+                  Colors.green,
+                );
               },
             ),
           ],
         ),
         if (_showSuggestions && viewModel.filteredSuggestions.isNotEmpty)
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            constraints: const BoxConstraints(maxHeight: 150),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: viewModel.filteredSuggestions.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(viewModel.filteredSuggestions[index]),
-                  onTap: () {
-                    viewModel.techSkillController.text =
-                        viewModel.filteredSuggestions[index];
-                    setState(() {
-                      _showSuggestions = false;
-                    });
-                  },
-                );
-              },
-            ),
+          SuggestionList(
+            suggestions: viewModel.filteredSuggestions,
+            onTap: (skill) {
+              // fill the text field and hide
+              viewModel.techSkillController.text = skill;
+              setState(() {
+                _showSuggestions = false;
+              });
+            },
           ),
       ],
     );
