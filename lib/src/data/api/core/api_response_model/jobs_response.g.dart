@@ -15,6 +15,9 @@ JobsResponse _$JobsResponseFromJson(Map<String, dynamic> json) => JobsResponse(
       totalElements: (json['totalElements'] as num?)?.toInt(),
       totalPages: (json['totalPages'] as num?)?.toInt(),
       last: json['last'] as bool?,
+      fullTimeJobsCount: (json['fullTimeJobsCount'] as num?)?.toInt(),
+      partTimeJobsCount: (json['partTimeJobsCount'] as num?)?.toInt(),
+      internshipJobsCount: (json['internshipJobsCount'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$JobsResponseToJson(JobsResponse instance) =>
@@ -25,6 +28,9 @@ Map<String, dynamic> _$JobsResponseToJson(JobsResponse instance) =>
       'totalElements': instance.totalElements,
       'totalPages': instance.totalPages,
       'last': instance.last,
+      'fullTimeJobsCount': instance.fullTimeJobsCount,
+      'partTimeJobsCount': instance.partTimeJobsCount,
+      'internshipJobsCount': instance.internshipJobsCount,
     };
 
 Content _$ContentFromJson(Map<String, dynamic> json) => Content(

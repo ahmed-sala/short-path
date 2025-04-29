@@ -36,7 +36,7 @@ dependencies:
   injectable:
   dio:
   device_info_plus: ^11.3.0
-
+  flutter_expandable_fab:
   permission_handler: ^11.0.1
   url_launcher: ^6.1.7
   easy_pdf_viewer: ^1.0.8
@@ -68,6 +68,7 @@ dependencies:
   flutter_downloader:
   flutter_markdown:
   flutter_email_sender:
+  flutter_speed_dial: ^7.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

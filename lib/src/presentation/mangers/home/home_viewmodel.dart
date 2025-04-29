@@ -21,9 +21,9 @@ class HomeViewmodel extends Cubit<HomeState> {
 
   List<ContentEntity>? jobs;
 
-  List<JobEntity>? fullTimeJobs;
-  List<JobEntity>? partTimeJobs;
-  List<JobEntity>? contractorJobs;
+  int? fullTimeJobsCount;
+  int? partTimeJobsCount;
+  int? internshipJobsCount;
 
   Future<void> getUserData() async {
     if (isClosed) return;
@@ -66,6 +66,9 @@ class HomeViewmodel extends Cubit<HomeState> {
       switch (result) {
         case Success<JobEntity?>():
           jobs = result.data?.content;
+          fullTimeJobsCount = result.data?.fullTimeJobsCount;
+          partTimeJobsCount = result.data?.partTimeJobsCount;
+          internshipJobsCount = result.data?.internshipJobsCount;
           if (!isClosed) emit(JobsLoaded(jobs));
           break;
         case Failures<JobEntity?>():

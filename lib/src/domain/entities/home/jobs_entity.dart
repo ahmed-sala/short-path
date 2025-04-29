@@ -5,8 +5,14 @@ class JobEntity {
   final int? totalElements;
   final int? totalPages;
   final bool? last;
+  final int? fullTimeJobsCount;
+  final int? partTimeJobsCount;
+  final int? internshipJobsCount;
 
   JobEntity({
+    this.fullTimeJobsCount,
+    this.partTimeJobsCount,
+    this.internshipJobsCount,
     this.content,
     this.pageNumber,
     this.pageSize,
