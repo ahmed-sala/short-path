@@ -29,9 +29,7 @@ class WorkExperienceError extends WorkExperienceState {
 }
 
 class ToolAdded extends WorkExperienceState {
-  final String tool;
-
-  const ToolAdded(this.tool);
+  const ToolAdded();
 }
 
 class ToolRemoved extends WorkExperienceState {
@@ -86,4 +84,29 @@ class CurrentlyWorkingChanged extends WorkExperienceState {
   final bool isCurrentlyWorking;
 
   const CurrentlyWorkingChanged(this.isCurrentlyWorking);
+}
+
+class ToolSuggestionsCleared extends WorkExperienceState {
+  const ToolSuggestionsCleared();
+}
+
+class WorkExperienceUpdatedState extends WorkExperienceState {
+  List<String>? filteredToolSuggestions;
+  WorkExperienceUpdatedState({this.filteredToolSuggestions});
+}
+
+class ToolsTechnologiesChanged extends WorkExperienceState {
+  const ToolsTechnologiesChanged();
+}
+
+class ToolsAndTechnologiesAdded extends WorkExperienceState {
+  const ToolsAndTechnologiesAdded();
+}
+
+class ToolsAndTechnologiesRemoved extends WorkExperienceState {
+  const ToolsAndTechnologiesRemoved();
+}
+
+class ToolsAndTechnologiesSelected extends WorkExperienceState {
+  const ToolsAndTechnologiesSelected();
 }

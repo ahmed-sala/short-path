@@ -11,7 +11,6 @@ import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/user_info/Project/Project_State.dart';
 import 'package:short_path/src/presentation/mangers/user_info/Project/Project_Viewmodel.dart';
-import 'package:short_path/src/presentation/screens/widgets/user%20info/profile/suggestion_list.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/project/project_list.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/project/tool_list.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
@@ -20,6 +19,7 @@ import 'package:short_path/src/presentation/shared_widgets/custom_drop_downButto
 
 import '../../../../../short_path.dart';
 import '../../../../shared_widgets/progress_bar.dart';
+import '../../../../shared_widgets/suggetion_list.dart';
 import '../../../widgets/user info/profile/header_widget.dart';
 
 class ProjectScreen extends StatelessWidget {
@@ -155,7 +155,8 @@ class ProjectScreen extends StatelessWidget {
                                     .technologiesUsedController.text.isNotEmpty)
                               SuggestionList(
                                 suggestions: viewModel.filteredToolSuggestions,
-                                onTap: viewModel.selectTool,
+                                onTap: viewModel
+                                    .selectTool, // fills the field, adds it, and clears
                               ),
                             verticalSpace(20),
                             if (viewModel.toolsTechnologies.isNotEmpty) ...[

@@ -8,23 +8,22 @@ import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
+import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
 import 'package:short_path/src/presentation/mangers/user_info/profile/profile_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/profile/profile_viewmodel.dart';
-import 'package:short_path/src/presentation/mangers/user_info/Language/language_state.dart';
-import 'package:short_path/src/presentation/mangers/user_info/Language/language_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/widgets/user info/profile/header_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/user info/profile/job_title_input.dart';
-import 'package:short_path/src/presentation/screens/widgets/user info/profile/portfolio_input.dart';
-import 'package:short_path/src/presentation/screens/widgets/user info/profile/portfolio_list_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/user info/profile/language_input.dart';
 import 'package:short_path/src/presentation/screens/widgets/user info/profile/language_list_widget.dart';
-import 'package:short_path/src/presentation/screens/widgets/user info/profile/suggestion_list.dart';
+import 'package:short_path/src/presentation/screens/widgets/user info/profile/portfolio_input.dart';
+import 'package:short_path/src/presentation/screens/widgets/user info/profile/portfolio_list_widget.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 import 'package:short_path/src/presentation/shared_widgets/progress_bar.dart';
 import 'package:short_path/src/short_path.dart';
 
 import '../../../../../../config/helpers/validations.dart';
+import '../../../../mangers/user_info/Language/language_state.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -50,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
                 }
                 if (state is ProfileUpdateSuccess) {
                   navKey.currentState!.pushNamedAndRemoveUntil(
-                      RoutesName.skillGathering, (route) => false);
+                      RoutesName.skillGathering, (r) => false);
                 }
                 if (state is ProfileUpdateError) {
                   showAwesomeDialog(
@@ -62,17 +61,15 @@ class ProfileScreen extends StatelessWidget {
                   );
                 }
               },
-              buildWhen: (previous, current) =>
-              current is ProfileInitialState ||
-                  current is ValidateColorButtonState,
-              listenWhen: (previous, current) {
-                if (previous is ProfileLoading ||
-                    current is ProfileUpdateError) hideLoading();
-                return current is! ProfileInitialState;
+              buildWhen: (prev, cur) =>
+                  cur is ProfileInitialState || cur is ValidateColorButtonState,
+              listenWhen: (prev, cur) {
+                if (prev is ProfileLoading || cur is ProfileUpdateError)
+                  hideLoading();
+                return cur is! ProfileInitialState;
               },
               builder: (context, state) {
                 final profVM = context.read<ProfileViewmodel>();
-                final langVM = context.read<LanguageViewmodel>();
 
                 return Form(
                   key: profVM.formKey,
@@ -84,18 +81,22 @@ class ProfileScreen extends StatelessWidget {
                       const Center(child: HeaderWidget()),
                       StepProgressBar(currentStep: 1),
                       verticalSpace(22),
+
+                      // Job title & portfolio
                       JobTitleInput(viewModel: profVM),
                       verticalSpace(20),
                       PortfolioInput(viewModel: profVM),
                       if (profVM.portfolioLinks.isNotEmpty)
                         const PortfolioListWidget(),
                       verticalSpace(20),
+
+                      // LinkedIn & Picture URLs
                       CustomTextFormField(
                         hintText: 'Enter your LinkedIn profile URL',
                         keyboardType: TextInputType.url,
                         controller: profVM.linkedInController,
                         labelText: 'LinkedIn Profile',
-                        validator: (value) => validateLink(value),
+                        validator: validateLink,
                       ),
                       verticalSpace(20),
                       CustomTextFormField(
@@ -103,39 +104,50 @@ class ProfileScreen extends StatelessWidget {
                         keyboardType: TextInputType.url,
                         controller: profVM.profilePictureController,
                         labelText: 'Profile Picture',
-                        validator: (value) => validateLink(value),
+                        validator: validateLink,
                       ),
                       verticalSpace(20),
-                      LanguageInput(viewModel: langVM),
+
+                      // LANGUAGE INPUT + suggestions & selected list
+                      LanguageInput(
+                          viewModel: context.read<LanguageViewmodel>()),
+                      verticalSpace(8),
+
+                      BlocBuilder<LanguageViewmodel, LanguageState>(
+                        builder: (context, langState) {
+                          final langVM = context.read<LanguageViewmodel>();
+                          if (langVM.languages.isNotEmpty) {
+                            return const LanguageListWidget();
+                          }
+
+                          return const SizedBox.shrink();
+                        },
+                      ),
+
                       verticalSpace(20),
+
+                      // Bio / Summary
                       CustomTextFormField(
-                        hintText: 'Enter your Bio',
+                        hintText: 'Enter your ',
                         keyboardType: TextInputType.text,
                         controller: profVM.bioController,
                         labelText: 'Summary',
-                        validator: (value) => validateSummary(value),
+                        validator: validateSummary,
                       ),
-                      if (langVM.filteredLanguageSuggestions.isNotEmpty &&
-                          langVM.languageController.text.isNotEmpty)
-                        SuggestionList(
-                          suggestions: langVM.filteredLanguageSuggestions,
-                          onTap: langVM.selectLanguage,
-                        ),
-                      if (langVM.languages.isNotEmpty)
-                        const LanguageListWidget(),
-
                       verticalSpace(15),
+
+                      // NEXT button
                       CustomAuthButton(
                         text: 'NEXT',
                         onPressed: () {
-                          // First submit profile, then languages
                           profVM.next();
-                          langVM.next();
+                          context.read<LanguageViewmodel>().next();
                         },
                         color: profVM.validate
                             ? AppColors.primaryColor
                             : const Color(0xFF5C6673),
                       ),
+                      verticalSpace(30),
                     ],
                   ),
                 );

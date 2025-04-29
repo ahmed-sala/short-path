@@ -25,25 +25,25 @@ class ShortPath extends StatelessWidget {
               minTextAdapt: true,
               splitScreenMode: true,
               builder: (context, child) => MaterialApp(
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: const [
-                  Locale('en'),
-                  Locale('ar'),
-                ],
-                locale: Locale(localizationViewmodel.cachedLanguageCode),
-                theme: AppTheme.lightTheme,
-                debugShowCheckedModeBanner: false,
-                title: 'Short Path',
-                builder: EasyLoading.init(),
-                navigatorKey: navKey,
-                initialRoute: RoutesName.home,
-                onGenerateRoute: AppRoute.onGenerateRoute,
-              ));
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: const [
+                      Locale('en'),
+                      Locale('ar'),
+                    ],
+                    locale: Locale(localizationViewmodel.cachedLanguageCode),
+                    theme: AppTheme.lightTheme,
+                    debugShowCheckedModeBanner: false,
+                    title: 'Short Path',
+                    builder: EasyLoading.init(),
+                    navigatorKey: navKey,
+                    initialRoute: RoutesName.education,
+                    onGenerateRoute: AppRoute.onGenerateRoute,
+                  ));
         },
       ),
     );

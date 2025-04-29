@@ -15,58 +15,131 @@ class EducationListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<EducationViewmodelNew, EducationState>(
       builder: (context, state) {
-        final skills = context.read<EducationViewmodelNew>().educationDetails;
-        if (skills.isEmpty) {
-          return Text(
-            context.localization.nothingAddedYet,
-            style: const TextStyle(color: Colors.grey),
+        final items = context.read<EducationViewmodelNew>().educationDetails;
+        if (items.isEmpty) {
+          return Center(
+            child: Text(
+              context.localization.nothingAddedYet,
+              style: const TextStyle(
+                color: Colors.grey,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
           );
         }
-        return Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: skills.map((skill) {
-            return Chip(
-              label: Text(skill.institutionName!),
-              backgroundColor: AppColors.whiteColor,
-              labelStyle: const TextStyle(color: AppColors.primaryColor),
-              deleteIcon: const Icon(Icons.close, color: Colors.red),
-              onDeleted: () {
-                // Use ScaffoldMessenger to manage SnackBars
-                final scaffoldMessenger = ScaffoldMessenger.maybeOf(context);
-                if (scaffoldMessenger == null) {
-                  debugPrint('ScaffoldMessenger not found in the widget tree.');
-                  return;
-                }
 
-                scaffoldMessenger
-                    .hideCurrentSnackBar(); // Dismiss any previous SnackBar
-                context.read<EducationViewmodelNew>().removeEducation(skill);
-                scaffoldMessenger.showSnackBar(
-                  SnackBar(
-                    content: Text(
-                        '${skill.institutionName} ${context.localization.removedSuccessfully}'),
-                    backgroundColor: Colors.red,
-                    action: SnackBarAction(
-                      label: context.localization.undo,
-                      onPressed: () {
-                        Fluttertoast.cancel();
-                        scaffoldMessenger
-                            .hideCurrentSnackBar(); // Dismiss previous SnackBar
-                        context.read<EducationViewmodelNew>().addEducation();
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            children: items.map((edu) {
+              return Container(
+                width: 220,
+                margin: const EdgeInsets.only(right: 12),
+                child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  shadowColor: Colors.black12,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Header row: Institution + delete button
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                edu.institutionName ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => _onDelete(context, edu),
+                              child: const Icon(
+                                Icons.close,
+                                size: 18,
+                                color: Colors.redAccent,
+                              ),
+                            ),
+                          ],
+                        ),
 
-                        ToastDialog.show(
-                            '${skill.institutionName} ${context.localization.addedBack}',
-                            Colors.green);
-                      },
+                        const SizedBox(height: 4),
+
+                        // Degree
+                        if (edu.degreeCertification != null &&
+                            edu.degreeCertification!.isNotEmpty)
+                          Text(
+                            edu.degreeCertification!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+
+                        // Years / Duration
+                        if (edu.graduationDate != null)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 2),
+                            child: Text(
+                              '${edu.graduationDate ?? ''}',
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
-                );
-              },
-            );
-          }).toList(),
+                ),
+              );
+            }).toList(),
+          ),
         );
       },
+    );
+  }
+
+  void _onDelete(BuildContext context, edu) {
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    context.read<EducationViewmodelNew>().removeEducation(edu);
+
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(
+          '${edu.institutionName} ${context.localization.removedSuccessfully}',
+        ),
+        backgroundColor: Colors.red[600],
+        action: SnackBarAction(
+          label: context.localization.undo,
+          textColor: Colors.white,
+          onPressed: () {
+            Fluttertoast.cancel();
+            messenger.hideCurrentSnackBar();
+            context.read<EducationViewmodelNew>().addEducation();
+            ToastDialog.show(
+              '${edu.institutionName} ${context.localization.addedBack}',
+              Colors.green,
+            );
+          },
+        ),
+      ),
     );
   }
 }

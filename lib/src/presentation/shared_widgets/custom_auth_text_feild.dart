@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/styles/colors/app_colore.dart';
 
 class CustomTextFormField extends StatefulWidget {
   CustomTextFormField({
@@ -69,18 +70,18 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         controller: widget.controller,
         decoration: InputDecoration(
           prefixIcon: (_isFocused && widget.showPassword == null)
-              ? const Icon(Icons.edit, color: Colors.blueAccent)
+              ? const Icon(Icons.edit, color: AppColors.primaryColor)
               : null,
           suffixIcon: (_isFocused && widget.showPassword != null)
               ? IconButton(
-            onPressed: widget.showPassword,
-            icon: Icon(
-              widget.isPasswordVisible
-                  ? Icons.visibility
-                  : Icons.visibility_off,
-              color: Colors.grey.shade600,
-            ),
-          )
+                  onPressed: widget.showPassword,
+                  icon: Icon(
+                    widget.isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    color: Colors.grey.shade600,
+                  ),
+                )
               : null,
           labelText: widget.labelText,
           labelStyle: TextStyle(
@@ -93,7 +94,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide:
-            const BorderSide(color: Colors.blueAccent, width: 2),
+                const BorderSide(color: AppColors.primaryColor, width: 2),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
@@ -102,15 +103,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           filled: true,
           fillColor: Colors.grey[50],
           contentPadding:
-          const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+              const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
         ),
         onChanged: widget.onChanged,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         obscureText:
-        widget.showPassword == null ? false : widget.isPasswordVisible,
+            widget.showPassword == null ? false : widget.isPasswordVisible,
         validator: widget.validator,
         keyboardType:
-        isSummaryField ? TextInputType.multiline : widget.keyboardType,
+            isSummaryField ? TextInputType.multiline : widget.keyboardType,
         maxLines: isSummaryField ? 5 : 1,
         style: const TextStyle(
           color: Color(0xFF858383),

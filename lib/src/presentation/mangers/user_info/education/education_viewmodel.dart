@@ -76,20 +76,27 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   }
 
   void onToolChanged() {
-    filteredToolSuggestions = toolsTechnologiesController.text.isEmpty
-        ? technicalSkills
-        : technicalSkills
-            .where((tool) => tool
-                .toLowerCase()
-                .startsWith(toolsTechnologiesController.text.toLowerCase()))
-            .toList();
+    final input = toolsTechnologiesController.text.toLowerCase();
+    if (input.isEmpty) {
+      filteredToolSuggestions = [];
+    } else {
+      filteredToolSuggestions = technicalSkills
+          .where((tool) =>
+              tool.toLowerCase().startsWith(input) &&
+              !tollsTechnologies.contains(tool))
+          .toList();
+    }
     emit(const ToolsTechnologiesChanged());
   }
 
-  void selectTool(int index) {
-    toolsTechnologiesController.text = filteredToolSuggestions[index];
+  void selectTool(String selectedTool) {
+    // 1) Set the text field
+    toolsTechnologiesController.text = selectedTool;
+    // 2) Add to the list
+    addToolsTechnologies(selectedTool);
+    // 3) Clear suggestions
     filteredToolSuggestions = [];
-    emit(const ToolsAndTechnologiesSelected());
+    emit(const ToolsAndTechnologiesAdded());
   }
 
   void updateSelectedDegree(String? degree) {
