@@ -159,7 +159,7 @@ class ProjectScreen extends StatelessWidget {
                               ),
                             verticalSpace(20),
                             if (viewModel.toolsTechnologies.isNotEmpty) ...[
-                              ToolList(),
+                              const ToolList(),
                               verticalSpace(20),
                             ],
                             verticalSpace(20),

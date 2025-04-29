@@ -660,9 +660,13 @@ class _ApiServices implements ApiServices {
   }
 
   @override
-  Future<CoverSheetResponse> generateCoverSheet(String jobDescription) async {
+  Future<CoverSheetResponse> generateCoverSheet(
+    String? jobDescription,
+    int? jobId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'job': jobDescription};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<CoverSheetResponse>(Options(

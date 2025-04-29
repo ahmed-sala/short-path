@@ -18,7 +18,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   final UserInfoUsecase _userInfoUsecase;
 
   EducationViewmodelNew(this._userInfoUsecase)
-      : super(EducationInitialState()) {
+      : super(const EducationInitialState()) {
     _initializeListeners();
   }
 
@@ -52,8 +52,8 @@ class EducationViewmodelNew extends Cubit<EducationState> {
 
   // Screens
   final List<Widget> pages = [
-    EducationScreen(),
-    EducationProjectScreen(),
+    const EducationScreen(),
+    const EducationProjectScreen(),
   ];
 
   void _initializeListeners() {
@@ -72,7 +72,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     validate = institutionName.text.isNotEmpty &&
         location.text.isNotEmpty &&
         (formKey.currentState?.validate() ?? false);
-    emit(ValidateColorButtonState());
+    emit(const ValidateColorButtonState());
   }
 
   void onToolChanged() {
@@ -83,18 +83,18 @@ class EducationViewmodelNew extends Cubit<EducationState> {
                 .toLowerCase()
                 .startsWith(toolsTechnologiesController.text.toLowerCase()))
             .toList();
-    emit(ToolsTechnologiesChanged());
+    emit(const ToolsTechnologiesChanged());
   }
 
   void selectTool(int index) {
     toolsTechnologiesController.text = filteredToolSuggestions[index];
     filteredToolSuggestions = [];
-    emit(ToolsAndTechnologiesSelected());
+    emit(const ToolsAndTechnologiesSelected());
   }
 
   void updateSelectedDegree(String? degree) {
     selectedDegree = degree;
-    emit(DegreeCertificationChanged());
+    emit(const DegreeCertificationChanged());
     validateColorButton();
   }
 
@@ -117,7 +117,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
         fieldOfStudy: fieldOfStudyController.text,
       ),
     );
-    emit(EducationAddedState());
+    emit(const EducationAddedState());
 
     // Reset fields
     _clearEducationFields();
@@ -126,12 +126,12 @@ class EducationViewmodelNew extends Cubit<EducationState> {
 
   void removeEducation(EducationDetailEntity education) {
     educationDetails.remove(education);
-    emit(RemoveEducationState());
+    emit(const RemoveEducationState());
   }
 
   void addProject() {
     if (tollsTechnologies.isEmpty) {
-      emit(AddEducationErrorState('Please add tools and technologies'));
+      emit(const AddEducationErrorState('Please add tools and technologies'));
       return;
     }
     if (educationProjectFormKey.currentState!.validate()) {
@@ -165,7 +165,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   void changePage(int index) {
     if (currentPage != index) {
       currentPage = index;
-      emit(OnboardingNextState());
+      emit(const OnboardingNextState());
     }
   }
 
@@ -175,7 +175,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
 
   void nextButton() async {
     if (projects.isEmpty) {
-      emit(AddEducationErrorState('Please add projects'));
+      emit(const AddEducationErrorState('Please add projects'));
       return;
     }
 
@@ -189,7 +189,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
         fieldOfStudy: fieldOfStudyController.text,
       ),
     );
-    emit(AddEducationLoadingState());
+    emit(const AddEducationLoadingState());
     EducationEntity educationEntity = EducationEntity(
       educationDetails: educationDetails,
     );
@@ -198,7 +198,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     );
     switch (result) {
       case Success<void>():
-        emit(AddEducationSuccessState());
+        emit(const AddEducationSuccessState());
       case Failures<void>():
         educationDetails.removeLast();
         var errorMessage =
@@ -211,7 +211,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     if (value.isNotEmpty && !tollsTechnologies.contains(value)) {
       tollsTechnologies.add(value);
       toolsTechnologiesController.clear();
-      emit(ToolsAndTechnologiesAdded());
+      emit(const ToolsAndTechnologiesAdded());
     }
   }
 
@@ -219,7 +219,7 @@ class EducationViewmodelNew extends Cubit<EducationState> {
   void removeToolsTechnologies(String value) {
     if (value.isNotEmpty) {
       tollsTechnologies.remove(value);
-      emit(ToolsAndTechnologiesRemoved());
+      emit(const ToolsAndTechnologiesRemoved());
     }
   }
 

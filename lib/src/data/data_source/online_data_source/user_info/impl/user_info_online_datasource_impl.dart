@@ -14,7 +14,7 @@ import '../contracts/user_info_online_datasource.dart';
 
 @Injectable(as: UserInfoOnlineDataSource)
 class UserInfoOnlineDatasourceImpl implements UserInfoOnlineDataSource {
-  ApiServices _apiServices;
+  final ApiServices _apiServices;
 
   UserInfoOnlineDatasourceImpl(this._apiServices);
 

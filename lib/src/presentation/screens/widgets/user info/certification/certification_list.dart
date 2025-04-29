@@ -14,12 +14,12 @@ class CertificationList extends StatelessWidget {
   final Color primaryColor;
 
   const CertificationList({
-    Key? key,
+    super.key,
     required this.certifications,
     required this.onRemove,
     required this.onUndo,
     this.primaryColor = Colors.blue,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

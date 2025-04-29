@@ -8,7 +8,7 @@ import 'package:short_path/src/data/dto_models/auth/app_user_dto.dart';
 
 @Injectable(as: AuthOnlineDatasource)
 class AuthOnlineDataSourceImpl implements AuthOnlineDatasource {
-  ApiServices _apiServices;
+  final ApiServices _apiServices;
   AuthOnlineDataSourceImpl(this._apiServices);
 
   @override

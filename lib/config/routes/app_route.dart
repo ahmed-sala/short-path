@@ -3,8 +3,7 @@ import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/src/presentation/screens/screen/auth/login_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/auth/register_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/home/home_screen.dart';
-import 'package:short_path/src/presentation/screens/screen/home/job_detail.dart';
-import 'package:short_path/src/presentation/screens/screen/home/jobs_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/job/job_detail.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/auth_decision.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/onboarding_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/section/section_screen.dart';
@@ -16,6 +15,8 @@ import 'package:short_path/src/presentation/screens/screen/user%20info/language/
 import 'package:short_path/src/presentation/screens/screen/user%20info/profile_screen/profile_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/project/project_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/user%20info/work_experience/work_experience_screen.dart';
+
+import '../../src/presentation/screens/screen/job/jobs_screen.dart';
 
 class AppRoute {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -43,7 +44,7 @@ class AppRoute {
             settings: settings, widget: const JobsScreen());
       case RoutesName.education:
         return _handelMaterialPageRoute(
-            settings: settings, widget: MainEducationScreen());
+            settings: settings, widget: const MainEducationScreen());
 
       case RoutesName.skillGathering:
         return _handelMaterialPageRoute(
@@ -57,8 +58,7 @@ class AppRoute {
 
       case RoutesName.jobDetail:
         return _handelMaterialPageRoute(
-            settings: settings, widget: JobDetail());
-
+            settings: settings, widget: const JobDetail());
 
       case RoutesName.project:
         return _handelMaterialPageRoute(

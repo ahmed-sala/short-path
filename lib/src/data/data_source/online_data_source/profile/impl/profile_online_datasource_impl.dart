@@ -13,7 +13,7 @@ import '../contracts/profile_online_datasource.dart';
 
 @Injectable(as: ProfileOnlineDataSource)
 class ProfileOnlineDatasourceImpl implements ProfileOnlineDataSource {
-  ApiServices _apiServices;
+  final ApiServices _apiServices;
 
   ProfileOnlineDatasourceImpl(this._apiServices);
 

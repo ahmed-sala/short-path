@@ -53,7 +53,7 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
                 .toLowerCase()
                 .startsWith(toolController.text.toLowerCase()))
             .toList();
-    emit(ToolChanged());
+    emit(const ToolChanged());
   }
 
   void _validateForm() {
@@ -88,22 +88,22 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   Future<void> next() async {
     if (workExperiences.isNotEmpty) {
       try {
-        emit(AddWorkExperienceLoading());
+        emit(const AddWorkExperienceLoading());
         final result =
             await userInfoUsecase.invokeWorkExperience(workExperiences);
         switch (result) {
           case Success<void>():
-            emit(AddWorkExperienceSuccess());
+            emit(const AddWorkExperienceSuccess());
           case Failures<void>():
             var errorMessage = ErrorHandler.fromException(result.exception);
             if (errorMessage.code == 403) {
-              emit(SessionExpired());
+              emit(const SessionExpired());
               return;
             }
             emit(AddWorkExperienceFailed(errorMessage.errorMessage));
         }
       } catch (e) {
-        emit(AddWorkExperienceFailed('An error occurred. Please try again.'));
+        emit(const AddWorkExperienceFailed('An error occurred. Please try again.'));
       }
     }
   }
@@ -147,7 +147,7 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
   void selectTool(int index) {
     toolController.text = filteredToolSuggestions[index];
     filteredToolSuggestions = [];
-    emit(ToolSelected());
+    emit(const ToolSelected());
   }
 
   // Work experience management
@@ -196,7 +196,7 @@ class WorkExperienceViewModel extends Cubit<WorkExperienceState> {
 
   void addWorkExperienceBack(WorkExperienceEntity experience) {
     workExperiences.add(experience);
-    emit(WorkExperienceAdded());
+    emit(const WorkExperienceAdded());
   }
 
   @override

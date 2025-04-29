@@ -18,7 +18,7 @@ class AwardsList extends StatelessWidget {
         if (skills.isEmpty) {
           return Text(
             context.localization.nothingAddedYet,
-            style: TextStyle(color: Colors.grey),
+            style: const TextStyle(color: Colors.grey),
           );
         }
         return Wrap(

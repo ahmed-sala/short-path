@@ -16,7 +16,7 @@ import '../../data_source/online_data_source/profile/contracts/profile_online_da
 
 @Injectable(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {
-  ProfileOnlineDataSource _ProfileOnlineDataSource;
+  final ProfileOnlineDataSource _ProfileOnlineDataSource;
   ProfileRepositoryImpl(
     this._ProfileOnlineDataSource,
   );

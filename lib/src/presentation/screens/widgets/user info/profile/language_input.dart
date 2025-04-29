@@ -30,8 +30,8 @@ class LanguageInput extends StatelessWidget {
             labelText: context.localization.level,
             items: viewModel.languageLevels
                 .map((level) => DropdownMenuItem(
-                      child: Text(level),
                       value: level,
+                      child: Text(level),
                     ))
                 .toList(),
             value: viewModel.selectedLanguageLevel,

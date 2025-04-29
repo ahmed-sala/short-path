@@ -10,7 +10,7 @@ import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feil
 import '../../../../../shared_widgets/toast_dialoge.dart';
 
 class SoftSkillInputWidget extends StatefulWidget {
-  SoftSkillInputWidget({super.key});
+  const SoftSkillInputWidget({super.key});
 
   @override
   _SoftSkillInputWidgetState createState() => _SoftSkillInputWidgetState();

@@ -107,6 +107,5 @@ abstract class ApiServices {
   );
   @GET(ApisEndPoints.generateCoverSheet)
   Future<CoverSheetResponse> generateCoverSheet(
-    @Query("job") String jobDescription,
-  );
+      @Query("job") String? jobDescription, @Path('jobId ') int? jobId);
 }

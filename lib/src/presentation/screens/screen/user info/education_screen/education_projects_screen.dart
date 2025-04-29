@@ -15,6 +15,8 @@ import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.da
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 
 class EducationProjectScreen extends StatelessWidget {
+  const EducationProjectScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     var viewModel = context.read<EducationViewmodelNew>();
@@ -107,7 +109,7 @@ class EducationProjectScreen extends StatelessWidget {
                         ),
                       verticalSpace(20),
                       if (viewModel.tollsTechnologies.isNotEmpty) ...[
-                        ToolsListWidget(),
+                        const ToolsListWidget(),
                         verticalSpace(20),
                       ],
                       CustomAuthButton(

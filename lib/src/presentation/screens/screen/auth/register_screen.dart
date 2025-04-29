@@ -6,16 +6,16 @@ import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/auth/register/register_states.dart';
 import 'package:short_path/src/presentation/mangers/auth/register/register_viewmodel.dart';
-import 'package:short_path/src/presentation/screens/widgets/auth/first_step_register.dart';
-import 'package:short_path/src/presentation/screens/widgets/auth/second_step_register.dart';
+import 'package:short_path/src/presentation/screens/screen/auth/widgets/animated_logo.dart';
+import 'package:short_path/src/presentation/screens/screen/auth/widgets/first_step_register.dart';
+import 'package:short_path/src/presentation/screens/screen/auth/widgets/no_account_row.dart';
+import 'package:short_path/src/presentation/screens/screen/auth/widgets/second_step_register.dart';
 
-import '../../widgets/auth/animated_form.dart';
-import '../../widgets/auth/animated_logo.dart';
-import '../../widgets/auth/custom_progress_bar.dart';
-import '../../widgets/auth/no_account_row.dart';
+import 'widgets/animated_form.dart';
+import 'widgets/custom_progress_bar.dart';
 
 class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +96,11 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 10),
                                   // Progress Bar is added here
-                                  CustomProgressBar(),
+                                  const CustomProgressBar(),
                                   const SizedBox(height: 10),
                                   viewModel.currentStep == 0
-                                      ? FirstStepRegister()
-                                      : SecondStepRegister(),
+                                      ? const FirstStepRegister()
+                                      : const SecondStepRegister(),
                                   const SizedBox(height: 20),
                                   NoAccountRow(
                                     content: context

@@ -5,25 +5,29 @@ import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/data/data_source/online_data_source/career/contract/career_online_datasource.dart';
 import 'package:short_path/src/domain/repositories/contract/career_repository.dart';
 
+import '../../../domain/entities/career/cover_sheet_entity.dart';
+
 @Injectable(as: CareerRepository)
 class CareerRepositoryImpl implements CareerRepository {
-  CareerOnlineDatasource _careerOnlineDatasource;
+  final CareerOnlineDatasource _careerOnlineDatasource;
   CareerRepositoryImpl(this._careerOnlineDatasource);
   @override
   Future<ApiResult<Response<ResponseBody>>> downloadFile(
-      String jobDescription) async {
+      {String? jobDescription, int? jobId}) async {
     return await executeApi<Response<ResponseBody>>(apiCall: () async {
-      var result = await _careerOnlineDatasource.downloadFile(jobDescription);
+      var result = await _careerOnlineDatasource.downloadFile(
+          jobDescription: jobDescription, jobId: jobId);
       return result;
     });
   }
 
   @override
-  Future<ApiResult<String?>> generateCoverSheet(String jobDescription) async {
-    return await executeApi<String?>(apiCall: () async {
-      var result =
-          await _careerOnlineDatasource.generateCoverSheet(jobDescription);
-      return result;
+  Future<ApiResult<CoverSheetEntity?>> generateCoverSheet(
+      {String? jobDescription, int? jobId}) async {
+    return await executeApi<CoverSheetEntity?>(apiCall: () async {
+      var result = await _careerOnlineDatasource.generateCoverSheet(
+          jobDescription: jobDescription, jobId: jobId);
+      return result?.toEntity();
     });
   }
 }

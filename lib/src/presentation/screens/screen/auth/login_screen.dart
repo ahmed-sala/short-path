@@ -10,17 +10,17 @@ import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/auth/login/login_states.dart';
 import 'package:short_path/src/presentation/mangers/auth/login/login_viewmodel.dart';
+import 'package:short_path/src/presentation/screens/screen/auth/widgets/animated_logo.dart';
+import 'package:short_path/src/presentation/screens/screen/auth/widgets/no_account_row.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_text_feild.dart';
 
 import '../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
 import '../../../mangers/auth/login/login_actions.dart';
-import '../../widgets/auth/animated_form.dart';
-import '../../widgets/auth/animated_logo.dart';
-import '../../widgets/auth/no_account_row.dart';
+import 'widgets/animated_form.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -201,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               : null,
                                           color: viewModel.validate
                                               ? const Color(0xFF102027)
-                                              : const Color(0xFFB0BC5),
+                                              : const Color(0x0ffb0bc5),
                                         ),
                                       ),
                                       SizedBox(height: 20.h),

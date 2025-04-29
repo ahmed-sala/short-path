@@ -27,7 +27,7 @@ class SectionScreen extends StatelessWidget {
             ),
             // Wrap bottomNavigationBar with AnimatedSlide
             bottomNavigationBar: AnimatedSlide(
-              offset: _viewModel.showBottomNav ? Offset(0, 0) : Offset(0, 1),
+              offset: _viewModel.showBottomNav ? const Offset(0, 0) : const Offset(0, 1),
               duration: const Duration(milliseconds: 300),
               child: Theme(
                 data: Theme.of(context).copyWith(
@@ -45,7 +45,7 @@ class SectionScreen extends StatelessWidget {
                         color: Colors.black.withOpacity(0.1),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(4, 4),
+                        offset: const Offset(4, 4),
                       ),
                     ],
                     borderRadius: BorderRadius.circular(20.r),
