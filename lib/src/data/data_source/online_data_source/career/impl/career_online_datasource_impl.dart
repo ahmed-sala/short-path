@@ -17,7 +17,8 @@ class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
   CareerOnlineDatasourceImpl(this._apiServices);
 
   @override
-  Future<Response<ResponseBody>> downloadFile(String jobDescription) async {
+  Future<Response<ResponseBody>> downloadFile(
+      {String? jobDescription, int? jobId}) async {
     String? token =
         await getIt<FlutterSecureStorage>().read(key: SharedPrefKeys.userToken);
     final response = await DioClient.downloadPdf(
@@ -31,8 +32,9 @@ class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
   }
 
   @override
-  Future<CoverSheetDto?> generateCoverSheet(String jobDescription) async {
-    var response = await _apiServices.generateCoverSheet(jobDescription);
+  Future<CoverSheetDto?> generateCoverSheet(
+      {String? jobDescription, int? jobId}) async {
+    var response = await _apiServices.generateCoverSheet(jobDescription, jobId);
     return response.toDto();
   }
 }

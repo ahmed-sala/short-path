@@ -13,19 +13,20 @@ class CareerRepositoryImpl implements CareerRepository {
   CareerRepositoryImpl(this._careerOnlineDatasource);
   @override
   Future<ApiResult<Response<ResponseBody>>> downloadFile(
-      String jobDescription) async {
+      {String? jobDescription, int? jobId}) async {
     return await executeApi<Response<ResponseBody>>(apiCall: () async {
-      var result = await _careerOnlineDatasource.downloadFile(jobDescription);
+      var result = await _careerOnlineDatasource.downloadFile(
+          jobDescription: jobDescription, jobId: jobId);
       return result;
     });
   }
 
   @override
   Future<ApiResult<CoverSheetEntity?>> generateCoverSheet(
-      String jobDescription) async {
+      {String? jobDescription, int? jobId}) async {
     return await executeApi<CoverSheetEntity?>(apiCall: () async {
-      var result =
-          await _careerOnlineDatasource.generateCoverSheet(jobDescription);
+      var result = await _careerOnlineDatasource.generateCoverSheet(
+          jobDescription: jobDescription, jobId: jobId);
       return result?.toEntity();
     });
   }

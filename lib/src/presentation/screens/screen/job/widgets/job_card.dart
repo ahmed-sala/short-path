@@ -6,7 +6,7 @@ import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
 
 import '../../../../../../../config/routes/routes_name.dart';
 import '../../../../../../../core/styles/cached_network_image_widget.dart';
-import '../../../../../../short_path.dart';
+import '../../../../../short_path.dart';
 
 class JobCard extends StatelessWidget {
   const JobCard({super.key, required this.job});

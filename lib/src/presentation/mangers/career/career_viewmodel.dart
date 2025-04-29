@@ -25,7 +25,7 @@ class CareerViewmodel extends Cubit<CareerState> {
     try {
       emit(GenerateCoverSheetLoading());
       final result =
-          await _careerUsecase.generateCoverSheet(jobDescribtion.text);
+          await _careerUsecase.generateCoverSheet(jobDescription: jobDescribtion.text);
       switch (result) {
         case Success<CoverSheetEntity?>():
           var coverSheetResponse = result.data;

@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
+
+import '../../../../domain/entities/home/jobs_entity.dart';
 
 part 'jobs_response.g.dart';
 
@@ -17,6 +18,12 @@ class JobsResponse {
   final int? totalPages;
   @JsonKey(name: "last")
   final bool? last;
+  @JsonKey(name: "fullTimeJobsCount")
+  final int? fullTimeJobsCount;
+  @JsonKey(name: "partTimeJobsCount")
+  final int? partTimeJobsCount;
+  @JsonKey(name: "internshipJobsCount")
+  final int? internshipJobsCount;
 
   JobsResponse({
     this.content,
@@ -25,6 +32,9 @@ class JobsResponse {
     this.totalElements,
     this.totalPages,
     this.last,
+    this.fullTimeJobsCount,
+    this.partTimeJobsCount,
+    this.internshipJobsCount,
   });
 
   factory JobsResponse.fromJson(Map<String, dynamic> json) {
@@ -43,6 +53,9 @@ class JobsResponse {
       totalElements: totalElements,
       totalPages: totalPages,
       last: last,
+      fullTimeJobsCount: fullTimeJobsCount,
+      partTimeJobsCount: partTimeJobsCount,
+      internshipJobsCount: internshipJobsCount,
     );
   }
 }

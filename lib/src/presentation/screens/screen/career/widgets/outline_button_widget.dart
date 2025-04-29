@@ -1,15 +1,9 @@
-import 'package:fluttertoast/fluttertoast.dart';
-
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../../../core/styles/colors/app_colore.dart';
 
 class OutlineButtonWidget extends StatelessWidget {
-  const OutlineButtonWidget(
-      {super.key,
-      required this.jobDescription,
-      required this.generateCoverSheet});
-  final String jobDescription;
-  final VoidCallback generateCoverSheet;
+  const OutlineButtonWidget({super.key, required this.onTap});
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
@@ -21,17 +15,7 @@ class OutlineButtonWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
       ),
-      onPressed: () {
-        if (jobDescription.isEmpty) {
-          Fluttertoast.showToast(
-            msg: 'Please add a job description.',
-            backgroundColor: Colors.redAccent,
-            textColor: Colors.white,
-          );
-        } else {
-          generateCoverSheet();
-        }
-      },
+      onPressed: onTap,
       icon: const Icon(Icons.note_add, size: 24),
       label: const Text(
         'Cover Sheet',

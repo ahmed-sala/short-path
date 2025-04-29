@@ -2,17 +2,26 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../../../core/functions/storage_permission.dart';
-import '../../../../mangers/career/career_viewmodel.dart';
 import '../cv_screen.dart';
 
 Future<void> handleCreateCV(
-    BuildContext context, CareerViewmodel careerViewmodel) async {
+  BuildContext context, {
+  String? jobDescription,
+  int? jobId,
+}) async {
   // First check if permission is already granted.
   bool alreadyGranted = await hasStoragePermission();
   if (alreadyGranted) {
     Fluttertoast.showToast(
       msg: "Permission already granted! Downloading file...",
       backgroundColor: Colors.green,
+    );
+    // Navigate to CvScreen
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CvScreen(),
+      ),
     );
     return;
   }

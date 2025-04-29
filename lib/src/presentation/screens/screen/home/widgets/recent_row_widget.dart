@@ -1,9 +1,9 @@
 import 'package:short_path/core/extensions/extensions.dart';
 
-import '../../../../../../../config/routes/routes_name.dart';
-import '../../../../../../../core/common/common_imports.dart';
-import '../../../../../../../core/styles/colors/app_colore.dart';
-import '../../../../../../short_path.dart';
+import '../../../../../../config/routes/routes_name.dart';
+import '../../../../../../core/common/common_imports.dart';
+import '../../../../../../core/styles/colors/app_colore.dart';
+import '../../../../../short_path.dart';
 
 class RecentRowWidget extends StatelessWidget {
   const RecentRowWidget({super.key});

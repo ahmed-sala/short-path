@@ -1,7 +1,7 @@
 import 'package:short_path/core/extensions/extensions.dart';
 
-import '../../../../../../../core/common/common_imports.dart';
-import '../../../../../mangers/home/jobs/jobs_viewmodel.dart';
+import '../../../../../../core/common/common_imports.dart';
+import '../../../../mangers/home/jobs/jobs_viewmodel.dart';
 
 class JobSearchWidget extends StatelessWidget {
   final TextEditingController searchController;

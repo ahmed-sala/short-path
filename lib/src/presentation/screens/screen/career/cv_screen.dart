@@ -15,8 +15,11 @@ import '../../../../../core/common/common_imports.dart';
 class CvScreen extends StatelessWidget {
   CvScreen({
     super.key,
+    this.jobId,
+    this.jobDescription,
   });
-
+  final int? jobId;
+  final String? jobDescription;
   PDFDocument? document;
 
   Future<void> _loadPdf(String? filePath) async {
@@ -35,7 +38,11 @@ class CvScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<CvCubit>()..downloadFile(),
+      create: (context) => getIt<CvCubit>()
+        ..downloadFile(
+          jobId: jobId,
+          jobDescription: jobDescription,
+        ),
       child: Scaffold(
         appBar: AppBar(title: const Text('Your CV')),
         body: BlocConsumer<CvCubit, CvState>(

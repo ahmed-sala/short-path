@@ -9,7 +9,7 @@ import 'package:short_path/src/presentation/screens/screen/profile/widgets/profi
 import 'package:short_path/src/presentation/screens/screen/profile/widgets/states_section_widget.dart';
 import 'package:short_path/src/presentation/screens/screen/profile/widgets/tab_widget.dart';
 
-import '../home/widgets/session_expiration_widget.dart';
+import '../../../shared_widgets/session_expiration_widget.dart';
 import 'widgets/locallization_widget.dart';
 
 class PersonalProfileScreen extends StatelessWidget {

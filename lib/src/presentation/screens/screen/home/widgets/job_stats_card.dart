@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 
-import '../../../../../mangers/home/home_viewmodel.dart';
+import '../../../../mangers/home/home_viewmodel.dart';
 
 class JobStatsCard extends StatelessWidget {
   const JobStatsCard({super.key, required this.viewModel});
@@ -28,14 +28,14 @@ class JobStatsCard extends StatelessWidget {
                   const Icon(Icons.insert_drive_file, size: 40),
                   const SizedBox(height: 8),
                   Text(
-                    viewModel.contractorJobs?.length.toString() ?? "0",
+                    viewModel.fullTimeJobsCount.toString(),
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    context.localization.contractor,
+                    context.localization.fullTime,
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],
@@ -61,15 +61,15 @@ class JobStatsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        viewModel.fullTimeJobs?.length.toString() ?? "0",
+                        viewModel.internshipJobsCount.toString(),
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text(
-                        context.localization.fullTime,
-                        style: const TextStyle(fontSize: 16),
+                      const Text(
+                        'Internship',
+                        style: TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
@@ -88,7 +88,7 @@ class JobStatsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        viewModel.partTimeJobs?.length.toString() ?? "0",
+                        viewModel.partTimeJobsCount.toString(),
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,

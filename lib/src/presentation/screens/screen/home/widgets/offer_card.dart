@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/extensions/extensions.dart';
+import 'package:short_path/src/presentation/mangers/section/section_Screen_viewmodel.dart';
 
 class OfferCard extends StatelessWidget {
   const OfferCard({super.key});
@@ -41,7 +43,8 @@ class OfferCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle button press, e.g., navigate to the CV builder screen
+                    BlocProvider.of<SectionScreenViewmodel>(context)
+                        .updateCurrentIndex(1);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
