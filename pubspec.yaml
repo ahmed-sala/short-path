@@ -39,7 +39,7 @@ dependencies:
   flutter_expandable_fab:
   permission_handler: ^11.0.1
   url_launcher: ^6.1.7
-  easy_pdf_viewer: ^1.0.8
+  easy_pdf_viewer:
   retrofit:
   json_annotation: ^4.9.0
   awesome_dialog: ^3.2.1

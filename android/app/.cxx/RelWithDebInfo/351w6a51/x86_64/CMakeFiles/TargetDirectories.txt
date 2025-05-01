@@ -1,0 +1,2 @@
+G:/short_path/android/app/.cxx/RelWithDebInfo/351w6a51/x86_64/CMakeFiles/edit_cache.dir
+G:/short_path/android/app/.cxx/RelWithDebInfo/351w6a51/x86_64/CMakeFiles/rebuild_cache.dir
