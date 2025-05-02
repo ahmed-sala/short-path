@@ -17,11 +17,10 @@ class OnboardingScreen extends StatelessWidget {
   OnboardingScreen({super.key});
 
   final OnboardingViewmodel _viewmodel = getIt<OnboardingViewmodel>();
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    final PageController pageController = PageController();
-
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
@@ -29,10 +28,18 @@ class OnboardingScreen extends StatelessWidget {
           create: (_) => _viewmodel,
           child: BlocBuilder<OnboardingViewmodel, OnboardingState>(
             builder: (context, state) {
+              // Extract currentPage from the state
+              int currentPage = 0;
+              if (state is OnboardingPageChanged) {
+                currentPage = state.currentPage;
+              } else if (state is OnboardingInitial) {
+                currentPage = 0;
+              }
+
               return Column(
                 children: [
                   // Top Skip Button
-                  if (_viewmodel.currentPage != demoData.length - 1)
+                  if (currentPage != demoData.length - 1)
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0.w),
                       child: Row(
@@ -60,7 +67,7 @@ class OnboardingScreen extends StatelessWidget {
                   Expanded(
                     flex: 4,
                     child: PageView.builder(
-                      controller: pageController,
+                      controller: _pageController,
                       onPageChanged: (index) {
                         _viewmodel.changePage(index);
                       },
@@ -109,16 +116,17 @@ class OnboardingScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // Dots Indicator
+                  // Dots Indicator and Buttons
                   NextBackButtuns(
-                      finish: () {
-                        navKey.currentState!
-                            .pushReplacementNamed(RoutesName.authDecision);
-                      },
-                      pageController: pageController,
-                      length: demoData.length,
-                      changePage: _viewmodel.changePage,
-                      currentPage: _viewmodel.currentPage),
+                    finish: () {
+                      navKey.currentState!
+                          .pushReplacementNamed(RoutesName.authDecision);
+                    },
+                    length: demoData.length,
+                    changePage: _viewmodel.changePage,
+                    currentPage: currentPage, // Use state-derived currentPage
+                    pageController: _pageController,
+                  ),
                   verticalSpace(24),
                 ],
               );
