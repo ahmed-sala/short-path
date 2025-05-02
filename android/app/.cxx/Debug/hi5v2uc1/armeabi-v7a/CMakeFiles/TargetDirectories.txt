@@ -1,0 +1,2 @@
+D:/AndroidStudioProjects/short-path/android/app/.cxx/Debug/hi5v2uc1/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/AndroidStudioProjects/short-path/android/app/.cxx/Debug/hi5v2uc1/armeabi-v7a/CMakeFiles/rebuild_cache.dir

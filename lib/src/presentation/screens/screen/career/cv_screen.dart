@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
+// import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
@@ -9,6 +9,7 @@ import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/career/cv_cubit.dart';
 import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../../../core/common/common_imports.dart';
 
@@ -18,13 +19,14 @@ class CvScreen extends StatelessWidget {
     this.jobId,
     this.jobDescription,
   });
+
   final int? jobId;
   final String? jobDescription;
-  PDFDocument? document;
+  SfPdfViewer? document;
 
   Future<void> _loadPdf(String? filePath) async {
     try {
-      PDFDocument pdf = await PDFDocument.fromFile(File(filePath!));
+      SfPdfViewer pdf = await SfPdfViewer.file(File(filePath!));
 
       document = pdf;
     } catch (e) {
@@ -59,6 +61,7 @@ class CvScreen extends StatelessWidget {
             }
           },
           builder: (context, state) {
+            var viewModel = context.read<CvCubit>();
             if (state is DownloadCvLoading || document == null) {
               return Center(
                 child: Lottie.asset(
@@ -91,10 +94,8 @@ class CvScreen extends StatelessWidget {
               ));
             }
             if (state is DownloadCvSuccess) {
-              return PDFViewer(
-                document: document!,
-                showPicker: false,
-                lazyLoad: false,
+              return SfPdfViewer.file(
+                File(viewModel.filePath!),
               );
             }
             return const Center(
