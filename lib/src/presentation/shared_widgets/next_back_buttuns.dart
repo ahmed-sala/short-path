@@ -3,13 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/widgets/dot_items.dart';
 
 class NextBackButtuns extends StatelessWidget {
-  const NextBackButtuns(
-      {super.key,
-      required this.finish,
-      required this.pageController,
-      required this.length,
-      required this.changePage,
-      required this.currentPage});
+  const NextBackButtuns({
+    super.key,
+    required this.finish,
+    required this.pageController,
+    required this.length,
+    required this.changePage,
+    required this.currentPage,
+  });
+
   final int currentPage;
   final PageController pageController;
   final void Function(int) changePage;
@@ -29,8 +31,7 @@ class NextBackButtuns extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 24.0), // Fixed the vertical space here
-
+        const SizedBox(height: 24.0),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0.w),
           child: Row(
@@ -53,7 +54,7 @@ class NextBackButtuns extends StatelessWidget {
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
                       );
-                      changePage(currentPage - 1);
+                      // No need for changePage here; onPageChanged handles it
                     },
                     child: Text(
                       'Back',
@@ -80,7 +81,7 @@ class NextBackButtuns extends StatelessWidget {
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,
                           );
-                          changePage(currentPage + 1);
+                          // No need for changePage here
                         }
                       : finish,
                   child: Text(

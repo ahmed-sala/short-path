@@ -7,16 +7,16 @@ import 'package:short_path/src/presentation/mangers/onboarding/onboarding_state.
 class OnboardingViewmodel extends Cubit<OnboardingState> {
   int currentPage = 0;
   final PageController _pageController = PageController();
-  get pageController => _pageController;
+
+  PageController get pageController => _pageController;
+
   OnboardingViewmodel() : super(const OnboardingInitial());
 
-  /// Updates the page index and emits the corresponding state
   void changePage(int index) {
     currentPage = index;
-    emit(const OnboardingNextState()); // Emit state to notify listeners
+    emit(OnboardingPageChanged(index));
   }
 
-  /// Handles the skip action and emits the SkipState
   void skip() {
     emit(const OnboardingSkipState());
   }
