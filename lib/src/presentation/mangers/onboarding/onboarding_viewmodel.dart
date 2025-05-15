@@ -1,23 +1,54 @@
-import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:short_path/src/presentation/mangers/onboarding/onboarding_state.dart';
+import '../../../data/static_data/demo_data_list.dart';
+import 'onboarding_state.dart';
 
 @injectable
 class OnboardingViewmodel extends Cubit<OnboardingState> {
-  int currentPage = 0;
-  final PageController _pageController = PageController();
+  final PageController pageController = PageController();
+  int currentPageIndex = 0;
 
-  PageController get pageController => _pageController;
+  OnboardingViewmodel() : super(OnboardingInitial());
 
-  OnboardingViewmodel() : super(const OnboardingInitial());
+  void changePage(int pageIndex) {
+    currentPageIndex = pageIndex;
+    emit(OnboardingPageChanged(pageIndex));
+  }
 
-  void changePage(int index) {
-    currentPage = index;
-    emit(OnboardingPageChanged(index));
+  void next() {
+    if (currentPageIndex < demoData.length - 1) {
+      pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      changePage(currentPageIndex + 1);
+    } else {
+      finish();
+    }
+  }
+
+  void back() {
+    if (currentPageIndex > 0) {
+      pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      changePage(currentPageIndex - 1);
+    }
   }
 
   void skip() {
-    emit(const OnboardingSkipState());
+    finish();
+  }
+
+  void finish() {
+    emit(OnboardingFinished());
+  }
+
+  @override
+  Future<void> close() {
+    pageController.dispose();
+    return super.close();
   }
 }
