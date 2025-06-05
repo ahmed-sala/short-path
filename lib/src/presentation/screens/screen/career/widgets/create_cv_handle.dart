@@ -22,6 +22,7 @@ Future<void> handleCreateCV(
       MaterialPageRoute(
         builder: (_) => CvScreen(
           jobDescription: jobDescription,
+          jobId: jobId,
         ),
       ),
     );

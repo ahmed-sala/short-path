@@ -5,8 +5,10 @@ class IconButtonWidget extends StatelessWidget {
   const IconButtonWidget({
     super.key,
     required this.onTap,
+    this.text,
   });
   final VoidCallback onTap;
+  final String? text;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
@@ -19,9 +21,9 @@ class IconButtonWidget extends StatelessWidget {
       ),
       onPressed: onTap,
       icon: const Icon(Icons.description, size: 24, color: Colors.white),
-      label: const Text(
-        'Generate CV',
-        style: TextStyle(
+      label: Text(
+        text ?? 'Generate CV',
+        style: const TextStyle(
             fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
       ),
     );

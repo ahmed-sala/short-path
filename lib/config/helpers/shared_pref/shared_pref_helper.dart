@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:short_path/config/helpers/shared_pref/shared_pre_keys.dart';
 
 class SharedPrefHelper {
   SharedPrefHelper._();
@@ -77,5 +78,12 @@ class SharedPrefHelper {
   static removeSecureString(String key) async {
     const flutterSecureStorage = FlutterSecureStorage();
     await flutterSecureStorage.delete(key: key);
+  }
+}
+
+class SharedPrefsService {
+  static Future<bool> hasFilledCV() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(SharedPrefKeys.completeCv) ?? false;
   }
 }

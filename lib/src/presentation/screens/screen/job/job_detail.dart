@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/functions/send_email.dart';
 import 'package:short_path/src/domain/entities/home/jobs_entity.dart';
@@ -16,8 +17,12 @@ import 'package:short_path/src/presentation/screens/screen/job/widgets/salary_ra
 import 'package:short_path/src/presentation/shared_widgets/buttons_section_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
+import '../../../../../config/routes/routes_name.dart';
+import '../../../../../core/dialogs/awesome_dialoge.dart';
 import '../../../../../core/styles/colors/app_colore.dart';
 import '../../../../../dependency_injection/di.dart';
+import '../../../../short_path.dart';
 import '../career/cover_sheet_screen.dart';
 import '../career/widgets/create_cv_handle.dart';
 
@@ -83,6 +88,9 @@ class _JobDetailState extends State<JobDetail> {
       body: BlocProvider(
         create: (context) => getIt<JobDetailCubit>(),
         child: Builder(builder: (context) {
+          var isHaveCv =
+              getIt<SharedPreferences>().getBool(SharedPrefKeys.completeCv) ??
+                  false;
           return SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 16.h),
             child: BlocListener<JobDetailCubit, JobDetailState>(
@@ -134,11 +142,43 @@ class _JobDetailState extends State<JobDetail> {
                   ButtonsSectionWidget(
                     onGenerateCoverSheetTap: () {
                       int jobId = jobDetail?.id ?? 0;
-                      context.read<JobDetailCubit>().generateCoverSheet(jobId);
+                      if (isHaveCv) {
+                        context
+                            .read<JobDetailCubit>()
+                            .generateCoverSheet(jobId);
+                      } else {
+                        showCustomDialog(context,
+                            title: 'make cv',
+                            message: 'Please make your cv', onConfirm: () {
+                          getIt<SharedPreferences>()
+                              .setBool(SharedPrefKeys.completeCv, true);
+                          navKey.currentState?.pushNamedAndRemoveUntil(
+                            RoutesName.profile,
+                            (Route<dynamic> route) => false,
+                          );
+                        });
+                      }
                     },
                     onGenerateCvTap: () async {
                       int jobId = jobDetail?.id ?? 0;
-                      await handleCreateCV(context, jobId: jobId);
+                      if (isHaveCv) {
+                        await handleCreateCV(
+                          context,
+                          jobId: jobId,
+                          jobDescription: jobDetail?.description ?? '',
+                        );
+                      } else {
+                        showCustomDialog(context,
+                            title: 'make cv',
+                            message: 'Please make your cv', onConfirm: () {
+                          getIt<SharedPreferences>()
+                              .setBool(SharedPrefKeys.completeCv, true);
+                          navKey.currentState?.pushNamedAndRemoveUntil(
+                            RoutesName.profile,
+                            (Route<dynamic> route) => false,
+                          );
+                        });
+                      }
                     },
                   ),
                   SizedBox(height: 24.h),
