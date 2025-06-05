@@ -17,9 +17,9 @@ abstract class DioProvider {
           "Accept": "application/json",
           "Content-Type": "application/json",
         },
-        connectTimeout: const Duration(seconds: 60),
-        sendTimeout: const Duration(seconds: 60),
-        receiveTimeout: const Duration(seconds: 60),
+        connectTimeout: const Duration(seconds: 1000),
+        sendTimeout: const Duration(seconds: 1000),
+        receiveTimeout: const Duration(seconds: 1000),
       ),
     );
 

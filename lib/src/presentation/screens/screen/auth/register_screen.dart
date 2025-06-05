@@ -37,7 +37,7 @@ class RegisterScreen extends StatelessWidget {
             EasyLoading.showSuccess(
                 context.localization.registrationSuccessful);
 
-            Navigator.pushReplacementNamed(context, RoutesName.profile);
+            Navigator.pushReplacementNamed(context, RoutesName.postRegisterChoice);
           }
         },
         builder: (context, state) {

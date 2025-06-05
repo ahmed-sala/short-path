@@ -20,7 +20,9 @@ Future<void> handleCreateCV(
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => CvScreen(),
+        builder: (_) => CvScreen(
+          jobDescription: jobDescription,
+        ),
       ),
     );
     return;
