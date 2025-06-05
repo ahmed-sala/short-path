@@ -21,6 +21,7 @@ class CvCubit extends Cubit<CvState> {
   String? filePath;
   Future<void> downloadFile({String? jobDescription, int? jobId}) async {
     try {
+      print('jobDescription: $jobDescription');
       emit(DownloadCvLoading());
       final result = await _careerUsecase.downloadFile(
         jobDescription: jobDescription,

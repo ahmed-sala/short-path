@@ -24,9 +24,12 @@ class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
     final response = await DioClient.downloadPdf(
       endPoint: ApisEndPoints.downloadCv,
       token: token!,
-      // data: {
-      //   "jobDescription": jobDescription,
-      // },
+      data: {
+        "jobDescription": jobDescription,
+      },
+      queryParameters: {
+        "jobId": jobId,
+      },
     );
     return response;
   }

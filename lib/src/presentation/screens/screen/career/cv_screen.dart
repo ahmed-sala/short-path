@@ -61,6 +61,7 @@ class CvScreen extends StatelessWidget {
             }
           },
           builder: (context, state) {
+            print('jobDescription: $jobDescription');
             var viewModel = context.read<CvCubit>();
             if (state is DownloadCvLoading || document == null) {
               return Center(
