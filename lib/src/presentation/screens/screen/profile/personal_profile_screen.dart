@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/extensions/extensions.dart';
@@ -8,19 +9,26 @@ import 'package:short_path/src/presentation/mangers/profile/personal_profile_vie
 import 'package:short_path/src/presentation/screens/screen/profile/widgets/profile_header_widget.dart';
 import 'package:short_path/src/presentation/screens/screen/profile/widgets/states_section_widget.dart';
 import 'package:short_path/src/presentation/screens/screen/profile/widgets/tab_widget.dart';
+import 'package:short_path/src/short_path.dart';
 
+import '../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
+import '../../../../../config/helpers/shared_pref/shared_pref_helper.dart';
+import '../../../shared_widgets/custom_auth_button.dart';
 import '../../../shared_widgets/session_expiration_widget.dart';
 import 'widgets/locallization_widget.dart';
+// ←– Import the PersonalInfoWidget
+import 'widgets/personal_info/personal_info_widget.dart';
 
 class PersonalProfileScreen extends StatelessWidget {
   PersonalProfileScreen({super.key});
 
-  final PersonalProfileCubit personalProfileCubit =
+  final PersonalProfileCubit _personalProfileCubit =
       getIt<PersonalProfileCubit>();
 
   @override
   Widget build(BuildContext context) {
-    List<Tab> myTabs = <Tab>[
+    // Define all tabs
+    final List<Tab> myTabs = <Tab>[
       Tab(text: context.localization.personalInfo),
       Tab(text: context.localization.profile),
       Tab(text: context.localization.workExperience),
@@ -31,21 +39,27 @@ class PersonalProfileScreen extends StatelessWidget {
       Tab(text: context.localization.projects),
       Tab(text: context.localization.additionalInfo),
     ];
+
     return DefaultTabController(
       length: myTabs.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(context.localization.profile),
+          title: Text(
+            context.localization.profile,
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+          ),
+          elevation: 2,
+          centerTitle: false,
           actions: [
             const LocalizationIcon(),
             IconButton(
               onPressed: () {
                 showCustomDialog(
                   context,
-                  title: context.localization.location,
+                  title: context.localization.logout,
                   message: context.localization.logoutConfirmation,
                   onConfirm: () {
-                    personalProfileCubit.logout();
+                    _personalProfileCubit.logout();
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       RoutesName.login,
@@ -56,27 +70,38 @@ class PersonalProfileScreen extends StatelessWidget {
               },
               icon: const Icon(
                 Icons.logout_outlined,
-                color: Colors.red,
+                color: Colors.redAccent,
+                size: 24,
               ),
+              tooltip: context.localization.logout,
             ),
+            const SizedBox(width: 8),
           ],
         ),
-        body: BlocProvider(
+        body: BlocProvider<PersonalProfileCubit>(
           create: (context) {
-            personalProfileCubit.getUser();
-            personalProfileCubit.getProfile();
-            personalProfileCubit.getWorkExperiences();
-            personalProfileCubit.getSkills();
-            personalProfileCubit.getEducation();
-            personalProfileCubit.getLanguages();
-            personalProfileCubit.getCertification();
-            personalProfileCubit.getProjects();
-            personalProfileCubit.getAdditionalInfo();
-            return personalProfileCubit;
+            final hasCv =
+                getIt<SharedPreferences>().getBool(SharedPrefKeys.completeCv) ??
+                    false;
+            _personalProfileCubit.getUser();
+            if (hasCv) {
+              _personalProfileCubit
+                ..getProfile()
+                ..getWorkExperiences()
+                ..getSkills()
+                ..getEducation()
+                ..getLanguages()
+                ..getCertification()
+                ..getProjects()
+                ..getAdditionalInfo();
+            }
+            return _personalProfileCubit;
           },
           child: BlocConsumer<PersonalProfileCubit, PersonalProfileState>(
             listener: (context, state) {
-              if (state is LogOutLoadingState) {}
+              if (state is LogOutLoadingState) {
+                // optional: show loading spinner or toast
+              }
             },
             builder: (context, state) {
               if (state is PersonalProfileLoading) {
@@ -88,13 +113,80 @@ class PersonalProfileScreen extends StatelessWidget {
               if (state is SessionExpired) {
                 return const SessionExpirationWidget();
               }
-              return const Column(
-                children: [
-                  ProfileHeaderWidget(),
-                  StatesSectionWidget(),
-                  SizedBox(height: 16.0),
-                  TabWidget(),
-                ],
+
+              // At this point, user data is loaded (or at least attempted).
+              return FutureBuilder<bool>(
+                future: SharedPrefsService.hasFilledCV(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final hasFilledCV = snapshot.data!;
+                  if (hasFilledCV) {
+                    // FULL CV – show header, states, and tabs
+                    return Column(
+                      children: [
+                        const ProfileHeaderWidget(),
+                        const SizedBox(height: 12),
+                        const StatesSectionWidget(),
+                        const SizedBox(height: 16),
+                        // TabBar
+                        Material(
+                          color: Colors.white,
+                          elevation: 1,
+                          child: TabBar(
+                            isScrollable: true,
+                            indicatorColor: Theme.of(context).primaryColor,
+                            labelColor: Theme.of(context).primaryColor,
+                            unselectedLabelColor: Colors.grey.shade600,
+                            tabs: myTabs,
+                            labelStyle: const TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                            unselectedLabelStyle: const TextStyle(fontSize: 14),
+                          ),
+                        ),
+                        // Tab content
+                        const Expanded(
+                          child:
+                              TabWidget(), // assumes TabWidget handles its own TabBarView
+                        ),
+                      ],
+                    );
+                  } else {
+                    return SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          children: [
+                            const ProfileHeaderWidget(),
+                            const SizedBox(height: 20),
+                            const Expanded(child: PersonalInfoWidget()),
+                            const SizedBox(height: 30),
+                            CustomAuthButton(
+                              text: 'Fill in Your CV',
+                              onPressed: () {
+                                getIt<SharedPreferences>()
+                                    .setBool(SharedPrefKeys.completeCv, true);
+                                navKey.currentState?.pushNamedAndRemoveUntil(
+                                  RoutesName.profile,
+                                  (route) => false,
+                                );
+                              },
+                              color: Theme.of(context).primaryColor,
+                              textColor: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                },
               );
             },
           ),

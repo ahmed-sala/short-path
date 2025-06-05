@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/career/career_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/screen/career/widgets/create_cv_handle.dart';
 import 'package:short_path/src/presentation/screens/screen/career/widgets/tip_section_widget.dart';
 import 'package:short_path/src/presentation/shared_widgets/buttons_section_widget.dart';
+import 'package:short_path/src/short_path.dart';
 
+import '../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
+import '../../../../../config/routes/routes_name.dart';
+import '../../../../../core/dialogs/awesome_dialoge.dart';
 import '../../../../../core/functions/send_email.dart';
 import 'cover_sheet_screen.dart';
 
@@ -53,6 +58,9 @@ class CareerScreen extends StatelessWidget {
         child: Builder(
           builder: (context) {
             final vm = context.read<CareerViewmodel>();
+            var isHaveCv =
+                getIt<SharedPreferences>().getBool(SharedPrefKeys.completeCv) ??
+                    false;
             return Scaffold(
               body: SafeArea(
                 child: SingleChildScrollView(
@@ -136,7 +144,20 @@ class CareerScreen extends StatelessWidget {
                               backgroundColor: Colors.redAccent,
                               textColor: Colors.white,
                             );
+                          } else if (!isHaveCv) {
+                            print('No CV found, prompting user to create one');
+                            showCustomDialog(context,
+                                title: 'make cv',
+                                message: 'Please make your cv', onConfirm: () {
+                              getIt<SharedPreferences>()
+                                  .setBool(SharedPrefKeys.completeCv, true);
+                              navKey.currentState?.pushNamedAndRemoveUntil(
+                                RoutesName.profile,
+                                (Route<dynamic> route) => false,
+                              );
+                            });
                           } else {
+                            print('have cv $isHaveCv');
                             vm.generateCoverSheet();
                           }
                         },
@@ -147,6 +168,17 @@ class CareerScreen extends StatelessWidget {
                               backgroundColor: Colors.redAccent,
                               textColor: Colors.white,
                             );
+                          } else if (!isHaveCv) {
+                            showCustomDialog(context,
+                                title: 'make cv',
+                                message: 'Please make your cv', onConfirm: () {
+                              getIt<SharedPreferences>()
+                                  .setBool(SharedPrefKeys.completeCv, true);
+                              navKey.currentState?.pushNamedAndRemoveUntil(
+                                RoutesName.profile,
+                                (Route<dynamic> route) => false,
+                              );
+                            });
                           } else {
                             handleCreateCV(
                               context,
