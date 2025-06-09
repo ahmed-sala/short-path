@@ -4,5 +4,5 @@ class SharedPrefKeys {
   static const String userToken = "user token";
   static const String onBoardingCompleted = "onBoardingCompleted";
   static const String languageCode = "languageCode";
-  static const String completeCv = "languageCode";
+  static const String completeCv = "completeCv";
 }

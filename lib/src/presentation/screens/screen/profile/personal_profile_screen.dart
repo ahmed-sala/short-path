@@ -16,6 +16,7 @@ import '../../../../../config/helpers/shared_pref/shared_pref_helper.dart';
 import '../../../shared_widgets/custom_auth_button.dart';
 import '../../../shared_widgets/session_expiration_widget.dart';
 import 'widgets/locallization_widget.dart';
+
 // ←– Import the PersonalInfoWidget
 import 'widgets/personal_info/personal_info_widget.dart';
 
@@ -125,32 +126,29 @@ class PersonalProfileScreen extends StatelessWidget {
                   final hasFilledCV = snapshot.data!;
                   if (hasFilledCV) {
                     // FULL CV – show header, states, and tabs
-                    return Column(
+                    return const Column(
                       children: [
-                        const ProfileHeaderWidget(),
-                        const SizedBox(height: 12),
-                        const StatesSectionWidget(),
-                        const SizedBox(height: 16),
+                        ProfileHeaderWidget(),
+                        SizedBox(height: 12),
+                        StatesSectionWidget(),
+                        SizedBox(height: 16),
                         // TabBar
-                        Material(
-                          color: Colors.white,
-                          elevation: 1,
-                          child: TabBar(
-                            isScrollable: true,
-                            indicatorColor: Theme.of(context).primaryColor,
-                            labelColor: Theme.of(context).primaryColor,
-                            unselectedLabelColor: Colors.grey.shade600,
-                            tabs: myTabs,
-                            labelStyle: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w600),
-                            unselectedLabelStyle: const TextStyle(fontSize: 14),
-                          ),
-                        ),
+                        // Material(
+                        //   color: Colors.white,
+                        //   elevation: 1,
+                        //   child: TabBar(
+                        //     isScrollable: true,
+                        //     indicatorColor: Theme.of(context).primaryColor,
+                        //     labelColor: Theme.of(context).primaryColor,
+                        //     unselectedLabelColor: Colors.grey.shade600,
+                        //     tabs: myTabs,
+                        //     labelStyle: const TextStyle(
+                        //         fontSize: 14, fontWeight: FontWeight.w600),
+                        //     unselectedLabelStyle: const TextStyle(fontSize: 14),
+                        //   ),
+                        // ),
                         // Tab content
-                        const Expanded(
-                          child:
-                              TabWidget(), // assumes TabWidget handles its own TabBarView
-                        ),
+                        TabWidget(),
                       ],
                     );
                   } else {

@@ -23,7 +23,6 @@ void configLoading() {
 }
 
 void main() async {
-  WidgetsBinding widgetsFlutterBinding =
   WidgetsFlutterBinding.ensureInitialized();
 
   await FlutterDownloader.initialize(
