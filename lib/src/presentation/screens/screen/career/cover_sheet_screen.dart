@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 
 class CoverSheetScreen extends StatelessWidget {
@@ -26,7 +27,7 @@ class CoverSheetScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Cover Sheet')),
+        appBar: AppBar(title: Text(context.localization.coverSheetB)),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Markdown(
@@ -57,7 +58,8 @@ class CoverSheetScreen extends StatelessWidget {
                 // Implement copy to clipboard functionality
                 final data = response ?? "";
                 Clipboard.setData(ClipboardData(text: data));
-                Fluttertoast.showToast(msg: 'Copied to clipboard');
+                Fluttertoast.showToast(
+                    msg: context.localization.copiedToClipboard);
               },
             ),
           ],

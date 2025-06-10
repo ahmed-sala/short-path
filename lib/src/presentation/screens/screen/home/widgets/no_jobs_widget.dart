@@ -1,4 +1,5 @@
 import 'package:lottie/lottie.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/animations/app_animation.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -20,16 +21,16 @@ class NoJobsWidget extends StatelessWidget {
             fit: BoxFit.contain,
           ),
           const SizedBox(height: 20),
-          const Text(
-            'No Jobs Available',
+          Text(
+            context.localization.noJobsAvailable,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Please check back later.',
+          Text(
+            context.localization.pleaseCheckBackLater,
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey,

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/animations/app_animation.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/dependency_injection/di.dart';
@@ -24,14 +25,14 @@ class CvScreen extends StatelessWidget {
   final String? jobDescription;
   SfPdfViewer? document;
 
-  Future<void> _loadPdf(String? filePath) async {
+  Future<void> _loadPdf(BuildContext context, String? filePath) async {
     try {
       SfPdfViewer pdf = await SfPdfViewer.file(File(filePath!));
 
       document = pdf;
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Error loading CV: $e",
+        msg: "${context.localization.errorLoadingCv}: $e",
         backgroundColor: Colors.red,
       );
     }
@@ -46,7 +47,7 @@ class CvScreen extends StatelessWidget {
           jobDescription: jobDescription,
         ),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Your CV')),
+        appBar: AppBar(title: Text(context.localization.yourCv)),
         body: BlocConsumer<CvCubit, CvState>(
           listener: (context, state) {
             var viewModel = context.read<CvCubit>();
@@ -57,7 +58,7 @@ class CvScreen extends StatelessWidget {
               );
             }
             if (state is DownloadCvSuccess) {
-              _loadPdf(viewModel.filePath);
+              _loadPdf(context, viewModel.filePath);
             }
           },
           builder: (context, state) {
@@ -75,8 +76,8 @@ class CvScreen extends StatelessWidget {
               return Center(
                   child: Column(
                 children: [
-                  const Text(
-                    'please try again later',
+                  Text(
+                    context.localization.pleaseTryAgainLater,
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -86,7 +87,7 @@ class CvScreen extends StatelessWidget {
                     height: 20,
                   ),
                   CustomAuthButton(
-                      text: 'Go back',
+                      text: context.localization.goBack,
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -99,9 +100,9 @@ class CvScreen extends StatelessWidget {
                 File(viewModel.filePath!),
               );
             }
-            return const Center(
+            return Center(
               child: Text(
-                'No CV available',
+                context.localization.noCvAvailable,
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,

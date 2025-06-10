@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 
 class StepProgressBar extends StatelessWidget {
   final int currentStep;
-  final List<String> stepNames = [
-    "Info",
-    "Skills",
-    "Education",
-    "Experience",
-    "Projects",
-    "Certifications",
-    "Additional"
-  ];
+  final List<String> stepNames;
 
-  StepProgressBar({super.key, required this.currentStep});
+  StepProgressBar(
+      {super.key, required this.currentStep, required this.stepNames});
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +27,12 @@ class StepProgressBar extends StatelessWidget {
                       shape: BoxShape.circle,
                       boxShadow: isCurrent
                           ? [
-                        BoxShadow(
-                          color: Colors.orange.withOpacity(0.5),
-                          blurRadius: 10,
-                          spreadRadius: 3,
-                        ),
-                      ]
+                              BoxShadow(
+                                color: Colors.orange.withOpacity(0.5),
+                                blurRadius: 10,
+                                spreadRadius: 3,
+                              ),
+                            ]
                           : [],
                     ),
                     child: CircleAvatar(
@@ -47,8 +40,8 @@ class StepProgressBar extends StatelessWidget {
                       backgroundColor: isCompleted
                           ? Colors.green
                           : isCurrent
-                          ? Colors.orange
-                          : Colors.grey.shade400,
+                              ? Colors.orange
+                              : Colors.grey.shade400,
                       child: Text(
                         "$stepNumber",
                         style: const TextStyle(
@@ -82,8 +75,8 @@ class StepProgressBar extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: isCompleted
                         ? const LinearGradient(
-                      colors: [Colors.greenAccent, Colors.green],
-                    )
+                            colors: [Colors.greenAccent, Colors.green],
+                          )
                         : null,
                     color: isCompleted ? null : Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(3),

@@ -33,8 +33,10 @@ class SecondStepRegister extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         DateInputField(
-            selectedDate: viewModel.selectedDate,
-            onDateSelected: viewModel.updateSelectedDate),
+          selectedDate: viewModel.selectedDate,
+          onDateSelected: viewModel.updateSelectedDate,
+          labelText: context.localization.birthDate,
+        ),
         const SizedBox(height: 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -48,8 +50,7 @@ class SecondStepRegister extends StatelessWidget {
                     groupValue: viewModel.selectedGender,
                     onChanged: (value) =>
                         viewModel.updateSelectedGender(value!),
-                    fillColor:
-                        WidgetStateProperty.all(AppColors.primaryColor),
+                    fillColor: WidgetStateProperty.all(AppColors.primaryColor),
                     overlayColor:
                         WidgetStateProperty.all(AppColors.primaryColor),
                     focusColor: AppColors.primaryColor,
@@ -65,8 +66,7 @@ class SecondStepRegister extends StatelessWidget {
               child: Row(
                 children: [
                   Radio<String>(
-                    fillColor:
-                        WidgetStateProperty.all(AppColors.primaryColor),
+                    fillColor: WidgetStateProperty.all(AppColors.primaryColor),
                     overlayColor:
                         WidgetStateProperty.all(AppColors.primaryColor),
                     focusColor: AppColors.primaryColor,
@@ -76,7 +76,7 @@ class SecondStepRegister extends StatelessWidget {
                     onChanged: (value) =>
                         viewModel.updateSelectedGender(value!),
                   ),
-                  const Text('Female'),
+                  Text(context.localization.female),
                 ],
               ),
             ),

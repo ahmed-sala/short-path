@@ -1,4 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 import '../../../../../../core/common/common_imports.dart';
 import '../../../../../../core/functions/storage_permission.dart';
@@ -13,7 +14,7 @@ Future<void> handleCreateCV(
   bool alreadyGranted = await hasStoragePermission();
   if (alreadyGranted) {
     Fluttertoast.showToast(
-      msg: "Permission already granted! Downloading file...",
+      msg: context.localization.permissionAlreadyGrantedDownloadingFile,
       backgroundColor: Colors.green,
     );
     // Navigate to CvScreen
@@ -34,17 +35,17 @@ Future<void> handleCreateCV(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text('Permission Required'),
-        content: const Text(
-            'Do you want to grant storage permission to download the file?'),
+        title: Text(context.localization.permissionRequired),
+        content: Text(context
+            .localization.doYouWantToGrantStoragePermissionToDownloadTheFile),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('No'),
+            child: Text(context.localization.no),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Yes'),
+            child: Text(context.localization.yes),
           ),
         ],
       );
@@ -56,13 +57,13 @@ Future<void> handleCreateCV(
     bool permissionGranted = await requestStoragePermission();
     if (!permissionGranted) {
       Fluttertoast.showToast(
-        msg: "Storage permission is required to download the file.",
+        msg: context.localization.storagePermissionIsRequiredToDownloadTheFile,
         backgroundColor: Colors.red,
       );
       return;
     }
     Fluttertoast.showToast(
-      msg: "Permission granted! Downloading file...",
+      msg: context.localization.permissionGrantedDownloadingFile,
       backgroundColor: Colors.green,
     );
     Navigator.push(

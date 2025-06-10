@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 showAwesomeDialog(BuildContext context,
     {required String title,
@@ -112,7 +113,7 @@ void showCustomDialog(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
                       child: Text(
-                        "Cancel",
+                        context.localization.cancel,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey.shade700,
@@ -137,8 +138,8 @@ void showCustomDialog(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         elevation: 0,
                       ),
-                      child: const Text(
-                        "Confirm",
+                      child: Text(
+                        context.localization.confirm,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,

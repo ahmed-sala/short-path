@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'dot_items.dart';
 
 class NextBackButtons extends StatelessWidget {
@@ -44,7 +45,7 @@ class NextBackButtons extends StatelessWidget {
                     ),
                     onPressed: onBack,
                     child: Text(
-                      'Back',
+                      context.localization.back,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 16.0,
@@ -64,7 +65,9 @@ class NextBackButtons extends StatelessWidget {
                   ),
                   onPressed: onNext,
                   child: Text(
-                    currentPage < length - 1 ? 'Next' : 'Get Started',
+                    currentPage < length - 1
+                        ? context.localization.next
+                        : context.localization.getStarted,
                     style: const TextStyle(fontSize: 16.0, color: Colors.white),
                   ),
                 ),

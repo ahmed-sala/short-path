@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/career/career_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/screen/career/widgets/create_cv_handle.dart';
@@ -29,10 +30,10 @@ class CareerScreen extends StatelessWidget {
         listener: (context, state) async {
           final vm = context.read<CareerViewmodel>();
           if (state is GenerateCoverSheetLoading) {
-            EasyLoading.show(status: 'Generating cover sheet...');
+            EasyLoading.show(status: context.localization.generatingCoverSheet);
           } else if (state is GenerateCoverSheetSuccess) {
             EasyLoading.dismiss();
-            EasyLoading.showSuccess('Cover sheet ready!');
+            EasyLoading.showSuccess(context.localization.coverSheetReady);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -69,8 +70,8 @@ class CareerScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text(
-                        'Craft Your Dream Career',
+                      Text(
+                        context.localization.craftYourDreamCareer,
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
@@ -80,7 +81,8 @@ class CareerScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Enter a job description to generate a tailored CV or cover sheet that stands out.',
+                        context.localization
+                            .enterAJobDescriptionToGenerateATailoredCVOrCoverSheetThatStandsOut,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[700],
@@ -90,7 +92,7 @@ class CareerScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
                       Text(
-                        'Describe the Job Role',
+                        context.localization.describeTheJobRole,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -109,12 +111,12 @@ class CareerScreen extends StatelessWidget {
                           maxLines: 6,
                           style: const TextStyle(fontSize: 16),
                           decoration: InputDecoration(
-                            labelText: 'Job Description',
+                            labelText: context.localization.jobDescription,
                             labelStyle: TextStyle(
                               color: primaryColor.withOpacity(0.6),
                             ),
-                            hintText:
-                                'E.g., Software Engineer at a tech startup...',
+                            hintText: context
+                                .localization.egSoftwareEngineerAtATechStartup,
                             hintStyle: TextStyle(color: Colors.grey[400]),
                             prefixIcon: const Icon(
                               Icons.work_outline,
@@ -128,7 +130,7 @@ class CareerScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 32),
                       Text(
-                        'Choose Your Action',
+                        context.localization.chooseYourAction,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -140,15 +142,18 @@ class CareerScreen extends StatelessWidget {
                         onGenerateCoverSheetTap: () {
                           if (vm.jobDescribtion.text.isEmpty) {
                             Fluttertoast.showToast(
-                              msg: 'Please add a job description.',
+                              msg:
+                                  context.localization.pleaseAddAJobDescription,
                               backgroundColor: Colors.redAccent,
                               textColor: Colors.white,
                             );
                           } else if (!isHaveCv) {
-                            print('No CV found, prompting user to create one');
+                            print(context.localization
+                                .noCvFoundPromptingUserToCreateOne);
                             showCustomDialog(context,
-                                title: 'make cv',
-                                message: 'Please make your cv', onConfirm: () {
+                                title: context.localization.makeCv,
+                                message: context.localization.pleaseMakeYourCv,
+                                onConfirm: () {
                               getIt<SharedPreferences>()
                                   .setBool(SharedPrefKeys.completeCv, true);
                               navKey.currentState?.pushNamedAndRemoveUntil(
@@ -157,21 +162,23 @@ class CareerScreen extends StatelessWidget {
                               );
                             });
                           } else {
-                            print('have cv $isHaveCv');
+                            print('${context.localization.haveCv} $isHaveCv');
                             vm.generateCoverSheet();
                           }
                         },
                         onGenerateCvTap: () {
                           if (vm.jobDescribtion.text.isEmpty) {
                             Fluttertoast.showToast(
-                              msg: 'Please add a job description.',
+                              msg:
+                                  context.localization.pleaseAddAJobDescription,
                               backgroundColor: Colors.redAccent,
                               textColor: Colors.white,
                             );
                           } else if (!isHaveCv) {
                             showCustomDialog(context,
-                                title: 'make cv',
-                                message: 'Please make your cv', onConfirm: () {
+                                title: context.localization.makeCv,
+                                message: context.localization.pleaseMakeYourCv,
+                                onConfirm: () {
                               getIt<SharedPreferences>()
                                   .setBool(SharedPrefKeys.completeCv, true);
                               navKey.currentState?.pushNamedAndRemoveUntil(

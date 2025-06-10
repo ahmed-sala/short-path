@@ -97,10 +97,11 @@ class _JobDetailState extends State<JobDetail> {
               listener: (context, state) {
                 final vm = context.read<JobDetailCubit>();
                 if (state is GenerateCoverSheetLoading) {
-                  EasyLoading.show(status: 'Generating cover sheet...');
+                  EasyLoading.show(
+                      status: context.localization.generatingCoverSheet);
                 } else if (state is GenerateCoverSheetSuccess) {
                   EasyLoading.dismiss();
-                  EasyLoading.showSuccess('Cover sheet ready!');
+                  EasyLoading.showSuccess(context.localization.coverSheetReady);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -126,16 +127,22 @@ class _JobDetailState extends State<JobDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CompanyLogoTitleWidget(
-                    jobTitle: jobDetail?.title ?? '',
-                    imageUrl: jobDetail?.image,
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: CompanyLogoTitleWidget(
+                      jobTitle: jobDetail?.title ?? '',
+                      imageUrl: jobDetail?.image,
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   // Company, Location, Posted Info
-                  JobInfoWidget(
-                    company: jobDetail?.company ?? '',
-                    location: jobDetail?.location ?? '',
-                    postedAgo: jobDetail?.datePosted ?? '',
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: JobInfoWidget(
+                      company: jobDetail?.company ?? '',
+                      location: jobDetail?.location ?? '',
+                      postedAgo: jobDetail?.datePosted ?? '',
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   // Row with "CREATE COVER SHEET" and "CREATE CV" buttons
@@ -148,8 +155,9 @@ class _JobDetailState extends State<JobDetail> {
                             .generateCoverSheet(jobId);
                       } else {
                         showCustomDialog(context,
-                            title: 'make cv',
-                            message: 'Please make your cv', onConfirm: () {
+                            title: context.localization.makeCv,
+                            message: context.localization.pleaseMakeYourCv,
+                            onConfirm: () {
                           getIt<SharedPreferences>()
                               .setBool(SharedPrefKeys.completeCv, true);
                           navKey.currentState?.pushNamedAndRemoveUntil(
@@ -169,8 +177,9 @@ class _JobDetailState extends State<JobDetail> {
                         );
                       } else {
                         showCustomDialog(context,
-                            title: 'make cv',
-                            message: 'Please make your cv', onConfirm: () {
+                            title: context.localization.makeCv,
+                            message: context.localization.pleaseMakeYourCv,
+                            onConfirm: () {
                           getIt<SharedPreferences>()
                               .setBool(SharedPrefKeys.completeCv, true);
                           navKey.currentState?.pushNamedAndRemoveUntil(

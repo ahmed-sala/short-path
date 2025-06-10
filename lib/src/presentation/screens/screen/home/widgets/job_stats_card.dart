@@ -83,8 +83,8 @@ class JobStatsCard extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const Text(
-                              'Internship',
+                            Text(
+                              context.localization.internship,
                               style: TextStyle(fontSize: 16),
                             ),
                           ],

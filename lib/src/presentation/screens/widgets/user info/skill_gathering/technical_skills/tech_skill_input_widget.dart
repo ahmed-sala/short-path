@@ -64,7 +64,12 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
                     viewModel.selectedProficiency = newValue!;
                   });
                 },
-                items: ['Beginner', 'Intermediate', 'Advanced', 'Expert']
+                items: [
+                  context.localization.beginner,
+                  context.localization.intermediate,
+                  context.localization.advanced,
+                  context.localization.expert
+                ]
                     .map((value) => DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -87,7 +92,8 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
                     .map((s) => s.toLowerCase())
                     .contains(skill)) {
                   ToastDialog.show(
-                    'Please choose a skill from the suggestions',
+                    context.localization
+                        .pleaseChooseATechnicalSkillFromTheSuggestions,
                     Colors.red,
                   );
                   return;
@@ -99,7 +105,7 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
                     .contains(skill);
                 if (alreadyAdded) {
                   ToastDialog.show(
-                    'Skill “${raw}” is already added',
+                    context.localization.technicalSkillIsAlreadyAdded(raw),
                     Colors.orange,
                   );
                   return;

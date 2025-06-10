@@ -1,69 +1,44 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:short_path/config/routes/app_route.dart';
-import 'package:short_path/config/routes/routes_name.dart';
-import 'package:short_path/core/functions/initial_route.dart';
 import 'package:short_path/core/styles/theme/app_theme.dart';
-import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/localization/localization_viewmodel.dart';
-
 import '../config/localization/app_localizations.dart';
 import '../core/common/common_imports.dart';
 
 final GlobalKey<NavigatorState> navKey = GlobalKey<NavigatorState>();
 
 class ShortPath extends StatelessWidget {
-  ShortPath({super.key});
+  final String startupRoute;
 
-  /// We grab the LocalizationViewmodel from DI as before.
-  final LocalizationViewmodel localizationViewmodel =
-      getIt<LocalizationViewmodel>();
+  const ShortPath({Key? key, required this.startupRoute}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => localizationViewmodel,
-      child: BlocBuilder<LocalizationViewmodel, LocalizationState>(
-        builder: (context, state) {
-          return FutureBuilder<String?>(
-            future: initialRoute(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const _LoadingScaffold();
-              }
-
-              String routeName = snapshot.data ?? RoutesName.onBoarding;
-
-              return ScreenUtilInit(
-                designSize: const Size(375, 812),
-                minTextAdapt: true,
-                splitScreenMode: true,
-                builder: (context, child) => MaterialApp(
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: const [
-                    Locale('en'),
-                    Locale('ar'),
-                  ],
-                  locale: Locale(localizationViewmodel.cachedLanguageCode),
-                  theme: AppTheme.lightTheme,
-                  debugShowCheckedModeBanner: false,
-                  title: 'Short Path',
-                  builder: EasyLoading.init(),
-                  navigatorKey: navKey,
-                  initialRoute: RoutesName.sectionScreen,
-                  onGenerateRoute: AppRoute.onGenerateRoute,
-                ),
-              );
-            },
-          );
-        },
-      ),
+    return BlocBuilder<LocalizationViewmodel, LocalizationState>(
+      builder: (context, state) {
+        return ScreenUtilInit(
+          designSize: const Size(375, 812),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) {
+            final vm = context.read<LocalizationViewmodel>();
+            return MaterialApp(
+              locale: Locale(vm.cachedLanguageCode),
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              theme: AppTheme.lightTheme,
+              debugShowCheckedModeBanner: false,
+              title: 'Short Path',
+              builder: EasyLoading.init(),
+              navigatorKey: navKey,
+              initialRoute: startupRoute,
+              onGenerateRoute: AppRoute.onGenerateRoute,
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -74,9 +49,7 @@ class _LoadingScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Material(
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
+      child: Center(child: CircularProgressIndicator()),
     );
   }
 }

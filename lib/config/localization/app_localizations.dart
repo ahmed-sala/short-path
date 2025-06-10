@@ -218,6 +218,612 @@ abstract class AppLocalizations {
   /// **'Welcome,'**
   String get welcome;
 
+  /// No description provided for @welcomeB.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome!'**
+  String get welcomeB;
+
+  /// No description provided for @welcomeToShortPath.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Short Path!'**
+  String get welcomeToShortPath;
+
+  /// No description provided for @whatWouldYouLikeToDoNext.
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to do next?'**
+  String get whatWouldYouLikeToDoNext;
+
+  /// No description provided for @fillInYourCV.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in Your CV'**
+  String get fillInYourCV;
+
+  /// No description provided for @continueToHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to Home'**
+  String get continueToHome;
+
+  /// No description provided for @youCanAlwaysUpdateYourCVLaterFromProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'You can always update your CV later from Profile.'**
+  String get youCanAlwaysUpdateYourCVLaterFromProfile;
+
+  /// No description provided for @permissionAlreadyGrantedDownloadingFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission already granted! Downloading file...'**
+  String get permissionAlreadyGrantedDownloadingFile;
+
+  /// No description provided for @permissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Required'**
+  String get permissionRequired;
+
+  /// No description provided for @doYouWantToGrantStoragePermissionToDownloadTheFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to grant storage permission to download the file?'**
+  String get doYouWantToGrantStoragePermissionToDownloadTheFile;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @storagePermissionIsRequiredToDownloadTheFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage permission is required to download the file.'**
+  String get storagePermissionIsRequiredToDownloadTheFile;
+
+  /// No description provided for @permissionGrantedDownloadingFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission granted! Downloading file...'**
+  String get permissionGrantedDownloadingFile;
+
+  /// No description provided for @generateCv.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate CV'**
+  String get generateCv;
+
+  /// No description provided for @coverSheetB.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover Sheet'**
+  String get coverSheetB;
+
+  /// No description provided for @jobDescriptionTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: Provide specific details about the job role for the best results!'**
+  String get jobDescriptionTip;
+
+  /// No description provided for @generatingCoverSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating cover sheet...'**
+  String get generatingCoverSheet;
+
+  /// No description provided for @coverSheetReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover sheet ready!'**
+  String get coverSheetReady;
+
+  /// No description provided for @craftYourDreamCareer.
+  ///
+  /// In en, this message translates to:
+  /// **'Craft Your Dream Career'**
+  String get craftYourDreamCareer;
+
+  /// No description provided for @enterAJobDescriptionToGenerateATailoredCVOrCoverSheetThatStandsOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a job description to generate a tailored CV or cover sheet that stands out.'**
+  String get enterAJobDescriptionToGenerateATailoredCVOrCoverSheetThatStandsOut;
+
+  /// No description provided for @describeTheJobRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the Job Role'**
+  String get describeTheJobRole;
+
+  /// No description provided for @egSoftwareEngineerAtATechStartup.
+  ///
+  /// In en, this message translates to:
+  /// **'E.g., Software Engineer at a tech startup...'**
+  String get egSoftwareEngineerAtATechStartup;
+
+  /// No description provided for @chooseYourAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Your Action'**
+  String get chooseYourAction;
+
+  /// No description provided for @pleaseAddAJobDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add a job description.'**
+  String get pleaseAddAJobDescription;
+
+  /// No description provided for @noCvFoundPromptingUserToCreateOne.
+  ///
+  /// In en, this message translates to:
+  /// **'No CV found, prompting user to create one.'**
+  String get noCvFoundPromptingUserToCreateOne;
+
+  /// No description provided for @makeCv.
+  ///
+  /// In en, this message translates to:
+  /// **'Make CV'**
+  String get makeCv;
+
+  /// No description provided for @pleaseMakeYourCv.
+  ///
+  /// In en, this message translates to:
+  /// **'Please make your CV.'**
+  String get pleaseMakeYourCv;
+
+  /// No description provided for @na.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get na;
+
+  /// No description provided for @haveCv.
+  ///
+  /// In en, this message translates to:
+  /// **'Have CV?'**
+  String get haveCv;
+
+  /// No description provided for @copiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard!'**
+  String get copiedToClipboard;
+
+  /// No description provided for @errorLoadingCv.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading CV'**
+  String get errorLoadingCv;
+
+  /// No description provided for @noLanguagesAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No languages available.'**
+  String get noLanguagesAvailable;
+
+  /// No description provided for @noCvAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No CV available.'**
+  String get noCvAvailable;
+
+  /// No description provided for @yourCv.
+  ///
+  /// In en, this message translates to:
+  /// **'Your CV'**
+  String get yourCv;
+
+  /// No description provided for @pleaseTryAgainLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Please try again later.'**
+  String get pleaseTryAgainLater;
+
+  /// No description provided for @goBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Go back'**
+  String get goBack;
+
+  /// No description provided for @internship.
+  ///
+  /// In en, this message translates to:
+  /// **'Internship'**
+  String get internship;
+
+  /// No description provided for @noJobsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No jobs available.'**
+  String get noJobsAvailable;
+
+  /// No description provided for @pleaseCheckBackLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check back later.'**
+  String get pleaseCheckBackLater;
+
+  /// No description provided for @pleaseChooseAToolFromSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Please choose a tool from suggestions.'**
+  String get pleaseChooseAToolFromSuggestions;
+
+  /// No description provided for @toolAlreadyAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Tool {raw} already added.'**
+  String toolAlreadyAdded(String raw);
+
+  /// No description provided for @addYourEducation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Your Education'**
+  String get addYourEducation;
+
+  /// No description provided for @enterYourInstitutionName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your institution name'**
+  String get enterYourInstitutionName;
+
+  /// No description provided for @institutionName.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution Name'**
+  String get institutionName;
+
+  /// No description provided for @pleaseEnterYourInstitutionName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your Institution name'**
+  String get pleaseEnterYourInstitutionName;
+
+  /// No description provided for @role.
+  ///
+  /// In en, this message translates to:
+  /// **'Role'**
+  String get role;
+
+  /// No description provided for @selectRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Role'**
+  String get selectRole;
+
+  /// No description provided for @associates.
+  ///
+  /// In en, this message translates to:
+  /// **'Associates'**
+  String get associates;
+
+  /// No description provided for @bachelors.
+  ///
+  /// In en, this message translates to:
+  /// **'Bachelors'**
+  String get bachelors;
+
+  /// No description provided for @masters.
+  ///
+  /// In en, this message translates to:
+  /// **'Masters'**
+  String get masters;
+
+  /// No description provided for @doctorate.
+  ///
+  /// In en, this message translates to:
+  /// **'Doctorate'**
+  String get doctorate;
+
+  /// No description provided for @pleaseSelectYourDegree.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your degree'**
+  String get pleaseSelectYourDegree;
+
+  /// No description provided for @enterYourFieldOfStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your field of study'**
+  String get enterYourFieldOfStudy;
+
+  /// No description provided for @fieldOfStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Field of Study'**
+  String get fieldOfStudy;
+
+  /// No description provided for @pleaseEnterYourFieldOfStudy.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your field of study'**
+  String get pleaseEnterYourFieldOfStudy;
+
+  /// No description provided for @enterYourInstitutionLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your institution location'**
+  String get enterYourInstitutionLocation;
+
+  /// No description provided for @institutionLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Institution Location'**
+  String get institutionLocation;
+
+  /// No description provided for @pleaseEnterYourInstitutionLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your Institution Location'**
+  String get pleaseEnterYourInstitutionLocation;
+
+  /// No description provided for @graduationDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Graduation Date'**
+  String get graduationDate;
+
+  /// No description provided for @addingEducations.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding Educations...'**
+  String get addingEducations;
+
+  /// No description provided for @addingProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding profile...'**
+  String get addingProfile;
+
+  /// No description provided for @enterYourLinkedInProfileUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your LinkedIn profile URL'**
+  String get enterYourLinkedInProfileUrl;
+
+  /// No description provided for @linkedInProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'LinkedIn Profile'**
+  String get linkedInProfile;
+
+  /// No description provided for @enterYourProfilePictureUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Profile Picture URL'**
+  String get enterYourProfilePictureUrl;
+
+  /// No description provided for @profilePicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Picture'**
+  String get profilePicture;
+
+  /// No description provided for @enterYourBioSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your bio/summary'**
+  String get enterYourBioSummary;
+
+  /// No description provided for @bioSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Bio/Summary'**
+  String get bioSummary;
+
+  /// No description provided for @addingProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding Projects...'**
+  String get addingProjects;
+
+  /// No description provided for @enterProjectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Project Title'**
+  String get enterProjectTitle;
+
+  /// No description provided for @projectTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Project Title'**
+  String get projectTitle;
+
+  /// No description provided for @freelance.
+  ///
+  /// In en, this message translates to:
+  /// **'Freelance'**
+  String get freelance;
+
+  /// No description provided for @yourSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Skills'**
+  String get yourSkills;
+
+  /// No description provided for @addingSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding Skills...'**
+  String get addingSkills;
+
+  /// No description provided for @addingWorkExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding Work Experience...'**
+  String get addingWorkExperience;
+
+  /// No description provided for @yourSessionHasExpiredPleaseLoginAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has expired. Please login again.'**
+  String get yourSessionHasExpiredPleaseLoginAgain;
+
+  /// No description provided for @enterJobTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Job Title'**
+  String get enterJobTitle;
+
+  /// No description provided for @companyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Name'**
+  String get companyName;
+
+  /// No description provided for @enterCompanyField.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Company Field'**
+  String get enterCompanyField;
+
+  /// No description provided for @selectJobType.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Job Type'**
+  String get selectJobType;
+
+  /// No description provided for @jobLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Location'**
+  String get jobLocation;
+
+  /// No description provided for @selectJobLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Job Location'**
+  String get selectJobLocation;
+
+  /// No description provided for @startDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Date'**
+  String get startDate;
+
+  /// No description provided for @endDate.
+  ///
+  /// In en, this message translates to:
+  /// **'End Date'**
+  String get endDate;
+
+  /// No description provided for @jobSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Job Summary'**
+  String get jobSummary;
+
+  /// No description provided for @enterJobSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Job Summary'**
+  String get enterJobSummary;
+
+  /// No description provided for @enterCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Company Name'**
+  String get enterCompanyName;
+
+  /// No description provided for @currentlyWorkingHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Currently working here'**
+  String get currentlyWorkingHere;
+
+  /// No description provided for @addWorkExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Work Experience'**
+  String get addWorkExperience;
+
+  /// No description provided for @addedWorkExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Added Work Experience:'**
+  String get addedWorkExperience;
+
+  /// No description provided for @enterYourPortfolioUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your portfolio URL (GitHub, etc.)'**
+  String get enterYourPortfolioUrl;
+
+  /// No description provided for @pleaseChooseAnIndustrySkillFromTheSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Please choose an industry skill from the suggestions.'**
+  String get pleaseChooseAnIndustrySkillFromTheSuggestions;
+
+  /// No description provided for @industrySkillIsAlreadyAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Industry Skill {raw} is already added.'**
+  String industrySkillIsAlreadyAdded(String raw);
+
+  /// No description provided for @pleaseChooseASoftSkillFromTheSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Please choose a soft skill from the suggestions.'**
+  String get pleaseChooseASoftSkillFromTheSuggestions;
+
+  /// No description provided for @softSkillIsAlreadyAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Soft Skill {raw} is already added.'**
+  String softSkillIsAlreadyAdded(String raw);
+
+  /// No description provided for @pleaseChooseATechnicalSkillFromTheSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Please choose a technical skill from the suggestions.'**
+  String get pleaseChooseATechnicalSkillFromTheSuggestions;
+
+  /// No description provided for @technicalSkillIsAlreadyAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Technical Skill {raw} is already added.'**
+  String technicalSkillIsAlreadyAdded(String raw);
+
+  /// No description provided for @beginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get beginner;
+
+  /// No description provided for @intermediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get intermediate;
+
+  /// No description provided for @advanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get advanced;
+
+  /// No description provided for @expert.
+  ///
+  /// In en, this message translates to:
+  /// **'Expert'**
+  String get expert;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date'**
+  String get selectDate;
+
   /// No description provided for @findYourJob.
   ///
   /// In en, this message translates to:
@@ -569,7 +1175,7 @@ abstract class AppLocalizations {
   /// No description provided for @arabic.
   ///
   /// In en, this message translates to:
-  /// **'العربية'**
+  /// **'Arabic'**
   String get arabic;
 
   /// No description provided for @loading.
@@ -1049,7 +1655,7 @@ abstract class AppLocalizations {
   /// No description provided for @transformToDes.
   ///
   /// In en, this message translates to:
-  /// **'Transform Your Job Description\\ninto a Professional CV!'**
+  /// **'Transform Your Job Description\ninto a Professional CV!'**
   String get transformToDes;
 
   /// No description provided for @getStarted.
@@ -1147,6 +1753,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Content for'**
   String get contentFor;
+
+  /// No description provided for @trackYourProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Track Your Progress'**
+  String get trackYourProgress;
+
+  /// No description provided for @monitorYourJobSearchJourney.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor your job search journey and stay updated on applications and interviews.'**
+  String get monitorYourJobSearchJourney;
+
+  /// No description provided for @smartRecommendations.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Recommendations'**
+  String get smartRecommendations;
+
+  /// No description provided for @getPersonalizedJobSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Get personalized job suggestions based on your experience and preferences.'**
+  String get getPersonalizedJobSuggestions;
+
+  /// No description provided for @aiPoweredJobSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'AI-Powered Job Search'**
+  String get aiPoweredJobSearch;
+
+  /// No description provided for @leverageAdvancedAI.
+  ///
+  /// In en, this message translates to:
+  /// **'Leverage advanced AI to find the perfect job opportunities tailored to your skills.'**
+  String get leverageAdvancedAI;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @noSavedJobsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved jobs yet!'**
+  String get noSavedJobsYet;
+
+  /// No description provided for @yourSavedJobsWillAppearHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Your saved jobs will appear here.'**
+  String get yourSavedJobsWillAppearHere;
+
+  /// No description provided for @savedJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved Jobs'**
+  String get savedJobs;
 }
 
 class _AppLocalizationsDelegate

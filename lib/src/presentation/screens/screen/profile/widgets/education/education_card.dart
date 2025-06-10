@@ -18,7 +18,7 @@ class EducationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final graduation = education.graduationDate != null
         ? _formatDate(education.graduationDate!)
-        : "Ongoing";
+        : context.localization.ongoing;
 
     return ReusableWidgets.cardContainer(
       child: Column(

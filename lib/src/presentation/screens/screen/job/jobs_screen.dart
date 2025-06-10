@@ -29,49 +29,47 @@ class _JobsScreenState extends State<JobsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(context.localization.jobs),
-          actions: [
-            IconButton(
-                icon: const Icon(Icons.search),
-                onPressed: () => setState(() => _isSearching = !_isSearching))
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: BlocProvider(
-            create: (context) => jobsViewmodel,
-            child: BlocBuilder<JobsViewmodel, JobsState>(
-              builder: (context, state) {
-                return Column(
-                  children: [
-                    if (_isSearching)
-                      JobSearchWidget(
-                          searchController: jobsViewmodel.searchController,
-                          jobsViewmodel: jobsViewmodel),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: state is AllJobsLoading &&
-                                    jobsViewmodel.jobs.isEmpty
-                                ? ListView.separated(
-                                    itemCount: 5,
-                                    itemBuilder: (_, __) =>
-                                        const SkeletonJobCard(),
-                                    separatorBuilder: (_, __) =>
-                                        const SizedBox(height: 8),
-                                  )
-                                : ListView.separated(
-                                    itemCount: jobsViewmodel.jobs.length,
-                                    itemBuilder: (_, index) => JobCard(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(context.localization.jobs),
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () => setState(() => _isSearching = !_isSearching))
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: BlocProvider(
+          create: (context) => jobsViewmodel,
+          child: BlocBuilder<JobsViewmodel, JobsState>(
+            builder: (context, state) {
+              return Column(
+                children: [
+                  if (_isSearching)
+                    JobSearchWidget(
+                        searchController: jobsViewmodel.searchController,
+                        jobsViewmodel: jobsViewmodel),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: state is AllJobsLoading &&
+                                  jobsViewmodel.jobs.isEmpty
+                              ? ListView.separated(
+                                  itemCount: 5,
+                                  itemBuilder: (_, __) =>
+                                      const SkeletonJobCard(),
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(height: 8),
+                                )
+                              : ListView.separated(
+                                  itemCount: jobsViewmodel.jobs.length,
+                                  itemBuilder: (_, index) =>JobCard(
                                       job: jobsViewmodel.jobs[index],
                                       onBookmarkToggle: (ContentEntity job) {
-                                        if (jobsViewmodel.jobs[index].isSaved ==
+                                      if (jobsViewmodel.jobs[index].isSaved ==
                                             true) {
                                           jobsViewmodel.jobs[index].isSaved =
                                               false;
@@ -82,21 +80,19 @@ class _JobsScreenState extends State<JobsScreen> {
                                               true;
                                           jobsViewmodel.saveJobToFavorite(job);
                                         }
-                                      },
-                                    ),
-                                    separatorBuilder: (_, __) =>
-                                        const SizedBox(height: 8),
-                                  ),
-                          ),
-                          const SizedBox(height: 16),
-                          PaginationControls(jobsViewmodel: jobsViewmodel),
-                        ],
-                      ),
+                                      },),
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(height: 8),
+                                ),
+                        ),
+                        const SizedBox(height: 16),
+                        PaginationControls(jobsViewmodel: jobsViewmodel),
+                      ],
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

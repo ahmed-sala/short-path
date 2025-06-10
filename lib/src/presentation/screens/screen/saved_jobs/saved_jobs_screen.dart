@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/saved_jobs/saved_jobs_cubit.dart';
 
@@ -19,6 +20,7 @@ class SavedJobsScreen extends StatefulWidget {
 
 class _SavedJobsScreenState extends State<SavedJobsScreen> {
   SavedJobsCubit savedJobsCubit = getIt<SavedJobsCubit>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -78,7 +80,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
           Icon(Icons.bookmark_border, size: 80, color: Colors.grey),
           verticalSpace(16),
           Text(
-            'No saved jobs yet!',
+            context.localization.noSavedJobsYet,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -87,7 +89,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
           ),
           verticalSpace(8),
           Text(
-            'Your saved jobs will appear here.',
+            context.localization.yourSavedJobsWillAppearHere,
             style: TextStyle(color: Colors.grey[600]),
           ),
         ],
