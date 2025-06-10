@@ -8,6 +8,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
@@ -16,6 +17,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../config/helpers/dio_module.dart' as _i644;
+import '../config/helpers/firestore/firestore_module.dart' as _i240;
+import '../config/helpers/firestore/firestore_services.dart' as _i635;
 import '../config/helpers/shared_pref/shared_pref_module.dart' as _i222;
 import '../src/data/api/api_services.dart' as _i687;
 import '../src/data/api/dio_client.dart' as _i885;
@@ -80,6 +83,8 @@ import '../src/presentation/mangers/career/career_viewmodel.dart' as _i510;
 import '../src/presentation/mangers/career/cv_cubit.dart' as _i218;
 import '../src/presentation/mangers/home/home_viewmodel.dart' as _i190;
 import '../src/presentation/mangers/home/jobs/jobs_viewmodel.dart' as _i132;
+import '../src/presentation/mangers/home/save_job/saved_jobs_cubit.dart'
+    as _i853;
 import '../src/presentation/mangers/job_detail/job_detail_cubit.dart' as _i982;
 import '../src/presentation/mangers/localization/localization_viewmodel.dart'
     as _i841;
@@ -120,6 +125,7 @@ extension GetItInjectableX on _i174.GetIt {
     final sharedPrefModule = _$SharedPrefModule();
     final registerModule = _$RegisterModule();
     final dioProvider = _$DioProvider();
+    final firebaseModule = _$FirebaseModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => sharedPrefModule.sharedPreferences,
       preResolve: true,
@@ -137,13 +143,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
     gh.lazySingleton<_i528.PrettyDioLogger>(() => dioProvider.providePretty());
     gh.lazySingleton<_i13.AppInterceptors>(() => _i13.AppInterceptors());
+    gh.lazySingleton<_i974.FirebaseFirestore>(
+        () => firebaseModule.firebaseFirestore);
     gh.factory<_i990.AuthOfflineDataSource>(
         () => _i718.authOfflineDatasourceImpl());
     gh.singleton<_i687.ApiServices>(() => _i687.ApiServices(gh<_i361.Dio>()));
     gh.factory<_i658.CareerOnlineDatasource>(
         () => _i656.CareerOnlineDatasourceImpl(gh<_i687.ApiServices>()));
-    gh.factory<_i177.HomeOnlineDatasource>(
-        () => _i36.HomeOnlineDatasourceImpl(gh<_i687.ApiServices>()));
+    gh.factory<_i635.FirestoreService>(
+        () => _i635.FirestoreService(gh<_i974.FirebaseFirestore>()));
     gh.factory<_i263.ProfileOnlineDataSource>(
         () => _i636.ProfileOnlineDatasourceImpl(gh<_i687.ApiServices>()));
     gh.factory<_i468.UserInfoOnlineDataSource>(
@@ -158,19 +166,15 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i645.CareerRepository>(
         () => _i726.CareerRepositoryImpl(gh<_i658.CareerOnlineDatasource>()));
-    gh.factory<_i363.HomeRepository>(() => _i210.HomeRepositoryImpl(
-          gh<_i177.HomeOnlineDatasource>(),
-          gh<_i990.AuthOfflineDataSource>(),
-        ));
     gh.factory<_i175.UserInfoRepository>(() => _i300.UserInfoRepositoryImpl(
           gh<_i468.UserInfoOnlineDataSource>(),
           gh<_i990.AuthOfflineDataSource>(),
         ));
     gh.factory<_i552.ProfileRepository>(
         () => _i488.ProfileRepositoryImpl(gh<_i263.ProfileOnlineDataSource>()));
-    gh.factory<_i991.HomeUsecase>(() => _i991.HomeUsecase(
-          gh<_i367.AuthRepository>(),
-          gh<_i363.HomeRepository>(),
+    gh.factory<_i177.HomeOnlineDatasource>(() => _i36.HomeOnlineDatasourceImpl(
+          gh<_i687.ApiServices>(),
+          gh<_i635.FirestoreService>(),
         ));
     gh.factory<_i692.AuthUseCase>(
         () => _i692.AuthUseCase(gh<_i367.AuthRepository>()));
@@ -182,10 +186,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i859.ProjectUsecase(gh<_i175.UserInfoRepository>()));
     gh.factory<_i748.UserInfoUsecase>(
         () => _i748.UserInfoUsecase(gh<_i175.UserInfoRepository>()));
-    gh.factory<_i190.HomeViewmodel>(
-        () => _i190.HomeViewmodel(gh<_i991.HomeUsecase>()));
-    gh.factory<_i132.JobsViewmodel>(
-        () => _i132.JobsViewmodel(gh<_i991.HomeUsecase>()));
     gh.factory<_i4.ProfileViewmodel>(
         () => _i4.ProfileViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i277.WorkExperienceViewModel>(
@@ -203,6 +203,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i218.CvCubit>(() => _i218.CvCubit(gh<_i720.CareerUsecase>()));
     gh.factory<_i982.JobDetailCubit>(
         () => _i982.JobDetailCubit(gh<_i720.CareerUsecase>()));
+    gh.factory<_i363.HomeRepository>(() => _i210.HomeRepositoryImpl(
+          gh<_i177.HomeOnlineDatasource>(),
+          gh<_i990.AuthOfflineDataSource>(),
+        ));
     gh.factory<_i374.AdditionalInfoViewmodel>(
         () => _i374.AdditionalInfoViewmodel(gh<_i563.AdditionalInfoUsecase>()));
     gh.factory<_i501.ProfileUsecase>(() => _i501.ProfileUsecase(
@@ -217,8 +221,18 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i208.LanguageViewmodel(gh<_i748.UserInfoUsecase>()));
     gh.factory<_i639.SkillGatheringViewmodel>(
         () => _i639.SkillGatheringViewmodel(gh<_i748.UserInfoUsecase>()));
+    gh.factory<_i991.HomeUsecase>(() => _i991.HomeUsecase(
+          gh<_i367.AuthRepository>(),
+          gh<_i363.HomeRepository>(),
+        ));
     gh.factory<_i1046.PersonalProfileCubit>(
         () => _i1046.PersonalProfileCubit(gh<_i501.ProfileUsecase>()));
+    gh.factory<_i190.HomeViewmodel>(
+        () => _i190.HomeViewmodel(gh<_i991.HomeUsecase>()));
+    gh.factory<_i132.JobsViewmodel>(
+        () => _i132.JobsViewmodel(gh<_i991.HomeUsecase>()));
+    gh.factory<_i853.SavedJobsCubit>(
+        () => _i853.SavedJobsCubit(gh<_i991.HomeUsecase>()));
     return this;
   }
 }
@@ -228,3 +242,5 @@ class _$SharedPrefModule extends _i222.SharedPrefModule {}
 class _$RegisterModule extends _i644.RegisterModule {}
 
 class _$DioProvider extends _i13.DioProvider {}
+
+class _$FirebaseModule extends _i240.FirebaseModule {}

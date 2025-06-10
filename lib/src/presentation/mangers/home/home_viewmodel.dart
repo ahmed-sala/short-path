@@ -15,8 +15,8 @@ part 'home_state.dart';
 class HomeViewmodel extends Cubit<HomeState> {
   final HomeUsecase _homeUsecase;
   HomeViewmodel(
-      this._homeUsecase,
-      ) : super(HomeInitial());
+    this._homeUsecase,
+  ) : super(HomeInitial());
   AppUser? appUser;
 
   List<ContentEntity>? jobs;
@@ -82,6 +82,34 @@ class HomeViewmodel extends Cubit<HomeState> {
       }
     } catch (e) {
       if (!isClosed) emit(JobsError(e.toString()));
+    }
+  }
+
+  Future<void> saveJobToFavorite(ContentEntity contentEntity) async {
+    emit(SavedJobsLoading());
+    final result = await _homeUsecase.saveJobToFavorite(contentEntity);
+    switch (result) {
+      case Success<void>():
+        emit(SaveJobsSuccess());
+      case Failures<void>():
+        var errorMessages =
+            ErrorHandler.fromException(result.exception).errorMessage;
+
+        emit(SavedJobsFailure(errorMessages));
+    }
+  }
+
+  Future<void> removeJobFromFavorite(ContentEntity contentEntity) async {
+    emit(SavedJobsLoading());
+    final result = await _homeUsecase.removeJobFromFavorite(contentEntity);
+    switch (result) {
+      case Success<void>():
+        emit(DeleteSavedJobSuccess());
+      case Failures<void>():
+        var errorMessages =
+            ErrorHandler.fromException(result.exception).errorMessage;
+
+        emit(SavedJobsFailure(errorMessages));
     }
   }
 }

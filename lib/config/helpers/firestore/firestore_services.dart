@@ -56,6 +56,29 @@ class FirestoreService {
     }
   }
 
+  Future<bool> deleteDocumentByField(
+    String collectionPath,
+    String field,
+    dynamic value,
+  ) async {
+    try {
+      // find the first matching document
+      final querySnapshot = await _firestore
+          .collection(collectionPath)
+          .where(field, isEqualTo: value)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isEmpty) return false;
+
+      // delete it
+      await querySnapshot.docs.first.reference.delete();
+      return true;
+    } catch (e) {
+      throw Exception('Error deleting document by field: $e');
+    }
+  }
+
   Future<Map<String, dynamic>?> getDocumentById(
       String collectionPath, String docId) async {
     try {

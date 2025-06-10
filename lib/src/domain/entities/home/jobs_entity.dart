@@ -1,3 +1,5 @@
+import 'package:short_path/src/data/dto_models/saved_job_model.dart';
+
 class JobEntity {
   final List<ContentEntity>? content;
   final int? pageNumber;
@@ -8,7 +10,6 @@ class JobEntity {
   final int? fullTimeJobsCount;
   final int? partTimeJobsCount;
   final int? internshipJobsCount;
-
   JobEntity({
     this.fullTimeJobsCount,
     this.partTimeJobsCount,
@@ -33,7 +34,7 @@ class ContentEntity {
   final String? datePosted;
   final String? salaryRange;
   final String? url;
-
+  bool? isSaved = false;
   ContentEntity({
     this.id,
     this.title,
@@ -45,5 +46,20 @@ class ContentEntity {
     this.datePosted,
     this.salaryRange,
     this.url,
+    this.isSaved,
   });
+  SavedJobModel toSavedJobModel() {
+    return SavedJobModel(
+      id: id,
+      title: title,
+      company: company,
+      description: description,
+      image: image,
+      location: location,
+      employmentType: employmentType,
+      datePosted: datePosted,
+      salaryRange: salaryRange,
+      url: url,
+    );
+  }
 }

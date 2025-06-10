@@ -56,7 +56,7 @@ class ShortPath extends StatelessWidget {
                   title: 'Short Path',
                   builder: EasyLoading.init(),
                   navigatorKey: navKey,
-                  initialRoute: RoutesName.onBoarding,
+                  initialRoute: RoutesName.sectionScreen,
                   onGenerateRoute: AppRoute.onGenerateRoute,
                 ),
               );

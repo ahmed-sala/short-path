@@ -676,7 +676,7 @@ class _ApiServices implements ApiServices {
     )
         .compose(
           _dio.options,
-          '/cover-sheet/generate',
+          'cover-sheet/generate',
           queryParameters: queryParameters,
           data: _data,
         )

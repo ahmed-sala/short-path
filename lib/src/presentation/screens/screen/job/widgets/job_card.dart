@@ -9,8 +9,9 @@ import '../../../../../../../core/styles/cached_network_image_widget.dart';
 import '../../../../../short_path.dart';
 
 class JobCard extends StatelessWidget {
-  const JobCard({super.key, required this.job});
+  const JobCard({super.key, required this.job, this.onBookmarkToggle});
   final ContentEntity? job;
+  final void Function(ContentEntity job)? onBookmarkToggle;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -75,8 +76,17 @@ class JobCard extends StatelessWidget {
                 ),
                 // Bookmark icon
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.bookmark_border),
+                  onPressed: () {
+                    if (onBookmarkToggle != null && job != null) {
+                      onBookmarkToggle!(job!);
+                    }
+                  },
+                  icon: job?.isSaved == true
+                      ? const Icon(Icons.bookmark, color: Colors.orange)
+                      : const Icon(
+                          Icons.bookmark_border,
+                          color: Colors.grey,
+                        ),
                 ),
               ],
             ),
