@@ -71,7 +71,8 @@ class _IndustrySkillInputWidgetState extends State<IndustrySkillInputWidget> {
                     .map((s) => s.toLowerCase())
                     .contains(lower)) {
                   ToastDialog.show(
-                    'Please choose an industry skill from the suggestions',
+                    context.localization
+                        .pleaseChooseAnIndustrySkillFromTheSuggestions,
                     Colors.red,
                   );
                   return;
@@ -82,7 +83,7 @@ class _IndustrySkillInputWidgetState extends State<IndustrySkillInputWidget> {
                     .map((s) => s.toLowerCase())
                     .contains(lower)) {
                   ToastDialog.show(
-                    'Industry skill "$raw" is already added',
+                    context.localization.industrySkillIsAlreadyAdded(raw),
                     Colors.orange,
                   );
                   return;

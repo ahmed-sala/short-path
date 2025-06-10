@@ -69,6 +69,333 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome => 'Welcome,';
 
   @override
+  String get welcomeB => 'Welcome!';
+
+  @override
+  String get welcomeToShortPath => 'Welcome to Short Path!';
+
+  @override
+  String get whatWouldYouLikeToDoNext => 'What would you like to do next?';
+
+  @override
+  String get fillInYourCV => 'Fill in Your CV';
+
+  @override
+  String get continueToHome => 'Continue to Home';
+
+  @override
+  String get youCanAlwaysUpdateYourCVLaterFromProfile =>
+      'You can always update your CV later from Profile.';
+
+  @override
+  String get permissionAlreadyGrantedDownloadingFile =>
+      'Permission already granted! Downloading file...';
+
+  @override
+  String get permissionRequired => 'Permission Required';
+
+  @override
+  String get doYouWantToGrantStoragePermissionToDownloadTheFile =>
+      'Do you want to grant storage permission to download the file?';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get storagePermissionIsRequiredToDownloadTheFile =>
+      'Storage permission is required to download the file.';
+
+  @override
+  String get permissionGrantedDownloadingFile =>
+      'Permission granted! Downloading file...';
+
+  @override
+  String get generateCv => 'Generate CV';
+
+  @override
+  String get coverSheetB => 'Cover Sheet';
+
+  @override
+  String get jobDescriptionTip =>
+      'Tip: Provide specific details about the job role for the best results!';
+
+  @override
+  String get generatingCoverSheet => 'Generating cover sheet...';
+
+  @override
+  String get coverSheetReady => 'Cover sheet ready!';
+
+  @override
+  String get craftYourDreamCareer => 'Craft Your Dream Career';
+
+  @override
+  String get enterAJobDescriptionToGenerateATailoredCVOrCoverSheetThatStandsOut =>
+      'Enter a job description to generate a tailored CV or cover sheet that stands out.';
+
+  @override
+  String get describeTheJobRole => 'Describe the Job Role';
+
+  @override
+  String get egSoftwareEngineerAtATechStartup =>
+      'E.g., Software Engineer at a tech startup...';
+
+  @override
+  String get chooseYourAction => 'Choose Your Action';
+
+  @override
+  String get pleaseAddAJobDescription => 'Please add a job description.';
+
+  @override
+  String get noCvFoundPromptingUserToCreateOne =>
+      'No CV found, prompting user to create one.';
+
+  @override
+  String get makeCv => 'Make CV';
+
+  @override
+  String get pleaseMakeYourCv => 'Please make your CV.';
+
+  @override
+  String get na => 'N/A';
+
+  @override
+  String get haveCv => 'Have CV?';
+
+  @override
+  String get copiedToClipboard => 'Copied to clipboard!';
+
+  @override
+  String get errorLoadingCv => 'Error loading CV';
+
+  @override
+  String get noLanguagesAvailable => 'No languages available.';
+
+  @override
+  String get noCvAvailable => 'No CV available.';
+
+  @override
+  String get yourCv => 'Your CV';
+
+  @override
+  String get pleaseTryAgainLater => 'Please try again later.';
+
+  @override
+  String get goBack => 'Go back';
+
+  @override
+  String get internship => 'Internship';
+
+  @override
+  String get noJobsAvailable => 'No jobs available.';
+
+  @override
+  String get pleaseCheckBackLater => 'Please check back later.';
+
+  @override
+  String get pleaseChooseAToolFromSuggestions =>
+      'Please choose a tool from suggestions.';
+
+  @override
+  String toolAlreadyAdded(String raw) {
+    return 'Tool $raw already added.';
+  }
+
+  @override
+  String get addYourEducation => 'Add Your Education';
+
+  @override
+  String get enterYourInstitutionName => 'Enter your institution name';
+
+  @override
+  String get institutionName => 'Institution Name';
+
+  @override
+  String get pleaseEnterYourInstitutionName =>
+      'Please enter your Institution name';
+
+  @override
+  String get role => 'Role';
+
+  @override
+  String get selectRole => 'Select Role';
+
+  @override
+  String get associates => 'Associates';
+
+  @override
+  String get bachelors => 'Bachelors';
+
+  @override
+  String get masters => 'Masters';
+
+  @override
+  String get doctorate => 'Doctorate';
+
+  @override
+  String get pleaseSelectYourDegree => 'Please select your degree';
+
+  @override
+  String get enterYourFieldOfStudy => 'Enter your field of study';
+
+  @override
+  String get fieldOfStudy => 'Field of Study';
+
+  @override
+  String get pleaseEnterYourFieldOfStudy => 'Please enter your field of study';
+
+  @override
+  String get enterYourInstitutionLocation => 'Enter your institution location';
+
+  @override
+  String get institutionLocation => 'Institution Location';
+
+  @override
+  String get pleaseEnterYourInstitutionLocation =>
+      'Please enter your Institution Location';
+
+  @override
+  String get graduationDate => 'Graduation Date';
+
+  @override
+  String get addingEducations => 'Adding Educations...';
+
+  @override
+  String get addingProfile => 'Adding profile...';
+
+  @override
+  String get enterYourLinkedInProfileUrl => 'Enter your LinkedIn profile URL';
+
+  @override
+  String get linkedInProfile => 'LinkedIn Profile';
+
+  @override
+  String get enterYourProfilePictureUrl => 'Enter your Profile Picture URL';
+
+  @override
+  String get profilePicture => 'Profile Picture';
+
+  @override
+  String get enterYourBioSummary => 'Enter your bio/summary';
+
+  @override
+  String get bioSummary => 'Bio/Summary';
+
+  @override
+  String get addingProjects => 'Adding Projects...';
+
+  @override
+  String get enterProjectTitle => 'Enter Project Title';
+
+  @override
+  String get projectTitle => 'Project Title';
+
+  @override
+  String get freelance => 'Freelance';
+
+  @override
+  String get yourSkills => 'Your Skills';
+
+  @override
+  String get addingSkills => 'Adding Skills...';
+
+  @override
+  String get addingWorkExperience => 'Adding Work Experience...';
+
+  @override
+  String get yourSessionHasExpiredPleaseLoginAgain =>
+      'Your session has expired. Please login again.';
+
+  @override
+  String get enterJobTitle => 'Enter Job Title';
+
+  @override
+  String get companyName => 'Company Name';
+
+  @override
+  String get enterCompanyField => 'Enter Company Field';
+
+  @override
+  String get selectJobType => 'Select Job Type';
+
+  @override
+  String get jobLocation => 'Job Location';
+
+  @override
+  String get selectJobLocation => 'Select Job Location';
+
+  @override
+  String get startDate => 'Start Date';
+
+  @override
+  String get endDate => 'End Date';
+
+  @override
+  String get jobSummary => 'Job Summary';
+
+  @override
+  String get enterJobSummary => 'Enter Job Summary';
+
+  @override
+  String get enterCompanyName => 'Enter Company Name';
+
+  @override
+  String get currentlyWorkingHere => 'Currently working here';
+
+  @override
+  String get addWorkExperience => 'Add Work Experience';
+
+  @override
+  String get addedWorkExperience => 'Added Work Experience:';
+
+  @override
+  String get enterYourPortfolioUrl => 'Enter your portfolio URL (GitHub, etc.)';
+
+  @override
+  String get pleaseChooseAnIndustrySkillFromTheSuggestions =>
+      'Please choose an industry skill from the suggestions.';
+
+  @override
+  String industrySkillIsAlreadyAdded(String raw) {
+    return 'Industry Skill $raw is already added.';
+  }
+
+  @override
+  String get pleaseChooseASoftSkillFromTheSuggestions =>
+      'Please choose a soft skill from the suggestions.';
+
+  @override
+  String softSkillIsAlreadyAdded(String raw) {
+    return 'Soft Skill $raw is already added.';
+  }
+
+  @override
+  String get pleaseChooseATechnicalSkillFromTheSuggestions =>
+      'Please choose a technical skill from the suggestions.';
+
+  @override
+  String technicalSkillIsAlreadyAdded(String raw) {
+    return 'Technical Skill $raw is already added.';
+  }
+
+  @override
+  String get beginner => 'Beginner';
+
+  @override
+  String get intermediate => 'Intermediate';
+
+  @override
+  String get advanced => 'Advanced';
+
+  @override
+  String get expert => 'Expert';
+
+  @override
+  String get selectDate => 'Select Date';
+
+  @override
   String get findYourJob => 'Find Your Job';
 
   @override
@@ -246,7 +573,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get english => 'English';
 
   @override
-  String get arabic => 'العربية';
+  String get arabic => 'Arabic';
 
   @override
   String get loading => 'Loading...';
@@ -488,7 +815,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get transformToDes =>
-      'Transform Your Job Description\\ninto a Professional CV!';
+      'Transform Your Job Description\ninto a Professional CV!';
 
   @override
   String get getStarted => 'Get Started';
@@ -537,4 +864,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contentFor => 'Content for';
+
+  @override
+  String get trackYourProgress => 'Track Your Progress';
+
+  @override
+  String get monitorYourJobSearchJourney =>
+      'Monitor your job search journey and stay updated on applications and interviews.';
+
+  @override
+  String get smartRecommendations => 'Smart Recommendations';
+
+  @override
+  String get getPersonalizedJobSuggestions =>
+      'Get personalized job suggestions based on your experience and preferences.';
+
+  @override
+  String get aiPoweredJobSearch => 'AI-Powered Job Search';
+
+  @override
+  String get leverageAdvancedAI =>
+      'Leverage advanced AI to find the perfect job opportunities tailored to your skills.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get confirm => 'Confirm';
 }

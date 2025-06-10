@@ -5,7 +5,9 @@ import '../../../../mangers/home/home_viewmodel.dart';
 
 class JobStatsCard extends StatelessWidget {
   const JobStatsCard({super.key, required this.viewModel});
+
   final HomeViewmodel viewModel;
+
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
@@ -67,8 +69,8 @@ class JobStatsCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text(
-                        'Internship',
+                      Text(
+                        context.localization.internship,
                         style: TextStyle(fontSize: 16),
                       ),
                     ],

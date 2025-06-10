@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
@@ -26,11 +27,11 @@ class MainEducationScreen extends StatelessWidget {
         body: BlocConsumer<EducationViewmodelNew, EducationState>(
           listener: (context, state) {
             if (state is AddEducationLoadingState) {
-              showLoading(context, 'Adding Educations');
+              showLoading(context, context.localization.addingEducations);
             }
             if (state is AddEducationErrorState) {
               showAwesomeDialog(context,
-                  title: 'Error',
+                  title: context.localization.error,
                   desc: state.message,
                   onOk: () {},
                   dialogType: DialogType.error);
@@ -48,26 +49,34 @@ class MainEducationScreen extends StatelessWidget {
             return current is! EducationInitialState;
           },
           builder: (context, state) {
-            return Directionality(
-              textDirection: TextDirection.ltr,
-              child: SafeArea(
-                child: Column(
-                  children: [
-                    verticalSpace(40),
-                    const Center(child: HeaderWidget()),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: StepProgressBar(currentStep: 3),
+            return SafeArea(
+              child: Column(
+                children: [
+                  verticalSpace(40),
+                  const Center(child: HeaderWidget()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: StepProgressBar(
+                      currentStep: 3,
+                      stepNames: [
+                        context.localization.personalInfo,
+                        context.localization.skills,
+                        context.localization.education,
+                        context.localization.experience,
+                        context.localization.projects,
+                        context.localization.certifications,
+                        context.localization.additionalInfo,
+                      ],
                     ),
-                    verticalSpace(16),
-                    const EducationListWidget(),
-                    const Expanded(
-                      flex: 2,
-                      child: DetailedEducation(),
-                    ),
-                    verticalSpace(20),
-                  ],
-                ),
+                  ),
+                  verticalSpace(16),
+                  const EducationListWidget(),
+                  const Expanded(
+                    flex: 2,
+                    child: DetailedEducation(),
+                  ),
+                  verticalSpace(20),
+                ],
               ),
             );
           },

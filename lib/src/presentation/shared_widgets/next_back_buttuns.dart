@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/widgets/dot_items.dart';
 
 class NextBackButtuns extends StatelessWidget {
@@ -57,7 +58,7 @@ class NextBackButtuns extends StatelessWidget {
                       // No need for changePage here; onPageChanged handles it
                     },
                     child: Text(
-                      'Back',
+                      context.localization.back,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 16.0.sp,
@@ -85,7 +86,9 @@ class NextBackButtuns extends StatelessWidget {
                         }
                       : finish,
                   child: Text(
-                    currentPage < length - 1 ? 'Next' : 'Get Started',
+                    currentPage < length - 1
+                        ? context.localization.next
+                        : context.localization.getStarted,
                     style: TextStyle(
                       fontSize: 16.0.sp,
                       color: Colors.white,

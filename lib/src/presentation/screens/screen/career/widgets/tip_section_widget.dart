@@ -1,3 +1,4 @@
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 
 import '../../../../../../core/common/common_imports.dart';
@@ -13,8 +14,8 @@ class TipSectionWidget extends StatelessWidget {
         color: AppColors.primaryColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Text(
-        'Tip: Provide specific details about the job role for the best results!',
+      child: Text(
+        context.localization.jobDescriptionTip,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 14,

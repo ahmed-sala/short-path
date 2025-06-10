@@ -69,6 +69,334 @@ class AppLocalizationsAr extends AppLocalizations {
   String get welcome => 'مرحبًا،';
 
   @override
+  String get welcomeB => 'مرحبًا!';
+
+  @override
+  String get welcomeToShortPath => 'مرحبًا بك في شورت باث!';
+
+  @override
+  String get whatWouldYouLikeToDoNext => 'ماذا تريد أن تفعل بعد ذلك؟';
+
+  @override
+  String get fillInYourCV => 'املأ سيرتك الذاتية';
+
+  @override
+  String get continueToHome => 'الانتقال إلى الصفحة الرئيسية';
+
+  @override
+  String get youCanAlwaysUpdateYourCVLaterFromProfile =>
+      'يمكنك دائمًا تحديث سيرتك الذاتية لاحقًا من الملف الشخصي.';
+
+  @override
+  String get permissionAlreadyGrantedDownloadingFile =>
+      'تم منح الإذن مسبقًا! جارٍ تنزيل الملف...';
+
+  @override
+  String get permissionRequired => 'مطلوب إذن';
+
+  @override
+  String get doYouWantToGrantStoragePermissionToDownloadTheFile =>
+      'هل تريد منح إذن التخزين لتنزيل الملف؟';
+
+  @override
+  String get no => 'لا';
+
+  @override
+  String get yes => 'نعم';
+
+  @override
+  String get storagePermissionIsRequiredToDownloadTheFile =>
+      'إذن التخزين مطلوب لتنزيل الملف.';
+
+  @override
+  String get permissionGrantedDownloadingFile =>
+      'تم منح الإذن! جارٍ تنزيل الملف...';
+
+  @override
+  String get generateCv => 'إنشاء السيرة الذاتية';
+
+  @override
+  String get coverSheetB => 'ورقة الغلاف';
+
+  @override
+  String get jobDescriptionTip =>
+      'نصيحة: قدم تفاصيل محددة حول الوظيفة للحصول على أفضل النتائج!';
+
+  @override
+  String get generatingCoverSheet => 'جارٍ إنشاء ورقة الغلاف...';
+
+  @override
+  String get coverSheetReady => 'ورقة الغلاف جاهزة!';
+
+  @override
+  String get craftYourDreamCareer => 'اصنع مسار مهنتك الحلم';
+
+  @override
+  String
+      get enterAJobDescriptionToGenerateATailoredCVOrCoverSheetThatStandsOut =>
+          'أدخل وصفًا وظيفيًا لإنشاء سيرة ذاتية أو ورقة غلاف مخصصة تبرز.';
+
+  @override
+  String get describeTheJobRole => 'صف الدور الوظيفي';
+
+  @override
+  String get egSoftwareEngineerAtATechStartup =>
+      'مثال: مهندس برمجيات في شركة ناشئة تقنية';
+
+  @override
+  String get chooseYourAction => 'اختر إجراءك';
+
+  @override
+  String get pleaseAddAJobDescription => 'يرجى إضافة وصف وظيفي.';
+
+  @override
+  String get noCvFoundPromptingUserToCreateOne =>
+      'لم يتم العثور على سيرة ذاتية، جارٍ مطالبة المستخدم بإنشائها.';
+
+  @override
+  String get makeCv => 'أنشئ سيرة ذاتية';
+
+  @override
+  String get pleaseMakeYourCv => 'يرجى إنشاء سيرتك الذاتية.';
+
+  @override
+  String get na => 'غير متوفر';
+
+  @override
+  String get haveCv => 'هل لديك سيرة ذاتية؟';
+
+  @override
+  String get copiedToClipboard => 'تم النسخ إلى الحافظة!';
+
+  @override
+  String get errorLoadingCv => 'حدث خطأ أثناء تحميل السيرة الذاتية';
+
+  @override
+  String get noLanguagesAvailable => 'لا توجد لغات متاحة.';
+
+  @override
+  String get noCvAvailable => 'لا توجد سيرة ذاتية متاحة.';
+
+  @override
+  String get yourCv => 'سيرتك الذاتية';
+
+  @override
+  String get pleaseTryAgainLater => 'يرجى المحاولة مرة أخرى لاحقًا.';
+
+  @override
+  String get goBack => 'الرجوع';
+
+  @override
+  String get internship => 'تدريب';
+
+  @override
+  String get noJobsAvailable => 'لا توجد وظائف متاحة.';
+
+  @override
+  String get pleaseCheckBackLater => 'يرجى التحقق لاحقًا.';
+
+  @override
+  String get pleaseChooseAToolFromSuggestions =>
+      'يرجى اختيار أداة من الاقتراحات.';
+
+  @override
+  String toolAlreadyAdded(String raw) {
+    return 'تمت إضافة الأداة $raw مسبقًا.';
+  }
+
+  @override
+  String get addYourEducation => 'أضف تعليمك';
+
+  @override
+  String get enterYourInstitutionName => 'أدخل اسم المؤسسة التعليمية';
+
+  @override
+  String get institutionName => 'اسم المؤسسة التعليمية';
+
+  @override
+  String get pleaseEnterYourInstitutionName =>
+      'يرجى إدخال اسم المؤسسة التعليمية';
+
+  @override
+  String get role => 'الدور';
+
+  @override
+  String get selectRole => 'اختر الدور';
+
+  @override
+  String get associates => 'دبلوم';
+
+  @override
+  String get bachelors => 'بكالوريوس';
+
+  @override
+  String get masters => 'ماجستير';
+
+  @override
+  String get doctorate => 'دكتوراه';
+
+  @override
+  String get pleaseSelectYourDegree => 'يرجى اختيار الدرجة العلمية';
+
+  @override
+  String get enterYourFieldOfStudy => 'أدخل مجال دراستك';
+
+  @override
+  String get fieldOfStudy => 'مجال الدراسة';
+
+  @override
+  String get pleaseEnterYourFieldOfStudy => 'يرجى إدخال مجال دراستك';
+
+  @override
+  String get enterYourInstitutionLocation => 'أدخل موقع المؤسسة التعليمية';
+
+  @override
+  String get institutionLocation => 'موقع المؤسسة التعليمية';
+
+  @override
+  String get pleaseEnterYourInstitutionLocation =>
+      'يرجى إدخال موقع المؤسسة التعليمية';
+
+  @override
+  String get graduationDate => 'تاريخ التخرج';
+
+  @override
+  String get addingEducations => 'جارٍ إضافة التعليم...';
+
+  @override
+  String get addingProfile => 'جارٍ إضافة الملف الشخصي...';
+
+  @override
+  String get enterYourLinkedInProfileUrl => 'أدخل رابط ملفك على لينكدإن';
+
+  @override
+  String get linkedInProfile => 'ملف لينكدإن';
+
+  @override
+  String get enterYourProfilePictureUrl => 'أدخل رابط صورتك الشخصية';
+
+  @override
+  String get profilePicture => 'الصورة الشخصية';
+
+  @override
+  String get enterYourBioSummary => 'أدخل نبذة عنك';
+
+  @override
+  String get bioSummary => 'نبذة';
+
+  @override
+  String get addingProjects => 'جارٍ إضافة المشاريع...';
+
+  @override
+  String get enterProjectTitle => 'أدخل عنوان المشروع';
+
+  @override
+  String get projectTitle => 'عنوان المشروع';
+
+  @override
+  String get freelance => 'عمل حر';
+
+  @override
+  String get yourSkills => 'مهاراتك';
+
+  @override
+  String get addingSkills => 'جارٍ إضافة المهارات...';
+
+  @override
+  String get addingWorkExperience => 'جارٍ إضافة الخبرات العملية...';
+
+  @override
+  String get yourSessionHasExpiredPleaseLoginAgain =>
+      'انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.';
+
+  @override
+  String get enterJobTitle => 'أدخل المسمى الوظيفي';
+
+  @override
+  String get companyName => 'اسم الشركة';
+
+  @override
+  String get enterCompanyField => 'أدخل مجال الشركة';
+
+  @override
+  String get selectJobType => 'اختر نوع الوظيفة';
+
+  @override
+  String get jobLocation => 'موقع الوظيفة';
+
+  @override
+  String get selectJobLocation => 'اختر موقع الوظيفة';
+
+  @override
+  String get startDate => 'تاريخ البدء';
+
+  @override
+  String get endDate => 'تاريخ الانتهاء';
+
+  @override
+  String get jobSummary => 'ملخص الوظيفة';
+
+  @override
+  String get enterJobSummary => 'أدخل ملخص الوظيفة';
+
+  @override
+  String get enterCompanyName => 'أدخل اسم الشركة';
+
+  @override
+  String get currentlyWorkingHere => 'أعمل حاليًا هنا';
+
+  @override
+  String get addWorkExperience => 'أضف خبرة عملية';
+
+  @override
+  String get addedWorkExperience => 'تمت إضافة خبرة عملية:';
+
+  @override
+  String get enterYourPortfolioUrl => 'أدخل رابط معرض أعمالك (مثل GitHub)';
+
+  @override
+  String get pleaseChooseAnIndustrySkillFromTheSuggestions =>
+      'يرجى اختيار مهارة صناعية من الاقتراحات.';
+
+  @override
+  String industrySkillIsAlreadyAdded(String raw) {
+    return 'تمت إضافة المهارة الصناعية $raw مسبقًا.';
+  }
+
+  @override
+  String get pleaseChooseASoftSkillFromTheSuggestions =>
+      'يرجى اختيار مهارة ناعمة من الاقتراحات.';
+
+  @override
+  String softSkillIsAlreadyAdded(String raw) {
+    return 'تمت إضافة المهارة الناعمة $raw مسبقًا.';
+  }
+
+  @override
+  String get pleaseChooseATechnicalSkillFromTheSuggestions =>
+      'يرجى اختيار مهارة تقنية من الاقتراحات.';
+
+  @override
+  String technicalSkillIsAlreadyAdded(String raw) {
+    return 'تمت إضافة المهارة التقنية $raw مسبقًا.';
+  }
+
+  @override
+  String get beginner => 'مبتدئ';
+
+  @override
+  String get intermediate => 'متوسط';
+
+  @override
+  String get advanced => 'متقدم';
+
+  @override
+  String get expert => 'خبير';
+
+  @override
+  String get selectDate => 'اختر التاريخ';
+
+  @override
   String get findYourJob => 'ابحث عن وظيفتك';
 
   @override
@@ -242,7 +570,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectLanguage => 'اختر اللغة';
 
   @override
-  String get english => 'English';
+  String get english => 'الإنجليزية';
 
   @override
   String get arabic => 'العربية';
@@ -486,7 +814,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get partTime => 'دوام جزئي';
 
   @override
-  String get transformToDes => 'حوّل وصف وظيفتك\\nإلى سيرة ذاتية احترافية!';
+  String get transformToDes => 'حوّل وصف وظيفتك\nإلى سيرة ذاتية احترافية!';
 
   @override
   String get getStarted => 'ابدأ';
@@ -535,4 +863,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get contentFor => 'المحتوى من';
+
+  @override
+  String get trackYourProgress => 'تابع تقدمك';
+
+  @override
+  String get monitorYourJobSearchJourney =>
+      'تابع رحلتك في البحث عن عمل وكن على اطلاع دائم بالتقديمات والمقابلات.';
+
+  @override
+  String get smartRecommendations => 'توصيات ذكية';
+
+  @override
+  String get getPersonalizedJobSuggestions =>
+      'احصل على اقتراحات وظيفية مخصصة بناءً على خبرتك وتفضيلاتك.';
+
+  @override
+  String get aiPoweredJobSearch => 'بحث عن عمل مدعوم بالذكاء الاصطناعي';
+
+  @override
+  String get leverageAdvancedAI =>
+      'استفد من الذكاء الاصطناعي المتقدم للعثور على فرص عمل مثالية تناسب مهاراتك.';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get confirm => 'تأكيد';
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:short_path/config/helpers/shared_pref/shared_pre_keys.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/short_path.dart';
 
 import '../../../../../config/routes/routes_name.dart';
+
 // Import your ButtonsSectionWidget
 import '../../../shared_widgets/buttons_section_widget.dart';
 
@@ -32,7 +34,7 @@ class PostRegisterChoiceScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome!'),
+        title: Text(context.localization.welcomeB),
         centerTitle: true,
         elevation: 0,
       ),
@@ -57,10 +59,10 @@ class PostRegisterChoiceScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const Column(
+                child: Column(
                   children: [
                     Text(
-                      'Welcome to Short Path!',
+                      context.localization.welcomeToShortPath,
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -69,7 +71,7 @@ class PostRegisterChoiceScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      'What would you like to do next?',
+                      context.localization.whatWouldYouLikeToDoNext,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black54,
@@ -86,14 +88,14 @@ class PostRegisterChoiceScreen extends StatelessWidget {
               ButtonsSectionWidget(
                 onGenerateCvTap: onFillInCv,
                 onGenerateCoverSheetTap: onContinueToHome,
-                boldButtonText: 'Fill in Your CV',
-                outlineButtonText: 'Continue to Home',
+                boldButtonText: context.localization.fillInYourCV,
+                outlineButtonText: context.localization.continueToHome,
                 outlineButtonIcon: Icons.home_outlined,
               ),
 
               const SizedBox(height: 16),
-              const Text(
-                'You can always update your CV later from Profile.',
+              Text(
+                context.localization.youCanAlwaysUpdateYourCVLaterFromProfile,
                 style: TextStyle(fontSize: 14, color: Colors.black45),
               ),
             ],

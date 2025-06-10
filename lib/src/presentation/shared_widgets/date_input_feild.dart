@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 
 class DateInputField extends StatelessWidget {
   /// The currently selected date. If `null`, the widget shows 'Select Date'.
@@ -18,7 +19,7 @@ class DateInputField extends StatelessWidget {
     super.key,
     required this.selectedDate,
     required this.onDateSelected,
-    this.labelText = 'Date Earned',
+    required this.labelText,
     this.height = 70.0,
   });
 
@@ -57,7 +58,7 @@ class DateInputField extends StatelessWidget {
           child: Text(
             selectedDate != null
                 ? DateFormat('M/d/yyyy').format(selectedDate!)
-                : 'Select Date',
+                : context.localization.selectDate,
             style: TextStyle(
               color: selectedDate == null ? Colors.grey : Colors.black,
             ),

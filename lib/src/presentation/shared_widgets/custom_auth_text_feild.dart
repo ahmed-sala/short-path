@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 
 class CustomTextFormField extends StatefulWidget {
@@ -51,7 +52,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    bool isSummaryField = widget.labelText == "Summary";
+    bool isSummaryField = widget.labelText == context.localization.bioSummary;
 
     return Container(
       decoration: BoxDecoration(

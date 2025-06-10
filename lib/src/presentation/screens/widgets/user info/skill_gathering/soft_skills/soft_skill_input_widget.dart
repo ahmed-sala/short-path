@@ -70,7 +70,8 @@ class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
                 // 1) Must exist in master list
                 if (!softSkills.map((s) => s.toLowerCase()).contains(lower)) {
                   ToastDialog.show(
-                    'Please choose a soft skill from the suggestions',
+                    context
+                        .localization.pleaseChooseASoftSkillFromTheSuggestions,
                     Colors.red,
                   );
                   return;
@@ -81,7 +82,7 @@ class _SoftSkillInputWidgetState extends State<SoftSkillInputWidget> {
                     .map((s) => s.toLowerCase())
                     .contains(lower)) {
                   ToastDialog.show(
-                    'Soft skill "$raw" is already added',
+                    context.localization.softSkillIsAlreadyAdded(raw),
                     Colors.orange,
                   );
                   return;

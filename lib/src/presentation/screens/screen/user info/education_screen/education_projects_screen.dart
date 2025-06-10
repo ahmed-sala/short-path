@@ -113,7 +113,8 @@ class EducationProjectScreen extends StatelessWidget {
                                     .map((s) => s.toLowerCase())
                                     .contains(lower)) {
                                   ToastDialog.show(
-                                    'Please choose a tool from suggestions',
+                                    context.localization
+                                        .pleaseChooseAToolFromSuggestions,
                                     Colors.red,
                                   );
                                   return;
@@ -123,7 +124,7 @@ class EducationProjectScreen extends StatelessWidget {
                                     .map((t) => t.toLowerCase())
                                     .contains(lower)) {
                                   ToastDialog.show(
-                                    'Tool "$raw" already added',
+                                    context.localization.toolAlreadyAdded(raw),
                                     Colors.orange,
                                   );
                                   return;

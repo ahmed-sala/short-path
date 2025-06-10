@@ -24,7 +24,7 @@ class PersonalProfileScreen extends StatelessWidget {
   PersonalProfileScreen({super.key});
 
   final PersonalProfileCubit _personalProfileCubit =
-      getIt<PersonalProfileCubit>();
+  getIt<PersonalProfileCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class PersonalProfileScreen extends StatelessWidget {
                     Navigator.pushNamedAndRemoveUntil(
                       context,
                       RoutesName.login,
-                      (route) => false,
+                          (route) => false,
                     );
                   },
                 );
@@ -162,16 +162,18 @@ class PersonalProfileScreen extends StatelessWidget {
                             const Expanded(child: PersonalInfoWidget()),
                             const SizedBox(height: 30),
                             CustomAuthButton(
-                              text: 'Fill in Your CV',
+                              text: context.localization.fillInYourCV,
                               onPressed: () {
                                 getIt<SharedPreferences>()
                                     .setBool(SharedPrefKeys.completeCv, true);
                                 navKey.currentState?.pushNamedAndRemoveUntil(
                                   RoutesName.profile,
-                                  (route) => false,
+                                      (route) => false,
                                 );
                               },
-                              color: Theme.of(context).primaryColor,
+                              color: Theme
+                                  .of(context)
+                                  .primaryColor,
                               textColor: Colors.white,
                               borderRadius: BorderRadius.circular(10),
                               textStyle: const TextStyle(
