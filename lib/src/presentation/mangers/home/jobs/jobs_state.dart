@@ -23,3 +23,27 @@ final class SearchModeState extends JobsState {
   final bool isSearching;
   SearchModeState(this.isSearching);
 }
+
+final class SavedJobsInitial extends JobsState {}
+
+final class SavedJobsLoading extends JobsState {}
+
+final class SaveJobsSuccess extends JobsState {
+  SaveJobsSuccess();
+}
+
+final class SavedJobsFailure extends JobsState {
+  final String errorMessage;
+
+  SavedJobsFailure(this.errorMessage);
+}
+
+final class DeleteSavedJobSuccess extends JobsState {
+  DeleteSavedJobSuccess();
+}
+
+final class DeleteSavedJobFailure extends JobsState {
+  final String errorMessage;
+
+  DeleteSavedJobFailure(this.errorMessage);
+}

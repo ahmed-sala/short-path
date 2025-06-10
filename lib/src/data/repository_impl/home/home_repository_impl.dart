@@ -29,7 +29,39 @@ class HomeRepositoryImpl implements HomeRepository {
         size: size,
         jobFilterRequest: jobFilterRequest,
       );
-      return response.toEntity();
+      return response;
     });
+  }
+
+  @override
+  Future<ApiResult<List<ContentEntity>?>> getFavoriteJobs() {
+    return executeApi<List<ContentEntity>?>(
+      apiCall: () async {
+        var response = await homeOnlineDatasource.getFavoriteJobs();
+        return response.map((job) => job.toEntity()).toList();
+      },
+    );
+  }
+
+  @override
+  Future<ApiResult<void>> removeJobFromFavorite(ContentEntity contentEntity) {
+    return executeApi<void>(
+      apiCall: () async {
+        await homeOnlineDatasource.removeJobFromFavorite(
+          contentEntity.toSavedJobModel(),
+        );
+      },
+    );
+  }
+
+  @override
+  Future<ApiResult<void>> saveJobToFavorite(ContentEntity contentEntity) {
+    return executeApi<void>(
+      apiCall: () async {
+        await homeOnlineDatasource.saveJobToFavorite(
+          contentEntity.toSavedJobModel(),
+        );
+      },
+    );
   }
 }

@@ -11,4 +11,7 @@ abstract interface class HomeRepository {
     int? size,
     JobFilterRequest? jobFilterRequest,
   });
+  Future<ApiResult<void>> saveJobToFavorite(ContentEntity contentEntity);
+  Future<ApiResult<void>> removeJobFromFavorite(ContentEntity contentEntity);
+  Future<ApiResult<List<ContentEntity>?>> getFavoriteJobs();
 }

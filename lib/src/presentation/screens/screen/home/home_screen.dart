@@ -65,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                           fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 16),
-                    JobStatsCard(viewModel: homeViewmodel),
+                    const JobStatsCard(),
                     verticalSpace(20),
                   ],
                 ),

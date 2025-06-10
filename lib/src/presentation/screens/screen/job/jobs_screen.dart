@@ -5,6 +5,7 @@ import 'package:short_path/src/presentation/screens/screen/job/widgets/job_searc
 
 import '../../../../../core/common/common_imports.dart';
 import '../../../../../dependency_injection/di.dart';
+import '../../../../domain/entities/home/jobs_entity.dart';
 import '../../../mangers/home/jobs/jobs_viewmodel.dart';
 import '../../../shared_widgets/skeleton_job_card.dart';
 import 'widgets/pagination_controls.dart';
@@ -67,8 +68,22 @@ class _JobsScreenState extends State<JobsScreen> {
                                   )
                                 : ListView.separated(
                                     itemCount: jobsViewmodel.jobs.length,
-                                    itemBuilder: (_, index) =>
-                                        JobCard(job: jobsViewmodel.jobs[index]),
+                                    itemBuilder: (_, index) => JobCard(
+                                      job: jobsViewmodel.jobs[index],
+                                      onBookmarkToggle: (ContentEntity job) {
+                                        if (jobsViewmodel.jobs[index].isSaved ==
+                                            true) {
+                                          jobsViewmodel.jobs[index].isSaved =
+                                              false;
+                                          jobsViewmodel
+                                              .removeJobFromFavorite(job);
+                                        } else {
+                                          jobsViewmodel.jobs[index].isSaved =
+                                              true;
+                                          jobsViewmodel.saveJobToFavorite(job);
+                                        }
+                                      },
+                                    ),
                                     separatorBuilder: (_, __) =>
                                         const SizedBox(height: 8),
                                   ),

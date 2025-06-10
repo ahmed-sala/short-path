@@ -72,4 +72,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'shortpath-687f9.firebasestorage.app',
     iosBundleId: 'com.example.shortPath',
   );
+
 }
