@@ -83,8 +83,6 @@ import '../src/presentation/mangers/career/career_viewmodel.dart' as _i510;
 import '../src/presentation/mangers/career/cv_cubit.dart' as _i218;
 import '../src/presentation/mangers/home/home_viewmodel.dart' as _i190;
 import '../src/presentation/mangers/home/jobs/jobs_viewmodel.dart' as _i132;
-import '../src/presentation/mangers/home/save_job/saved_jobs_cubit.dart'
-    as _i853;
 import '../src/presentation/mangers/job_detail/job_detail_cubit.dart' as _i982;
 import '../src/presentation/mangers/localization/localization_viewmodel.dart'
     as _i841;
@@ -92,6 +90,7 @@ import '../src/presentation/mangers/onboarding/onboarding_viewmodel.dart'
     as _i359;
 import '../src/presentation/mangers/profile/personal_profile_viewmodel.dart'
     as _i1046;
+import '../src/presentation/mangers/saved_jobs/saved_jobs_cubit.dart' as _i740;
 import '../src/presentation/mangers/section/section_Screen_viewmodel.dart'
     as _i794;
 import '../src/presentation/mangers/user_info/additional_info/additional_info_viewmodel.dart'
@@ -231,8 +230,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i190.HomeViewmodel(gh<_i991.HomeUsecase>()));
     gh.factory<_i132.JobsViewmodel>(
         () => _i132.JobsViewmodel(gh<_i991.HomeUsecase>()));
-    gh.factory<_i853.SavedJobsCubit>(
-        () => _i853.SavedJobsCubit(gh<_i991.HomeUsecase>()));
+    gh.factory<_i740.SavedJobsCubit>(
+        () => _i740.SavedJobsCubit(gh<_i991.HomeUsecase>()));
     return this;
   }
 }

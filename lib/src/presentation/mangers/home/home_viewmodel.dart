@@ -86,30 +86,42 @@ class HomeViewmodel extends Cubit<HomeState> {
   }
 
   Future<void> saveJobToFavorite(ContentEntity contentEntity) async {
+    if (isClosed) return;
+
     emit(SavedJobsLoading());
+
     final result = await _homeUsecase.saveJobToFavorite(contentEntity);
+    if (isClosed) return;
+
     switch (result) {
       case Success<void>():
-        emit(SaveJobsSuccess());
+        if (!isClosed) emit(SaveJobsSuccess());
+        break;
       case Failures<void>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
-
-        emit(SavedJobsFailure(errorMessages));
+        if (!isClosed) emit(SavedJobsFailure(errorMessages));
+        break;
     }
   }
 
   Future<void> removeJobFromFavorite(ContentEntity contentEntity) async {
+    if (isClosed) return;
+
     emit(SavedJobsLoading());
+
     final result = await _homeUsecase.removeJobFromFavorite(contentEntity);
+    if (isClosed) return;
+
     switch (result) {
       case Success<void>():
-        emit(DeleteSavedJobSuccess());
+        if (!isClosed) emit(DeleteSavedJobSuccess());
+        break;
       case Failures<void>():
         var errorMessages =
             ErrorHandler.fromException(result.exception).errorMessage;
-
-        emit(SavedJobsFailure(errorMessages));
+        if (!isClosed) emit(SavedJobsFailure(errorMessages));
+        break;
     }
   }
 }

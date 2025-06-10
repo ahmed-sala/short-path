@@ -50,16 +50,16 @@ class ContentEntity {
   });
   SavedJobModel toSavedJobModel() {
     return SavedJobModel(
-      id: id,
-      title: title,
-      company: company,
-      description: description,
-      image: image,
-      location: location,
-      employmentType: employmentType,
-      datePosted: datePosted,
-      salaryRange: salaryRange,
-      url: url,
-    );
+        id: id,
+        title: title,
+        company: company,
+        description: description,
+        image: image,
+        location: location,
+        employmentType: employmentType,
+        datePosted: datePosted,
+        salaryRange: salaryRange,
+        url: url,
+        isSaved: isSaved);
   }
 }

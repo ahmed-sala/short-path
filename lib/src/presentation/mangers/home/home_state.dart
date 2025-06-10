@@ -36,9 +36,19 @@ final class SearchModeState extends HomeState {
   SearchModeState(this.isSearching);
 }
 
-final class SavedJobsInitial extends HomeState {}
-
 final class SavedJobsLoading extends HomeState {}
+
+final class SavedJobsLoaded extends HomeState {
+  SavedJobsLoaded();
+}
+
+final class SavedJobsError extends HomeState {
+  final String message;
+
+  SavedJobsError(this.message);
+}
+
+final class SavedJobsInitial extends HomeState {}
 
 final class SaveJobsSuccess extends HomeState {
   SaveJobsSuccess();

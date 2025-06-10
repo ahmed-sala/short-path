@@ -12,7 +12,7 @@ class SavedJobModel {
   final String? salaryRange;
   final String? url;
   int? userId;
-
+  bool? isSaved = false;
   SavedJobModel({
     this.id,
     this.title,
@@ -25,6 +25,7 @@ class SavedJobModel {
     this.salaryRange,
     this.url,
     this.userId,
+    this.isSaved,
   });
 
   factory SavedJobModel.fromJson(Map<String, dynamic> json) {
@@ -40,6 +41,7 @@ class SavedJobModel {
       salaryRange: json['salaryRange'] as String?,
       url: json['url'] as String?,
       userId: json['userId'] as int?,
+      isSaved: json['isSaved'] as bool? ?? false,
     );
   }
 
@@ -56,6 +58,7 @@ class SavedJobModel {
       'salaryRange': salaryRange,
       'url': url,
       'userId': userId,
+      'isSaved': isSaved ?? false,
     };
   }
 
@@ -71,6 +74,7 @@ class SavedJobModel {
       datePosted: datePosted,
       salaryRange: salaryRange,
       url: url,
+      isSaved: isSaved ?? false,
     );
   }
 }
