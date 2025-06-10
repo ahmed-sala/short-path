@@ -1801,6 +1801,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm'**
   String get confirm;
+
+  /// No description provided for @noSavedJobsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved jobs yet!'**
+  String get noSavedJobsYet;
+
+  /// No description provided for @yourSavedJobsWillAppearHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Your saved jobs will appear here.'**
+  String get yourSavedJobsWillAppearHere;
+
+  /// No description provided for @savedJobs.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved Jobs'**
+  String get savedJobs;
 }
 
 class _AppLocalizationsDelegate

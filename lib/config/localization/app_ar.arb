@@ -282,5 +282,8 @@
   "aiPoweredJobSearch": "بحث عن عمل مدعوم بالذكاء الاصطناعي",
   "leverageAdvancedAI": "استفد من الذكاء الاصطناعي المتقدم للعثور على فرص عمل مثالية تناسب مهاراتك.",
   "cancel": "إلغاء",
-  "confirm": "تأكيد"
+  "confirm": "تأكيد",
+  "noSavedJobsYet": "لا توجد وظائف محفوظة بعد.",
+  "yourSavedJobsWillAppearHere": "ستظهر وظائفك المحفوظة هنا.",
+  "savedJobs": "الوظائف المحفوظة"
 }

@@ -127,16 +127,22 @@ class _JobDetailState extends State<JobDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CompanyLogoTitleWidget(
-                    jobTitle: jobDetail?.title ?? '',
-                    imageUrl: jobDetail?.image,
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: CompanyLogoTitleWidget(
+                      jobTitle: jobDetail?.title ?? '',
+                      imageUrl: jobDetail?.image,
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   // Company, Location, Posted Info
-                  JobInfoWidget(
-                    company: jobDetail?.company ?? '',
-                    location: jobDetail?.location ?? '',
-                    postedAgo: jobDetail?.datePosted ?? '',
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: JobInfoWidget(
+                      company: jobDetail?.company ?? '',
+                      location: jobDetail?.location ?? '',
+                      postedAgo: jobDetail?.datePosted ?? '',
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   // Row with "CREATE COVER SHEET" and "CREATE CV" buttons

@@ -891,4 +891,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirm => 'Confirm';
+
+  @override
+  String get noSavedJobsYet => 'No saved jobs yet!';
+
+  @override
+  String get yourSavedJobsWillAppearHere => 'Your saved jobs will appear here.';
+
+  @override
+  String get savedJobs => 'Saved Jobs';
 }

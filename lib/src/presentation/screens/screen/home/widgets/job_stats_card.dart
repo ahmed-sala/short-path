@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:short_path/core/extensions/extensions.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../mangers/home/home_viewmodel.dart';
 
 class JobStatsCard extends StatelessWidget {
   const JobStatsCard({
     super.key,
-
   });
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeViewmodel, HomeState>(
@@ -82,7 +84,7 @@ class JobStatsCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                        context.localization.internship,
+                              context.localization.internship,
                               style: TextStyle(fontSize: 16),
                             ),
                           ],

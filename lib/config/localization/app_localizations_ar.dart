@@ -890,4 +890,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get confirm => 'تأكيد';
+
+  @override
+  String get noSavedJobsYet => 'لا توجد وظائف محفوظة بعد.';
+
+  @override
+  String get yourSavedJobsWillAppearHere => 'ستظهر وظائفك المحفوظة هنا.';
+
+  @override
+  String get savedJobs => 'الوظائف المحفوظة';
 }

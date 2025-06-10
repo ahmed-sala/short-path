@@ -310,5 +310,8 @@
   "aiPoweredJobSearch": "AI-Powered Job Search",
   "leverageAdvancedAI": "Leverage advanced AI to find the perfect job opportunities tailored to your skills.",
   "cancel": "Cancel",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "noSavedJobsYet": "No saved jobs yet!",
+  "yourSavedJobsWillAppearHere": "Your saved jobs will appear here.",
+  "savedJobs": "Saved Jobs"
 }
