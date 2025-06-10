@@ -45,7 +45,6 @@ class SavedJobsCubit extends Cubit<SavedJobsState> {
   }
 
   Future<void> removeJobFromFavorite(ContentEntity contentEntity) async {
-    emit(SavedJobsLoading());
     final result = await _homeUsecase.removeJobFromFavorite(contentEntity);
     switch (result) {
       case Success<void>():
