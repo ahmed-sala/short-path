@@ -27,7 +27,9 @@ class SectionScreen extends StatelessWidget {
             ),
             // Wrap bottomNavigationBar with AnimatedSlide
             bottomNavigationBar: AnimatedSlide(
-              offset: _viewModel.showBottomNav ? const Offset(0, 0) : const Offset(0, 1),
+              offset: _viewModel.showBottomNav
+                  ? const Offset(0, 0)
+                  : const Offset(0, 1),
               duration: const Duration(milliseconds: 300),
               child: Theme(
                 data: Theme.of(context).copyWith(
@@ -83,6 +85,10 @@ class SectionScreen extends StatelessWidget {
                         _buildBottomNavItem(
                           Icons.card_giftcard,
                           context.localization.career,
+                        ),
+                        _buildBottomNavItem(
+                          Icons.collections_bookmark_outlined,
+                          'Saved',
                         ),
                         _buildBottomNavItem(
                           Icons.person_2_outlined,

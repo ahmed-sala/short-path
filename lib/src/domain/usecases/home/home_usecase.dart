@@ -32,4 +32,14 @@ class HomeUsecase {
       jobFilterRequest: jobFilterRequest,
     );
   }
+
+  Future<ApiResult<void>> saveJobToFavorite(ContentEntity contentEntity) async {
+    return await _homeRepository.saveJobToFavorite(contentEntity);
+  }
+  Future<ApiResult<void>> removeJobFromFavorite(ContentEntity contentEntity) async {
+    return await _homeRepository.removeJobFromFavorite(contentEntity);
+  }
+  Future<ApiResult<List<ContentEntity>?>> getFavoriteJobs() async {
+    return await _homeRepository.getFavoriteJobs();
+  }
 }

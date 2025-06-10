@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:short_path/src/presentation/mangers/section/section_screen_states.dart';
 import 'package:short_path/src/presentation/screens/screen/career/career_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/profile/personal_profile_screen.dart';
+import 'package:short_path/src/presentation/screens/screen/saved_jobs/saved_jobs_screen.dart';
 
 import '../../screens/screen/home/home_screen.dart';
 
@@ -24,13 +25,13 @@ class SectionScreenViewmodel extends Cubit<SectionScreenState> {
     'Profile',
   ];
 
-  final List<Widget> _screens = [
-    HomeScreen(),
-    const CareerScreen(),
-    PersonalProfileScreen(),
-  ];
+  List<Widget> get _screens => [
+        HomeScreen(),
+        const CareerScreen(),
+        const SavedJobsScreen(),
+        PersonalProfileScreen(),
+      ];
 
-  String get currentTitle => _titles[_currentIndex];
   Widget get currentScreen => _screens[_currentIndex];
 
   void updateCurrentIndex(int index) {

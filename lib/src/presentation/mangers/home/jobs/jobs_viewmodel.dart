@@ -54,4 +54,32 @@ class JobsViewmodel extends Cubit<JobsState> {
       emit(AllJobsError(e.toString()));
     }
   }
+
+  Future<void> saveJobToFavorite(ContentEntity contentEntity) async {
+    emit(SavedJobsLoading());
+    final result = await _homeUsecase.saveJobToFavorite(contentEntity);
+    switch (result) {
+      case Success<void>():
+        emit(SaveJobsSuccess());
+      case Failures<void>():
+        var errorMessages =
+            ErrorHandler.fromException(result.exception).errorMessage;
+
+        emit(SavedJobsFailure(errorMessages));
+    }
+  }
+
+  Future<void> removeJobFromFavorite(ContentEntity contentEntity) async {
+    emit(SavedJobsLoading());
+    final result = await _homeUsecase.removeJobFromFavorite(contentEntity);
+    switch (result) {
+      case Success<void>():
+        emit(DeleteSavedJobSuccess());
+      case Failures<void>():
+        var errorMessages =
+            ErrorHandler.fromException(result.exception).errorMessage;
+
+        emit(SavedJobsFailure(errorMessages));
+    }
+  }
 }
