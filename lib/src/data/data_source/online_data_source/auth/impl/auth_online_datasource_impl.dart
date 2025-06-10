@@ -1,4 +1,6 @@
 import 'package:injectable/injectable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/data/api/api_services.dart';
 import 'package:short_path/src/data/api/core/api_request_model/auth/login_request.dart';
 import 'package:short_path/src/data/api/core/api_response_model/auth_response.dart';
@@ -27,6 +29,8 @@ class AuthOnlineDataSourceImpl implements AuthOnlineDatasource {
   @override
   Future<GetUserResponse> getUserData() async {
     var response = await _apiServices.getUserData();
+    var userId = response.id;
+    getIt<SharedPreferences>().setInt('userId', userId!);
     return response;
   }
 }

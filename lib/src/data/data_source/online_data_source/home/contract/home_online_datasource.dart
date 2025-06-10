@@ -9,4 +9,7 @@ abstract interface class HomeOnlineDatasource {
     int? size,
     JobFilterRequest? jobFilterRequest,
   });
+  Future<void> saveJobToFavorite(JobsResponse jobResponse);
+  Future<void> removeJobFromFavorite(JobsResponse jobResponse);
+  Future<JobsResponse> getFavoriteJobs();
 }
