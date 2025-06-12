@@ -91,7 +91,7 @@ class CareerScreen extends StatelessWidget {
                     children: [
                       Text(
                         context.localization.craftYourDreamCareer,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                           color: primaryColor,

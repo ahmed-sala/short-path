@@ -48,7 +48,6 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
       var techSkill = TechnicalSkillEntity(
           skill: skill, proficiency: proficiency?.toUpperCase());
       _techSkills.add(techSkill);
-      technicalSkills.remove(skill);
 
       emit(SkillAddedState(techSkills: _techSkills));
     } else if (type == 'Soft') {
@@ -87,13 +86,11 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
     }
   }
 
-
   void removeSkill(
       {required String skill, required String type, String? proficiency}) {
     if (type == 'Technical') {
       _techSkills.removeWhere((s) =>
           s.skill == skill && s.proficiency == proficiency?.toUpperCase());
-      technicalSkills.add(skill);
       emit(SkillRemovedState(techSkills: _techSkills));
     } else if (type == 'Soft') {
       _softSkills.remove(skill);

@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:short_path/config/routes/app_route.dart';
 import 'package:short_path/core/styles/theme/app_theme.dart';
 import 'package:short_path/src/presentation/mangers/localization/localization_viewmodel.dart';
+
 import '../config/localization/app_localizations.dart';
 import '../core/common/common_imports.dart';
 

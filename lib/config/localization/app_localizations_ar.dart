@@ -133,8 +133,8 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String
-      get enterAJobDescriptionToGenerateATailoredCVOrCoverSheetThatStandsOut =>
-          'أدخل وصفًا وظيفيًا لإنشاء سيرة ذاتية أو ورقة غلاف مخصصة تبرز.';
+  get enterAJobDescriptionToGenerateATailoredCVOrCoverSheetThatStandsOut =>
+      'أدخل وصفًا وظيفيًا لإنشاء سيرة ذاتية أو ورقة غلاف مخصصة تبرز.';
 
   @override
   String get describeTheJobRole => 'صف الدور الوظيفي';
