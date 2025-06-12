@@ -23,9 +23,9 @@ import '../../../../../core/dialogs/awesome_dialoge.dart';
 import '../../../../../core/styles/colors/app_colore.dart';
 import '../../../../../dependency_injection/di.dart';
 import '../../../../short_path.dart';
+import '../../../shared_widgets/custom_auth_button.dart';
 import '../career/cover_sheet_screen.dart';
 import '../career/widgets/create_cv_handle.dart';
-
 class JobDetail extends StatefulWidget {
   const JobDetail({super.key});
 
@@ -196,6 +196,27 @@ class _JobDetailState extends State<JobDetail> {
                     EmploymentTypeWidget(
                         employmentTypeValue: employmentTypeValue),
                   SizedBox(height: 24.h),
+                  CustomAuthButton(
+                    text: 'Generate Interview Preparation',
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        RoutesName.InterviewPreparation,
+                        arguments: {
+                          'jobId': jobDetail?.id ?? 0,
+                          'jobTitle': jobDetail?.title,
+                        },
+                      );
+                    },
+                    color: AppColors.primaryColor,
+                    textColor: Colors.white,
+                    borderRadius: BorderRadius.circular(40),
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      color: Colors.white,
+                    ),
+                  ),
                 ],
               ),
             ),

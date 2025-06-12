@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:short_path/dependency_injection/di.dart';
@@ -14,6 +15,8 @@ import '../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
 import '../../../../../config/routes/routes_name.dart';
 import '../../../../../core/dialogs/awesome_dialoge.dart';
 import '../../../../../core/functions/send_email.dart';
+import '../../../../../core/styles/colors/app_colore.dart';
+import '../../../shared_widgets/custom_auth_button.dart';
 import 'cover_sheet_screen.dart';
 
 class CareerScreen extends StatelessWidget {
@@ -189,6 +192,36 @@ class CareerScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 24),
                       const TipSectionWidget(),
+                      SizedBox(height: 24.h),
+                      CustomAuthButton(
+                        text: 'Generate Interview Preparation',
+                        onPressed: () {
+                          final vm = context.read<CareerViewmodel>();
+                          if (vm.jobDescribtion.text.isEmpty) {
+                            Fluttertoast.showToast(
+                              msg: 'Please add a job description first',
+                              backgroundColor: Colors.redAccent,
+                              textColor: Colors.white,
+                            );
+                          } else {
+                            Navigator.pushNamed(
+                              context,
+                              RoutesName.InterviewPreparation,
+                              arguments: {
+                                'jobDescription': vm.jobDescribtion.text,
+                                // Add any other needed parameters
+                              },
+                            );
+                          }
+                        },
+                        color: AppColors.primaryColor, // Use your color constant
+                        textColor: Colors.white,
+                        borderRadius: BorderRadius.circular(40),
+                        textStyle: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
