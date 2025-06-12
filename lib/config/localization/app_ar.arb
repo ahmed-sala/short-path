@@ -274,6 +274,8 @@
   "intermediate": "متوسط",
   "advanced": "متقدم",
   "expert": "خبير",
+  "fluent": "بطلاقة",
+  "native": "لغة الأم",
   "selectDate": "اختر التاريخ",
   "trackYourProgress": "تابع تقدمك",
   "monitorYourJobSearchJourney": "تابع رحلتك في البحث عن عمل وكن على اطلاع دائم بالتقديمات والمقابلات.",
@@ -285,5 +287,15 @@
   "confirm": "تأكيد",
   "noSavedJobsYet": "لا توجد وظائف محفوظة بعد.",
   "yourSavedJobsWillAppearHere": "ستظهر وظائفك المحفوظة هنا.",
-  "savedJobs": "الوظائف المحفوظة"
+  "savedJobs": "الوظائف المحفوظة",
+  "selectLevel": "اختر المستوى",
+  "pleaseSelectALevel": "يرجى اختيار مستوى",
+  "languageAddedSuccessfully": "تمت إضافة اللغة بنجاح",
+  "degree": "الدرجة العلمية",
+  "selectDegree": "اختر الدرجة العلمية",
+  "contract": "عقد",
+  "remote": "عن بُعد",
+  "onsite": "في الموقع",
+  "hybrid": "هجين",
+  "uploadImage": "تحميل صورة"
 }

@@ -30,6 +30,25 @@ class WorkExperienceScreen extends StatelessWidget {
   WorkExperienceScreen({Key? key}) : super(key: key);
   WorkExperienceViewModel viewModel = getIt<WorkExperienceViewModel>();
 
+  Map<String, String> getJobTypeDisplayMap(BuildContext context) => {
+        context.localization.fullTime: 'Full_Time',
+        context.localization.partTime: 'Part_Time',
+        context.localization.contract: 'Contract',
+        context.localization.internship: 'Internship',
+      };
+
+  Map<String, String> getJobLocationDisplayMap(BuildContext context) => {
+        context.localization.remote: 'Remote',
+        context.localization.onsite: 'Onsite',
+        context.localization.hybrid: 'Hybrid',
+      };
+
+  List<String> getDisplayJobTypes(BuildContext context) =>
+      getJobTypeDisplayMap(context).keys.toList();
+
+  List<String> getDisplayJobLocations(BuildContext context) =>
+      getJobLocationDisplayMap(context).keys.toList();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -130,16 +149,34 @@ class WorkExperienceScreen extends StatelessWidget {
                           CustomDropdownButtonFormField(
                             labelText: context.localization.jobType,
                             hintText: context.localization.selectJobType,
-                            value: viewModel.selectedJobType,
-                            items: viewModel.jobTypes
-                                .map(
-                                  (jobType) => DropdownMenuItem(
-                                    value: jobType,
-                                    child: Text(jobType),
-                                  ),
-                                )
+                            value: viewModel.selectedJobType != null
+                                ? getJobTypeDisplayMap(context)
+                                    .entries
+                                    .firstWhere(
+                                      (entry) =>
+                                          entry.value ==
+                                          viewModel.selectedJobType,
+                                      orElse: () => const MapEntry('', ''),
+                                    )
+                                    .key
+                                : null,
+                            items: getDisplayJobTypes(context)
+                                .map((displayType) => DropdownMenuItem(
+                                      value: displayType,
+                                      child: Text(displayType),
+                                    ))
                                 .toList(),
-                            onChanged: viewModel.selectJobType,
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                final rawValue =
+                                    getJobTypeDisplayMap(context)[newValue];
+                                print(
+                                    "Selected Job Type: $newValue, Raw Value: $rawValue");
+                                if (rawValue != null) {
+                                  viewModel.selectJobType(rawValue);
+                                }
+                              }
+                            },
                             validator: (value) {
                               return validateJobType(value);
                             },
@@ -149,16 +186,34 @@ class WorkExperienceScreen extends StatelessWidget {
                           CustomDropdownButtonFormField(
                             labelText: context.localization.jobLocation,
                             hintText: context.localization.selectJobLocation,
-                            value: viewModel.selectedJobLocation,
-                            items: viewModel.jobLocations
-                                .map(
-                                  (jobLocation) => DropdownMenuItem(
-                                    value: jobLocation,
-                                    child: Text(jobLocation),
-                                  ),
-                                )
+                            value: viewModel.selectedJobLocation != null
+                                ? getJobLocationDisplayMap(context)
+                                    .entries
+                                    .firstWhere(
+                                      (entry) =>
+                                          entry.value ==
+                                          viewModel.selectedJobLocation,
+                                      orElse: () => const MapEntry('', ''),
+                                    )
+                                    .key
+                                : null,
+                            items: getDisplayJobLocations(context)
+                                .map((displayLocation) => DropdownMenuItem(
+                                      value: displayLocation,
+                                      child: Text(displayLocation),
+                                    ))
                                 .toList(),
-                            onChanged: viewModel.selectJobLocation,
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                final rawValue =
+                                    getJobLocationDisplayMap(context)[newValue];
+                                print(
+                                    "Selected Job Location: $newValue, Raw Value: $rawValue");
+                                if (rawValue != null) {
+                                  viewModel.selectJobLocation(rawValue);
+                                }
+                              }
+                            },
                             validator: (value) {
                               return validateJobLocation(value);
                             },

@@ -393,6 +393,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expert => 'Expert';
 
   @override
+  String get fluent => 'Fluent';
+
+  @override
+  String get native => 'Native';
+
+  @override
   String get selectDate => 'Select Date';
 
   @override
@@ -900,4 +906,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get savedJobs => 'Saved Jobs';
+
+  @override
+  String get selectLevel => 'Select Level';
+
+  @override
+  String get pleaseSelectALevel => 'Please select a level.';
+
+  @override
+  String get languageAddedSuccessfully => 'Language added successfully';
+
+  @override
+  String get degree => 'Degree';
+
+  @override
+  String get selectDegree => 'Select Degree';
+
+  @override
+  String get contract => 'Contract';
+
+  @override
+  String get remote => 'Remote';
+
+  @override
+  String get onsite => 'Onsite';
+
+  @override
+  String get hybrid => 'Hybrid';
+
+  @override
+  String get uploadImage => 'Upload Image';
 }

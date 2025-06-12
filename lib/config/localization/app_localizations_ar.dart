@@ -394,6 +394,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get expert => 'خبير';
 
   @override
+  String get fluent => 'بطلاقة';
+
+  @override
+  String get native => 'لغة الأم';
+
+  @override
   String get selectDate => 'اختر التاريخ';
 
   @override
@@ -899,4 +905,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get savedJobs => 'الوظائف المحفوظة';
+
+  @override
+  String get selectLevel => 'اختر المستوى';
+
+  @override
+  String get pleaseSelectALevel => 'يرجى اختيار مستوى';
+
+  @override
+  String get languageAddedSuccessfully => 'تمت إضافة اللغة بنجاح';
+
+  @override
+  String get degree => 'الدرجة العلمية';
+
+  @override
+  String get selectDegree => 'اختر الدرجة العلمية';
+
+  @override
+  String get contract => 'عقد';
+
+  @override
+  String get remote => 'عن بُعد';
+
+  @override
+  String get onsite => 'في الموقع';
+
+  @override
+  String get hybrid => 'هجين';
+
+  @override
+  String get uploadImage => 'تحميل صورة';
 }

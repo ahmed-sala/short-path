@@ -112,19 +112,52 @@ class ProfileScreen extends StatelessWidget {
                         validator: validateLink,
                       ),
                       verticalSpace(20),
-                      CustomTextFormField(
-                        hintText:
-                            context.localization.enterYourProfilePictureUrl,
-                        keyboardType: TextInputType.url,
-                        controller: profVM.profilePictureController,
-                        labelText: context.localization.profilePicture,
-                        validator: validateLink,
+                      // PROFILE PICTURE PICKER
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Show thumbnail if URL is set
+                          if (profVM.profilePictureController.text.isNotEmpty)
+                            ClipOval(
+                              child: Image.network(
+                                profVM.profilePictureController.text,
+                                width: 64,
+                                height: 64,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          else
+                            const CircleAvatar(
+                              radius: 32,
+                              child: Icon(Icons.person, size: 32),
+                            ),
+
+                          horizontalSpace(16),
+
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  context.localization.profilePicture,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                TextButton.icon(
+                                  onPressed: () =>
+                                      profVM.pickAndUploadProfilePicture(),
+                                  icon: const Icon(Icons.upload_file),
+                                  label: Text(context.localization.uploadImage),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                       verticalSpace(20),
 
                       // LANGUAGE INPUT + suggestions & selected list
-                      LanguageInput(
-                          viewModel: context.read<LanguageViewmodel>()),
+                      LanguageInput(),
                       verticalSpace(8),
 
                       BlocBuilder<LanguageViewmodel, LanguageState>(
@@ -155,7 +188,7 @@ class ProfileScreen extends StatelessWidget {
                         text: context.localization.next,
                         onPressed: () {
                           profVM.next();
-                          context.read<LanguageViewmodel>().next();
+                          languageVM.next();
                         },
                         color: profVM.validate
                             ? AppColors.primaryColor

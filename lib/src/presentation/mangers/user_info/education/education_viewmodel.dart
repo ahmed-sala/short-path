@@ -48,6 +48,8 @@ class EducationViewmodelNew extends Cubit<EducationState> {
 
   DateTime? selectedDate;
   bool validate = false;
+  final PageController pageController = PageController();
+
   int currentPage = 0;
 
   // Screens
@@ -55,6 +57,32 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     const EducationScreen(),
     const EducationProjectScreen(),
   ];
+
+  // Paging
+  void changePage(int index) {
+    currentPage = index;
+    emit(EducationPageChangedState(index));
+  }
+
+  void nextPage() {
+    if (currentPage < pages.length - 1) {
+      pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      changePage(currentPage + 1);
+    }
+  }
+
+  void previousPage() {
+    if (currentPage > 0) {
+      pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      changePage(currentPage - 1);
+    }
+  }
 
   void _initializeListeners() {
     projectNameController.addListener(_onInputChanged);
@@ -119,7 +147,8 @@ class EducationViewmodelNew extends Cubit<EducationState> {
         institutionName: institutionName.text,
         location: location.text,
         graduationDate: selectedDate,
-        projects: List.from(projects) // Pass a copy of the projects list
+        projects: List.from(projects)
+        // Pass a copy of the projects list
         ,
         fieldOfStudy: fieldOfStudyController.text,
       ),
@@ -169,16 +198,16 @@ class EducationViewmodelNew extends Cubit<EducationState> {
     emit(EducationProjectUpdated());
   }
 
-  void changePage(int index) {
-    if (currentPage != index) {
-      currentPage = index;
-      emit(const OnboardingNextState());
-    }
-  }
-
-  void returnToPreviousPage() {
-    changePage(0);
-  }
+  // void changePage(int index) {
+  //   if (currentPage != index) {
+  //     currentPage = index;
+  //     emit(const OnboardingNextState());
+  //   }
+  // }
+  //
+  // void returnToPreviousPage() {
+  //   changePage(0);
+  // }
 
   void nextButton() async {
     if (projects.isEmpty) {

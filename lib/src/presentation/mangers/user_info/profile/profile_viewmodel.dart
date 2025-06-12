@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/src/domain/entities/user_info/language_entity.dart';
 import 'package:short_path/src/domain/entities/user_info/profile_entity.dart';
 import 'package:short_path/src/domain/usecases/user_info/user_info_usecase.dart';
 import 'package:short_path/src/presentation/mangers/user_info/profile/profile_state.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../core/common/api/api_result.dart';
 import '../../../../data/api/core/error/error_handler.dart';
@@ -14,6 +18,7 @@ import '../../../../data/static_data/demo_data_list.dart';
 @singleton
 class ProfileViewmodel extends Cubit<ProfileState> {
   UserInfoUsecase userInfoUsecase;
+
   ProfileViewmodel(this.userInfoUsecase) : super(const ProfileInitialState()) {
     // Attach listeners to the controllers
     jobTitleController.addListener(onJobTitleChanged);
@@ -48,6 +53,48 @@ class ProfileViewmodel extends Cubit<ProfileState> {
     'Native'
   ];
 
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> pickAndUploadProfilePicture() async {
+    try {
+      final XFile? picked = await _picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 600,
+      );
+      if (picked == null) return;
+
+      emit(const ProfileLoading());
+
+      final file = File(picked.path);
+      final bytes = await file.readAsBytes();
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+      final fileName = 'profiles/$timestamp.jpg';
+
+      final supabase = Supabase.instance.client;
+
+      final response = await supabase.storage
+          .from('avatars') // <-- make sure you created this bucket
+          .uploadBinary(fileName, bytes,
+              fileOptions: const FileOptions(
+                contentType: 'image/jpeg',
+                upsert: true,
+              ));
+
+      if (response.isEmpty) {
+        emit(const ProfileUpdateError('Upload failed'));
+        return;
+      }
+
+      final publicUrl = supabase.storage.from('avatars').getPublicUrl(fileName);
+
+      profilePictureController.text = publicUrl;
+      emit(const ProfileInitialState());
+      validateColorButton();
+    } catch (e) {
+      emit(ProfileUpdateError('Failed to upload image: $e'));
+    }
+  }
+
   void onJobTitleChanged() {
     filteredJobSuggestions = jobTitleController.text.isEmpty
         ? jobSuggestions
@@ -80,7 +127,9 @@ class ProfileViewmodel extends Cubit<ProfileState> {
         jobTitle: jobTitleController.text,
         linkedIn: linkedInController.text,
         portfolioLinks: portfolioLinks,
-        profilePicture: profilePictureController.text,
+        profilePicture: profilePictureController.text.isEmpty
+            ? "https://www.pngpacks.com/uploads/data/657/IMG_PotlniwbKVKj.png"
+            : profilePictureController.text,
       );
 
       print('Profile: ${profileEntity.portfolioLinks}');
