@@ -13,25 +13,23 @@ class JobListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var homeViewmodel = context.watch<HomeViewmodel>();
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Column(
-        children: [
-          if (homeViewmodel.jobs == null)
-            ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => const SkeletonJobCard(),
-              separatorBuilder: (_, __) => verticalSpace(16),
-              itemCount: 5,
-            )
-          else
-            ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => JobCard(
+    return Column(
+      children: [
+        if (homeViewmodel.jobs == null)
+          ListView.separated(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => const SkeletonJobCard(),
+            separatorBuilder: (_, __) => verticalSpace(16),
+            itemCount: 5,
+          )
+        else
+          ListView.separated(
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) =>JobCard(
                 job: homeViewmodel.jobs![index],
                 onBookmarkToggle: (ContentEntity job) {
                   if (homeViewmodel.jobs![index].isSaved == true) {
@@ -41,13 +39,11 @@ class JobListWidget extends StatelessWidget {
                     homeViewmodel.jobs![index].isSaved = true;
                     homeViewmodel.saveJobToFavorite(job);
                   }
-                },
-              ),
-              separatorBuilder: (_, __) => verticalSpace(16),
-              itemCount: 5,
-            )
-        ],
-      ),
+                },),
+            separatorBuilder: (_, __) => verticalSpace(16),
+            itemCount: 5,
+          )
+      ],
     );
   }
 }

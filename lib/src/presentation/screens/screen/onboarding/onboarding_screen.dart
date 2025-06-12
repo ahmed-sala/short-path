@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:short_path/core/extensions/extensions.dart';
+import 'package:short_path/src/data/dto_models/onboarding/onboarding_model.dart';
 import 'package:short_path/src/presentation/mangers/onboarding/onboarding_viewmodel.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/widgets/next_back_buttons.dart';
+import '../../../../../config/localization/app_localizations.dart';
 import '../../../../../config/routes/routes_name.dart';
 import '../../../../../dependency_injection/di.dart';
 import '../../../../data/static_data/demo_data_list.dart';
@@ -12,6 +15,26 @@ class OnboardingScreen extends StatelessWidget {
   OnboardingScreen({super.key});
 
   final OnboardingViewmodel onboardingViewmodel = getIt<OnboardingViewmodel>();
+
+  List<Onboard> getDemoData(BuildContext context) {
+    final List<Onboard> demoData = [
+      Onboard(
+        image: 'assets/images/onboarding1.png',
+        title: context.localization.trackYourProgress,
+        subtitle: context.localization.monitorYourJobSearchJourney,
+      ),
+      Onboard(
+        image: 'assets/images/onboarding2.png',
+        title: context.localization.smartRecommendations,
+        subtitle: context.localization.getPersonalizedJobSuggestions,
+      ),
+      Onboard(
+          image: 'assets/images/onboarding3.png',
+          title: context.localization.aiPoweredJobSearch,
+          subtitle: context.localization.leverageAdvancedAI),
+    ];
+    return demoData;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +65,7 @@ class OnboardingScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: TextButton(
                           onPressed: onboardingViewmodel.skip,
-                          child: const Text('Skip'),
+                          child: Text(context.localization.skip),
                         ),
                       ),
                     ),
@@ -53,6 +76,7 @@ class OnboardingScreen extends StatelessWidget {
                       onPageChanged: onboardingViewmodel.changePage,
                       itemCount: demoData.length,
                       itemBuilder: (context, index) {
+                        final demoData = getDemoData(context);
                         final item = demoData[index];
                         return Column(
                           children: [

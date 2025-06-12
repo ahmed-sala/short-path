@@ -88,7 +88,7 @@ class SectionScreen extends StatelessWidget {
                         ),
                         _buildBottomNavItem(
                           Icons.collections_bookmark_outlined,
-                          'Saved',
+                          context.localization.savedJobs,
                         ),
                         _buildBottomNavItem(
                           Icons.person_2_outlined,

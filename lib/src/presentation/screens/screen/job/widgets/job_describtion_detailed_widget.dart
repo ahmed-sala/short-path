@@ -5,6 +5,7 @@ import '../../../../../../core/styles/colors/app_colore.dart';
 
 class JobDescriptionDetailedWidget extends StatefulWidget {
   const JobDescriptionDetailedWidget({super.key, required this.description});
+
   final String description;
 
   @override
@@ -14,9 +15,10 @@ class JobDescriptionDetailedWidget extends StatefulWidget {
 
 class _JobDescriptionDetailedWidgetState
     extends State<JobDescriptionDetailedWidget> {
+  bool _isExpanded = false;
+
   @override
   Widget build(BuildContext context) {
-    bool _isExpanded = false;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -42,27 +44,30 @@ class _JobDescriptionDetailedWidgetState
                 ),
               ),
               SizedBox(height: 8.h),
-              AnimatedCrossFade(
-                firstChild: Text(
-                  widget.description,
-                  style: TextStyle(
-                    fontSize: 14.0.sp,
-                    color: Colors.black54,
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: AnimatedCrossFade(
+                  firstChild: Text(
+                    widget.description,
+                    style: TextStyle(
+                      fontSize: 14.0.sp,
+                      color: Colors.black54,
+                    ),
+                    maxLines: 12,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 12,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                secondChild: Text(
-                  widget.description,
-                  style: TextStyle(
-                    fontSize: 14.0.sp,
-                    color: Colors.black54,
+                  secondChild: Text(
+                    widget.description,
+                    style: TextStyle(
+                      fontSize: 14.0.sp,
+                      color: Colors.black54,
+                    ),
                   ),
+                  crossFadeState: _isExpanded
+                      ? CrossFadeState.showSecond
+                      : CrossFadeState.showFirst,
+                  duration: const Duration(milliseconds: 300),
                 ),
-                crossFadeState: _isExpanded
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 300),
               ),
               Align(
                 alignment: Alignment.centerRight,

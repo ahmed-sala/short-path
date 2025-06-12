@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:short_path/config/routes/routes_name.dart';
 import 'package:short_path/core/dialogs/awesome_dialoge.dart';
 import 'package:short_path/core/dialogs/show_hide_loading.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/dependency_injection/di.dart';
@@ -45,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
             child: BlocConsumer<ProfileViewmodel, ProfileState>(
               listener: (context, state) {
                 if (state is ProfileLoading) {
-                  showLoading(context, 'Adding profile...');
+                  showLoading(context, context.localization.addingProfile);
                 }
                 if (state is ProfileUpdateSuccess) {
                   navKey.currentState!.pushNamedAndRemoveUntil(
@@ -54,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
                 if (state is ProfileUpdateError) {
                   showAwesomeDialog(
                     context,
-                    title: 'Error',
+                    title: context.localization.error,
                     desc: state.message,
                     onOk: () {},
                     dialogType: DialogType.error,
@@ -79,7 +80,18 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       verticalSpace(40),
                       const Center(child: HeaderWidget()),
-                      StepProgressBar(currentStep: 1),
+                      StepProgressBar(
+                        currentStep: 1,
+                        stepNames: [
+                          context.localization.personalInfo,
+                          context.localization.skills,
+                          context.localization.education,
+                          context.localization.experience,
+                          context.localization.projects,
+                          context.localization.certifications,
+                          context.localization.additionalInfo,
+                        ],
+                      ),
                       verticalSpace(22),
 
                       // Job title & portfolio
@@ -92,25 +104,60 @@ class ProfileScreen extends StatelessWidget {
 
                       // LinkedIn & Picture URLs
                       CustomTextFormField(
-                        hintText: 'Enter your LinkedIn profile URL',
+                        hintText:
+                            context.localization.enterYourLinkedInProfileUrl,
                         keyboardType: TextInputType.url,
                         controller: profVM.linkedInController,
-                        labelText: 'LinkedIn Profile',
+                        labelText: context.localization.linkedInProfile,
                         validator: validateLink,
                       ),
                       verticalSpace(20),
-                      CustomTextFormField(
-                        hintText: 'Enter your Profile Picture URL',
-                        keyboardType: TextInputType.url,
-                        controller: profVM.profilePictureController,
-                        labelText: 'Profile Picture',
-                        validator: validateLink,
+                      // PROFILE PICTURE PICKER
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Show thumbnail if URL is set
+                          if (profVM.profilePictureController.text.isNotEmpty)
+                            ClipOval(
+                              child: Image.network(
+                                profVM.profilePictureController.text,
+                                width: 64,
+                                height: 64,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          else
+                            const CircleAvatar(
+                              radius: 32,
+                              child: Icon(Icons.person, size: 32),
+                            ),
+
+                          horizontalSpace(16),
+
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  context.localization.profilePicture,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                TextButton.icon(
+                                  onPressed: () =>
+                                      profVM.pickAndUploadProfilePicture(),
+                                  icon: const Icon(Icons.upload_file),
+                                  label: Text(context.localization.uploadImage),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                       verticalSpace(20),
 
                       // LANGUAGE INPUT + suggestions & selected list
-                      LanguageInput(
-                          viewModel: context.read<LanguageViewmodel>()),
+                      LanguageInput(),
                       verticalSpace(8),
 
                       BlocBuilder<LanguageViewmodel, LanguageState>(
@@ -128,20 +175,20 @@ class ProfileScreen extends StatelessWidget {
 
                       // Bio / Summary
                       CustomTextFormField(
-                        hintText: 'Enter your ',
+                        hintText: context.localization.enterYourBioSummary,
                         keyboardType: TextInputType.text,
                         controller: profVM.bioController,
-                        labelText: 'Summary',
+                        labelText: context.localization.bioSummary,
                         validator: validateSummary,
                       ),
                       verticalSpace(15),
 
                       // NEXT button
                       CustomAuthButton(
-                        text: 'NEXT',
+                        text: context.localization.next,
                         onPressed: () {
                           profVM.next();
-                          context.read<LanguageViewmodel>().next();
+                          languageVM.next();
                         },
                         color: profVM.validate
                             ? AppColors.primaryColor

@@ -4,7 +4,9 @@ import '../../../../../../core/common/common_imports.dart';
 
 class SalaryRangeWidget extends StatelessWidget {
   const SalaryRangeWidget({super.key, required this.salaryRangeValue});
+
   final String salaryRangeValue;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,11 +28,14 @@ class SalaryRangeWidget extends StatelessWidget {
               ),
             ),
             SizedBox(height: 8.h),
-            Text(
-              salaryRangeValue,
-              style: TextStyle(
-                fontSize: 14.0.sp,
-                color: Colors.black54,
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: Text(
+                salaryRangeValue,
+                style: TextStyle(
+                  fontSize: 14.0.sp,
+                  color: Colors.black54,
+                ),
               ),
             ),
           ],

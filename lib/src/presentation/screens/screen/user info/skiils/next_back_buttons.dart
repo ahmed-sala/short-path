@@ -67,7 +67,7 @@ class NextBackButtons extends StatelessWidget {
                   child: Text(
                     currentPage < length - 1
                         ? context.localization.next
-                        : context.localization.getStarted,
+                        : context.localization.next,
                     style: const TextStyle(fontSize: 16.0, color: Colors.white),
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/animations/app_animation.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/dependency_injection/di.dart';
@@ -23,12 +24,12 @@ class CvScreen extends StatelessWidget {
   final String? jobDescription;
   SfPdfViewer? document;
 
-  Future<void> _loadPdf(String? filePath) async {
+  Future<void> _loadPdf(BuildContext context, String? filePath) async {
     try {
       document = await SfPdfViewer.file(File(filePath!));
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Error loading CV: \$e",
+        msg: "${context.localization.errorLoadingCv}: $e",
         backgroundColor: Colors.red,
       );
     }
@@ -85,7 +86,7 @@ class CvScreen extends StatelessWidget {
               );
             }
             if (state is DownloadCvSuccess) {
-              _loadPdf(context.read<CvCubit>().filePath);
+              _loadPdf(context, viewModel.filePath);
             }
           },
           builder: (context, state) {
@@ -100,24 +101,26 @@ class CvScreen extends StatelessWidget {
             }
             if (state is DownloadCvError) {
               return Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text(
-                      'Please try again later',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                  child: Column(
+                children: [
+                  Text(
+                    context.localization.pleaseTryAgainLater,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
                     ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Go back'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                      ),
-                    ),
-                  ],
-                ),
-              );
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomAuthButton(
+                      text: context.localization.goBack,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      color: AppColors.primaryColor)
+                ],
+              ));
             }
             if (state is DownloadCvSuccess) {
               return Column(
@@ -141,10 +144,13 @@ class CvScreen extends StatelessWidget {
                 ],
               );
             }
-            return const Center(
+            return Center(
               child: Text(
-                'No CV available',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                context.localization.noCvAvailable,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
               ),
             );
           },

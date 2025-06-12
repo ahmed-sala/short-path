@@ -18,42 +18,38 @@ class ProfileHeaderWidget extends StatelessWidget {
         print('user ${viewmodel.appUser}');
         var profilePicture =
             '${viewmodel.profileEntity?.profilePicture}'; // Placeholder URL
-        return Directionality(
-          textDirection: TextDirection.ltr,
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
-            child: Skeletonizer(
-              enabled: isLoading,
-              child: Row(
-                children: [
-                  // Profile Picture
-                  ImageWidget(
-                    imageUrl: viewmodel.profileEntity?.profilePicture,
-                    width: 120,
-                    height: 120,
-                  ),
-                  const SizedBox(width: 16.0),
-                  // Name and Title
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        isLoading
-                            ? context.localization.loading
-                            : '${viewmodel.appUser?.firstName} ${viewmodel.appUser?.lastName}',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      Text(
-                        isLoading
-                            ? context.localization.loading
-                            : viewmodel.profileEntity?.jobTitle ?? '',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+          child: Skeletonizer(
+            enabled: isLoading,
+            child: Row(
+              children: [
+                // Profile Picture
+                ImageWidget(
+                  imageUrl: viewmodel.profileEntity?.profilePicture,
+                  width: 120,
+                  height: 120,
+                ),
+                const SizedBox(width: 16.0),
+                // Name and Title
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      isLoading
+                          ? context.localization.loading
+                          : '${viewmodel.appUser?.firstName} ${viewmodel.appUser?.lastName}',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Text(
+                      isLoading
+                          ? context.localization.loading
+                          : viewmodel.profileEntity?.jobTitle ?? '',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         );

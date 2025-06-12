@@ -20,6 +20,20 @@ class TechSkillInputWidget extends StatefulWidget {
 
 class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
   bool _showSuggestions = false;
+  /// build the list of labels the user actually sees
+  List<String> get _displayLevels => [
+    context.localization.beginner,
+    context.localization.intermediate,
+    context.localization.advanced,
+    context.localization.expert
+  ];
+  /// Map from whatever the user sees → the API enum
+  Map<String,String> get _displayToApi => {
+    context.localization.beginner:     'Beginner',
+    context.localization.intermediate: 'Intermediate',
+    context.localization.advanced:     'Advanced',
+    context.localization.expert:       'Expert',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +76,10 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
                 onChanged: (String? newValue) {
                   setState(() {
                     viewModel.selectedProficiency = newValue!;
+                    print("selectedProficiency: '${viewModel.selectedProficiency}'");
                   });
                 },
-                items: ['Beginner', 'Intermediate', 'Advanced', 'Expert']
+                items: _displayLevels
                     .map((value) => DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -87,7 +102,8 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
                     .map((s) => s.toLowerCase())
                     .contains(skill)) {
                   ToastDialog.show(
-                    'Please choose a skill from the suggestions',
+                    context.localization
+                        .pleaseChooseATechnicalSkillFromTheSuggestions,
                     Colors.red,
                   );
                   return;
@@ -99,22 +115,35 @@ class _TechSkillInputWidgetState extends State<TechSkillInputWidget> {
                     .contains(skill);
                 if (alreadyAdded) {
                   ToastDialog.show(
-                    'Skill “${raw}” is already added',
+                    context.localization.technicalSkillIsAlreadyAdded(raw),
                     Colors.orange,
                   );
                   return;
                 }
 
                 // 3) All good—add it
+                final displayLevel = viewModel.selectedProficiency;
+                // must pick a level
+                if (displayLevel == null) {
+                  ToastDialog.show(
+                    context.localization.pleaseSelectALevel,
+                    Colors.red,
+                  );
+                  return;
+                }
+                final apiLevel = _displayToApi[displayLevel]!;
+                print("apiLevel: '$apiLevel'");
+
                 viewModel.addSkill(
                   skill: raw,
-                  proficiency: viewModel.selectedProficiency,
+                  proficiency: apiLevel,
                   type: 'Technical',
                 );
                 viewModel.techSkillController.clear();
                 setState(() {
                   viewModel.filteredSuggestions = [];
                   _showSuggestions = false;
+                  viewModel.selectedProficiency = null;
                 });
                 ToastDialog.show(
                   '${context.localization.skillAddedSuccessfully} $raw',

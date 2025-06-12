@@ -37,7 +37,8 @@ class RegisterScreen extends StatelessWidget {
             EasyLoading.showSuccess(
                 context.localization.registrationSuccessful);
 
-            Navigator.pushReplacementNamed(context, RoutesName.postRegisterChoice);
+            Navigator.pushReplacementNamed(
+                context, RoutesName.postRegisterChoice);
           }
         },
         builder: (context, state) {
@@ -66,53 +67,50 @@ class RegisterScreen extends StatelessWidget {
                     // Animated logo at the top
                     const AnimatedLogo(width: 280, height: 280),
                     // Wrap your form in the AnimatedForm widget
-                    Directionality(
-                      textDirection: TextDirection.ltr,
-                      child: AnimatedForm(
-                        child: Form(
-                          key: viewModel.formKey,
-                          onChanged: () => viewModel.validateColorButton(),
-                          child: Card(
-                            elevation: 30,
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(28),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 20),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    context.localization.createAnAccount,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium
-                                        ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: const Color(0xFF102027),
-                                        ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  // Progress Bar is added here
-                                  const CustomProgressBar(),
-                                  const SizedBox(height: 10),
-                                  viewModel.currentStep == 0
-                                      ? const FirstStepRegister()
-                                      : const SecondStepRegister(),
-                                  const SizedBox(height: 20),
-                                  NoAccountRow(
-                                    content: context
-                                        .localization.alreadyHaveAnAccount,
-                                    actionText: context.localization.logInHere,
-                                    onPressed: () {
-                                      Navigator.pushReplacementNamed(
-                                          context, RoutesName.login);
-                                    },
-                                  ),
-                                ],
-                              ),
+                    AnimatedForm(
+                      child: Form(
+                        key: viewModel.formKey,
+                        onChanged: () => viewModel.validateColorButton(),
+                        child: Card(
+                          elevation: 30,
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(28),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  context.localization.createAnAccount,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xFF102027),
+                                      ),
+                                ),
+                                const SizedBox(height: 10),
+                                // Progress Bar is added here
+                                const CustomProgressBar(),
+                                const SizedBox(height: 10),
+                                viewModel.currentStep == 0
+                                    ? const FirstStepRegister()
+                                    : const SecondStepRegister(),
+                                const SizedBox(height: 20),
+                                NoAccountRow(
+                                  content:
+                                      context.localization.alreadyHaveAnAccount,
+                                  actionText: context.localization.logInHere,
+                                  onPressed: () {
+                                    Navigator.pushReplacementNamed(
+                                        context, RoutesName.login);
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         ),

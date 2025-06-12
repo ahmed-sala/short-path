@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/skill_gathering/industry_specfic/industry_skill_input_widget.dart';
 import 'package:short_path/src/presentation/screens/widgets/user%20info/skill_gathering/industry_specfic/industry_skill_list_widget.dart';
@@ -13,8 +14,8 @@ class IndustrySpecificSkillsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Industry Specific Skills',
+          Text(
+            context.localization.industrySpecificSkills,
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -33,8 +34,8 @@ class IndustrySpecificSkillsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Your Skills',
+          Text(
+            context.localization.yourSkills,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

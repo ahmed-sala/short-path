@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
@@ -13,6 +14,24 @@ import 'package:short_path/src/presentation/shared_widgets/date_input_feild.dart
 
 class EducationScreen extends StatelessWidget {
   const EducationScreen({super.key});
+
+  List<String> getDisplayDegrees(BuildContext context) {
+    return [
+      context.localization.associates,
+      context.localization.bachelors,
+      context.localization.masters,
+      context.localization.doctorate
+    ];
+  }
+
+  Map<String, String> getDisplayToApi(BuildContext context) {
+    return {
+      context.localization.associates: 'Associates',
+      context.localization.bachelors: 'Bachelors',
+      context.localization.masters: 'Masters',
+      context.localization.doctorate: 'Doctorate',
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +53,19 @@ class EducationScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Center(
+                  Center(
                     child: EducationHeader(
-                      title: 'Add Your Education',
+                      title: context.localization.addYourEducation,
                     ),
                   ),
                   verticalSpace(30),
                   CustomTextFormField(
                     keyboardType: TextInputType.text,
-                    hintText: 'Enter your institution name',
+                    hintText: context.localization.enterYourInstitutionName,
                     controller: educationViewmodel.institutionName,
-                    labelText: 'Institution Name',
+                    labelText: context.localization.institutionName,
                     validator: (val) => val == null || val.isEmpty
-                        ? 'Please enter your Institution name'
+                        ? context.localization.pleaseEnterYourInstitutionName
                         : null,
                   ),
                   verticalSpace(20),
@@ -55,15 +74,21 @@ class EducationScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CustomDropdownButtonFormField(
-                          labelText: 'Role',
-                          hintText: 'Select Role',
-                          value: educationViewmodel.selectedDegree,
-                          items: [
-                            'Associates',
-                            'Bachelors',
-                            'Masters',
-                            'Doctorate'
-                          ]
+                          labelText: context.localization.degree,
+                          hintText: context.localization.selectDegree,
+                          value: educationViewmodel.selectedDegree != null
+                              ? getDisplayToApi(context)
+                                  .entries
+                                  .firstWhere(
+                                    (entry) =>
+                                        entry.value ==
+                                        educationViewmodel.selectedDegree,
+                                    orElse: () => MapEntry(
+                                        '', ''), // Fallback if not found
+                                  )
+                                  .key
+                              : null,
+                          items: getDisplayDegrees(context)
                               .map(
                                 (jobLocation) => DropdownMenuItem(
                                   value: jobLocation,
@@ -71,14 +96,20 @@ class EducationScreen extends StatelessWidget {
                                 ),
                               )
                               .toList(),
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              educationViewmodel.selectedDegree = newValue;
-                              educationViewmodel.validateColorButton();
+                          onChanged: (String? selectedDisplayDegree) {
+                            if (selectedDisplayDegree != null) {
+                              final apiValue = getDisplayToApi(
+                                  context)[selectedDisplayDegree];
+                              print(
+                                  "Selected Degree: $selectedDisplayDegree, API Value: $apiValue");
+                              if (apiValue != null) {
+                                educationViewmodel.selectedDegree = apiValue;
+                                educationViewmodel.validateColorButton();
+                              }
                             }
                           },
                           validator: (value) => value == null
-                              ? 'Please select your degree'
+                              ? context.localization.pleaseSelectYourDegree
                               : null,
                         ),
                       ),
@@ -86,11 +117,11 @@ class EducationScreen extends StatelessWidget {
                       Expanded(
                         child: CustomTextFormField(
                           keyboardType: TextInputType.text,
-                          hintText: 'Field of Study',
+                          hintText: context.localization.enterYourFieldOfStudy,
                           controller: educationViewmodel.fieldOfStudyController,
-                          labelText: 'Field of Study',
+                          labelText: context.localization.fieldOfStudy,
                           validator: (val) => val == null || val.isEmpty
-                              ? 'Please enter your field of study'
+                              ? context.localization.pleaseEnterYourFieldOfStudy
                               : null,
                         ),
                       ),
@@ -98,11 +129,12 @@ class EducationScreen extends StatelessWidget {
                   ),
                   verticalSpace(20),
                   CustomTextFormField(
-                    hintText: 'Enter your institution location',
+                    hintText: context.localization.enterYourInstitutionLocation,
                     controller: educationViewmodel.location,
-                    labelText: 'Institution Location',
+                    labelText: context.localization.institutionLocation,
                     validator: (val) => val == null || val.isEmpty
-                        ? 'Please enter your Institution Location'
+                        ? context
+                            .localization.pleaseEnterYourInstitutionLocation
                         : null,
                     keyboardType: TextInputType.text,
                   ),
@@ -110,7 +142,7 @@ class EducationScreen extends StatelessWidget {
                   DateInputField(
                     selectedDate: educationViewmodel.selectedDate,
                     onDateSelected: educationViewmodel.updateSelectedDate,
-                    labelText: 'Graduation Date',
+                    labelText: context.localization.graduationDate,
                   ),
                   verticalSpace(20),
                 ],
