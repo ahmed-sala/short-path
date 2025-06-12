@@ -709,7 +709,7 @@ class _ApiServices implements ApiServices {
     )
         .compose(
           _dio.options,
-          '/interview-preparation/',
+          '/interview-preparation/${jobId}',
           queryParameters: queryParameters,
           data: _data,
         )

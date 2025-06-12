@@ -26,6 +26,7 @@ import '../../../../short_path.dart';
 import '../../../shared_widgets/custom_auth_button.dart';
 import '../career/cover_sheet_screen.dart';
 import '../career/widgets/create_cv_handle.dart';
+
 class JobDetail extends StatefulWidget {
   const JobDetail({super.key});
 
@@ -48,6 +49,7 @@ class _JobDetailState extends State<JobDetail> {
     final url = jobDetail?.url ?? '';
     final salaryRangeValue = jobDetail?.salaryRange;
     final employmentTypeValue = jobDetail?.employmentType;
+    final jobId = jobDetail?.id;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -88,6 +90,7 @@ class _JobDetailState extends State<JobDetail> {
       body: BlocProvider(
         create: (context) => getIt<JobDetailCubit>(),
         child: Builder(builder: (context) {
+          final vm = context.read<JobDetailCubit>();
           var isHaveCv =
               getIt<SharedPreferences>().getBool(SharedPrefKeys.completeCv) ??
                   false;
@@ -95,7 +98,6 @@ class _JobDetailState extends State<JobDetail> {
             padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 16.h),
             child: BlocListener<JobDetailCubit, JobDetailState>(
               listener: (context, state) {
-                final vm = context.read<JobDetailCubit>();
                 if (state is GenerateCoverSheetLoading) {
                   EasyLoading.show(status: 'Generating cover sheet...');
                 } else if (state is GenerateCoverSheetSuccess) {
@@ -118,6 +120,25 @@ class _JobDetailState extends State<JobDetail> {
                   EasyLoading.dismiss();
                   Fluttertoast.showToast(
                     msg: state.message,
+                    backgroundColor: Colors.redAccent,
+                    textColor: Colors.white,
+                  );
+                } else if (state is InterviewPreparationLoading) {
+                  EasyLoading.show(
+                      status: 'Generating interview preparation...');
+                } else if (state is InterviewPreparationLoaded) {
+                  EasyLoading.dismiss();
+                  Navigator.pushNamed(context, RoutesName.InterviewPreparation,
+                      arguments: {
+                        'questions': state.questions,
+                        'answers': state.answers,
+                        'jobTitle': jobDetail?.title!,
+                        'jobId': jobDetail?.id!,
+                      });
+                } else if (state is InterviewPreparationError) {
+                  EasyLoading.dismiss();
+                  Fluttertoast.showToast(
+                    msg: state.errorMessage,
                     backgroundColor: Colors.redAccent,
                     textColor: Colors.white,
                   );
@@ -199,14 +220,7 @@ class _JobDetailState extends State<JobDetail> {
                   CustomAuthButton(
                     text: 'Generate Interview Preparation',
                     onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        RoutesName.InterviewPreparation,
-                        arguments: {
-                          'jobId': jobDetail?.id ?? 0,
-                          'jobTitle': jobDetail?.title,
-                        },
-                      );
+                      vm.generateInterviewPreparationByJobId(jobId!);
                     },
                     color: AppColors.primaryColor,
                     textColor: Colors.white,

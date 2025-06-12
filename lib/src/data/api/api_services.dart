@@ -49,6 +49,7 @@ abstract class ApiServices {
   Future<void> addLanguage(
     @Body() LanguageRequest languageRequest,
   );
+
   @GET(ApisEndPoints.language)
   Future<List<LanguageResponse>> getLanguage();
 
@@ -56,6 +57,7 @@ abstract class ApiServices {
   Future<void> addSkill(
     @Body() SkillRequest skillRequest,
   );
+
   @GET(ApisEndPoints.skill)
   Future<SkillsResponse> getSkill();
 
@@ -63,24 +65,31 @@ abstract class ApiServices {
   Future<void> addProfile(
     @Body() ProfileInfoRequest profileRequest,
   );
+
   @GET(ApisEndPoints.profile)
   Future<ProfileResponse> getProfile();
+
   @POST(ApisEndPoints.education)
   Future<void> addEducation(
     @Body() EducationRequest educationRequest,
   );
+
   @GET(ApisEndPoints.education)
   Future<List<EducationResponse>> getEducation();
+
   @POST(ApisEndPoints.certification)
   Future<void> addCertification(
     @Body() CertificationRequest certificationRequest,
   );
+
   @GET(ApisEndPoints.certification)
   Future<List<CertificateResponse>> getCertification();
+
   @POST(ApisEndPoints.project)
   Future<void> addProject(
     @Body() ProjectRequest projectRequest,
   );
+
   @GET(ApisEndPoints.project)
   Future<List<ProjectResponse>> getProject();
 
@@ -88,14 +97,18 @@ abstract class ApiServices {
   Future<void> addWorkExperience(
     @Body() WorkExperienceRequest workExperienceRequest,
   );
+
   @GET(ApisEndPoints.workExperience)
   Future<List<WorkExperienceResponse>> getWorkExperience();
+
   @POST(ApisEndPoints.additionalInfo)
   Future<void> addAdditionalInfo(
     @Body() AdditionalInfromationRequest additionalInfromationRequest,
   );
+
   @GET(ApisEndPoints.additionalInfo)
   Future<AdditionalInfoResponse> getAdditionalInfo();
+
   @GET(ApisEndPoints.getUserData)
   Future<GetUserResponse> getUserData();
 
@@ -107,16 +120,18 @@ abstract class ApiServices {
     @Query("size") int size,
     @Query('filter', encoded: true) JobFilterRequest filterRequest,
   );
+
   @GET(ApisEndPoints.generateCoverSheet)
   Future<CoverSheetResponse> generateCoverSheet(
       @Query("job") String? jobDescription, @Path('jobId ') int? jobId);
-  @GET(ApisEndPoints.interviewPreparationId)
+
+  @GET("${ApisEndPoints.interviewPreparationId}/{jobId}")
   Future<InterviewPreparationDto> interviewPreparationById(
-      @Path('jobId') int jobId,
-      );
+    @Path('jobId') int jobId,
+  );
+
   @GET(ApisEndPoints.interviewPreparation)
   Future<InterviewPreparationDto> interviewPreparationByDescription(
-      @Query("jobDescription") String? jobDescription,
-      );
-
+    @Query("jobDescription") String? jobDescription,
+  );
 }

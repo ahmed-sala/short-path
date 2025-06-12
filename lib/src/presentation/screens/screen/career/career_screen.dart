@@ -56,6 +56,22 @@ class CareerScreen extends StatelessWidget {
               backgroundColor: Colors.redAccent,
               textColor: Colors.white,
             );
+          } else if (state is InterviewPreparationLoading) {
+            EasyLoading.show(status: 'Generating interview preparation...');
+          } else if (state is InterviewPreparationLoaded) {
+            EasyLoading.dismiss();
+            Navigator.pushNamed(context, RoutesName.InterviewPreparation,
+                arguments: {
+                  'questions': state.questions,
+                  'answers': state.answers,
+                });
+          } else if (state is InterviewPreparationError) {
+            EasyLoading.dismiss();
+            Fluttertoast.showToast(
+              msg: state.errorMessage,
+              backgroundColor: Colors.redAccent,
+              textColor: Colors.white,
+            );
           }
         },
         child: Builder(
@@ -204,17 +220,20 @@ class CareerScreen extends StatelessWidget {
                               textColor: Colors.white,
                             );
                           } else {
-                            Navigator.pushNamed(
-                              context,
-                              RoutesName.InterviewPreparation,
-                              arguments: {
-                                'jobDescription': vm.jobDescribtion.text,
-                                // Add any other needed parameters
-                              },
-                            );
+                            // Navigator.pushNamed(
+                            //   context,
+                            //   RoutesName.InterviewPreparation,
+                            //   arguments: {
+                            //     'jobDescription': vm.jobDescribtion.text,
+                            //     // Add any other needed parameters
+                            //   },
+                            // );
+                            vm.generateInterviewPreparationByJobDescription(
+                                vm.jobDescribtion.text);
                           }
                         },
-                        color: AppColors.primaryColor, // Use your color constant
+                        color: AppColors.primaryColor,
+                        // Use your color constant
                         textColor: Colors.white,
                         borderRadius: BorderRadius.circular(40),
                         textStyle: TextStyle(

@@ -81,16 +81,16 @@ class AppRoute {
         return _handelMaterialPageRoute(
             settings: settings, widget: WorkExperienceScreen());
 
-
       case RoutesName.InterviewPreparation:
-      // Get the arguments which should contain jobId and optionally jobTitle
+        // Get the arguments which should contain jobId and optionally jobTitle
         final args = settings.arguments as Map<String, dynamic>?;
         return _handelMaterialPageRoute(
           settings: settings,
           widget: InterviewPreparationScreen(
-            jobId: args?['jobId'] as int? ?? 0,
-            initialJobTitle: args?['jobTitle'] as String?,
-
+            questions: args?['questions'] as List<String>,
+            answers: args?['answers'] as List<String>,
+            jobId: args?['jobId'] as int?,
+            jobTitle: args?['jobTitle'] as String?,
           ),
         );
 
