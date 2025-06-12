@@ -28,6 +28,8 @@ import 'package:short_path/src/data/api/core/api_response_model/work_experience_
 import 'package:short_path/src/data/api/core/constants/apis_baseurl.dart';
 import 'package:short_path/src/data/api/core/constants/apis_end_points.dart';
 
+import '../dto_models/career/interview_preparation_dto.dart';
+
 part 'api_services.g.dart';
 
 @singleton
@@ -108,4 +110,13 @@ abstract class ApiServices {
   @GET(ApisEndPoints.generateCoverSheet)
   Future<CoverSheetResponse> generateCoverSheet(
       @Query("job") String? jobDescription, @Path('jobId ') int? jobId);
+  @GET(ApisEndPoints.interviewPreparationId)
+  Future<InterviewPreparationDto> interviewPreparationById(
+      @Path('jobId') int jobId,
+      );
+  @GET(ApisEndPoints.interviewPreparation)
+  Future<InterviewPreparationDto> interviewPreparationByDescription(
+      @Query("jobDescription") String? jobDescription,
+      );
+
 }

@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/data/api/api_services.dart';
 import 'package:short_path/src/data/dto_models/career/cover_sheet_dto.dart';
+import 'package:short_path/src/data/dto_models/career/interview_preparation_dto.dart';
 
 import '../../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
 import '../../../../api/core/constants/apis_end_points.dart';
@@ -39,5 +40,19 @@ class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
       {String? jobDescription, int? jobId}) async {
     var response = await _apiServices.generateCoverSheet(jobDescription, jobId);
     return response.toDto();
+  }
+
+  @override
+  Future<InterviewPreparationDto> interviewPreparationByDescription(String? jobDescription)async {
+    var response = await _apiServices.interviewPreparationByDescription(jobDescription);
+    return response;
+
+  }
+
+  @override
+  Future<InterviewPreparationDto> interviewPreparationById(int? jobId ) async {
+    var response = await _apiServices.interviewPreparationById(jobId!);
+    return response;
+
   }
 }
