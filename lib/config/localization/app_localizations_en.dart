@@ -132,8 +132,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get craftYourDreamCareer => 'Craft Your Dream Career';
 
   @override
-  String
-  get enterAJobDescriptionToGenerateATailoredCVOrCoverSheetThatStandsOut =>
+  String get enterAJobDescriptionToGenerateATailoredCVOrCoverSheetThatStandsOut =>
       'Enter a job description to generate a tailored CV or cover sheet that stands out.';
 
   @override
@@ -937,4 +936,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get uploadImage => 'Upload Image';
+
+  @override
+  String get extractSkills => 'Extract Skills';
 }

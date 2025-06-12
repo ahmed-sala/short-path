@@ -297,5 +297,6 @@
   "remote": "عن بُعد",
   "onsite": "في الموقع",
   "hybrid": "هجين",
-  "uploadImage": "تحميل صورة"
+  "uploadImage": "تحميل صورة",
+  "extractSkills": "استخراج المهارات"
 }

@@ -325,5 +325,6 @@
   "remote": "Remote",
   "onsite": "Onsite",
   "hybrid": "Hybrid",
-  "uploadImage": "Upload Image"
+  "uploadImage": "Upload Image",
+  "extractSkills": "Extract Skills"
 }

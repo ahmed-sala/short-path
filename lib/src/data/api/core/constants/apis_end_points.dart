@@ -18,4 +18,5 @@ abstract class ApisEndPoints {
 
   // static const String downloadCv = "file/download";
   static const String generateCoverSheet = "cover-sheet/generate";
+  static const String extractSkills = "machine/get-skills";
 }

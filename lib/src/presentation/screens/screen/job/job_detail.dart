@@ -143,6 +143,24 @@ class _JobDetailState extends State<JobDetail> {
                     backgroundColor: Colors.redAccent,
                     textColor: Colors.white,
                   );
+                } else if (state is SkillsExtractionLoading) {
+                  EasyLoading.show(status: 'Extracting skills...');
+                } else if (state is SkillsExtractionSuccess) {
+                  EasyLoading.dismiss();
+                  Navigator.pushNamed(
+                    context,
+                    RoutesName.machineSkills,
+                    arguments: {
+                      'extractedSkillsDto': state.skills,
+                    },
+                  );
+                } else if (state is SkillsExtractionError) {
+                  EasyLoading.dismiss();
+                  Fluttertoast.showToast(
+                    msg: state.errorMessage,
+                    backgroundColor: Colors.redAccent,
+                    textColor: Colors.white,
+                  );
                 }
               },
               child: Column(
@@ -226,6 +244,22 @@ class _JobDetailState extends State<JobDetail> {
                     EmploymentTypeWidget(
                         employmentTypeValue: employmentTypeValue),
                   SizedBox(height: 24.h),
+                  // Custom Auth Button for extracting skills
+                  CustomAuthButton(
+                    text: context.localization.extractSkills,
+                    onPressed: () {
+                      vm.extractSkills(jobDetail?.description ?? '');
+                    },
+                    color: AppColors.primaryColor,
+                    textColor: Colors.white,
+                    borderRadius: BorderRadius.circular(40),
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
                   CustomAuthButton(
                     text: 'Generate Interview Preparation',
                     onPressed: () {

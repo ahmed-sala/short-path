@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:short_path/config/routes/routes_name.dart';
+import 'package:short_path/src/data/dto_models/career/extract_skills_dto.dart';
 import 'package:short_path/src/presentation/screens/screen/auth/login_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/auth/register_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/home/home_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/job/job_detail.dart';
+import 'package:short_path/src/presentation/screens/screen/job/machine_skills_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/auth_decision.dart';
 import 'package:short_path/src/presentation/screens/screen/onboarding/onboarding_screen.dart';
 import 'package:short_path/src/presentation/screens/screen/section/section_screen.dart';
@@ -98,6 +100,14 @@ class AppRoute {
         return _handelMaterialPageRoute(
             settings: settings, widget: PostRegisterChoiceScreen());
 
+      case RoutesName.machineSkills:
+        final args = settings.arguments as Map<String, dynamic>?;
+        return _handelMaterialPageRoute(
+            settings: settings,
+            widget: MachineSkillsScreen(
+              extractedSkillsDto:
+                  args?['extractedSkillsDto'] as ExtractedSkillsDto,
+            ));
       default:
         return _handelMaterialPageRoute(
             settings: settings, widget: const Scaffold());

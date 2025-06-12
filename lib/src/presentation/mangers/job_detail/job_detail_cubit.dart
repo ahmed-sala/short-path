@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 
 import '../../../../core/common/api/api_result.dart';
 import '../../../data/api/core/error/error_handler.dart';
+import '../../../data/dto_models/career/extract_skills_dto.dart';
 import '../../../data/dto_models/career/interview_preparation_dto.dart';
 import '../../../domain/entities/career/cover_sheet_entity.dart';
 import '../../../domain/usecases/career/career_usecase.dart';
@@ -146,6 +147,23 @@ class JobDetailCubit extends Cubit<JobDetailState> {
         interviewQuestions.add(question);
         interviewAnswers.add(answer);
       }
+    }
+  }
+
+  Future<void> extractSkills(String jobDescription) async {
+    try {
+      emit(SkillsExtractionLoading());
+      final result = await _careerUsecase.extractSkills(jobDescription);
+      switch (result) {
+        case Success<ExtractedSkillsDto>():
+          emit(SkillsExtractionSuccess(result.data!));
+          break;
+        case Failures():
+          emit(SkillsExtractionError(result.exception.toString()));
+          break;
+      }
+    } catch (e) {
+      emit(SkillsExtractionError(e.toString()));
     }
   }
 }

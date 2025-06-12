@@ -1,3 +1,5 @@
+import '../../../data/dto_models/career/extract_skills_dto.dart';
+
 sealed class JobDetailState {}
 
 final class JobDetailInitial extends JobDetailState {}
@@ -28,4 +30,18 @@ final class InterviewPreparationError extends JobDetailState {
   final String errorMessage;
 
   InterviewPreparationError(this.errorMessage);
+}
+
+final class SkillsExtractionLoading extends JobDetailState {}
+
+final class SkillsExtractionSuccess extends JobDetailState {
+  final ExtractedSkillsDto skills;
+
+  SkillsExtractionSuccess(this.skills);
+}
+
+final class SkillsExtractionError extends JobDetailState {
+  final String errorMessage;
+
+  SkillsExtractionError(this.errorMessage);
 }

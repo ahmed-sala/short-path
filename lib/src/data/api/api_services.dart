@@ -27,6 +27,7 @@ import 'package:short_path/src/data/api/core/api_response_model/skills_response.
 import 'package:short_path/src/data/api/core/api_response_model/work_experience_response.dart';
 import 'package:short_path/src/data/api/core/constants/apis_baseurl.dart';
 import 'package:short_path/src/data/api/core/constants/apis_end_points.dart';
+import 'package:short_path/src/data/dto_models/career/extract_skills_dto.dart';
 
 import '../dto_models/career/interview_preparation_dto.dart';
 
@@ -133,5 +134,10 @@ abstract class ApiServices {
   @GET(ApisEndPoints.interviewPreparation)
   Future<InterviewPreparationDto> interviewPreparationByDescription(
     @Query("jobDescription") String? jobDescription,
+  );
+
+  @GET(ApisEndPoints.extractSkills)
+  Future<ExtractedSkillsDto> extractSkills(
+    @Query("jobDescription") String jobDescription,
   );
 }

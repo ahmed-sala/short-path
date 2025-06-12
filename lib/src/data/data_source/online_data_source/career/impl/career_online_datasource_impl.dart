@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/data/api/api_services.dart';
 import 'package:short_path/src/data/dto_models/career/cover_sheet_dto.dart';
+import 'package:short_path/src/data/dto_models/career/extract_skills_dto.dart';
 import 'package:short_path/src/data/dto_models/career/interview_preparation_dto.dart';
 
 import '../../../../../../config/helpers/shared_pref/shared_pre_keys.dart';
@@ -43,16 +44,22 @@ class CareerOnlineDatasourceImpl implements CareerOnlineDatasource {
   }
 
   @override
-  Future<InterviewPreparationDto> interviewPreparationByDescription(String? jobDescription)async {
-    var response = await _apiServices.interviewPreparationByDescription(jobDescription);
+  Future<InterviewPreparationDto> interviewPreparationByDescription(
+      String? jobDescription) async {
+    var response =
+        await _apiServices.interviewPreparationByDescription(jobDescription);
     return response;
-
   }
 
   @override
-  Future<InterviewPreparationDto> interviewPreparationById(int? jobId ) async {
+  Future<InterviewPreparationDto> interviewPreparationById(int? jobId) async {
     var response = await _apiServices.interviewPreparationById(jobId!);
     return response;
+  }
 
+  @override
+  Future<ExtractedSkillsDto> extractSkills(String jobDescription) async {
+    var response = await _apiServices.extractSkills(jobDescription);
+    return response;
   }
 }

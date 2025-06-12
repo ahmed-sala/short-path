@@ -32,3 +32,17 @@ final class InterviewPreparationError extends CareerState {
 
   InterviewPreparationError(this.errorMessage);
 }
+
+final class SkillsExtractionLoading extends CareerState {}
+
+final class SkillsExtractionSuccess extends CareerState {
+  final ExtractedSkillsDto skills;
+
+  SkillsExtractionSuccess(this.skills);
+}
+
+final class SkillsExtractionError extends CareerState {
+  final String errorMessage;
+
+  SkillsExtractionError(this.errorMessage);
+}
