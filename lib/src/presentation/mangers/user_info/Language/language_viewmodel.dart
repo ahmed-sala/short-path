@@ -13,10 +13,7 @@ import 'language_state.dart';
 @injectable
 class LanguageViewmodel extends Cubit<LanguageState> {
   final UserInfoUsecase _userInfoUsecase;
-  LanguageViewmodel(this._userInfoUsecase) : super(const LanguageInitial()) {
-    // Attach listeners to the controllers
-    languageController.addListener(onLanguageChanged);
-  }
+  LanguageViewmodel(this._userInfoUsecase) : super(const LanguageInitial());
 
   final formKey = GlobalKey<FormState>();
   final TextEditingController languageController = TextEditingController();

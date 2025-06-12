@@ -79,3 +79,10 @@ class AddEducationErrorState extends EducationState {
 class DegreeCertificationChanged extends EducationState {
   const DegreeCertificationChanged();
 }
+
+/// Fired whenever the page changes
+final class EducationPageChangedState extends EducationState {
+  final int pageIndex;
+
+  const EducationPageChangedState(this.pageIndex);
+}

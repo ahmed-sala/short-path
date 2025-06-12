@@ -818,6 +818,18 @@ abstract class AppLocalizations {
   /// **'Expert'**
   String get expert;
 
+  /// No description provided for @fluent.
+  ///
+  /// In en, this message translates to:
+  /// **'Fluent'**
+  String get fluent;
+
+  /// No description provided for @native.
+  ///
+  /// In en, this message translates to:
+  /// **'Native'**
+  String get native;
+
   /// No description provided for @selectDate.
   ///
   /// In en, this message translates to:
@@ -1819,6 +1831,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saved Jobs'**
   String get savedJobs;
+
+  /// No description provided for @selectLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Level'**
+  String get selectLevel;
+
+  /// No description provided for @pleaseSelectALevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a level.'**
+  String get pleaseSelectALevel;
+
+  /// No description provided for @languageAddedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Language added successfully'**
+  String get languageAddedSuccessfully;
+
+  /// No description provided for @degree.
+  ///
+  /// In en, this message translates to:
+  /// **'Degree'**
+  String get degree;
+
+  /// No description provided for @selectDegree.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Degree'**
+  String get selectDegree;
+
+  /// No description provided for @contract.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract'**
+  String get contract;
+
+  /// No description provided for @remote.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote'**
+  String get remote;
+
+  /// No description provided for @onsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Onsite'**
+  String get onsite;
+
+  /// No description provided for @hybrid.
+  ///
+  /// In en, this message translates to:
+  /// **'Hybrid'**
+  String get hybrid;
+
+  /// No description provided for @uploadImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Image'**
+  String get uploadImage;
 }
 
 class _AppLocalizationsDelegate

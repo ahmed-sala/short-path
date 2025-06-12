@@ -15,63 +15,41 @@ import 'package:short_path/src/short_path.dart';
 
 import '../../../../shared_widgets/progress_bar.dart';
 import '../../../widgets/user info/profile/header_widget.dart';
+import 'next_back_buttons.dart';
 
-class SkillInformationScreen extends StatefulWidget {
+class SkillInformationScreen extends StatelessWidget {
   const SkillInformationScreen({super.key});
-
-  @override
-  _SkillInformationScreenState createState() => _SkillInformationScreenState();
-}
-
-class _SkillInformationScreenState extends State<SkillInformationScreen> {
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: BlocProvider(
-        create: (context) => getIt<SkillGatheringViewmodel>(),
+        create: (_) => getIt<SkillGatheringViewmodel>(),
         child: BlocConsumer<SkillGatheringViewmodel, SkillGatheringState>(
+          listenWhen: (prev, curr) =>
+          curr is! SkillPageChangedState && curr is! SkillAddedState && curr is! SkillRemovedState,
           listener: (context, state) {
-            switch (state) {
-              case SkillsAddedSuccessState():
-                navKey.currentState!.pushNamedAndRemoveUntil(
-                    RoutesName.education, (route) => false);
-              case SkillsAddedFailureState():
-                showAwesomeDialog(context,
-                    title: context.localization.error,
-                    desc: state.message,
-                    onOk: () {},
-                    dialogType: DialogType.error);
-              case SkillsAddedLoadingState():
-                showLoading(context, context.localization.addingSkills);
-
-              default:
+            if (state is SkillsAddedSuccessState) {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(RoutesName.education, (_) => false);
             }
-          },
-          listenWhen: (previous, current) {
-            if (previous is SkillsAddedLoadingState ||
-                current is SkillsAddedFailureState) {
-              hideLoading();
+            if (state is SkillsAddedFailureState) {
+              showAwesomeDialog(
+                context,
+                title: context.localization.error,
+                desc: state.message,
+                onOk: () {},
+                dialogType: DialogType.error,
+              );
             }
-            return current is! InitialSkillGatheringState;
+            if (state is SkillsAddedLoadingState) {
+              showLoading(context, context.localization.addingSkills);
+            }
           },
           builder: (context, state) {
-            final skillGatheringViewmodel =
-                context.read<SkillGatheringViewmodel>();
+            final vm = context.read<SkillGatheringViewmodel>();
+
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +57,6 @@ class _SkillInformationScreenState extends State<SkillInformationScreen> {
                 const Center(child: HeaderWidget()),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
-                  // Adjust value as needed
                   child: StepProgressBar(
                     currentStep: 2,
                     stepNames: [
@@ -96,26 +73,19 @@ class _SkillInformationScreenState extends State<SkillInformationScreen> {
                 verticalSpace(10),
                 Expanded(
                   child: PageView.builder(
-                    controller: _pageController,
-                    onPageChanged: (index) {
-                      // Update ViewModel when page changes
-                      skillGatheringViewmodel.changePage(index);
-                    },
-                    itemCount: skillGatheringViewmodel.pages.length,
-                    itemBuilder: (context, index) {
-                      return skillGatheringViewmodel.pages[index];
-                    },
+                    controller: vm.pageController,
+                    onPageChanged: vm.changePage,
+                    itemCount: vm.pages.length,
+                    itemBuilder: (context, index) => vm.pages[index],
                   ),
                 ),
-                // NextBackButtons widget for navigation
-                NextBackButtuns(
-                  finish: () {
-                    skillGatheringViewmodel.addAllSkills();
-                  },
-                  pageController: _pageController,
-                  length: skillGatheringViewmodel.pages.length,
-                  changePage: skillGatheringViewmodel.changePage,
-                  currentPage: skillGatheringViewmodel.currentPage,
+                NextBackButtons(
+                  currentPage: vm.currentPage,
+                  length: vm.pages.length,
+                  onNext: vm.currentPage < vm.pages.length - 1
+                      ? vm.nextPage
+                      : vm.addAllSkills,
+                  onBack: vm.previousPage,
                 ),
                 verticalSpace(24),
               ],

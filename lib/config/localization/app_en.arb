@@ -147,6 +147,8 @@
   "intermediate": "Intermediate",
   "advanced": "Advanced",
   "expert": "Expert",
+  "fluent": "Fluent",
+  "native": "Native",
   "selectDate": "Select Date",
   "findYourJob": "Find Your Job",
   "recentJobList": "Recent Job List",
@@ -313,5 +315,15 @@
   "confirm": "Confirm",
   "noSavedJobsYet": "No saved jobs yet!",
   "yourSavedJobsWillAppearHere": "Your saved jobs will appear here.",
-  "savedJobs": "Saved Jobs"
+  "savedJobs": "Saved Jobs",
+  "selectLevel": "Select Level",
+  "pleaseSelectALevel": "Please select a level.",
+  "languageAddedSuccessfully": "Language added successfully",
+  "degree": "Degree",
+  "selectDegree": "Select Degree",
+  "contract": "Contract",
+  "remote": "Remote",
+  "onsite": "Onsite",
+  "hybrid": "Hybrid",
+  "uploadImage": "Upload Image"
 }

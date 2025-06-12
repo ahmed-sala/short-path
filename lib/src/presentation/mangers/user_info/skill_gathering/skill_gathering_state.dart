@@ -7,6 +7,11 @@ sealed class SkillGatheringState {
 class InitialSkillGatheringState extends SkillGatheringState {
   const InitialSkillGatheringState();
 }
+/// Fired whenever the page changes
+final class SkillPageChangedState extends SkillGatheringState {
+  final int pageIndex;
+  const SkillPageChangedState(this.pageIndex);
+}
 
 class SkillAddedState extends SkillGatheringState {
   final List<TechnicalSkillEntity>? techSkills;

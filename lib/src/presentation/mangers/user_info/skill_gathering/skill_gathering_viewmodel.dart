@@ -30,8 +30,10 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
   final List<String> _industrySkills = [];
   List<String> get industrySkills => _industrySkills;
 
-  String selectedProficiency = 'Beginner';
+  String? selectedProficiency;
   List<String> filteredSuggestions = [];
+  final PageController pageController = PageController();
+
   int currentPage = 0;
 
   List<Widget> pages = [
@@ -59,11 +61,32 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
     }
   }
 
+  // Paging
   void changePage(int index) {
     currentPage = index;
-    filteredSuggestions = [];
-    emit(const OnboardingNextState()); // Emit state to notify listeners
+    emit(SkillPageChangedState(index));
   }
+
+  void nextPage() {
+    if (currentPage < pages.length - 1) {
+      pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      changePage(currentPage + 1);
+    }
+  }
+
+  void previousPage() {
+    if (currentPage > 0) {
+      pageController.previousPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      changePage(currentPage - 1);
+    }
+  }
+
 
   void removeSkill(
       {required String skill, required String type, String? proficiency}) {
@@ -107,6 +130,8 @@ class SkillGatheringViewmodel extends Cubit<SkillGatheringState> {
 
   @override
   Future<void> close() {
+    pageController.dispose();
+
     techSkillController.dispose();
     softSkillController.dispose();
     industrySpecificSkillController.dispose();

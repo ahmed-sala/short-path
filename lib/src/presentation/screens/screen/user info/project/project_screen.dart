@@ -28,6 +28,16 @@ class ProjectScreen extends StatelessWidget {
 
   ProjectViewmodel viewModel = getIt<ProjectViewmodel>();
 
+  /// Defines a map from localized role names to raw values.
+  Map<String, String> getRoleDisplayMap(BuildContext context) => {
+        context.localization.fullTime: 'Full Time',
+        context.localization.partTime: 'Part Time',
+        context.localization.freelance: 'Freelance',
+      };
+
+  List<String> getDisplayRole(BuildContext context) =>
+      getRoleDisplayMap(context).keys.toList();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -88,24 +98,35 @@ class ProjectScreen extends StatelessWidget {
                           CustomDropdownButtonFormField(
                             labelText: context.localization.role,
                             hintText: context.localization.selectRole,
-                            value: viewModel.roleController.text.isEmpty
-                                ? null
-                                : viewModel.roleController.text,
-                            items: [
-                              context.localization.fullTime,
-                              context.localization.partTime,
-                              context.localization.freelance
-                            ]
-                                .map(
-                                  (jobLocation) => DropdownMenuItem(
-                                    value: jobLocation,
-                                    child: Text(jobLocation),
-                                  ),
-                                )
+// Map raw value in roleController.text to localized string for display
+                            value: viewModel.roleController.text.isNotEmpty
+                                ? getRoleDisplayMap(context)
+                                    .entries
+                                    .firstWhere(
+                                      (entry) =>
+                                          entry.value ==
+                                          viewModel.roleController.text,
+                                      orElse: () => const MapEntry('', ''),
+                                    )
+                                    .key
+                                : null,
+                            // Populate dropdown with localized role names
+                            items: getDisplayRole(context)
+                                .map((displayRole) => DropdownMenuItem(
+                                      value: displayRole,
+                                      child: Text(displayRole),
+                                    ))
                                 .toList(),
+                            // On selection, store the raw value in roleController
                             onChanged: (String? newValue) {
                               if (newValue != null) {
-                                viewModel.roleController.text = newValue;
+                                final rawValue =
+                                    getRoleDisplayMap(context)[newValue];
+                                print(
+                                    'Selected role: $newValue, Raw value: $rawValue');
+                                if (rawValue != null) {
+                                  viewModel.roleController.text = rawValue;
+                                }
                               }
                             },
                             validator: (value) {

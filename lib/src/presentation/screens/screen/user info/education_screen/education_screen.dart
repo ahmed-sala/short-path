@@ -15,6 +15,24 @@ import 'package:short_path/src/presentation/shared_widgets/date_input_feild.dart
 class EducationScreen extends StatelessWidget {
   const EducationScreen({super.key});
 
+  List<String> getDisplayDegrees(BuildContext context) {
+    return [
+      context.localization.associates,
+      context.localization.bachelors,
+      context.localization.masters,
+      context.localization.doctorate
+    ];
+  }
+
+  Map<String, String> getDisplayToApi(BuildContext context) {
+    return {
+      context.localization.associates: 'Associates',
+      context.localization.bachelors: 'Bachelors',
+      context.localization.masters: 'Masters',
+      context.localization.doctorate: 'Doctorate',
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     var educationViewmodel = context.read<EducationViewmodelNew>();
@@ -56,15 +74,21 @@ class EducationScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CustomDropdownButtonFormField(
-                          labelText: context.localization.role,
-                          hintText: context.localization.selectRole,
-                          value: educationViewmodel.selectedDegree,
-                          items: [
-                            context.localization.associates,
-                            context.localization.bachelors,
-                            context.localization.masters,
-                            context.localization.doctorate
-                          ]
+                          labelText: context.localization.degree,
+                          hintText: context.localization.selectDegree,
+                          value: educationViewmodel.selectedDegree != null
+                              ? getDisplayToApi(context)
+                                  .entries
+                                  .firstWhere(
+                                    (entry) =>
+                                        entry.value ==
+                                        educationViewmodel.selectedDegree,
+                                    orElse: () => MapEntry(
+                                        '', ''), // Fallback if not found
+                                  )
+                                  .key
+                              : null,
+                          items: getDisplayDegrees(context)
                               .map(
                                 (jobLocation) => DropdownMenuItem(
                                   value: jobLocation,
@@ -72,10 +96,16 @@ class EducationScreen extends StatelessWidget {
                                 ),
                               )
                               .toList(),
-                          onChanged: (String? newValue) {
-                            if (newValue != null) {
-                              educationViewmodel.selectedDegree = newValue;
-                              educationViewmodel.validateColorButton();
+                          onChanged: (String? selectedDisplayDegree) {
+                            if (selectedDisplayDegree != null) {
+                              final apiValue = getDisplayToApi(
+                                  context)[selectedDisplayDegree];
+                              print(
+                                  "Selected Degree: $selectedDisplayDegree, API Value: $apiValue");
+                              if (apiValue != null) {
+                                educationViewmodel.selectedDegree = apiValue;
+                                educationViewmodel.validateColorButton();
+                              }
                             }
                           },
                           validator: (value) => value == null

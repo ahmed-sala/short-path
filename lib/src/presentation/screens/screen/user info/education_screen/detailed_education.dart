@@ -4,28 +4,10 @@ import 'package:short_path/core/styles/spacing.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_state.dart';
 import 'package:short_path/src/presentation/mangers/user_info/education/education_viewmodel.dart';
 import 'package:short_path/src/presentation/shared_widgets/next_back_buttuns.dart';
+import 'next_back_buttons.dart';
 
-class DetailedEducation extends StatefulWidget {
+class DetailedEducation extends StatelessWidget {
   const DetailedEducation({super.key});
-
-  @override
-  State<DetailedEducation> createState() => _DetailedEducationState();
-}
-
-class _DetailedEducationState extends State<DetailedEducation> {
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +16,7 @@ class _DetailedEducationState extends State<DetailedEducation> {
     return BlocListener<EducationViewmodelNew, EducationState>(
       listener: (context, state) {
         if (state is EducationAddedState) {
-          _pageController.jumpToPage(viewModel.currentPage);
+          viewModel.pageController.jumpToPage(viewModel.currentPage);
         }
       },
       child: BlocBuilder<EducationViewmodelNew, EducationState>(
@@ -44,7 +26,7 @@ class _DetailedEducationState extends State<DetailedEducation> {
               // PageView with PageController
               Expanded(
                 child: PageView.builder(
-                  controller: _pageController,
+                  controller: viewModel.pageController,
                   onPageChanged: (index) {
                     viewModel.changePage(index);
                   },
@@ -54,15 +36,23 @@ class _DetailedEducationState extends State<DetailedEducation> {
                   },
                 ),
               ),
-              // Navigation Buttons
-              NextBackButtuns(
-                finish: () {
-                  viewModel.nextButton();
-                },
-                pageController: _pageController,
-                length: viewModel.pages.length,
-                changePage: viewModel.changePage,
+              // // Navigation Buttons
+              // NextBackButtuns(
+              //   finish: () {
+              //     viewModel.nextButton();
+              //   },
+              //   pageController: _pageController,
+              //   length: viewModel.pages.length,
+              //   changePage: viewModel.changePage,
+              //   currentPage: viewModel.currentPage,
+              // ),
+              NextBackButtons(
                 currentPage: viewModel.currentPage,
+                length: viewModel.pages.length,
+                onNext: viewModel.currentPage < viewModel.pages.length - 1
+                    ? viewModel.nextPage
+                    : viewModel.nextButton,
+                onBack: viewModel.previousPage,
               ),
               verticalSpace(24),
             ],
