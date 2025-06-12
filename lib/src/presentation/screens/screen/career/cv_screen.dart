@@ -1,6 +1,6 @@
 import 'dart:io';
 
-// import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
@@ -8,10 +8,9 @@ import 'package:short_path/core/styles/animations/app_animation.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
 import 'package:short_path/dependency_injection/di.dart';
 import 'package:short_path/src/presentation/mangers/career/cv_cubit.dart';
-import 'package:short_path/src/presentation/shared_widgets/custom_auth_button.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
-import '../../../../../core/common/common_imports.dart';
+import '../job/interview_preparation_screen.dart';
 
 class CvScreen extends StatelessWidget {
   CvScreen({
@@ -26,14 +25,35 @@ class CvScreen extends StatelessWidget {
 
   Future<void> _loadPdf(String? filePath) async {
     try {
-      SfPdfViewer pdf = await SfPdfViewer.file(File(filePath!));
-
-      document = pdf;
+      document = await SfPdfViewer.file(File(filePath!));
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Error loading CV: $e",
+        msg: "Error loading CV: \$e",
         backgroundColor: Colors.red,
       );
+    }
+  }
+
+  void _showInterviewPreparation(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => BlocProvider.value(
+        value: getIt<CvCubit>(),
+        child: InterviewPreparationScreen(
+          questions: context.read<CvCubit>().interviewQuestions,
+          answers: context.read<CvCubit>().interviewAnswers,
+          jobTitle: jobDescription,
+          jobId: jobId,
+        ),
+      ),
+    );
+    // trigger generation if not yet loaded
+    if (jobId != null) {
+      getIt<CvCubit>().generateInterviewPreparationByJobId(jobId!);
+    } else if (jobDescription != null) {
+      getIt<CvCubit>()
+          .generateInterviewPreparationByJobDescription(jobDescription!);
     }
   }
 
@@ -46,10 +66,18 @@ class CvScreen extends StatelessWidget {
           jobDescription: jobDescription,
         ),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Your CV')),
+        appBar: AppBar(
+          title: const Text('Your CV'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.question_answer),
+              onPressed: () => _showInterviewPreparation(context),
+              tooltip: 'Interview Prep',
+            ),
+          ],
+        ),
         body: BlocConsumer<CvCubit, CvState>(
           listener: (context, state) {
-            var viewModel = context.read<CvCubit>();
             if (state is DownloadCvError) {
               Fluttertoast.showToast(
                 msg: state.message,
@@ -57,12 +85,11 @@ class CvScreen extends StatelessWidget {
               );
             }
             if (state is DownloadCvSuccess) {
-              _loadPdf(viewModel.filePath);
+              _loadPdf(context.read<CvCubit>().filePath);
             }
           },
           builder: (context, state) {
-            print('jobDescription: $jobDescription');
-            var viewModel = context.read<CvCubit>();
+            final viewModel = context.read<CvCubit>();
             if (state is DownloadCvLoading || document == null) {
               return Center(
                 child: Lottie.asset(
@@ -73,39 +100,51 @@ class CvScreen extends StatelessWidget {
             }
             if (state is DownloadCvError) {
               return Center(
-                  child: Column(
-                children: [
-                  const Text(
-                    'please try again later',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Please try again later',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomAuthButton(
-                      text: 'Go back',
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      color: AppColors.primaryColor)
-                ],
-              ));
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Go back'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              );
             }
             if (state is DownloadCvSuccess) {
-              return SfPdfViewer.file(
-                File(viewModel.filePath!),
+              return Column(
+                children: [
+                  Expanded(
+                    child: SfPdfViewer.file(
+                      File(viewModel.filePath!),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ElevatedButton.icon(
+                      onPressed: () => _showInterviewPreparation(context),
+                      icon: const Icon(Icons.question_answer),
+                      label: const Text('Interview Preparation'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(48),
+                      ),
+                    ),
+                  ),
+                ],
               );
             }
             return const Center(
               child: Text(
                 'No CV available',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
+                style: TextStyle(fontSize: 20, color: Colors.black),
               ),
             );
           },

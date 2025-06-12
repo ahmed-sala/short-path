@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../../../core/common/api/api_result.dart';
 import '../../../data/api/core/error/error_handler.dart';
+import '../../../data/dto_models/career/interview_preparation_dto.dart';
 import '../../../domain/usecases/career/career_usecase.dart';
 
 part 'cv_state.dart';
@@ -19,6 +20,8 @@ class CvCubit extends Cubit<CvState> {
 
   CvCubit(this._careerUsecase) : super(CvInitial());
   String? filePath;
+  List<String> interviewQuestions = [];
+  List<String> interviewAnswers = [];
   Future<void> downloadFile({String? jobDescription, int? jobId}) async {
     try {
       print('jobDescription: $jobDescription');
@@ -65,6 +68,104 @@ class CvCubit extends Cubit<CvState> {
       }
     } catch (e) {
       emit(DownloadCvError(e.toString()));
+    }
+  }
+
+  Future<void> generateInterviewPreparationByJobId(int jobId) async {
+    try {
+      emit(InterviewPreparationLoading());
+      final result = await _careerUsecase.interviewPreparationById(jobId);
+      switch (result) {
+        case Success<InterviewPreparationDto>():
+          _parseInterviewPreparation(result.data!.interviewPreparation!);
+          print('Interview preparation loaded successfully');
+          print('Questions: $interviewQuestions');
+          print('Answers: $interviewAnswers');
+          emit(InterviewPreparationLoaded(
+            questions: interviewQuestions,
+            answers: interviewAnswers,
+          ));
+          break;
+        case Failures():
+          emit(InterviewPreparationError(result.exception.toString()));
+          break;
+      }
+    } catch (e) {
+      emit(InterviewPreparationError(e.toString()));
+    }
+  }
+
+  Future<void> generateInterviewPreparationByJobDescription(
+      String jobDescription) async {
+    try {
+      emit(InterviewPreparationLoading());
+      final result = await _careerUsecase
+          .interviewPreparationByDescription(jobDescription);
+      switch (result) {
+        case Success<InterviewPreparationDto>():
+          _parseInterviewPreparation(result.data!.interviewPreparation!);
+          print('Interview preparation loaded successfully');
+          print('Questions: $interviewQuestions');
+          print('Answers: $interviewAnswers');
+          emit(InterviewPreparationLoaded(
+            questions: interviewQuestions,
+            answers: interviewAnswers,
+          ));
+          break;
+        case Failures():
+          emit(InterviewPreparationError(result.exception.toString()));
+          break;
+      }
+    } catch (e) {
+      emit(InterviewPreparationError(e.toString()));
+    }
+  }
+
+  /// Single-line aware parser: splits on numbering and then uses punctuation to separate Q/A
+  void _parseInterviewPreparation(String raw) {
+    interviewQuestions.clear();
+    interviewAnswers.clear();
+
+    // Trim any leading text before first number
+    final first = RegExp(r'\d+\.').firstMatch(raw);
+    final content = first != null ? raw.substring(first.start) : raw;
+
+    // Split into blocks at each 'digit+.' marker
+    final blocks = content.split(RegExp(r'(?=\d+\.)'));
+
+    for (var block in blocks) {
+      final b = block.trim();
+      if (b.isEmpty) continue;
+
+      // Remove leading number and optional bold markers
+      var text = b.replaceFirst(RegExp(r'^\d+\.\s*'), '');
+      text = text.replaceAll(RegExp(r'\*\*'), '').trim();
+
+      // Find end of question by first question mark or question-colon
+      int splitIndex = -1;
+      final qm = text.indexOf('?');
+      if (qm != -1) {
+        splitIndex = qm + 1;
+      } else {
+        // fallback: before first period if no '?'
+        final pd = text.indexOf('. ');
+        if (pd != -1) splitIndex = pd + 1;
+      }
+
+      String question;
+      String answer;
+
+      if (splitIndex > 0 && splitIndex < text.length) {
+        question = text.substring(0, splitIndex).trim();
+        answer = text.substring(splitIndex).trim();
+      } else {
+        // no clear split: whole text as question, empty answer
+        question = text;
+        answer = '';
+      }
+
+      interviewQuestions.add(question);
+      interviewAnswers.add(answer);
     }
   }
 }
