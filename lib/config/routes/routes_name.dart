@@ -21,5 +21,6 @@ class RoutesName {
   static const String sectionScreen = 'sectionScreen';
   static const String jobsScreen = 'jobsScreen';
   static const String jobDetail = 'jobDetail';
+  static const String InterviewPreparation = 'InterviewPreparation';
   static const String postRegisterChoice = 'postRegisterChoice';
 }

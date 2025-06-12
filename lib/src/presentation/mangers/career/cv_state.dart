@@ -13,3 +13,21 @@ final class DownloadCvError extends CvState {
 }
 
 final class DownloadCvSuccess extends CvState {}
+
+final class InterviewPreparationLoading extends CvState {}
+
+final class InterviewPreparationLoaded extends CvState {
+  final List<String> questions;
+  final List<String> answers;
+
+  InterviewPreparationLoaded({
+    required this.questions,
+    required this.answers,
+  });
+}
+
+final class InterviewPreparationError extends CvState {
+  final String errorMessage;
+
+  InterviewPreparationError(this.errorMessage);
+}

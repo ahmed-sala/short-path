@@ -1,9 +1,9 @@
 import 'dart:io';
 
-// import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
+import 'package:short_path/core/dialogs/show_hide_loading.dart';
 import 'package:short_path/core/extensions/extensions.dart';
 import 'package:short_path/core/styles/animations/app_animation.dart';
 import 'package:short_path/core/styles/colors/app_colore.dart';
@@ -28,7 +28,6 @@ class CvScreen extends StatelessWidget {
   Future<void> _loadPdf(BuildContext context, String? filePath) async {
     try {
       SfPdfViewer pdf = await SfPdfViewer.file(File(filePath!));
-
       document = pdf;
     } catch (e) {
       Fluttertoast.showToast(
@@ -50,21 +49,36 @@ class CvScreen extends StatelessWidget {
         appBar: AppBar(title: Text(context.localization.yourCv)),
         body: BlocConsumer<CvCubit, CvState>(
           listener: (context, state) {
-            var viewModel = context.read<CvCubit>();
+            var vm = context.read<CvCubit>();
+
             if (state is DownloadCvError) {
               Fluttertoast.showToast(
                 msg: state.message,
                 backgroundColor: Colors.red,
               );
             }
-            if (state is DownloadCvSuccess) {
-              _loadPdf(context, viewModel.filePath);
+            if (state is InterviewPreparationLoading) {
+              showLoading(context, 'generating interview prep...');
+            }
+            // Show interview prep dialog when loaded
+            if (state is InterviewPreparationLoaded) {
+              hideLoading();
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => InterviewPrepDialog(
+                  questions: state.questions,
+                  answers: state.answers,
+                  onClose: () => Navigator.of(context).pop(),
+                ),
+              );
             }
           },
           builder: (context, state) {
-            print('jobDescription: $jobDescription');
-            var viewModel = context.read<CvCubit>();
-            if (state is DownloadCvLoading || document == null) {
+            var vm = context.read<CvCubit>();
+
+            // Loading state or PDF not yet ready
+            if (state is DownloadCvLoading) {
               return Center(
                 child: Lottie.asset(
                   AppAnimation.loading,
@@ -72,45 +86,155 @@ class CvScreen extends StatelessWidget {
                 ),
               );
             }
+
+            // Download error UI
             if (state is DownloadCvError) {
               return Center(
-                  child: Column(
-                children: [
-                  Text(
-                    context.localization.pleaseTryAgainLater,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      context.localization.pleaseTryAgainLater,
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomAuthButton(
+                    const SizedBox(height: 20),
+                    CustomAuthButton(
                       text: context.localization.goBack,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      color: AppColors.primaryColor)
-                ],
-              ));
-            }
-            if (state is DownloadCvSuccess) {
-              return SfPdfViewer.file(
-                File(viewModel.filePath!),
+                      onPressed: () => Navigator.pop(context),
+                      color: AppColors.primaryColor,
+                    ),
+                  ],
+                ),
               );
             }
-            return Center(
-              child: Text(
-                context.localization.noCvAvailable,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
+
+            // Fallback: no CV
+            return Column(
+              children: [
+                // PDF viewer
+                Expanded(
+                  child: SfPdfViewer.file(
+                    File(vm.filePath!),
+                  ),
                 ),
-              ),
+
+                // Interview Prep button
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: CustomAuthButton(
+                      text: 'Generate Interview Questions',
+                      onPressed: () {
+                        if (jobId != null) {
+                          vm.generateInterviewPreparationByJobId(jobId!);
+                        } else if (jobDescription != null) {
+                          vm.generateInterviewPreparationByJobDescription(
+                            jobDescription!,
+                          );
+                        }
+                      },
+                      color: AppColors.primaryColor),
+                ),
+              ],
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+/// Dialog that embeds your InterviewPreparationScreen design
+class InterviewPrepDialog extends StatelessWidget {
+  final List<String> questions;
+  final List<String> answers;
+  final String? jobTitle;
+  final VoidCallback onClose;
+
+  const InterviewPrepDialog({
+    Key? key,
+    required this.questions,
+    required this.answers,
+    this.jobTitle,
+    required this.onClose,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 48.h),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Stack(
+        children: [
+          // Scrollable content with cards
+          Padding(
+            padding: EdgeInsets.only(top: 40.h),
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  questions.length,
+                  (i) {
+                    final q = questions[i];
+                    final a = i < answers.length
+                        ? answers[i]
+                        : 'No answer available.';
+                    return Card(
+                      margin: EdgeInsets.only(bottom: 16.h),
+                      child: Padding(
+                        padding: EdgeInsets.all(16.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              q,
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[800],
+                              ),
+                            ),
+                            SizedBox(height: 12.h),
+                            Text(
+                              a,
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+
+          // Close button
+          Positioned(
+            top: 4.h,
+            right: 4.w,
+            child: IconButton(
+              icon: Icon(Icons.close, size: 28.sp),
+              onPressed: onClose,
+            ),
+          ),
+
+          // Optional title
+          if (jobTitle != null)
+            Positioned(
+              top: 12.h,
+              left: 24.w,
+              right: 24.w,
+              child: Center(
+                child: Text(
+                  jobTitle!,
+                  style:
+                      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

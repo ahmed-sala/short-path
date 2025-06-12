@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_execute.dart';
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/data/data_source/online_data_source/career/contract/career_online_datasource.dart';
+import 'package:short_path/src/data/dto_models/career/interview_preparation_dto.dart';
 import 'package:short_path/src/domain/repositories/contract/career_repository.dart';
 
 import '../../../domain/entities/career/cover_sheet_entity.dart';
@@ -30,4 +31,23 @@ class CareerRepositoryImpl implements CareerRepository {
       return result?.toEntity();
     });
   }
+
+  @override
+  Future<ApiResult<InterviewPreparationDto>> interviewPreparationByDescription(String? jobDescription)async {
+    return await executeApi<InterviewPreparationDto>(apiCall: () async {
+      var result = await _careerOnlineDatasource.interviewPreparationByDescription(jobDescription);
+      return result;
+    });
+
+  }
+
+  @override
+  Future<ApiResult<InterviewPreparationDto>> interviewPreparationById(int? jobId)async {
+    return await executeApi<InterviewPreparationDto>(apiCall: () async {
+      var result = await _careerOnlineDatasource.interviewPreparationById(jobId);
+      return result;
+    });
+
+  }
 }
+

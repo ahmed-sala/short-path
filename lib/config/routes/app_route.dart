@@ -16,6 +16,7 @@ import 'package:short_path/src/presentation/screens/screen/user%20info/project/p
 import 'package:short_path/src/presentation/screens/screen/user%20info/work_experience/work_experience_screen.dart';
 
 import '../../src/presentation/screens/screen/auth/post_register_choice_screen.dart';
+import '../../src/presentation/screens/screen/job/interview_preparation_screen.dart';
 import '../../src/presentation/screens/screen/job/jobs_screen.dart';
 
 class AppRoute {
@@ -79,6 +80,20 @@ class AppRoute {
       case RoutesName.workExperience:
         return _handelMaterialPageRoute(
             settings: settings, widget: WorkExperienceScreen());
+
+      case RoutesName.InterviewPreparation:
+        // Get the arguments which should contain jobId and optionally jobTitle
+        final args = settings.arguments as Map<String, dynamic>?;
+        return _handelMaterialPageRoute(
+          settings: settings,
+          widget: InterviewPreparationScreen(
+            questions: args?['questions'] as List<String>,
+            answers: args?['answers'] as List<String>,
+            jobId: args?['jobId'] as int?,
+            jobTitle: args?['jobTitle'] as String?,
+          ),
+        );
+
       case RoutesName.postRegisterChoice:
         return _handelMaterialPageRoute(
             settings: settings, widget: PostRegisterChoiceScreen());

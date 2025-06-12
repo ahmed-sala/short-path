@@ -12,6 +12,9 @@ abstract class ApisEndPoints {
   static const String getUserData = "user";
   static const String getAllJobs = "job/";
   static const String downloadCv = "cv/generate";
+  static const String interviewPreparationId = "/interview-preparation";
+
+  static const String interviewPreparation = "/interview-preparation/generate";
 
   // static const String downloadCv = "file/download";
   static const String generateCoverSheet = "cover-sheet/generate";

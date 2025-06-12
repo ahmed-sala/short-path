@@ -123,8 +123,8 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final sharedPrefModule = _$SharedPrefModule();
     final registerModule = _$RegisterModule();
-    final dioProvider = _$DioProvider();
     final firebaseModule = _$FirebaseModule();
+    final dioProvider = _$DioProvider();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => sharedPrefModule.sharedPreferences,
       preResolve: true,
@@ -137,13 +137,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i794.SectionScreenViewmodel>(
         () => _i794.SectionScreenViewmodel());
     gh.lazySingleton<_i885.DioClient>(() => registerModule.dioClient);
+    gh.lazySingleton<_i974.FirebaseFirestore>(
+        () => firebaseModule.firebaseFirestore);
     gh.lazySingleton<_i558.FlutterSecureStorage>(
         () => sharedPrefModule.secureStorage);
     gh.lazySingleton<_i361.Dio>(() => dioProvider.dioProvider());
     gh.lazySingleton<_i528.PrettyDioLogger>(() => dioProvider.providePretty());
     gh.lazySingleton<_i13.AppInterceptors>(() => _i13.AppInterceptors());
-    gh.lazySingleton<_i974.FirebaseFirestore>(
-        () => firebaseModule.firebaseFirestore);
     gh.factory<_i990.AuthOfflineDataSource>(
         () => _i718.authOfflineDatasourceImpl());
     gh.singleton<_i687.ApiServices>(() => _i687.ApiServices(gh<_i361.Dio>()));
@@ -240,6 +240,6 @@ class _$SharedPrefModule extends _i222.SharedPrefModule {}
 
 class _$RegisterModule extends _i644.RegisterModule {}
 
-class _$DioProvider extends _i13.DioProvider {}
-
 class _$FirebaseModule extends _i240.FirebaseModule {}
+
+class _$DioProvider extends _i13.DioProvider {}
