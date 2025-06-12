@@ -73,6 +73,24 @@ class CareerScreen extends StatelessWidget {
               backgroundColor: Colors.redAccent,
               textColor: Colors.white,
             );
+          } else if (state is SkillsExtractionLoading) {
+            EasyLoading.show(status: 'Extracting skills...');
+          } else if (state is SkillsExtractionSuccess) {
+            EasyLoading.dismiss();
+            Navigator.pushNamed(
+              context,
+              RoutesName.machineSkills,
+              arguments: {
+                'extractedSkillsDto': state.skills,
+              },
+            );
+          } else if (state is SkillsExtractionError) {
+            EasyLoading.dismiss();
+            Fluttertoast.showToast(
+              msg: state.errorMessage,
+              backgroundColor: Colors.redAccent,
+              textColor: Colors.white,
+            );
           }
         },
         child: Builder(
@@ -216,6 +234,30 @@ class CareerScreen extends StatelessWidget {
                       const SizedBox(height: 24),
                       const TipSectionWidget(),
                       SizedBox(height: 24.h),
+                      CustomAuthButton(
+                        text: context.localization.extractSkills,
+                        onPressed: () {
+                          if (vm.jobDescribtion.text.isEmpty) {
+                            Fluttertoast.showToast(
+                              msg:
+                                  context.localization.pleaseAddAJobDescription,
+                              backgroundColor: Colors.redAccent,
+                              textColor: Colors.white,
+                            );
+                          } else {
+                            vm.extractSkills(vm.jobDescribtion.text);
+                          }
+                        },
+                        color: AppColors.primaryColor,
+                        // Use your color constant
+                        textColor: Colors.white,
+                        borderRadius: BorderRadius.circular(40),
+                        textStyle: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
                       CustomAuthButton(
                         text: 'Generate Interview Preparation',
                         onPressed: () {

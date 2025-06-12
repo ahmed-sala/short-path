@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:short_path/core/common/api/api_result.dart';
 import 'package:short_path/src/data/api/core/error/error_handler.dart';
+import 'package:short_path/src/data/dto_models/career/extract_skills_dto.dart';
 import 'package:short_path/src/domain/entities/career/cover_sheet_entity.dart';
 import 'package:short_path/src/domain/usecases/career/career_usecase.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -162,6 +163,23 @@ class CareerViewmodel extends Cubit<CareerState> {
 
       interviewQuestions.add(question);
       interviewAnswers.add(answer);
+    }
+  }
+
+  Future<void> extractSkills(String jobDescription) async {
+    try {
+      emit(SkillsExtractionLoading());
+      final result = await _careerUsecase.extractSkills(jobDescription);
+      switch (result) {
+        case Success<ExtractedSkillsDto>():
+          emit(SkillsExtractionSuccess(result.data!));
+          break;
+        case Failures():
+          emit(SkillsExtractionError(result.exception.toString()));
+          break;
+      }
+    } catch (e) {
+      emit(SkillsExtractionError(e.toString()));
     }
   }
 }
